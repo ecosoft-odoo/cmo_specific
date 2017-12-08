@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+      <record id="view_sale_management_fee" model="ir.ui.view">
+          <field name="name">view.sale.management.fee</field>
+          <field name="model">sale.cal.manage.fee</field>
+          <field name="type">form</field>
+          <field name="arch" type="xml">
+              <form string="Management And Operation Fee">
+                  <group>
+                      <field name="percent_rate"/>
+                  </group>
+                  <footer>
+                    <button string="Confirm" name="calculate_management_fee" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                  </footer>
+              </form>
+          </field>
+      </record>
+      <record id="action_sale_cal_management_fee" model="ir.actions.act_window">
+          <field name="name">Calculate Management Fee</field>
+          <field name="type">ir.actions.act_window</field>
+          <field name="res_model">sale.cal.manage.fee</field>
+          <field name="src_model">sale.order</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">form</field>
+          <field name="view_id" ref="view_sale_management_fee"/>
+          <field name="target">new</field>
+      </record>
+  </data>
+</openerp>

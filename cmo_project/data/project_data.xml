@@ -1,0 +1,695 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        # hr department
+        <record model="hr.department" id="project_department_1">
+            <field name="name">Bangkok Sculpture</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_2">
+            <field name="name">CEO OFFICE</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="True"/>
+        </record>
+        <record model="hr.department" id="project_department_3">
+            <field name="name">Corporate Affair</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_4">
+            <field name="name">Corporate Communications</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_5">
+            <field name="name">CM Art</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="True"/>
+        </record>
+        <record model="hr.department" id="project_department_6">
+            <field name="name">CM Expertise</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="True"/>
+        </record>
+        <record model="hr.department" id="project_department_7">
+            <field name="name">CMC</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="True"/>
+        </record>
+        <record model="hr.department" id="project_department_8">
+            <field name="name">CMEX MD Office</field>
+            <field name="active" eval="False"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_9">
+            <field name="name">CMEX</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="True"/>
+        </record>
+        <record model="hr.department" id="project_department_10">
+            <field name="name">Design Team</field>
+            <field name="active" eval="False"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_11">
+            <field name="name">Museum</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="True"/>
+        </record>
+        <record model="hr.department" id="project_department_12">
+            <field name="name">Facilities Management</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_13">
+            <field name="name">Finance &amp; Accounting</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_14">
+            <field name="name">Human Resources</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_15">
+            <field name="name">ICM</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="True"/>
+        </record>
+        <record model="hr.department" id="project_department_16">
+            <field name="name">Information Technology</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="True"/>
+        </record>
+        <record model="hr.department" id="project_department_17">
+            <field name="name">Internal Audit</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_18">
+            <field name="name">Odyssey</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="True"/>
+        </record>
+        <record model="hr.department" id="project_department_19">
+            <field name="name">Asian - International Business</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_20">
+            <field name="name">CM Mice</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_21">
+            <field name="name">BU 1 ( 2001-2003 )</field>
+            <field name="active" eval="False"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_22">
+            <field name="name">BU 2 ( 2001-2003 )</field>
+            <field name="active" eval="False"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_23">
+            <field name="name">BU 3 ( 2001-2003 )</field>
+            <field name="active" eval="False"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_24">
+            <field name="name">BU 4 ( 2002-2003 )</field>
+            <field name="active" eval="False"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_25">
+            <field name="name">General Management</field>
+            <field name="active" eval="False"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_26">
+            <field name="name">Tempolary Staff</field>
+            <field name="active" eval="False"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_27">
+            <field name="name">CME 1</field>
+            <field name="active" eval="False"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_28">
+            <field name="name">CME 2</field>
+            <field name="active" eval="False"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_29">
+            <field name="name">CME 3</field>
+            <field name="active" eval="False"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_30">
+            <field name="name">CME 4</field>
+            <field name="active" eval="False"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_31">
+            <field name="name">CM ACE ( 2004-2006 )</field>
+            <field name="active" eval="False"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_32">
+            <field name="name">CM PR Mar-Comm</field>
+            <field name="active" eval="False"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_33">
+            <field name="name">CM PEO</field>
+            <field name="active" eval="False"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_34">
+            <field name="name">A Link</field>
+            <field name="active" eval="False"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_35">
+            <field name="name">CM Entertainment</field>
+            <field name="active" eval="False"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_36">
+            <field name="name">Show Department</field>
+            <field name="active" eval="False"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_37">
+            <field name="name">Exhibition 2</field>
+            <field name="active" eval="False"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_38">
+            <field name="name">CSM Team</field>
+            <field name="active" eval="False"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_39">
+            <field name="name">-</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_40">
+            <field name="name">The Glitz</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="True"/>
+        </record>
+        <record model="hr.department" id="project_department_41">
+            <field name="name">Integrated Marketing Communication</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_42">
+            <field name="name">CMO Indonesia</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_43">
+            <field name="name">H-Project</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_44">
+            <field name="name">CM Play</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="True"/>
+        </record>
+        <record model="hr.department" id="project_department_45">
+            <field name="name">Amuse</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_46">
+            <field name="name">CM Join</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="True"/>
+        </record>
+        <record model="hr.department" id="project_department_47">
+            <field name="name">Imaginia</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_48">
+            <field name="name">Muse Corporation</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="True"/>
+        </record>
+        <record model="hr.department" id="project_department_49">
+            <field name="name">Business Development</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="True"/>
+        </record>
+        <record model="hr.department" id="project_department_50">
+            <field name="name">CUBE</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="True"/>
+        </record>
+        <record model="hr.department" id="project_department_51">
+            <field name="name">Legal</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="False"/>
+        </record>
+        <record model="hr.department" id="project_department_52">
+            <field name="name">CM One</field>
+            <field name="active" eval="True"/>
+            <field name="show" eval="True"/>
+        </record>
+        # lost_reason
+        <record model="project.lost.reason" id="project_lost_reason_1">
+            <field name="name">Unknow</field>
+        </record>
+        <record model="project.lost.reason" id="project_lost_reason_2">
+            <field name="name">Cost</field>
+        </record>
+        <record model="project.lost.reason" id="project_lost_reason_3">
+            <field name="name">Creative</field>
+        </record>
+        <record model="project.lost.reason" id="project_lost_reason_4">
+            <field name="name">Relationships</field>
+        </record>
+        <record model="project.lost.reason" id="project_lost_reason_5">
+            <field name="name">Unqualify</field>
+        </record>
+        # reject reason
+        <record model="project.reject.reason" id="project_reject_reason_1">
+            <field name="name">Full Capacity</field>
+        </record>
+        <record model="project.reject.reason" id="project_reject_reason_2">
+            <field name="name">Not Event</field>
+        </record>
+        <record model="project.reject.reason" id="project_reject_reason_3">
+            <field name="name">Low Budget</field>
+        </record>
+        <record model="project.reject.reason" id="project_reject_reason_4">
+            <field name="name">Too Much Competitors</field>
+        </record>
+        <record model="project.reject.reason" id="project_reject_reason_5">
+            <field name="name">Others</field>
+        </record>
+        # brand_type
+        <record model="project.brand.type" id="project_brand_type_1">
+            <field name="name">Normal Corporate</field>
+        </record>
+        <record model="project.brand.type" id="project_brand_type_2">
+            <field name="name">Thai Super Brand</field>
+        </record>
+        <record model="project.brand.type" id="project_brand_type_3">
+            <field name="name">International Brand</field>
+        </record>
+        # client_type
+        <record model="project.client.type" id="project_client_type_1">
+            <field name="name">Unknow</field>
+        </record>
+        <record model="project.client.type" id="project_client_type_2">
+            <field name="name">Government</field>
+        </record>
+        <record model="project.client.type" id="project_client_type_3">
+            <field name="name">Private Sector (Agency)</field>
+        </record>
+        <record model="project.client.type" id="project_client_type_4">
+            <field name="name">Private Sector (Direct)</field>
+        </record>
+        # industry data
+        <record model="project.industry" id="project_industry_1">
+            <field name="name">Agency / Consulting</field>
+        </record>
+        <record model="project.industry" id="project_industry_2">
+            <field name="name">Agribusiness / Biotechnology</field>
+        </record>
+        <record model="project.industry" id="project_industry_3">
+            <field name="name">Association / Organization</field>
+        </record>
+        <record model="project.industry" id="project_industry_4">
+            <field name="name">Banking / Finance</field>
+        </record>
+        <record model="project.industry" id="project_industry_5">
+            <field name="name">Communication / Telecommunication</field>
+        </record>
+        <record model="project.industry" id="project_industry_6">
+            <field name="name">Computer / IT / Technology</field>
+        </record>
+        <record model="project.industry" id="project_industry_7">
+            <field name="name">Construction / Engineering</field>
+        </record>
+        <record model="project.industry" id="project_industry_8">
+            <field name="name">Consumer Products / Health Care Pharmacy</field>
+        </record>
+        <record model="project.industry" id="project_industry_9">
+            <field name="name">Direct Sales</field>
+        </record>
+        <record model="project.industry" id="project_industry_10">
+            <field name="name">Electronic / Appliances</field>
+        </record>
+        <record model="project.industry" id="project_industry_11">
+            <field name="name">Fashion - Clothing / Jewelry / Cosmetics / Apparels / Accessories</field>
+        </record>
+        <record model="project.industry" id="project_industry_12">
+            <field name="name">Food &amp; Beverage</field>
+        </record>
+        <record model="project.industry" id="project_industry_13">
+            <field name="name">Gasoline / Petroleum / Energy</field>
+        </record>
+        <record model="project.industry" id="project_industry_14">
+            <field name="name">Government / Royal Institution</field>
+        </record>
+        <record model="project.industry" id="project_industry_15">
+            <field name="name">Hospital</field>
+        </record>
+        <record model="project.industry" id="project_industry_16">
+            <field name="name">Hotel / Travel</field>
+        </record>
+        <record model="project.industry" id="project_industry_17">
+            <field name="name">Industry - Chemical / Plastic / Glass / Paper / Metal / Textiles / Foot ware / Lighting</field>
+        </record>
+        <record model="project.industry" id="project_industry_18">
+            <field name="name">Institution / Education</field>
+        </record>
+        <record model="project.industry" id="project_industry_19">
+            <field name="name">Insurance</field>
+        </record>
+        <record model="project.industry" id="project_industry_20">
+            <field name="name">International Trade</field>
+        </record>
+        <record model="project.industry" id="project_industry_21">
+            <field name="name">Media / Entertainment / Printing / Publishing</field>
+        </record>
+        <record model="project.industry" id="project_industry_22">
+            <field name="name">Real Estate / Property / Building / Furnishing / Ornaments</field>
+        </record>
+        <record model="project.industry" id="project_industry_23">
+            <field name="name">Retailing / Wholesaling / Shopping Mall</field>
+        </record>
+        <record model="project.industry" id="project_industry_24">
+            <field name="name">Tourism / Logistics / Transportation / Shipping</field>
+        </record>
+        # location data
+        <record model="project.location" id="project_location_1">
+            <field name="name">Local</field>
+        </record>
+        <record model="project.location" id="project_location_2">
+            <field name="name">Regional</field>
+        </record>
+        <record model="project.location" id="project_location_3">
+            <field name="name">International</field>
+        </record>
+        # obligation data
+        <record model="project.obligation" id="project_obligation_1">
+            <field name="name">Corporate</field>
+        </record>
+        <record model="project.obligation" id="project_obligation_2">
+            <field name="name">Sale</field>
+        </record>
+        <record model="project.obligation" id="project_obligation_3">
+            <field name="name">CRM</field>
+        </record>
+        <record model="project.obligation" id="project_obligation_4">
+            <field name="name">CSR</field>
+        </record>
+        # project_from
+        <record model="project.from" id="project_from_1">
+            <field name="name">Unknow</field>
+        </record>
+        <record model="project.from" id="project_from_2">
+            <field name="name">Call in</field>
+        </record>
+        <record model="project.from" id="project_from_3">
+            <field name="name">New Prospect</field>
+        </record>
+        <record model="project.from" id="project_from_4">
+            <field name="name">Existing Account</field>
+        </record>
+        <record model="project.from" id="project_from_5">
+            <field name="name">CEO Office</field>
+        </record>
+        # project_function
+        <record model="project.function" id="project_function_1">
+            <field name="name">Anniversary</field>
+        </record>
+        <record model="project.function" id="project_function_2">
+            <field name="name">Art Management</field>
+        </record>
+        <record model="project.function" id="project_function_3">
+            <field name="name">Award Presentation</field>
+        </record>
+        <record model="project.function" id="project_function_4">
+            <field name="name">Concert</field>
+        </record>
+        <record model="project.function" id="project_function_5">
+            <field name="name">Contest</field>
+        </record>
+        <record model="project.function" id="project_function_6">
+            <field name="name">Conventions</field>
+        </record>
+        <record model="project.function" id="project_function_7">
+            <field name="name">Exhibitions</field>
+        </record>
+        <record model="project.function" id="project_function_8">
+            <field name="name">Fashion Show</field>
+        </record>
+        <record model="project.function" id="project_function_9">
+            <field name="name">Interior Design</field>
+        </record>
+        <record model="project.function" id="project_function_10">
+            <field name="name">Launches</field>
+        </record>
+        <record model="project.function" id="project_function_11">
+            <field name="name">Luxury &amp; Premium Services</field>
+        </record>
+        <record model="project.function" id="project_function_12">
+            <field name="name">Museum</field>
+        </record>
+        <record model="project.function" id="project_function_13">
+            <field name="name">Party</field>
+        </record>
+        <record model="project.function" id="project_function_14">
+            <field name="name">PCO</field>
+        </record>
+        <record model="project.function" id="project_function_15">
+            <field name="name">PEO</field>
+        </record>
+        <record model="project.function" id="project_function_16">
+            <field name="name">Press Conference</field>
+        </record>
+        <record model="project.function" id="project_function_17">
+            <field name="name">Promotion &amp; Roadshow</field>
+        </record>
+        <record model="project.function" id="project_function_18">
+            <field name="name">Public Complain Campaign</field>
+        </record>
+        <record model="project.function" id="project_function_19">
+            <field name="name">Public Event</field>
+        </record>
+        <record model="project.function" id="project_function_20">
+            <field name="name">Seminar</field>
+        </record>
+        <record model="project.function" id="project_function_21">
+            <field name="name">Trip &amp; Tour</field>
+        </record>
+        <record model="project.function" id="project_function_22">
+            <field name="name">Video</field>
+        </record>
+        <record model="project.function" id="project_function_23">
+            <field name="name">Visitor Center</field>
+        </record>
+        <record model="project.function" id="project_function_24">
+            <field name="name">Website &amp; Application</field>
+        </record>
+        <record model="project.function" id="project_function_25">
+            <field name="name">Workshop</field>
+        </record>
+        # project_position
+        <record model="project.position" id="project_position_1">
+            <field name="name">Project Manager</field>
+        </record>
+        <record model="project.position" id="project_position_2">
+            <field name="name">Designer</field>
+        </record>
+        <record model="project.position" id="project_position_3">
+            <field name="name">Procurement</field>
+        </record>
+        <record model="project.position" id="project_position_4">
+            <field name="name">Production</field>
+        </record>
+        <record model="project.position" id="project_position_5">
+            <field name="name">Creative</field>
+        </record>
+        <record model="project.position" id="project_position_6">
+            <field name="name">Graphic</field>
+        </record>
+        <record model="project.position" id="project_position_7">
+            <field name="name">Producer</field>
+        </record>
+        <record model="project.position" id="project_position_8">
+            <field name="name">Asst. Production</field>
+        </record>
+        # project_type
+        <record model="project.type" id="project_type_1">
+            <field name="name">Unknow</field>
+        </record>
+        <record model="project.type" id="project_type_2">
+            <field name="name">Event</field>
+        </record>
+        <record model="project.type" id="project_type_3">
+            <field name="name">IMC Campaign</field>
+        </record>
+        # task_type data
+        <!-- <delete model="project.task.type" id="project.project_tt_specification"/>
+        <delete model="project.task.type" id="project.project_tt_design"/>
+        <delete model="project.task.type" id="project.project_tt_development"/>
+        <delete model="project.task.type" id="project.project_tt_testing"/>
+        <delete model="project.task.type" id="project.project_tt_merge"/>
+        <delete model="project.task.type" id="project.project_tt_cancel"/> -->
+
+        <!-- <record model="project.task.type" id="project.project_tt_analysis">
+            <field name="name">In progress</field>
+        </record>
+        <record model="project.task.type" id="project.project_tt_deployment">
+            <field name="name">Received</field>
+            <field name="fold" eval="False"/>
+        </record> -->
+        <record model="project.task.type" id="project.project_tt_analysis">
+            <field name="name">Analysis</field>
+            <field name="sequence">1</field>
+            <field name="case_default" eval="True"/>
+            <field name="fold" eval="False"/>
+        </record>
+        <record model="project.task.type" id="project.project_tt_specification">
+            <field name="name">Specification</field>
+            <field name="sequence">2</field>
+            <field name="case_default" eval="True"/>
+            <field name="fold" eval="False"/>
+        </record>
+        <record model="project.task.type" id="project.project_tt_design">
+            <field name="name">Design</field>
+            <field name="sequence">3</field>
+            <field name="case_default" eval="True"/>
+            <field name="fold" eval="False"/>
+        </record>
+        <record model="project.task.type" id="project.project_tt_deployment">
+            <field name="name">Development</field>
+            <field name="sequence">4</field>
+            <field name="case_default" eval="True"/>
+            <field name="fold" eval="False"/>
+        </record>
+        <record model="project.task.type" id="project.project_tt_testing">
+            <field name="name">Testing</field>
+            <field name="sequence">5</field>
+            <field name="case_default" eval="True"/>
+            <field name="fold" eval="False"/>
+        </record>
+        <record model="project.task.type" id="project.project_tt_merge">
+            <field name="name">Done</field>
+            <field name="sequence">6</field>
+            <field name="case_default" eval="True"/>
+            <field name="fold" eval="False"/>
+        </record>
+        <record model="project.task.type" id="project.project_tt_cancel">
+            <field name="name">Cancelled</field>
+            <field name="sequence">7</field>
+            <field name="case_default" eval="True"/>
+            <field name="fold" eval="False"/>
+        </record>
+        # partner_type
+        <record model="res.partner.category" id="partner_category_1">
+            <field name="name">Agency</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="res.partner.category" id="partner_category_2">
+            <field name="name">Competitor</field>
+            <field name="active" eval="True"/>
+        </record>
+        # operating_unit
+        <record model="operating.unit" id="operating_unit_ceo">
+            <field name="name">CEO OFFICE(CEO)</field>
+            <field name="code">CEO</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_cmex">
+            <field name="name">CMEX</field>
+            <field name="code">CMEX</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_museum">
+            <field name="name">Museum</field>
+            <field name="code">Museum</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_it">
+            <field name="name">Information Technology</field>
+            <field name="code">IT</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_odyssey">
+            <field name="name">Odyssey</field>
+            <field name="code">Odyssey</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_cm_play">
+            <field name="name">CM Play</field>
+            <field name="code">CM Play</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_cm_join">
+            <field name="name">CM Join</field>
+            <field name="code">CM Join</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_bd">
+            <field name="name">Business Development</field>
+            <field name="code">BD</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_cm_one">
+            <field name="name">CM One</field>
+            <field name="code">CM One</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_fa">
+            <field name="name">Finance&amp;Accounting</field>
+            <field name="code">FA</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_hr">
+            <field name="name">Human Resource</field>
+            <field name="code">HR</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_fm">
+            <field name="name">Facility Management</field>
+            <field name="code">FM</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_it_issue">
+            <field name="name">IT ISSUE</field>
+            <field name="code">IT ISSUE</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_fm_issue">
+            <field name="name">FM ISSUE</field>
+            <field name="code">FM ISSUE</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+    </data>
+</openerp>

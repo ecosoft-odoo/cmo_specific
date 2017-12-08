@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_invoice_customer" model="ir.ui.view">
+            <field name="name">account.invoice.customer.quote</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <page string="Payments" position="after">
+                    <page string="Invoice Project" name="invoice_project">
+                        <group>
+                            <group>
+                                <field name="quote_ref_number" readonly="1"/>
+                                <field name="quote_ref_date" readonly="1"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                    </page>
+                </page>
+                <xpath expr="//field[@name='origin']" position="before">
+                    <field name="quote_ref_id"/>
+                </xpath>
+
+                <xpath expr="//tree[@string='Invoice Lines']/field[@name='discount']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//tree[@string='Invoice Lines']/field[@name='discount']" position="after">
+                    <field name="state_related_invoice" invisible="1"/>
+                </xpath>
+                <xpath expr="//tree[@string='Invoice Lines']/field[@name='product_id']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('state_related_invoice','in',['open','paid','cancel'])]}</attribute>
+                </xpath>
+                <xpath expr="//tree[@string='Invoice Lines']/field[@name='account_id']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('state_related_invoice','in',['open','paid','cancel'])]}</attribute>
+                </xpath>
+                <xpath expr="//tree[@string='Invoice Lines']/field[@name='account_analytic_id']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('state_related_invoice','in',['open','paid','cancel'])]}</attribute>
+                </xpath>
+                <xpath expr="//tree[@string='Invoice Lines']/field[@name='quantity']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('state_related_invoice','in',['open','paid','cancel'])]}</attribute>
+                </xpath>
+                <xpath expr="//tree[@string='Invoice Lines']/field[@name='uos_id']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('state_related_invoice','in',['open','paid','cancel'])]}</attribute>
+                </xpath>
+                <xpath expr="//tree[@string='Invoice Lines']/field[@name='price_unit']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('state_related_invoice','in',['open','paid','cancel'])]}</attribute>
+                </xpath>
+                <xpath expr="//tree[@string='Invoice Lines']/field[@name='invoice_line_tax_id']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('state_related_invoice','in',['open','paid','cancel'])]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Invoice form -->
+        <record id="view_invoice_form_inherit_1" model="ir.ui.view" >
+             <field name="name">account.invoice.form.inherit_1</field>
+             <field name="model">account.invoice</field>
+             <field name="inherit_id" ref="sale_layout.view_invoice_form_inherit_1"/>
+             <field name="arch" type="xml">
+                    <xpath expr="//page[@string='Invoice Lines']/field[@name='invoice_line']/tree/field[@name='sale_layout_cat_id']" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                    </xpath>
+             </field>
+        </record>
+
+        <record id="account_operating_unit_invoice_form" model="ir.ui.view">
+            <field name="name">account.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account_operating_unit.invoice_form" />
+            <field name="arch" type="xml">
+                <field name="operating_unit_id" position="attributes">
+                    <attribute name="attrs">{'readonly':[('state','in',['open','paid','cancel'])]}</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="hr_expense_advance_clearing_invoice_form" model="ir.ui.view">
+	        <field name="name">invoice.form</field>
+	        <field name="model">account.invoice</field>
+	        <field name="inherit_id" ref="hr_expense_advance_clearing.invoice_form"/>
+	        <field name="arch" type="xml">
+	           <field name="advance_expense_id" position="attributes">
+                   <attribute name="attrs">{'readonly':[('state','in',['open','paid','cancel'])]}</attribute>
+               </field>
+	        </field>
+	    </record>
+
+        <!-- invoice tree -->
+        <record id="invoice_tree" model="ir.ui.view">
+            <field name="name">account.invoice.tree</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_tree"/>
+            <field name="arch" type="xml">
+                <field name="date_due" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="currency_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="origin" position="after">
+                    <field name="invoice_type"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_invoice_customer2" model="ir.ui.view">
+            <field name="name">account.invoice.customer.pay</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account_voucher.view_invoice_customer"/>
+            <field name="arch" type="xml">
+                <button name="invoice_pay_customer" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+            </field>
+        </record>
+
+        <!-- supplier invoice form -->
+        <record id="view_invoice_supplier" model="ir.ui.view">
+            <field name="name">account.invoice.supplier.pay</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account_voucher.view_invoice_supplier"/>
+            <field name="arch" type="xml">
+                <button name="invoice_pay_customer" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+            </field>
+        </record>
+    </data>
+</openerp>

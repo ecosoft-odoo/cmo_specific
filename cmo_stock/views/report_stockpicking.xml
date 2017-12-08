@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="report_picking" inherit_id="stock.report_picking">
+            <xpath expr="//div[@class='col-xs-6']" position="replace">
+                <div class="col-xs-6">
+                    <div t-if="o.partner_id">
+                        <span>Issue for: </span>
+                        <span t-field="o.partner_id"/>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//h2" position="replace">
+                <h2>
+                    <span>Operating Unit: </span>
+                    <span t-field="o.default_operating_unit_id"/>
+                </h2>
+            </xpath>
+        </template>
+    </data>
+</openerp>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="cmo_sale_order" model="ir.actions.report.xml">
+           <field name="string">Quotation/Order (Eng)</field>
+           <field name="auto">True</field>
+           <field name="model">sale.order</field>
+           <field name="jasper_model_id" ref="sale.model_sale_order"/>
+           <field name="name">Quotation/Order (Eng)</field>
+           <field name="report_name">cmo.sale.order</field>
+           <field name="report_rml">cmo_sale_report/report/cmo_sale_order.jrxml</field>
+           <field name="force_locale">en_US</field>
+           <field name="menu">True</field>
+           <field name="header">False</field>
+           <field name="jasper_report">True</field>
+           <field name="jasper_output">pdf</field>
+        </record>
+        <record id="cmo_sale_order_values" model="ir.values">
+           <field name="name">Quotation/Order (Eng)</field>
+           <field name="model">sale.order</field>
+           <field name="key2" eval="'client_print_multi'"/>
+           <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_sale_order)"/>
+        </record>
+
+        <record id="cmo_sale_order_th" model="ir.actions.report.xml">
+           <field name="string">Quotation/Order (TH)</field>
+           <field name="auto">True</field>
+           <field name="model">sale.order</field>
+           <field name="jasper_model_id" ref="sale.model_sale_order"/>
+           <field name="name">Quotation/Order (TH)</field>
+           <field name="report_name">cmo.sale.order.th</field>
+           <field name="report_rml">cmo_sale_report/report/cmo_sale_order.jrxml</field>
+           <field name="force_locale">th_TH</field>
+           <field name="menu">True</field>
+           <field name="header">False</field>
+           <field name="jasper_report">True</field>
+           <field name="jasper_output">pdf</field>
+        </record>
+        <record id="cmo_sale_order_values_th" model="ir.values">
+           <field name="name">Quotation/Order (TH)</field>
+           <field name="model">sale.order</field>
+           <field name="key2" eval="'client_print_multi'"/>
+           <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_sale_order_th)"/>
+        </record>
+
+        <record id="cmo_sale_order_estimate" model="ir.actions.report.xml">
+           <field name="string">Quotation/Estimate</field>
+           <field name="auto">True</field>
+           <field name="model">sale.order</field>
+           <field name="jasper_model_id" ref="sale.model_sale_order"/>
+           <field name="name">Quotation/Estimate</field>
+           <field name="report_name">cmo.sale.order.est</field>
+           <field name="report_rml">cmo_sale_report/report/cmo_sale_order_estimate.jrxml</field>
+           <field name="force_locale">en_US</field>
+           <field name="menu">True</field>
+           <field name="header">False</field>
+           <field name="jasper_report">True</field>
+           <field name="jasper_output">pdf</field>
+        </record>
+        <record id="cmo_sale_order_values_est" model="ir.values">
+           <field name="name">Quotation/Estimate</field>
+           <field name="model">sale.order</field>
+           <field name="key2" eval="'client_print_multi'"/>
+           <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_sale_order_estimate)"/>
+        </record>
+
+        <record id="cmo_sale_order_additional" model="ir.actions.report.xml">
+           <field name="string">Quotation/Additional</field>
+           <field name="auto">True</field>
+           <field name="model">sale.order</field>
+           <field name="jasper_model_id" ref="sale.model_sale_order"/>
+           <field name="name">Quotation/Additional</field>
+           <field name="report_name">cmo.sale.order.add</field>
+           <field name="report_rml">cmo_sale_report/report/cmo_sale_order_additional.jrxml</field>
+           <field name="force_locale">en_US</field>
+           <field name="menu">True</field>
+           <field name="header">False</field>
+           <field name="jasper_report">True</field>
+           <field name="jasper_output">pdf</field>
+        </record>
+        <record id="cmo_sale_order_values_add" model="ir.values">
+           <field name="name">Quotation/Additional</field>
+           <field name="model">sale.order</field>
+           <field name="key2" eval="'client_print_multi'"/>
+           <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_sale_order_additional)"/>
+        </record>
+
+        <delete model="ir.actions.report.xml" id="sale.report_sale_order"/>
+    </data>
+</openerp>

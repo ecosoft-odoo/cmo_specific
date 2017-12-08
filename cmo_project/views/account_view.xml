@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_invoice_customer" model="ir.ui.view">
+            <field name="name">account.invoice.customer.quote</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="cmo_account.view_invoice_customer"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='invoice_project']/group/group" position="inside">
+                    <field name="project_ref_name"/>
+                    <field name="project_ref_number" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- invoice tree -->
+        <record id="invoice_tree" model="ir.ui.view">
+            <field name="name">account.invoice.tree</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_tree"/>
+            <field name="arch" type="xml">
+                <field name="origin" position="before">
+                    <field name="project_ref_name"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

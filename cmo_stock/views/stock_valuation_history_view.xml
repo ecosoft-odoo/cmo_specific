@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="stock_account.action_history_tree" model="ir.actions.act_window">
+            <field name="context">{'search_default_group_by_product': True}</field>
+        </record>
+
+        <record id="view_stock_history_report_search" model="ir.ui.view">
+            <field name="name">stock.history.report.search</field>
+            <field name="model">stock.history</field>
+            <field name="inherit_id" ref="stock_account.view_stock_history_report_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group" position="inside">
+                    <filter string="Operating Unit" icon="terp-accessories-archiver" context="{'group_by':'operating_unit_id'}"/>
+                    <filter string="Partner" icon="terp-accessories-archiver" context="{'group_by':'partner_id'}"/>
+                    <filter string="Operation Date" icon="terp-accessories-archiver" context="{'group_by':'date'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_stock_history_report_tree" model="ir.ui.view">
+            <field name="name">stock.history.report.tree</field>
+            <field name="model">stock.history</field>
+            <field name="inherit_id" ref="stock_account.view_stock_history_report_tree"/>
+            <field name="arch" type="xml">
+                <field name="source" position="after">
+                    <field name="partner_id"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="account_bank_receipt_view_form" model="ir.ui.view">
+            <field name="name">account.bank.receipt.form</field>
+            <field name="model">account.bank.receipt</field>
+            <field name="inherit_id" ref="account_bank_receipt.account_bank_receipt_view_form"/>
+            <field name="arch" type="xml">
+                <field name="validate_user_id" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </field>
+                <field name="validate_date" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

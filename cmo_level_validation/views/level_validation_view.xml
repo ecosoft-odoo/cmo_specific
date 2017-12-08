@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        # Level Validation
+        <record id="level_validation_tree" model="ir.ui.view">
+            <field name="name">level.validation.tree</field>
+            <field name="model">level.validation</field>
+            <field name="arch" type="xml">
+                <tree string="Level Validation" editable="top">
+                    <field name="operating_unit_id"/>
+                    <field name="level"/>
+                    <field name="limit_amount"/>
+                    <field name="user_ids" string="Approval User" widget="many2many_tags" placeholder="Users..."/>
+                    <field name="doctype" invisible="0"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_purchase_order_level_validation" model="ir.actions.act_window">
+            <field name="name">Purchase Order</field>
+            <field name="res_model">level.validation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="level_validation_tree"/>
+            <field name="context">{'doctype':'purchase_order'}</field>
+            <field name="domain">[('doctype', '=', 'purchase_order')]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a new Purhcase Order Level Validation.
+                </p>
+                <p>
+                    Manage Purhcase Order Level Validation you want to be used in the system.
+                </p>
+            </field>
+        </record>
+
+        <record id="action_employee_expense_level_validation" model="ir.actions.act_window">
+            <field name="name">Employee Expense</field>
+            <field name="res_model">level.validation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="level_validation_tree"/>
+            <field name="context">{'doctype':'employee_expense'}</field>
+            <field name="domain">[('doctype', '=', 'employee_expense')]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a new Employee Expense Level Validation.
+                </p>
+                <p>
+                    Manage Employee Expense Level Validation you want to be used in the system.
+                </p>
+            </field>
+        </record>
+
+        <record id="action_employee_advance_level_validation" model="ir.actions.act_window">
+            <field name="name">Employee Advance</field>
+            <field name="res_model">level.validation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="level_validation_tree"/>
+            <field name="context">{'doctype':'employee_advance'}</field>
+            <field name="domain">[('doctype', '=', 'employee_advance')]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a new Employee Advance Level Validation.
+                </p>
+                <p>
+                    Manage Employee Advance Validation you want to be used in the system.
+                </p>
+            </field>
+        </record>
+
+        <record id="action_employee_clearing_level_validation" model="ir.actions.act_window">
+            <field name="name">Employee Clearing</field>
+            <field name="res_model">level.validation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="level_validation_tree"/>
+            <field name="context">{'doctype':'employee_clearing'}</field>
+            <field name="domain">[('doctype', '=', 'employee_clearing')]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a new Employee Clearing Level Validation.
+                </p>
+                <p>
+                    Manage Employee Clearing Level Validation you want to be used in the system.
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_approval_level_validation"
+                  name="Approval"
+                  parent="base.menu_config"
+                  sequence="100"/>
+
+        <menuitem action="action_purchase_order_level_validation"
+                  id="menu_action_purchase_order_level_validation"
+                  parent="menu_approval_level_validation"
+                  sequence="10"/>
+
+        <menuitem action="action_employee_expense_level_validation"
+                  id="menu_action_employee_expense_level_validation"
+                  parent="menu_approval_level_validation"
+                  sequence="20"/>
+
+        <menuitem action="action_employee_advance_level_validation"
+                  id="menu_action_employee_advance_level_validation"
+                  parent="menu_approval_level_validation"
+                  sequence="30"/>
+
+        <menuitem action="action_employee_clearing_level_validation"
+                  id="menu_action_employee_clearing_level_validation"
+                  parent="menu_approval_level_validation"
+                  sequence="40"/>
+    </data>
+</openerp>

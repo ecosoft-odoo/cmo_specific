@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="stock.location" id="stock_location_cmex">
+            <field name="name">CMEX</field>
+            <field name="usage">production</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="stock.warehouse" id="warehouse_cmex">
+            <field name="name">CMEX</field>
+            <field name="code">CMEX</field>
+            <field name="operating_unit_id" ref="cmo_project.operating_unit_cmex"/>
+        </record>
+
+        <record model="stock.location" id="stock_location_eco">
+            <field name="name">CEO OFFICE(CEO)</field>
+            <field name="usage">production</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="stock.warehouse" id="warehouse_ceo">
+            <field name="name">CEO OFFICE(CEO)</field>
+            <field name="code">CEO OFFICE(CEO)</field>
+            <field name="operating_unit_id" ref="cmo_project.operating_unit_ceo"/>
+        </record>
+
+        <record model="stock.location" id="stock_location_museum">
+            <field name="name">Museum</field>
+            <field name="usage">production</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="stock.warehouse" id="warehouse_museum">
+            <field name="name">Museum</field>
+            <field name="code">Museum</field>
+            <field name="operating_unit_id" ref="cmo_project.operating_unit_museum"/>
+        </record>
+
+        <record model="stock.location" id="stock_location_it">
+            <field name="name">Information Technology</field>
+            <field name="usage">production</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="stock.warehouse" id="warehouse_it">
+            <field name="name">Information Technology</field>
+            <field name="code">Information Technology</field>
+            <field name="operating_unit_id" ref="cmo_project.operating_unit_it"/>
+        </record>
+
+        <record model="stock.location" id="stock_location_odyssey">
+            <field name="name">Odyssey</field>
+            <field name="usage">production</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="stock.warehouse" id="warehouse_odyssey">
+            <field name="name">Odyssey</field>
+            <field name="code">Odyssey</field>
+            <field name="operating_unit_id" ref="cmo_project.operating_unit_odyssey"/>
+        </record>
+
+        <record model="stock.location" id="stock_location_cm_play">
+            <field name="name">CM Play</field>
+            <field name="usage">production</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="stock.warehouse" id="warehouse_cm_play">
+            <field name="name">CM Play</field>
+            <field name="code">CM Play</field>
+            <field name="operating_unit_id" ref="cmo_project.operating_unit_cm_play"/>
+        </record>
+
+        <record model="stock.location" id="stock_location_cm_join">
+            <field name="name">CM Join</field>
+            <field name="usage">production</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="stock.warehouse" id="warehouse_cm_join">
+            <field name="name">CM Join</field>
+            <field name="code">CM Join</field>
+            <field name="operating_unit_id" ref="cmo_project.operating_unit_cm_join"/>
+        </record>
+
+        <record model="stock.location" id="stock_location_bd">
+            <field name="name">Business Development</field>
+            <field name="usage">production</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="stock.warehouse" id="warehouse_bd">
+            <field name="name">Business Development</field>
+            <field name="code">Business Development</field>
+            <field name="operating_unit_id" ref="cmo_project.operating_unit_bd"/>
+        </record>
+
+        <record model="stock.location" id="stock_location_cm_one">
+            <field name="name">CM One</field>
+            <field name="usage">production</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="stock.warehouse" id="warehouse_cm_one">
+            <field name="name">CM One</field>
+            <field name="code">CM One</field>
+            <field name="operating_unit_id" ref="cmo_project.operating_unit_cm_one"/>
+        </record>
+
+        <record model="stock.location" id="stock_location_fa">
+            <field name="name">Finance&amp;Accounting</field>
+            <field name="usage">production</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="stock.warehouse" id="warehouse_fa">
+            <field name="name">Finance&amp;Accounting</field>
+            <field name="code">Finance&amp;Accounting</field>
+            <field name="operating_unit_id" ref="cmo_project.operating_unit_fa"/>
+        </record>
+
+        <record model="stock.location" id="stock_location_hr">
+            <field name="name">Human Resource</field>
+            <field name="usage">production</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="stock.warehouse" id="warehouse_hr">
+            <field name="name">Human Resource</field>
+            <field name="code">Human Resource</field>
+            <field name="operating_unit_id" ref="cmo_project.operating_unit_hr"/>
+        </record>
+
+        <record model="stock.location" id="stock_location_fm">
+            <field name="name">Facility Management</field>
+            <field name="usage">production</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="stock.warehouse" id="warehouse_fm">
+            <field name="name">Facility Management</field>
+            <field name="code">Facility Management</field>
+            <field name="operating_unit_id" ref="cmo_project.operating_unit_fm"/>
+        </record>
+
+        <record model="stock.location" id="stock_location_it_issue">
+            <field name="name">IT ISSUE</field>
+            <field name="usage">production</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="stock.warehouse" id="warehouse_it_issue">
+            <field name="name">IT ISSUE</field>
+            <field name="code">IT ISSUE</field>
+            <field name="operating_unit_id" ref="cmo_project.operating_unit_it_issue"/>
+        </record>
+
+        <record model="stock.location" id="stock_location_fm_issue">
+            <field name="name">FM ISSUE</field>
+            <field name="usage">production</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="stock.warehouse" id="warehouse_fm_issue">
+            <field name="name">FM ISSUE</field>
+            <field name="code">FM ISSUE</field>
+            <field name="operating_unit_id" ref="cmo_project.operating_unit_fm_issue"/>
+        </record>
+
+        <function id="function_warehouse_adjust_location"
+                  model="stock.warehouse"
+                  name="_adjust_dest_location"/>
+    </data>
+</openerp>

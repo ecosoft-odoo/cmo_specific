@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        # CMO Asset Prepare
+        # 1) Confirm 2) Run Depre 3) Compute
+        <record id="action_asset_cmo_prepare" model="ir.actions.server">
+            <field name="name">Confirm -> Depre -> Compute</field>
+            <field name="condition">True</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_account_asset" />
+            <field name="state">code</field>
+            <field name="code">self.action_asset_cmo_prepare(cr, uid, context.get('active_ids', []), context=context)</field>
+        </record>
+    </data>
+</openerp>

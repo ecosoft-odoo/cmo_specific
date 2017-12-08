@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <act_window id="action_journal_entry_import_xlsx_tempalte"
+            name="Import JE (.xlsx)"
+            res_model="import.xlsx.template"
+            src_model="account.move"
+            view_mode="form"
+            target="new"/>
+        <!-- Optional: To be specific to some template and context -->
+    		<record id="action_journal_entry_import_xlsx_tempalte" model="ir.actions.act_window">
+      			<field name="context"
+              eval="{'template_fname': 'journal_entry.xlsx',
+                     'template_context': {}}"/>
+        </record>
+
+    </data>
+</openerp>

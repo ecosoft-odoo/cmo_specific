@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+<data>
+    <record id="product_template_section_form_view" model="ir.ui.view">
+        <field name="name">product.template.section.form.view</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='options']" position="after">
+                <div class="oe_left" name="sale_layout_cat">
+                    <label for="Section" string="Section"/>
+                    <field name="sale_layout_cat_id" class="oe_inline" />
+                </div>
+                <div class="oe_left" name="sale_layout_cat">
+                    <label for="Management Fee" string="Management Fee"/>
+                    <field name="management_fee" class="oe_inline" />
+                </div>
+            </xpath>
+        </field>
+    </record>
+</data>
+</openerp>

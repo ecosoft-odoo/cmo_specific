@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+        # Sale Covenant
+        <record model="sale.covenant.description" id="sale_covenant_1">
+            <field name="name">Covenant</field>
+            <field name="active" eval="True"/>
+            <field name="description">1. 7 Days Before Event Date is 90% of the Total amount in Quotation or contract
+2. 15 days Before Event Date is 70% of the Total amount in Quotation or contract
+3. 30 days Before Event Date is 50% of the Total amount in Quotation or contract
+            </field>
+        </record>
+    </data>
+</openerp>

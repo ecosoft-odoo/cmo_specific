@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_category_property_form_inherit" model="ir.ui.view">
+            <field name="name">product.category.property.form.inherit</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="account.view_category_property_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <field name="property_account_expense_categ" position="after">
+                        <field name="asset_profile_id"/>
+                    </field>
+                </data>
+            </field>
+        </record>
+    </data>
+</openerp>

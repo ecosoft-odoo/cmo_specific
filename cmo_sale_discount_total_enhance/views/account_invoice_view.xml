@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="discount_account_invoice_view_enhance_form" model="ir.ui.view">
+            <field name="name">discount.account.invoice</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="sale_discount_total.discount_account_invoice_view_form1"/>
+            <field name="arch" type="xml">
+                <field name="discount_type" position="replace"/>
+                <field name="discount_rate" position="replace"/>
+            </field>
+        </record>
+    </data>
+</openerp>

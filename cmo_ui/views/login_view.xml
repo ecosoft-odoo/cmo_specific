@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="web_login" model="ir.ui.view">
+              <field name="name">web_login</field>
+              <field name="inherit_id" ref="web.login"/>
+              <field name="arch" type="xml">
+                    <xpath expr="//label[@for='login']" position="replace">
+                        <label for="login" class="control-label">Username</label>
+                    </xpath>
+              </field>
+        </record>
+    </data>
+</openerp>

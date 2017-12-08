@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="purchase_order_form" model="ir.ui.view">
+            <field name="name">purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header/button[@id='draft_confirm']" position="attributes">
+                    <attribute name="string">Submit To Approval</attribute>
+                </xpath>
+                <xpath expr="//header/button[@name='purchase_approve']" position="after">
+                    <button name="recheck_approve" type="workflow"
+                            string="Purchase Approve"
+                            attrs="{'invisible':['|', ['approve_permission','=',False], ['state', 'not in', ['confirmed']]]}"
+                            />
+                    <button name="purchase_cancel" type="workflow"
+                            string="Refuse"
+                            attrs="{'invisible':['|', ['approve_permission','=',False], ['state', 'not in', ['confirmed']]]}"
+                            />
+                </xpath>
+                <field name="date_order" position="before">
+                    <field name="approver_ids" widget="many2many_tags" readonly="1"/>
+                    <field name="approve_permission" invisible="1"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_picking_form" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="attributes">
+                    <attribute name="domain">[('customer', '=', False), ('supplier', '=', False)]</attribute>
+                    <attribute name="string">Issue For</attribute>
+                    <attribute name="context">{'group_partner_operating_unit': True}</attribute>
+                </field>
+                <field name="partner_id" position="after">
+                    <field name="default_operating_unit_id" invisible="1"/>
+                </field>
+                <header position="attributes">
+                    <attribute name="groups">stock.group_stock_user</attribute>
+                </header>
+                <button name="do_enter_transfer_details" position="attributes">
+                    <attribute name="groups">cmo_stock.group_stock_wh_user</attribute>
+                </button>
+                <button name="action_cancel" position="attributes">
+                    <attribute name="groups">cmo_stock.group_stock_wh_user</attribute>
+                </button>
+                <button name="force_assign" position="attributes">
+                    <attribute name="groups">cmo_stock.group_stock_wh_user</attribute>
+                </button>
+            </field>
+        </record>
+
+        <record id="view_picking_internal_search" model="ir.ui.view">
+            <field name="name">stock.picking.internal.search</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+            <field name="arch" type="xml">
+                <group position="inside">
+                    <filter string="Partner" domain="[]" context="{'group_by':'partner_id'}"/>
+                </group>
+            </field>
+        </record>
+
+        <record id="view_move_stock_picking_tree" model="ir.ui.view">
+            <field name="name">stock.move.tree</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock_operating_unit.view_move_picking_tree"/>
+            <field name="arch" type="xml">
+                <field name="operating_unit_id" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                    <attribute name="readonly">0</attribute>
+                </field>
+                <field name="operating_unit_dest_id" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                    <attribute name="readonly">0</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_move_picking_tree" model="ir.ui.view">
+            <field name="name">stock.move.tree</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_picking_tree"/>
+            <field name="arch" type="xml">
+                <field name="string_availability_info" position="before">
+                    <field name="project_id"/>
+                    <field name="name" invisible="1"/>
+                </field>
+                <!-- <xpath expr="//tree" position="attributes">
+                    <attribute name="editable">bottom</attribute>
+                </xpath> -->
+            </field>
+        </record>
+
+        <record id="view_move_picking_form" model="ir.ui.view">
+            <field name="name">stock.move.form</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_picking_form"/>
+            <field name="arch" type="xml">
+                <field name="product_id" position="attributes">
+                    <attribute name="options">{'no_open':True,'no_create':1,'no_create_edit':1}</attribute>
+                </field>
+                <field name="location_id" position="attributes">
+                    <attribute name="options">{'no_open':True,'no_create':1,'no_create_edit':1}</attribute>
+                    <attribute name="domain">[('usage','&lt;&gt;','view'),('usage','=','internal'),('operating_unit_id','&lt;&gt;',False)]</attribute>
+                </field>
+                <field name="location_dest_id" position="attributes">
+                    <attribute name="options">{'no_open':True,'no_create':1,'no_create_edit':1}</attribute>
+                    <attribute name="domain">[('usage','&lt;&gt;','view'),('usage','=','production'),('operating_unit_id','&lt;&gt;',False)]</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="action_server_picking_type_form" model="ir.actions.server">
+            <field name="name">All Operations</field>
+            <field name="condition">True</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_stock_picking_type"/>
+            <field name="state">code</field>
+            <field name="code">action = self.action_picking_type_form(cr, uid, context.get('active_ids', []), context=context)</field>
+        </record>
+
+        <record id="stock.menu_action_picking_type_form" model="ir.ui.menu">
+            <field name="action" ref="action_server_picking_type_form"/>
+        </record>
+
+        <record id="action_server_open_stock" model="ir.actions.server">
+            <field name="name">View Product in Stock</field>
+            <field name="condition">True</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_stock_picking"/>
+            <field name="state">code</field>
+            <field name="code">action = self.action_open_stock(cr, uid, context.get('active_ids', []), context=context)</field>
+        </record>
+
+        <record model="ir.values" id="action_open_stock">
+            <field name="name">action_open_stock</field>
+            <field name="action_id" ref="action_server_open_stock" />
+            <field name="value" eval="'ir.actions.server,' + str(ref('action_server_open_stock'))" />
+            <field name="key">action</field>
+            <field name="model_id" ref="model_stock_picking"/>
+            <field name="model">stock.picking</field>
+            <field name="key2">client_action_multi</field>
+        </record>
+
+        <!-- Show and hide menu from group -->
+        <record id="stock.menu_stock_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('cmo_stock.group_stock_readonly')])]"/>
+        </record>
+        <record id="stock.menu_action_inventory_form" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('cmo_stock.group_stock_wh_user')])]"/>
+        </record>
+        <record id="stock.menu_traceability" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('cmo_stock.group_stock_wh_user')])]"/>
+        </record>
+        <record id="stock.menu_stock_sched" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('cmo_stock.group_stock_wh_user')])]"/>
+        </record>
+        <record id="stock.menu_stock_proc_schedulers" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('cmo_stock.group_stock_wh_user')])]"/>
+        </record>
+        <record id="stock.menu_stock_procurement_action" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('cmo_stock.group_stock_wh_user')])]"/>
+        </record>
+        <record id="stock.menu_stock_product" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('cmo_stock.group_stock_wh_user')])]"/>
+        </record>
+        <record id="stock.menu_stock_configuration" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('cmo_stock.group_stock_wh_user')])]"/>
+        </record>
+    </data>
+</openerp>

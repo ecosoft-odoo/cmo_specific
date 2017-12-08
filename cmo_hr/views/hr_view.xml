@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_expenses_tree_request" model="ir.ui.view">
+            <field name="name">hr.expense.expense.tree.request</field>
+            <field name="model">hr.expense.expense</field>
+            <field name="inherit_id" ref="hr_expense.view_expenses_tree"/>
+            <field name="arch" type="xml">
+                <field name="employee_id" position="after">
+                    <field name="employee_request_id"/>
+                </field>
+            </field>
+        </record>
+        <record id="view_expenses_form_advance" model="ir.ui.view">
+            <field name="name">view.expenses.form</field>
+            <field name="model">hr.expense.expense</field>
+            <field name="inherit_id" ref="hr_expense.view_expenses_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='confirm']" position="attributes">
+                    <attribute name="groups">base.group_hr_user,hr.group_hr_director,base.group_user</attribute>
+                </xpath>
+                <field name="department_id" position="after">
+                    <field name="department_readonly_id"/>
+                    <field name="employee_request_id"/>
+                </field>
+                <field name="department_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="currency_id" position="after">
+                    <field name="request_date"/>
+                    <field name="due_date"/>
+                </field>
+                <xpath expr="//tree[@string='Expense Lines']/field[@name='product_id']" position="attributes">
+                    <attribute name="options">{'no_open':True,'no_create':1,'no_create_edit':1}</attribute>
+                </xpath>
+                <xpath expr="//tree[@string='Expense Lines']/field[@name='analytic_account']" position="attributes">
+                    <attribute name="options">{'no_open':True,'no_create':1,'no_create_edit':1}</attribute>
+                </xpath>
+                <field name="line_ids" position="attributes">
+                    <attribute name="context">{'is_advance_clearing': context.get('is_advance_clearing'),'currency_id': currency_id, 'default_analytic_account': context.get('analytic_account', '')}</attribute>
+                </field>
+                <field name="line_ids" position="after">
+                    <group>
+                        <group>
+                            <field name="payment_by" widget="radio"/>
+                            <field name="bank_transfer_ref" attrs="{'invisible': [('payment_by','!=','bank_transfer')]}"/>
+                            <field name="ac_payee_ref" attrs="{'invisible': [('payment_by','!=','ac_payee')]}"/>
+                        </group>
+                        <group class="oe_subtotal_footer oe_right">
+
+                        </group>
+                    </group>
+                </field>
+                <xpath expr="//tree[@string='Expense Lines']/field[@name='uom_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//tree[@string='Expense Lines']/field[@name='analytic_account']" position="before">
+                    <field name="is_advance_clearing" invisible="1"/>
+                </xpath>
+                <xpath expr="//tree[@string='Expense Lines']/field[@name='analytic_account']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('is_advance_clearing','=',True)]}</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_expenses_form" model="ir.ui.view">
+			<field name="name">view.expenses.form</field>
+			<field name="model">hr.expense.expense</field>
+			<field name="inherit_id" ref="hr_expense_auto_invoice.view_expenses_form"/>
+			<field name="arch" type="xml">
+                <xpath expr="//tree[@string='Expense Lines']/field[@name='tax_ids']" position="after">
+                    <field name="amount_line_untaxed" sum="Total Untaxed"/>
+                </xpath>
+                <xpath expr="//tree[@string='Expense Lines']/field[@name='tax_ids']" position="attributes">
+                    <attribute name="options">{'no_open':True,'no_create':1,'no_create_edit':1}</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

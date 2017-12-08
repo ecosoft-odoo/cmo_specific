@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_quotation_tree" model="ir.ui.view">
+            <field name="name">sale.order.tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="project_related_id" string="Project Name"/>
+                </xpath>
+                <xpath expr="//field[@name='amount_total']" position="before">
+                    <field name="amount_untaxed" string="Untaxed" sum="Total Amount Untaxed"/>
+                </xpath>
+                <xpath expr="//field[@name='state']" position="attributes">
+                    <attribute name="string">State</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_sales_order_filter" model="ir.ui.view">
+            <field name="name">sale.order.list.select</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="arch" type="xml">
+                <filter name="my_sale_orders_filter" position="replace"/>
+                <xpath expr="//filter[@string='Order Month']" position="after">
+                    <filter string="Project Name" name="Project" context="{'group_by':'project_related_id'}"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_order_tree" model="ir.ui.view">
+            <field name="name">sale.order.tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="project_related_id" string="Project Name"/>
+                </xpath>
+                <xpath expr="//field[@name='amount_total']" position="before">
+                    <field name="amount_untaxed" string="Untaxed"/>
+                </xpath>
+                <xpath expr="//field[@name='state']" position="attributes">
+                    <attribute name="string">State</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_order_form_version" model="ir.ui.view">
+            <field name="name">sale.order.form.version</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <!-- sale order -->
+                <field name="partner_id" position="before">
+                    <field name="project_related_id"
+                           attrs="{'readonly': ['|',('order_type','=','sale_order'),('state','in',['cancel','done'])]}"
+                           context="{'tree_view_ref':'cmo_project.inherit_view_project_tree'}"
+                           />
+                    <field name="partner_id_readonly"/>
+                </field>
+                <field name="partner_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <xpath expr="//field[@name='project_id']" position="before">
+                    <field name="event_date_description" attrs="{'readonly': ['|',('order_type','=','sale_order'),('state','in',['cancel','done'])]}"/>
+                    <field name="venue_description" attrs="{'readonly': ['|',('order_type','=','sale_order'),('state','in',['cancel','done'])]}"/>
+                    <field name="amount_before_management_fee" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='project_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <field name="client_order_ref" position="after">
+                    <field name="quote_ref_id" options="{'no_create':1,'no_create_edit':1}" attrs="{'readonly': ['|',('order_type','=','sale_order'),('state','in',['cancel','done'])]}"/>
+                </field>
+                <xpath expr="//page[@string='Other Information']/group/group/field[@name='user_id']" position="before">
+                    <field name="approval_id"/>
+                </xpath>
+                <field name="note" position="replace">
+                    <group>
+                        <label for="margin_percentage"/>
+                        <div name="margin_percentage">
+                            <field name="margin_percentage" class="oe_inline"/> %%
+                        </div>
+                    </group>
+                    <group>
+                        <field name="note" string="Remark"/>
+                        <field name="section_code_order_line" invisible="1"/>
+                    </group>
+                </field>
+                <page string="Other Information" position="after">
+                    <page string="Payment Term">
+                        <group>
+                            <field name="payment_term_description"/>
+                        </group>
+                    </page>
+                    <page string="Covenants Of Client">
+                        <group>
+                            <field name="covenant_description"/>
+                        </group>
+                    </page>
+                </page>
+                <!-- order line -->
+                <xpath expr="//field[@name='order_line']/form/group/group/field[@name='sale_layout_cat_id']" position="replace"/>
+                <xpath expr="//field[@name='order_line']/form/group/group/field[@name='product_id']" position="before">
+                    <field name="order_lines_group"/>
+                    <!-- <field name="sale_layout_custom_group_id"/> -->
+                    <field name="sale_layout_custom_group"/>
+                    <field name="sale_layout_cat_id" required="1" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
+                    <!-- <field name="section_code" style="width:20%" /> -->
+                </xpath>
+                <xpath expr="//field[@name='order_line']/form/group/group/field[@name='product_id']" position="attributes">
+                    <attribute name="options">{'no_open':True,'no_create':1,'no_create_edit':1}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/form/group/group/field[@name='tax_id']" position="attributes">
+                    <attribute name="options">{'no_open':True,'no_create':1,'no_create_edit':1}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/form/group/group/field[@name='product_id']" position="after">
+                    <field name="manage_fee_percent" style="width:20%" attrs="{'invisible':[('order_lines_group', '!=', 'manage_fee')]}" class="oe_inline"/> %%
+                </xpath>
+                <xpath expr="//field[@name='order_line']/form/group/group/field[@name='price_unit']" position="attributes">
+                    <attribute name="attrs">{"invisible":[("manage_fee_percent", ">", 0.0)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/form/group/group/div/field[@name='product_uom_qty']" position="attributes">
+                    <attribute name="attrs">{"invisible":[("manage_fee_percent", ">", 0.0)]}</attribute>
+                </xpath>
+                <!-- <xpath expr="//field[@name='order_line']/form//field[@name='state']" position="before">
+                    <button name="action_cal_management_fee"
+                            string="Calculate" type="object"
+                            attrs="{'invisible':[('order_lines_group', '!=', 'manage_fee')]}"
+                            />
+                </xpath> -->
+                <xpath expr="//field[@name='order_line']/form/group/group/field[@name='address_allotment_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/form/group/group/field[@name='th_weight']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/form/group/group[2]/div" position="replace"/>
+                <xpath expr="//page[@string='Order Lines']/field[@name='order_line']/form[@string='Sales Order Lines']/group/group/label[@for='delay']" position="attributes">
+                    <attribute name="for"></attribute>
+                </xpath>
+                <!-- order line in sale order -->
+                <xpath expr="//field[@name='order_line']/tree[@string='Sales Order Lines']/field[@name='sale_layout_cat_id']" position="replace"/>
+                <xpath expr="//field[@name='order_line']/tree[@string='Sales Order Lines']/field[@name='tax_id']" position="replace"/>
+                <xpath expr="//field[@name='order_line']/tree[@string='Sales Order Lines']/field[@name='product_id']" position="before">
+                    <field name="order_lines_group"/>
+                    <!-- <field name="sale_layout_custom_group_id"/> -->
+                    <field name="sale_layout_custom_group"/>
+                    <field name="section_code" invisible="1"/>
+                    <field name="sale_layout_cat_id"/>
+                    <!-- <field name="section_code"/> -->
+                </xpath>
+            </field>
+        </record>
+        <record id="view_order_form_sale_stock" model="ir.ui.view">
+            <field name="name">sale.order.form.sale.stock</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_stock.view_order_form_inherit"/>
+            <field name="arch" type="xml">
+                <!-- order line -->
+                <xpath expr="//field[@name='warehouse_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sale_margin_sale_order_line" model="ir.ui.view">
+            <field name="name">sale.order.line.margin.view.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_margin.sale_margin_sale_order_line"/>
+            <field name="arch" type="xml">
+                <!-- order line -->
+                <xpath expr="//field[@name='order_line']/form//field[@name='purchase_price']" position="attributes">
+                    <attribute name="string">Estimate Unit Cost</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/form//field[@name='purchase_price']" position="after">
+                    <field name="sale_order_line_margin"/>
+                    <label for="so_line_percent_margin"/>
+                    <div name="so_line_percent_margin">
+                        <field name="so_line_percent_margin" class="oe_inline"/> %%
+                    </div>
+                </xpath>
+            </field>
+        </record>
+        <record id="invoice_view_order_form" model="ir.ui.view">
+            <field name="name">invoice.view.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_invoice_plan.view_order_form"/>
+            <field name="arch" type="xml">
+                <!-- sale order -->
+                <xpath expr="//div/field[@name='use_invoice_plan']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('order_type','=','quotation')]}</attribute>
+                </xpath>
+                <xpath expr="//div/label[@for='use_invoice_plan']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('order_type','=','quotation')]}</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_order_form" model="ir.ui.view">
+            <field name="name">view.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_split_quote2order.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header[@name='quotation']/button[@name='cancel']" position="after">
+                    <button name="action_calculate_manage_fee" states="draft" string="Calculate Management Fee" type="object" groups="base.group_user"/>
+                </xpath>
+                <xpath expr="//header[@name='quotation']/button[@name='cancel']" position="attributes">
+                    <attribute name="confirm">Are you sure to cancel this order?</attribute>
+                </xpath>
+                <xpath expr="//header[@name='sale_order']/button[@name='cancel']" position="attributes">
+                    <attribute name="confirm">Are you sure to cancel this order?</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="base.menu_base_config" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('base.group_sale_manager'))]"/>
+        </record>
+        <record id="sale_layout.Report_configuration" model="ir.ui.menu">
+            <field name="groups_id" eval="[(3, ref('base.group_sale_salesman'))]"/>
+        </record>
+    </data>
+</openerp>

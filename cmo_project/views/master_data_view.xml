@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+      # Project Function
+      <record id="view_project_function_form" model="ir.ui.view">
+          <field name="name">project.function.form</field>
+          <field name="model">project.function</field>
+          <field name="arch" type="xml">
+              <form string="Project Function">
+                  <group>
+                      <group>
+                          <field name="name"/>
+                      </group>
+                      <group>
+                          <field name="active"/>
+                      </group>
+                  </group>
+              </form>
+          </field>
+      </record>
+      <record id="view_project_function_tree" model="ir.ui.view">
+          <field name="name">project.function.tree</field>
+          <field name="model">project.function</field>
+          <field name="arch" type="xml">
+              <tree string="Project Function">
+                  <field name="name"/>
+              </tree>
+          </field>
+      </record>
+      <record id="action_project_function_form" model="ir.actions.act_window">
+          <field name="name">Project Function</field>
+          <field name="res_model">project.function</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">tree,form</field>
+          <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                  Click to create a new Project Function
+              </p>
+              <p>
+                  Manage project function you want to be used in the system.
+              </p>
+          </field>
+      </record>
+      <menuitem action="action_project_function_form"
+                id="menu_action_project_function_form"
+                parent="base.menu_definitions"
+                sequence="50"
+                groups="project.group_project_admin"/>
+
+      # TODO Project Department (not use, use odoo standard instead)
+      <record id="view_department_form" model="ir.ui.view">
+          <field name="name">view.department.form</field>
+          <field name="model">hr.department</field>
+          <field name="inherit_id" ref="hr.view_department_form"/>
+          <field name="arch" type="xml">
+              <xpath expr="//group" position="after">
+                <group>
+                  <field name="active"/>
+                  <field name="show"/>
+                </group>
+              </xpath>
+          </field>
+      </record>
+
+      <record id="view_project_department_tree" model="ir.ui.view">
+          <field name="name">project.department.tree</field>
+          <field name="model">hr.department</field>
+          <field name="arch" type="xml">
+              <tree string="Project department">
+                  <field name="name"/>
+                  <field name="active"/>
+                  <field name="show"/>
+              </tree>
+          </field>
+      </record>
+      <record id="action_project_department_form" model="ir.actions.act_window">
+          <field name="name">Project Department</field>
+          <field name="res_model">hr.department</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">tree,form</field>
+          <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                  Click to create a new Project Department
+              </p>
+              <p>
+                  Manage project Department you want to be used in the system.
+              </p>
+          </field>
+      </record>
+
+      # Project position
+      <record id="view_project_position_form" model="ir.ui.view">
+          <field name="name">project.position.form</field>
+          <field name="model">project.position</field>
+          <field name="arch" type="xml">
+              <form string="Project Position">
+                <group>
+                  <group>
+                      <field name="name"/>
+                  </group>
+                  <group>
+                      <field name="active"/>
+                  </group>
+                </group>
+              </form>
+          </field>
+      </record>
+      <record id="view_project_position_tree" model="ir.ui.view">
+          <field name="name">project.position.tree</field>
+          <field name="model">project.position</field>
+          <field name="arch" type="xml">
+              <tree string="Project Position">
+                  <field name="name"/>
+              </tree>
+          </field>
+      </record>
+      <record id="action_project_position_form" model="ir.actions.act_window">
+          <field name="name">Project Position</field>
+          <field name="res_model">project.position</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">tree,form</field>
+          <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                  Click to create a new Project Position
+              </p>
+              <p>
+                  Manage project Position you want to be used in the system.
+              </p>
+          </field>
+      </record>
+      <menuitem action="action_project_position_form"
+                id="menu_action_project_position_form"
+                parent="base.menu_definitions"
+                sequence="60"
+                groups="project.group_project_admin"/>
+
+      # Brand Type
+      <record id="view_project_brand_type_form" model="ir.ui.view">
+          <field name="name">project.brand.type.form</field>
+          <field name="model">project.brand.type</field>
+          <field name="arch" type="xml">
+              <form string="Project Brand Type">
+                  <group>
+                      <group>
+                          <field name="name"/>
+                      </group>
+                      <group>
+                          <field name="active"/>
+                      </group>
+                  </group>
+              </form>
+          </field>
+      </record>
+      <record id="view_project_brand_type_tree" model="ir.ui.view">
+          <field name="name">project.brand.type.tree</field>
+          <field name="model">project.brand.type</field>
+          <field name="arch" type="xml">
+              <tree string="Project Brand Type">
+                  <field name="name"/>
+              </tree>
+          </field>
+      </record>
+      <record id="action_project_brand_type_form" model="ir.actions.act_window">
+          <field name="name">Project Brand Type</field>
+          <field name="res_model">project.brand.type</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">tree,form</field>
+          <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                  Click to create a new Project Brand type
+              </p>
+              <p>
+                  Manage project brand type you want to be used in the system.
+              </p>
+          </field>
+      </record>
+      <menuitem action="action_project_brand_type_form"
+                id="menu_action_project_brand_type_form"
+                parent="base.menu_base_config"
+                sequence="30"
+                groups="project.group_project_admin"/>
+
+      # Client Type
+      <record id="view_project_client_type_form" model="ir.ui.view">
+          <field name="name">project.client.type.form</field>
+          <field name="model">project.client.type</field>
+          <field name="arch" type="xml">
+              <form string="Project Client Type">
+                  <group>
+                      <group>
+                          <field name="name"/>
+                      </group>
+                      <group>
+                          <field name="active"/>
+                      </group>
+                  </group>
+              </form>
+          </field>
+      </record>
+      <record id="view_project_client_type_tree" model="ir.ui.view">
+          <field name="name">project.client.type.tree</field>
+          <field name="model">project.client.type</field>
+          <field name="arch" type="xml">
+              <tree string="Project Client Type">
+                  <field name="name"/>
+              </tree>
+          </field>
+      </record>
+      <record id="action_project_client_type_form" model="ir.actions.act_window">
+          <field name="name">Project Client Type</field>
+          <field name="res_model">project.client.type</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">tree,form</field>
+          <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                  Click to create a new Project Client type
+              </p>
+              <p>
+                  Manage project client type you want to be used in the system.
+              </p>
+          </field>
+      </record>
+      <menuitem action="action_project_client_type_form"
+                id="menu_action_project_client_type_form"
+                parent="base.menu_definitions"
+                sequence="55"
+                groups="project.group_project_admin"/>
+
+      # Industry data
+      <record id="view_project_industry_form" model="ir.ui.view">
+          <field name="name">project.industry.form</field>
+          <field name="model">project.industry</field>
+          <field name="arch" type="xml">
+              <form string="Project Industry">
+                  <group>
+                      <group>
+                          <field name="name"/>
+                      </group>
+                      <group>
+                          <field name="active"/>
+                      </group>
+                  </group>
+              </form>
+          </field>
+      </record>
+      <record id="view_project_industry_tree" model="ir.ui.view">
+          <field name="name">project.industry.tree</field>
+          <field name="model">project.industry</field>
+          <field name="arch" type="xml">
+              <tree string="Project Industry">
+                  <field name="name"/>
+              </tree>
+          </field>
+      </record>
+      <record id="action_project_industry_form" model="ir.actions.act_window">
+          <field name="name">Project Industry</field>
+          <field name="res_model">project.industry</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">tree,form</field>
+          <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                  Click to create a new Project Industry
+              </p>
+              <p>
+                  Manage project Industry you want to be used in the system.
+              </p>
+          </field>
+      </record>
+      <menuitem action="action_project_industry_form"
+                id="menu_action_project_industry_form"
+                parent="base.menu_base_config"
+                sequence="30"
+                groups="project.group_project_admin"/>
+
+      # Location data
+      <record id="view_project_location_form" model="ir.ui.view">
+          <field name="name">project.location.form</field>
+          <field name="model">project.location</field>
+          <field name="arch" type="xml">
+              <form string="Project Location">
+                  <group>
+                      <group>
+                          <field name="name"/>
+                      </group>
+                      <group>
+                          <field name="active"/>
+                      </group>
+                  </group>
+              </form>
+          </field>
+      </record>
+      <record id="view_project_location_tree" model="ir.ui.view">
+          <field name="name">project.location.tree</field>
+          <field name="model">project.location</field>
+          <field name="arch" type="xml">
+              <tree string="Project Location">
+                  <field name="name"/>
+              </tree>
+          </field>
+      </record>
+      <record id="action_project_location_form" model="ir.actions.act_window">
+          <field name="name">Project Location</field>
+          <field name="res_model">project.location</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">tree,form</field>
+          <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                  Click to create a new Project Location
+              </p>
+              <p>
+                  Manage project Location you want to be used in the system.
+              </p>
+          </field>
+      </record>
+      <menuitem action="action_project_location_form"
+                id="menu_action_project_location_form"
+                parent="base.menu_definitions"
+                sequence="55"
+                groups="project.group_project_admin"/>
+
+      # Obligation data
+      <record id="view_project_obligation_form" model="ir.ui.view">
+          <field name="name">project.obligation.form</field>
+          <field name="model">project.obligation</field>
+          <field name="arch" type="xml">
+              <form string="Project Obligation">
+                  <group>
+                      <group>
+                          <field name="name"/>
+                      </group>
+                      <group>
+                          <field name="active"/>
+                      </group>
+                  </group>
+              </form>
+          </field>
+      </record>
+      <record id="view_project_obligation_tree" model="ir.ui.view">
+          <field name="name">project.obligation.tree</field>
+          <field name="model">project.obligation</field>
+          <field name="arch" type="xml">
+              <tree string="Project Obligation">
+                  <field name="name"/>
+              </tree>
+          </field>
+      </record>
+      <record id="action_project_obligation_form" model="ir.actions.act_window">
+          <field name="name">Project Obligation</field>
+          <field name="res_model">project.obligation</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">tree,form</field>
+          <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                  Click to create a new Project Obligation
+              </p>
+              <p>
+                  Manage project Obligation you want to be used in the system.
+              </p>
+          </field>
+      </record>
+      <menuitem action="action_project_obligation_form"
+                id="menu_action_project_obligation_form"
+                parent="base.menu_definitions"
+                sequence="55"
+                groups="project.group_project_admin"/>
+
+      # Project From
+      <record id="view_project_from_form" model="ir.ui.view">
+          <field name="name">project.from.form</field>
+          <field name="model">project.from</field>
+          <field name="arch" type="xml">
+              <form string="Project From">
+                  <group>
+                      <group>
+                          <field name="name"/>
+                      </group>
+                      <group>
+                          <field name="active"/>
+                      </group>
+                  </group>
+              </form>
+          </field>
+      </record>
+      <record id="view_project_from_tree" model="ir.ui.view">
+          <field name="name">project.from.tree</field>
+          <field name="model">project.from</field>
+          <field name="arch" type="xml">
+              <tree string="Project From">
+                  <field name="name"/>
+              </tree>
+          </field>
+      </record>
+      <record id="action_project_from_form" model="ir.actions.act_window">
+          <field name="name">Project From</field>
+          <field name="res_model">project.from</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">tree,form</field>
+          <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                  Click to create a new Project from
+              </p>
+              <p>
+                  Manage project from you want to be used in the system.
+              </p>
+          </field>
+      </record>
+      <menuitem action="action_project_from_form"
+                id="menu_action_project_from_form"
+                parent="base.menu_definitions"
+                sequence="55"
+                groups="project.group_project_admin"/>
+
+      # Project Type
+      <record id="view_project_type_form" model="ir.ui.view">
+          <field name="name">project.type.form</field>
+          <field name="model">project.type</field>
+          <field name="arch" type="xml">
+              <form string="Project Type">
+                  <group>
+                      <group>
+                          <field name="name"/>
+                      </group>
+                      <group>
+                          <field name="active"/>
+                      </group>
+                  </group>
+              </form>
+          </field>
+      </record>
+      <record id="view_project_type_tree" model="ir.ui.view">
+          <field name="name">project.type.tree</field>
+          <field name="model">project.type</field>
+          <field name="arch" type="xml">
+              <tree string="Project Type">
+                  <field name="name"/>
+              </tree>
+          </field>
+      </record>
+      <record id="action_project_type_form" model="ir.actions.act_window">
+          <field name="name">Project Type</field>
+          <field name="res_model">project.type</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">tree,form</field>
+          <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                  Click to create a new Project type
+              </p>
+              <p>
+                  Manage project from you want to be used in the system.
+              </p>
+          </field>
+      </record>
+      <menuitem action="action_project_type_form"
+                id="menu_action_project_type_form"
+                parent="base.menu_definitions"
+                sequence="55"
+                groups="project.group_project_admin"/>
+
+        # Competitor
+        <record id="view_project_competitor_form" model="ir.ui.view">
+            <field name="name">project.competitor.form</field>
+            <field name="model">project.competitor</field>
+            <field name="arch" type="xml">
+                <form string="Competitor">
+                    <group>
+                        <group>
+                            <field name="company"/>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="remark"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="view_project_competitor_tree" model="ir.ui.view">
+            <field name="name">project.competitor.tree</field>
+            <field name="model">project.competitor</field>
+            <field name="arch" type="xml">
+                <tree string="Competitor">
+                    <field name="company"/>
+                    <field name="name"/>
+                    <field name="remark"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_project_competitor_form" model="ir.actions.act_window">
+            <field name="name">Project Competitor</field>
+            <field name="res_model">project.competitor</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a new Project Competitor
+                </p>
+                <p>
+                    Manage project competitor you want to be used in the system.
+                </p>
+            </field>
+        </record>
+        <menuitem action="action_project_competitor_form"
+                  id="menu_action_project_competitor_form"
+                  parent="base.menu_definitions"
+                  sequence="55"
+                  groups="project.group_project_admin"/>
+
+        # Lost reason
+        <record id="view_project_lost_reason_form" model="ir.ui.view">
+            <field name="name">project.lost.reason.form</field>
+            <field name="model">project.lost.reason</field>
+            <field name="arch" type="xml">
+                <form string="Lost Reason">
+                    <field name="name"/>
+                </form>
+            </field>
+        </record>
+        <record id="view_project_lost_reason_tree" model="ir.ui.view">
+            <field name="name">project.lost.reason.tree</field>
+            <field name="model">project.lost.reason</field>
+            <field name="arch" type="xml">
+                <tree string="Lost Reason">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_project_lost_reason_form" model="ir.actions.act_window">
+            <field name="name">Project Lost Reason</field>
+            <field name="res_model">project.lost.reason</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a new Project Lost Reason
+                </p>
+                <p>
+                    Manage project lost reason you want to be used in the system.
+                </p>
+            </field>
+        </record>
+        <menuitem action="action_project_lost_reason_form"
+                  id="menu_action_project_lost_reason_form"
+                  parent="base.menu_definitions"
+                  sequence="55"
+                  groups="project.group_project_admin"/>
+
+        <record id="view_project_reject_reason_form" model="ir.ui.view">
+            <field name="name">project.reject.reason.form</field>
+            <field name="model">project.reject.reason</field>
+            <field name="arch" type="xml">
+                <form string="Reject Reason">
+                    <field name="name"/>
+                </form>
+            </field>
+        </record>
+        <record id="view_project_reject_reason_tree" model="ir.ui.view">
+            <field name="name">project.reject.reason.tree</field>
+            <field name="model">project.reject.reason</field>
+            <field name="arch" type="xml">
+                <tree string="Reject Reason">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_project_reject_reason_form" model="ir.actions.act_window">
+            <field name="name">Project Reject Reason</field>
+            <field name="res_model">project.reject.reason</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a new Project Reject Reason
+                </p>
+                <p>
+                    Manage project Reject reason you want to be used in the system.
+                </p>
+            </field>
+        </record>
+        <menuitem action="action_project_reject_reason_form"
+                  id="menu_action_project_reject_reason_form"
+                  parent="base.menu_definitions"
+                  sequence="55"
+                  groups="project.group_project_admin"/>
+    </data>
+</openerp>

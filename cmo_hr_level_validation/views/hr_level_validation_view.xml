@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_expenses_form_advance" model="ir.ui.view">
+            <field name="name">view.expenses.form</field>
+            <field name="model">hr.expense.expense</field>
+            <field name="inherit_id" ref="hr_expense.view_expenses_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header/button[@name='confirm']" position="attributes">
+                    <attribute name="string">Submit To Approval</attribute>
+                </xpath>
+                <xpath expr="//header/button[@name='confirm']" position="after">
+                    <button name="accepted"
+                            type="workflow"
+                            string="Validate"
+                            states="validate"
+                            groups="base.group_hr_manager,account.group_account_manager"
+                            />
+                </xpath>
+                <xpath expr="//header/button[@name='validate']" position="replace">
+                    <button name="recheck_approve" type="workflow"
+                            string="Approve"
+                            attrs="{'invisible':['|', ['approve_permission','=',False], ['state', 'not in', ['confirm']]]}"
+                            groups="base.group_hr_user"
+                            />
+                </xpath>
+                <xpath expr="//header/button[@name='refuse']" position="replace">
+                    <button name="refuse" type="workflow"
+                            string="Refuse"
+                            attrs="{'invisible':['|', ['approve_permission','=',False], ['state', 'not in', ['confirm']]]}"
+                            confirm="Are you sure to refuse this document?"
+                            groups="base.group_hr_user"
+                            />
+                </xpath>
+                <field name="name" position="before">
+                    <field name="approver_ids" widget="many2many_tags" readonly="1"/>
+                    <field name="approve_permission" invisible="1"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

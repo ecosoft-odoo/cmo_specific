@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <menuitem id="base.menu_main_pm" name="Project"
+            groups="project.group_project_manager,project.group_project_user,project.group_project_readonly"/>
+        <record id="project.act_project_project_2_project_task_all" model="ir.actions.act_window">
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record id="project.action_view_task" model="ir.actions.act_window">
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record id="project.open_view_task_list_kanban" model="ir.actions.act_window.view">
+            <field name="act_window_id" ref=""/>
+        </record>
+        <record id="project_search_view" model="ir.ui.view">
+            <field name="name">project.project.select</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.view_project_project_filter"/>
+            <field name="arch" type="xml">
+                  <field name="partner_id" position="after">
+                      <field name="project_number" string="Project Number"/>
+                  </field>
+                  <xpath expr="//field[@name='name']" position="before">
+                        <filter string="Latest" name="Latest" domain="[('date_start','&gt;',(context_today()-relativedelta(months=6)).strftime('%%Y-%%m-01'))]"/>
+                        <filter string="Draft" name="Draft" domain="[('state','=','draft')]"/>
+                        <filter string="Ready to Billing" name="Ready_billing" domain="[('state','=','ready_billing')]"/>
+                        <!-- <filter string="Invoices" name="Invoices" domain="[('state','=','invoices')]"/>
+                        <filter string="Received" name="Received" domain="[('state','=','received')]"/> -->
+                        <filter string="Cancelled" name="Cancelled" domain="[('state','=','cancelled')]"/>
+                        <filter string="Completed" name="Completed" domain="['&amp;',('state','=','close'),('close_reason','=','close')]"/>
+                        <filter string="Lost" name="Lost" domain="[('close_reason','=','lost')]"/>
+                        <filter string="Invoiced" name="Invoiced" domain="[('is_invoiced', '=', True)]"/>
+                        <filter string="Paid" name="Paid" domain="[('is_paid', '=', True)]"/>
+                        <!-- # TODO: filter won = close_reason != cancel, reject, lost
+                        <filter string="Won" name="Won" domain="[('state','!=','cancelled'),('state','!=','draft')]"/> -->
+                  </xpath>
+                  <xpath expr="//group/filter[@name='Parent']" position="after">
+                        <filter string="Department" name="Department" context="{'group_by':'operating_unit_id'}"/>
+                        <filter string="Agency" name="Agency" context="{'group_by':'agency_partner_id'}"/>
+                        <filter string="Customer" name="Customer" context="{'group_by':'partner_id'}"/>
+                        <filter string="Brand type" name="Brand type" context="{'group_by':'brand_type_id'}"/>
+                        <filter string="Industry" name="Industry" context="{'group_by':'industry_id'}"/>
+                        <filter string="Client type" name="Client type" context="{'group_by':'client_type_id'}"/>
+                        <filter string="Obligation" name="Obligation" context="{'group_by':'obligation_id'}"/>
+                        <filter string="Function" name="Function" context="{'group_by':'function_id'}"/>
+                        <filter string="Location" name="Location" context="{'group_by':'location_id'}"/>
+                        <filter string="Project from" name="Project from" context="{'group_by':'project_from_id'}"/>
+                        <filter string="Project type" name="Project type" context="{'group_by':'project_type_id'}"/>
+                        <filter string="Close reason" name="Close reason" context="{'group_by':'close_reason'}"/>
+                  </xpath>
+                  <xpath expr="//filter[@string='New Mail']" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                  </xpath>
+                  <xpath expr="//group/filter[@string='Contact']" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                  </xpath>
+                  <xpath expr="//group/filter[@string='Manager']" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                  </xpath>
+            </field>
+        </record>
+
+        # Project list view
+        <record id="project.open_view_project_all" model="ir.actions.act_window">
+            <field name="view_mode">tree,form,gantt</field>
+            <field name="context">{'search_default_Latest': 1}</field>
+        </record>
+
+        <record id="view_project" model="ir.ui.view">
+            <field name="name">project.project.tree</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.view_project"/>
+            <field name="arch" type="xml">
+              <xpath expr="/tree/field[@name='name']" position="before">
+                  <field name="project_number"/>
+              </xpath>
+              <xpath expr="/tree/field[@name='user_id']" position="attributes">
+                  <attribute name="invisible">1</attribute>
+              </xpath>
+              <xpath expr="/tree/field[@name='partner_id']" position="attributes">
+                  <attribute name="invisible">1</attribute>
+              </xpath>
+              <xpath expr="/tree/field[@name='planned_hours']" position="attributes">
+                  <attribute name="invisible">1</attribute>
+              </xpath>
+              <xpath expr="/tree/field[@name='total_hours']" position="attributes">
+                  <attribute name="invisible">1</attribute>
+              </xpath>
+              <xpath expr="/tree/field[@name='effective_hours']" position="attributes">
+                  <attribute name="invisible">1</attribute>
+              </xpath>
+              <xpath expr="/tree/field[@name='progress_rate']" position="attributes">
+                  <attribute name="invisible">1</attribute>
+              </xpath>
+              <xpath expr="/tree/field[@name='state']" position="attributes">
+                  <attribute name="string">Project Status</attribute>
+              </xpath>
+              <xpath expr="/tree/field[@name='state']" position="before">
+                  <field name="date_brief"/>
+                  <field name="date_start"/>
+              </xpath>
+              <xpath expr="/tree/field[@name='state']" position="after">
+                  <field name="operating_unit_id" string="Department"/>
+                  <field name="partner_id" string="Customer"/>
+                  <field name="project_from_id"/>
+                  <field name="project_type_id"/>
+                  <field name="project_budget" groups="project.group_project_admin,project.group_project_manager,project.group_project_readonly"/>
+                  <field name="actual_price" groups="project.group_project_admin,project.group_project_manager,project.group_project_readonly"/>
+                  <field name="estimate_cost" groups="project.group_project_admin,project.group_project_manager,project.group_project_readonly"/>
+                  <field name="pre_cost" groups="project.group_project_admin,project.group_project_manager,project.group_project_readonly"/>
+                  <field name="actual_po" groups="project.group_project_admin,project.group_project_manager,project.group_project_readonly"/>
+                  <field name="close_reason"/>
+              </xpath>
+            </field>
+        </record>
+        <record id="inherit_view_project_tree" model="ir.ui.view">
+            <field name="name">project.project.inherit.tree</field>
+            <field name="model">project.project</field>
+            <field eval="17" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Projects">
+                    <field name="project_number"/>
+                    <field name="name"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        # Project  # TODO Administration selection only public and access
+        <record id="edit_project" model="ir.ui.view">
+            <field name="name">edit.project</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/header/button[@name='set_open']" position="before">
+                    <button name="action_validate" type="object"
+                            string="Validate"
+                            states="draft"
+                            attrs="{'invisible':[['state', 'not in', ['draft']]]}"
+                            groups="project.group_project_admin,project.group_project_manager"/>
+                    <button name="action_approve" type="object"
+                            string="Approve"
+                            states="validate"
+                            groups="project.group_project_admin,project.group_project_manager"/>
+                    <button name="action_back_to_draft" type="object"
+                            string="Back to draft"
+                            states="validate,open,received,invoices"
+                            attrs="{'invisible':[['state', 'not in', ['open', 'pending', 'complete']]]}"
+                            groups="project.group_project_admin,project.group_project_manager"/>
+                    <button name="action_ready_billing" type="object"
+                            string="Ready to Billing"
+                            states="open"
+                            groups="project.group_project_admin,project.group_project_manager"/>
+                    <button name="action_back_to_open" type="object"
+                            string="Back to In-Progress"
+                            states="ready_billing"
+                            groups="project.group_project_admin,project.group_project_manager"/>
+                    <!-- no use state invoiced and paid -->
+                    <!-- <button name="action_invoices" type="object"
+                            string="Invoice"
+                            states="ready_billing,received,invoices"
+                            class="oe_highlight"
+                            groups="project.group_project_admin"/>
+                    <button name="action_received" type="object"
+                            string="Receive"
+                            states="ready_billing,received,invoices"
+                            class="oe_highlight"
+                            groups="project.group_project_admin"/> -->
+                </xpath>
+                <xpath expr="/form/header/button[@name='set_cancel']" position="after">
+                    <button name="%(action_project_close_reason)d"
+                            type="action"
+                            string="Close Project"
+                            states="draft,validate,open,received,invoices,ready_billing"
+                            confirm="Are you sure to close this project ?"
+                            groups="project.group_project_admin,project.group_project_manager,project.group_project_user"/>
+                </xpath>
+                <xpath expr="/form/header/button[@name='set_cancel']" position="attributes">
+                    <!-- <attribute name="states">draft,validate,open,invoices,ready_billing</attribute>
+                    <attribute name="groups">project.group_project_admin,project.group_project_manager</attribute> -->
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="/form/header/button[@name='set_template']" position="attributes">
+                    <!-- <attribute name="groups">project.group_project_admin,project.group_project_manager</attribute> -->
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="/form/header/button[@name='set_done']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                    <attribute name="string">Close Project(old no use)</attribute>
+                </xpath>
+                <xpath expr="/form/header/button[@name='set_pending']" position="attributes">
+                    <attribute name="string">Hold</attribute>
+                    <attribute name="name">%(action_project_hold_reason)d</attribute>
+                    <attribute name="type">action</attribute>
+                    <attribute name="states">open,validate,received,invoices</attribute>
+                    <attribute name="groups">project.group_project_admin,project.group_project_manager</attribute>
+                </xpath>
+                <xpath expr="/form/header/button[@name='set_open']" position="replace">
+                    <button name="action_released" type="object"
+                            string="Re-open Project"
+                            states="pending,cancelled"
+                            class="oe_highlight"
+                            confirm="Are you sure to re-open this project ?"
+                            groups="project.group_project_admin,project.group_project_manager"/>
+                </xpath>
+                <xpath expr="/form/header/button[@name='set_open']" position="attributes">
+                    <attribute name="groups">project.group_project_admin</attribute>
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="/form/header/field[@name='state']" position="attributes">
+                    <attribute name="statusbar_visible">draft,open,close</attribute>
+                </xpath>
+                <xpath expr="///field[@name='doc_count']" position="attributes">
+                    <!-- <attribute name="groups"></attribute> TODO: no set group yet may be use with others-->
+                </xpath>
+                <xpath expr="//p" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//div[@name='buttons']" position="after">
+                    <div class="oe_right oe_button_box" name="sale_purchase_buttons" groups="base.group_user">
+                        <button class="oe_inline oe_stat_button" type="object" name="quotation_relate_project_tree_view" icon="fa-strikethrough" groups="base.group_sale_salesman,base.group_sale_salesman_all_leads,project.group_project_readonly">
+                            <field string="Sale Quotation" name="quote_related_count" widget="statinfo"/>
+                        </button>
+                        <button class="oe_inline oe_stat_button" type="object" name="purchase_relate_project_tree_view" icon="fa-shopping-cart" groups="purchase.group_purchase_user,project.group_project_readonly">
+                            <field string="Purchase Order" name="purchase_related_count" widget="statinfo"/>
+                        </button>
+                        <button class="oe_inline oe_stat_button" type="object" name="invoice_relate_project_tree_view" icon="fa-pencil-square-o" groups="project.group_project_readonly">
+                            <field string="Invoices" name="out_invoice_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                </xpath>
+                <!-- install project portal group_alias will be hiden -->
+                <group name="group_alias" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </group>
+                <xpath expr="//field[@name='analytic_account_id']" position="before">
+                      <h1>
+                          <label for="name" string="Project Number"/>
+                          <field name="project_number" string="Project Number" class="oe_inline" readonly="1"/>
+                      </h1>
+                </xpath>
+                <xpath expr="//group/group/field[@string='Project Manager']" position="attributes">
+                      <attribute name="invisible">1</attribute>
+                      <attribute name="string">Project manager(no use)</attribute>
+                </xpath>
+                <xpath expr="//group/group/field[@name='partner_id']" position="replace"/>
+                <xpath expr="//group" position="after">
+                    <group>
+                        <group>
+                            <field name="project_budget"/>
+                            <field name="date_brief"/>
+                            <field name="date_start"/>
+                            <field name="date" string="End Date"/>
+                            <field name="project_parent_id"
+                                context="{'tree_view_ref':'cmo_project.inherit_view_project_tree'}"
+                                options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
+                            <field name="operating_unit_id" string="Department" readonly="1"/>
+                            <field name="state_before_inactive" invisible="1"/>
+                            <field name="is_active_state" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="is_invoiced"/>
+                            <field name="is_paid"/>
+                            <field name="hold_reason" attrs="{'invisible':[('state','not in','pending')]}"/>
+                            <field name="close_reason" string="Close Reason" readonly="1" attrs="{'invisible': [('close_reason','=',False)]}"/>
+                            <field name="lost_reason_id" readonly="1" attrs="{'invisible': [('close_reason','not in','lost')]}"/>
+                            <field name="lost_by_id" readonly="1" attrs="{'invisible': [('close_reason','not in','lost')]}"/>
+                            <field name="reject_reason_id" readonly="1" attrs="{'invisible': [('close_reason','not in','reject')]}"/>
+                        </group>
+                    </group>
+                </xpath>
+                <xpath expr="//notebook/page[@string='Team']" position="replace"/>
+                <xpath expr="//notebook/page[@string='Project Stages']" position="before">
+                    <page string="Team" name="team_tab">
+                        <field name="project_member_ids" nolabel="1" widget="one2many_list">
+                            <tree string="Team member" editable="bottom">
+                                <field name="position_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
+                                <field name="employee_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
+                                <field name="date_start"/>
+                                <field name="date_end"/>
+                                <field name="remark"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//notebook/page[@string='Project Stages']" position="before">
+                    <page string="Competitors">
+                        <group>
+                            <field name="competitor_ids" nolabel="1"/>
+                        </group>
+                    </page>
+                    <page string="Billing Info" states="ready_billing,cancelled,close,pending,received,invoices">
+                        <group>
+                            <field name="assign_id"
+                                options="{'no_open':True,'no_create':1,'no_create_edit':1}"
+                                domain="[('default_operating_unit_id','=','Finance&amp;Accounting')]"
+                                />
+                            <field name="assign_description" string="Note to FA"/>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//notebook/page[@string='Project Stages']" position="attributes">
+                      <attribute name="groups">project.group_project_admin</attribute>
+                </xpath>
+                <xpath expr="//notebook/page[@string='Other Info']/group[@string='Administration']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//notebook/page[@string='Other Info']/group[@name='misc']/field[@name='active']" position="attributes">
+                   <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//notebook/page[@name='project_stages']" position="attributes">
+                   <attribute name="groups">project.group_project_admin,project.group_project_manager</attribute>
+                   <attribute name="string">Tasks States</attribute>
+                </xpath>
+                <xpath expr="//notebook/page[@string='Other Info']/group[@name='misc']/field[@string='Start Date']" position="replace"/>
+                <xpath expr="//notebook/page[@string='Other Info']/group[@name='misc']/field[@string='End Date']" position="replace"/>
+                <xpath expr="//notebook/page[@string='Other Info']/group[@name='misc']/field[@name='sequence']" position="attributes">
+                     <attribute name="invisible">1</attribute>
+                     <attribute name="string">Sequence(no use)</attribute>
+                </xpath>
+                <xpath expr="//notebook/page[@string='Other Info']/group[@name='misc']/field[@name='parent_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                 <xpath expr="//notebook/page[@string='Other Info']/group[@name='misc']" position="after">
+                      <group>
+                          <field name="active" invisible="1"/>
+                          <group>
+                            <field name="partner_id" string="Customer"
+                                 options="{'no_open':True,'no_create':1,'no_create_edit':1}"
+                            />
+                            <field name="agency_partner_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
+                            <field name="client_type_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
+                            <field name="project_from_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
+                            <field name="project_type_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
+                            <field name="obligation_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
+                          </group>
+                          <group>
+                            <field name="function_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
+                            <field name="location_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
+                            <field name="project_place" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
+                            <field name="industry_id" readonly="1"/>
+                            <field name="brand_type_id" readonly="1"/>
+                          </group>
+                      </group>
+                  </xpath>
+                 <xpath expr="//notebook/page[@string='Other Info']/group[@name='misc']" position="attributes">
+                     <attribute name="string"></attribute>
+                 </xpath>
+                 <xpath expr="//notebook/page[@string='Other Info']" position="after">
+                    <page string="Budget &amp; Cost" groups="project.group_project_admin,project.group_project_readonly,project.group_project_manager">
+                        <group>
+                            <group>
+                                <field name="actual_price" readonly="1"/>
+                                <field name="estimate_cost" readonly="1"/>
+                                <field name="pre_cost"/>
+                                <field name="actual_po" readonly="1"/>
+                                <field name="expense" readonly="1"/>
+                                <field name="remaining_cost" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="remain_advance" readonly="1"/>
+                            </group>
+                        </group>
+                    </page>
+                 </xpath>
+                 <xpath expr="//notebook/page[@string='Other Info']/group[3]" position="after">
+                    <group>
+                        <field name="description" string="Project Description"/>
+                    </group>
+                 </xpath>
+                 <xpath expr="//notebook/page[@string='Other Info']" position="attributes">
+                     <attribute name="string">Project Info</attribute>
+                 </xpath>
+            </field>
+        </record>
+        <record id="edit_project_admin" model="ir.ui.view">
+            <field name="name">edit.project</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="edit_project"/>
+            <field name="groups_id" eval="[(6,0,[ref('project.group_project_admin')])]"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//group/field[@name='operating_unit_id']" position="attributes">
+                     <attribute name="readonly">0</attribute>
+                 </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

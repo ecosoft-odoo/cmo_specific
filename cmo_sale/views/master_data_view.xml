@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        # Covenant View
+        <record id="view_sale_covenant_description_form" model="ir.ui.view">
+            <field name="name">sale.covenant.description.form</field>
+            <field name="model">sale.covenant.description</field>
+            <field name="arch" type="xml">
+                <form string="Sale Covenant Description">
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="view_sale_covenant_description_tree" model="ir.ui.view">
+            <field name="name">sale.covenant.description.tree</field>
+            <field name="model">sale.covenant.description</field>
+            <field name="arch" type="xml">
+                <tree string="Sale Covenant Description">
+                    <field name="name"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_sale_covenant_description_form" model="ir.actions.act_window">
+            <field name="name">Sale Covenant</field>
+            <field name="res_model">sale.covenant.description</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a new Sale covenant
+                </p>
+                <p>
+                    Manage sale covenant you want to be used in the system.
+                </p>
+            </field>
+        </record>
+        <menuitem action="action_sale_covenant_description_form"
+                  id="menu_action_sale_covenant_description_form"
+                  parent="base.menu_base_config"
+                  sequence="50"
+                  groups="base.group_sale_manager"
+                  />
+    </data>
+</openerp>

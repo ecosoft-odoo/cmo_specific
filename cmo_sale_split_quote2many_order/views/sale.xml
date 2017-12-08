@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_order_form" model="ir.ui.view">
+            <field name="name">view.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_split_quote2order.view_order_form"/>
+            <field name="arch" type="xml">
+                <!-- header -->
+                <xpath expr="/form/header[@name='quotation']/button[@name='action_button_convert_to_order']" position="replace">
+                    <button name="action_validate_before_convert2order"
+                            string="Convert to Order"
+                            type="object"
+                            states="draft"/>
+                    <button name="action_view_sale_order"
+                            string="View sale Order"
+                            type="object"
+                            states="done"/>
+                </xpath>
+                <!--  Sale Order Plan -->
+				<xpath expr="/form/sheet/notebook" position="before">
+	               	<div>
+	               		<field name="use_multi_customer" attrs="{'invisible': [('order_type','=','sale_order')]}"/>
+	               		<label for="use_multi_customer" string="Order Plan" attrs="{'invisible': [('order_type','=','sale_order')]}"/>
+	               	</div>
+            	</xpath>
+                <page string="Other Information" position="before">
+                    <page string="Order Plan" attrs="{'invisible': ['|', ('use_multi_customer','=',False), ('order_type','=','sale_order')]}">
+                        <button name="action_cancel_draft_sale_orders"
+                                states="done"
+                                string="Cancel Draft Sale Orders"
+                                class="oe_highlight"
+                                type="object"
+                                confirm="This will cancel all draft sale orders, are you sure you want to proceed?"
+                                groups="base.group_user"/>
+                        <group>
+                            <group>
+                                <field name="customer_amount" string="Number of Customer"/>
+                                <field name="amount_untaxed_order_plan" string="Order Amount"/>
+                            </group>
+                            <group>
+                                <field name="use_merge"/>
+                                <field name="sale_order_mode" attrs="{'invisible': [('use_merge', '=', True)]}"/>
+                            </group>
+                        </group>
+                        <field name="order_plan_ids" attrs="{'readonly':[('state', '!=', 'draft')]}">
+                            <tree string="Sale Order Plan" editable="buttom">
+                                <field name="sequence" widget="handle"/>
+                                <field name="quote_id" invisible="1"/>
+                                <field name="customer_id"/>
+                                <field name="order_plan_ref"/>
+                                <field name="sale_order_amount" sum="Amount"/>
+                                <field name="sale_order_percent" sum="Percent"/>
+                                <field name="order_ref_name" readonly="1"/>
+                                <field name="order_ref_state" readonly="1"/>
+                            </tree>
+                        </field>
+                    </page>
+                </page>
+            </field>
+        </record>
+    </data>
+</openerp>

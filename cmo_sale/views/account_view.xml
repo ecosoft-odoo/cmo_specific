@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_invoice_customer" model="ir.ui.view">
+            <field name="name">account.invoice.customer.quote</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="cmo_account.view_invoice_customer"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='invoice_project']/group/group" position="inside">
+                    <field name="quote_ref_event_date"/>
+                    <field name="quote_ref_venue"/>
+                </xpath>
+                <xpath expr="//page[@name='invoice_project']/group/group" position="after">
+                    <group>
+                        <field name="others_note"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

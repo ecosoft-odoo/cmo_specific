@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+      <record id="view_project_hold_reason" model="ir.ui.view">
+          <field name="name">view.project.hold.reason</field>
+          <field name="model">project.hold.reason</field>
+          <field name="type">form</field>
+          <field name="arch" type="xml">
+              <form string="Reason for hold project">
+                  <p class="oe_grey">
+                      Select reason for hold project.
+                  </p>
+                  <group>
+                      <field name="hold_reason"/>
+                  </group>
+                  <footer>
+                    <button string="Confirm" name="confirm_hold" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                  </footer>
+              </form>
+          </field>
+      </record>
+
+      <record id="action_project_hold_reason" model="ir.actions.act_window">
+          <field name="name">Reason for hold project</field>
+          <field name="type">ir.actions.act_window</field>
+          <field name="res_model">project.hold.reason</field>
+          <field name="src_model">project.project</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">form</field>
+          <field name="view_id" ref="view_project_hold_reason"/>
+          <field name="target">new</field>
+      </record>
+    </data>
+</openerp>

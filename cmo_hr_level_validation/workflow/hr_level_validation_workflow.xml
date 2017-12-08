@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="act_level_check" model="workflow.activity">
+            <field name="wkf_id" ref="hr_expense.wkf_expenses"/>
+            <field name="name">CheckForApproval</field>
+            <field name="split_mode">OR</field>
+            <field name="kind">function</field>
+            <field name="action">action_check_approval()</field>
+        </record>
+
+        <record id="act_wait_approval" model="workflow.activity">
+            <field name="wkf_id" ref="hr_expense.wkf_expenses"/>
+            <field name="name">WaitForApproval</field>
+            <field name="split_mode">OR</field>
+            <field name="kind">dummy</field>
+        </record>
+
+        <record id="act_validated" model="workflow.activity">
+            <field name="wkf_id" ref="hr_expense.wkf_expenses"/>
+            <field name="name">validated</field>
+            <field name="split_mode">XOR</field>
+            <field name="kind">function</field>
+            <field name="action">action_validated()</field>
+        </record>
+
+        <record id="trans_check_approval_done" model="workflow.transition">
+            <field name="act_from" ref="act_level_check"/>
+            <field name="act_to" ref="act_validated"/>
+            <field name="condition">len(level_id) == 0</field>
+        </record>
+
+        <record id="trans_check_approval" model="workflow.transition">
+            <field name="act_from" ref="act_level_check"/>
+            <field name="act_to" ref="act_wait_approval"/>
+            <field name="condition">len(level_id) != 0</field>
+        </record>
+
+        <record id="trans_recheck_approval" model="workflow.transition">
+            <field name="act_from" ref="act_wait_approval"/>
+            <field name="act_to" ref="act_level_check"/>
+            <field name="signal">recheck_approve</field>
+        </record>
+
+        <record id="trans_wait_to_cancel" model="workflow.transition">
+            <field name="act_from" ref="act_wait_approval"/>
+            <field name="act_to" ref="hr_expense.act_refused"/>
+            <field name="signal">refuse</field>
+           <field name="group_id" ref="base.group_hr_user"/>
+        </record>
+
+        <record id="trans_confirmed_level_check" model="workflow.transition">
+           <field name="act_from" ref="hr_expense.act_confirm"/>
+           <field name="act_to" ref="act_level_check"/>
+       </record>
+
+       <record id="trans_confirmed_validate" model="workflow.transition">
+          <field name="act_from" ref="hr_expense.act_confirm"/>
+          <field name="act_to" ref="act_validated"/>
+      </record>
+
+       <record id="trans_validate_accepted" model="workflow.transition">
+           <field name="act_from" ref="act_validated"/>
+           <field name="act_to" ref="hr_expense.act_accepted"/>
+           <field name="signal">accepted</field>
+           <field name="group_id" ref="base.group_hr_user"/>
+       </record>
+
+       <record id="trans_validate_refuse" model="workflow.transition">
+           <field name="act_from" ref="act_validated"/>
+           <field name="act_to" ref="hr_expense.act_refused"/>
+           <field name="signal">refuse</field>
+           <field name="group_id" ref="base.group_hr_user"/>
+       </record>
+
+    </data>
+</openerp>

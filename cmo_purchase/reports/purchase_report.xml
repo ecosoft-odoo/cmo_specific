@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <delete id="purchase.report_purchase_quotation" model="ir.actions.report.xml"/>
+        <delete id="purchase.action_report_purchase_order" model="ir.actions.report.xml"/>
+    </data>
+</openerp>
