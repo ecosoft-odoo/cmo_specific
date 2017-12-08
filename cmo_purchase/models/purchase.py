@@ -6,7 +6,6 @@ from openerp.tools import float_compare
 from openerp.tools.translate import _
 
 
-
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
@@ -153,7 +152,7 @@ class PurchaseOrder(models.Model):
             if po_project and remaining_cost is not False:
                 if float_compare(order.amount_untaxed, remaining_cost, 2) > 0:
                     raise ValidationError(
-                        _("PO value is over remaining cost please change value")
+                        _("PO value over remaining cost, please change value")
                     )
 
     @api.multi
@@ -217,9 +216,10 @@ class PurchaseOrderLine(models.Model):
 
     @api.onchange('sale_order_line_ref_id')
     def _onchange_sale_order_line_ref_id(self):
-        self.product_ref_custom_group = self.sale_order_line_ref_id.\
-            sale_layout_custom_group
-        self.product_ref_cat_id = self.sale_order_line_ref_id.sale_layout_cat_id
+        self.product_ref_custom_group = \
+            self.sale_order_line_ref_id.sale_layout_custom_group
+        self.product_ref_cat_id = \
+            self.sale_order_line_ref_id.sale_layout_cat_id
         self.product_ref = self.sale_order_line_ref_id.product_id
 
 

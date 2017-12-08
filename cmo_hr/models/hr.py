@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import datetime
-
 from openerp import fields, models, api
 from openerp.exceptions import ValidationError
 from openerp.tools import float_compare
@@ -40,8 +38,7 @@ class HrExpenseExpense(models.Model):
         [('cash', 'Cash'),
          ('cashier_cheque', 'Cashier Cheque'),
          ('bank_transfer', 'Bank Transfer'),
-         ('ac_payee', 'A/C Payee'),
-        ],
+         ('ac_payee', 'A/C Payee'), ],
         string='Payment By',
     )
     bank_transfer_ref = fields.Text(

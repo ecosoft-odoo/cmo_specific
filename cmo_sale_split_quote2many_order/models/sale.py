@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import datetime
-
 from openerp import api, fields, models, _
 from openerp.tools.float_utils import float_round as round
 import openerp.addons.decimal_precision as dp
@@ -73,8 +71,8 @@ class sale_order(models.Model):
             'sale_layout_custom_group_id': None,
             'section_code': None,
             'product_id': None,
-            'price_unit': amount_price /
-                          (1.0 - (order_lines[0].discount / 100.0)),
+            'price_unit': (amount_price /
+                           (1.0 - (order_lines[0].discount / 100.0))),
             'product_uom_qty': 1.0,
             'name': description,
         })
@@ -94,27 +92,25 @@ class sale_order(models.Model):
                         if self.amount_price != 0 else amount_price
                     line.write({
                         'product_uom_qty': new_quantity,
-                        'purchase_price': 0.0,
-                        })
+                        'purchase_price': 0.0, })
             elif self.sale_order_mode == 'change_price':
                 lines = self.order_line[:-1]
                 last_line = self.order_line[-1]
                 line_amount = 0
                 for line in lines:
-                    new_price_unit = line.price_unit * line.product_uom_qty * \
-                                round((amount_price / self.amount_untaxed), 2)
+                    new_price_unit = \
+                        line.price_unit * line.product_uom_qty * \
+                        round((amount_price / self.amount_untaxed), 2)
                     line_amount += new_price_unit
                     line.write({
                         'price_unit': new_price_unit,
                         'purchase_price': 0.0,
-                        'product_uom_qty': 1,
-                        })
+                        'product_uom_qty': 1, })
                 last_price_unit = amount_price - line_amount
                 last_line.write({
                     'price_unit': last_price_unit,
                     'purchase_price': 0.0,
-                    'product_uom_qty': 1,
-                    })
+                    'product_uom_qty': 1, })
         self._amount_all()
 
     @api.multi
@@ -140,20 +136,19 @@ class sale_order(models.Model):
             if self.use_multi_customer and self.order_plan_ids:
                 order_plan = self.validate_sale_order_plan()
                 ctx = self._context.copy()
-                current_date = fields.Date.context_today(self)
-                fiscalyear_id = self.env['account.fiscalyear'].find(dt=current_date)
+                fiscalyear_id = self.env['account.fiscalyear'].find()
                 ctx["fiscalyear_id"] = fiscalyear_id
                 for plan in order_plan:
                     new_sale_order = order.copy({
-                        'name': self.env['ir.sequence'].with_context(ctx)\
-                                    .get('cmo.sale_order') or '/',
+                        'name': self.env['ir.sequence'].
+                        with_context(ctx).get('cmo.sale_order') or '/',
                         'order_type': 'sale_order',
                         'quote_id': self.id,
                         'client_order_ref': self.client_order_ref,
                         'partner_id': plan.customer_id.id,
                         'discount_rate': 0.0
                     })
-                    new_sale_order.write({'active':True})
+                    new_sale_order.write({'active': True})
                     if self.use_merge:
                         new_sale_order.merge_sale_order_line(
                             plan.sale_order_amount)
@@ -272,6 +267,6 @@ class SaleOrderCustomerPlan(models.Model):
     def _onchange_sale_order_amount(self):
         amount_order = self.quote_id.amount_untaxed
         if amount_order != 0:
-            new_percent = (self.sale_order_amount/amount_order) * 100 or 0.0
+            new_percent = (self.sale_order_amount / amount_order) * 100 or 0.0
             if round(new_percent, 6) != round(self.sale_order_percent, 10):
                 self.sale_order_percent = new_percent

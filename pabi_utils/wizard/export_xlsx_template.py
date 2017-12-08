@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 import re
 import os
-import math
 import openpyxl
 import base64
 import cStringIO
 import time
-from copy import copy
 from datetime import datetime
 from ast import literal_eval
 

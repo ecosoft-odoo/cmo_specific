@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-import datetime
-
 from openerp import fields, models, api, _
 from openerp.exceptions import ValidationError
 from openerp.tools.float_utils import float_round
+
 
 class SaleCovenantDescription(models.Model):
     _name = 'sale.covenant.description'
@@ -117,8 +116,7 @@ class SaleOrder(models.Model):
         assert len(self) == 1, \
             'This option should only be used for a single id at a time.'
         ctx = self._context.copy()
-        current_date = fields.Date.context_today(self)
-        fiscalyear_id = self.env['account.fiscalyear'].find(dt=current_date)
+        fiscalyear_id = self.env['account.fiscalyear'].find()
         ctx["fiscalyear_id"] = fiscalyear_id
         order = self.copy({
             'name': self.env['ir.sequence']
@@ -278,7 +276,8 @@ class SaleOrderLine(models.Model):
             'src_model': 'sale.order',
             'target': 'new',
             'type': 'ir.actions.act_window',
-            'context': {'order_line_id': self.id, 'view_id': 'view_sale_management_fee',}
+            'context': {'order_line_id': self.id,
+                        'view_id': 'view_sale_management_fee', }
         }
 
     @api.multi

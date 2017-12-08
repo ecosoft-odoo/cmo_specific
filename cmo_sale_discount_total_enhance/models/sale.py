@@ -50,7 +50,7 @@ class sale_order(models.Model):
                 amount = sum(self.order_line.mapped(
                     lambda r: r.product_uom_qty * r.price_unit)
                 )
-                total = amount if amount != 0 else 1 # prevent devison by zero
+                total = amount if amount != 0 else 1.0  # prevent /zero
                 discount_rate = self.discount_rate
                 discount = float_round((discount_rate / total) * 100.0, 16)
                 order_lines = self.order_line[:-1]
@@ -59,11 +59,10 @@ class sale_order(models.Model):
             for line in order_lines:
                 line.write({'discount': discount})
                 discount_line += cur.round(
-                    line.price_unit * line.product_uom_qty * discount / 100.0
-                    )
+                    line.price_unit * line.product_uom_qty * discount / 100.0)
             if last_line:
-                last_discount = (cur.round(discount_rate - discount_line) / \
-                    last_line.price_unit) * 100.0
+                last_discount = (cur.round(discount_rate - discount_line) /
+                                 last_line.price_unit * 100.0)
                 last_line.write({'discount': last_discount})
 
     @api.model
@@ -116,19 +115,19 @@ class sale_order(models.Model):
                     line.discount = order.discount_rate
             else:
                 amount = sum(order.order_line.mapped(
-                            lambda r: r.product_uom_qty * r.price_unit)
-                        )
-                total = amount if amount != 0 else 1 # prevent devison by zero
-                discount = float_round((order.discount_rate / total) * 100.0, 16)
+                             lambda r: r.product_uom_qty * r.price_unit))
+                total = amount if amount != 0 else 1  # prevent devison by zero
+                discount = \
+                    float_round((order.discount_rate / total) * 100.0, 16)
                 order_lines = order.order_line[:-1] if \
                     len(order.order_line) > 0 else order.order_line
                 cur = order.pricelist_id.currency_id
                 discount_line = 0
                 for line in order_lines:
                     discount_line += cur.round(
-                        line.price_unit * line.product_uom_qty *
-                        discount / 100.0
-                        )
+                        line.price_unit *
+                        line.product_uom_qty *
+                        discount / 100.0)
                     line.discount = discount
                 if len(order.order_line) > 0:
                     last_line = order.order_line[-1]
@@ -150,5 +149,5 @@ class SaleOrderLine(models.Model):
     @api.depends('price_unit', 'product_uom_qty')
     def _compute_price_subtotal_no_disco(self):
         for line in self:
-            line.price_subtotal_no_disco = line.price_unit * \
-                                            line.product_uom_qty
+            line.price_subtotal_no_disco = \
+                line.price_unit * line.product_uom_qty

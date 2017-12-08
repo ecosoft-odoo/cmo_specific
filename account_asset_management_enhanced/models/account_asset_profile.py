@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp import fields, models, api, _
-from openerp.exceptions import ValidationError
+from openerp import fields, models, api
 
 
 class AccountAssetProfile(models.Model):

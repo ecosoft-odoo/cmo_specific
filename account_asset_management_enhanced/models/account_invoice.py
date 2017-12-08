@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from copy import deepcopy
 
-from openerp import fields, models, api, _
+from openerp import models, api, _
 from openerp.exceptions import ValidationError
 from openerp.tools.float_utils import float_round
 

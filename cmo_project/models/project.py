@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import datetime
-
 from openerp import fields, models, api
 from openerp.exceptions import ValidationError
 # TODO: foreign key use, idex and ondelete
@@ -150,12 +148,11 @@ class ProjectProject(models.Model):
          ('reject', 'Reject'),
          ('lost', 'Lost'),
          ('cancel', 'Cancelled'),
-         ('terminate', 'Terminated'),
-        ],
+         ('terminate', 'Terminated'), ],
         string='Close Reason',
         states={'close': [('readonly', True)]},
     )
-    department_id = fields.Many2one( # no use
+    department_id = fields.Many2one(  # no use
         'hr.department',
         string='Department',
         states={'close': [('readonly', True)]},
@@ -291,8 +288,10 @@ class ProjectProject(models.Model):
                     ('quote_id', '=', quote.id),
                     ('order_type', '=', 'sale_order'),
                 ]
-                sale_order_states = sale_order_states + \
-                    self.env['sale.order'].sudo().search(domain).mapped('state')
+                sale_order_states = \
+                    sale_order_states + \
+                    self.env['sale.order'].sudo().\
+                    search(domain).mapped('state')
             sale_order_states = list(set(sale_order_states))
             if 'open' in invoice_states or 'paid' in invoice_states:
                 project.is_invoiced = True
@@ -318,11 +317,10 @@ class ProjectProject(models.Model):
     def create(self, vals):
         if vals.get('project_number', '/') == '/':
             ctx = self._context.copy()
-            current_date = fields.Date.context_today(self)
-            fiscalyear_id = self.env['account.fiscalyear'].find(dt=current_date)
+            fiscalyear_id = self.env['account.fiscalyear'].find()
             ctx["fiscalyear_id"] = fiscalyear_id
-            vals['project_number'] = self.env['ir.sequence']\
-                .with_context(ctx).get('cmo.project') # create sequence number
+            vals['project_number'] = self.env['ir.sequence'].\
+                with_context(ctx).get('cmo.project')  # create sequence number
         project = super(ProjectProject, self).create(vals)
         return project
 
@@ -373,10 +371,10 @@ class ProjectProject(models.Model):
 
     @api.multi
     def action_released(self):
-        if self.state_before_inactive:
-            res = self.write({'state':self.state_before_inactive})  # state_bf_hold
+        if self.state_before_inactive:  # state_bf_hold
+            res = self.write({'state': self.state_before_inactive})
         else:
-            res = self.write({'state':'open'})
+            res = self.write({'state': 'open'})
         self.write({
             'close_reason': False,
             'lost_reason_id': False,
@@ -406,8 +404,8 @@ class ProjectProject(models.Model):
     def _check_date_briefs(self):
         self.ensure_one()
         if self.date_brief > self.date:
-            return ValidationError("project brief-date must be lower than "
-                                                        "project end-date.")
+            return ValidationError("project brief-date must be lower "
+                                   "than project end-date.")
 
     @api.multi
     def purchase_relate_project_tree_view(self):
@@ -487,7 +485,7 @@ class ProjectProject(models.Model):
         for project in self:
             name = project.name or '/'
             if name and project.project_number:
-                name = '['+project.project_number+'] ' + name
+                name = '[%s] %s' % (project.project_number, name)
             res.append((project.id, name))
         return res
 
@@ -503,9 +501,8 @@ class ProjectProject(models.Model):
     @api.depends('expense')
     def _compute_expense(self):
         for project in self:
-            expense_lines = self.env['hr.expense.line'].sudo().search([
-                 ('analytic_account', '=', project.analytic_account_id.id),
-            ])
+            expense_lines = self.env['hr.expense.line'].sudo().search(
+                [('analytic_account', '=', project.analytic_account_id.id)])
             expense = sum(expense_lines.filtered(
                 lambda r: (r.expense_id.state in ('done', 'paid')) and
                           (r.expense_id.is_employee_advance is False)
@@ -605,6 +602,7 @@ class ProjectBrandType(models.Model):
         ('name_uniq', 'UNIQUE(name)', 'Project Brand Type must be unique!'),
     ]
 
+
 class ProjectClientType(models.Model):
     _name = 'project.client.type'
     _description = 'Project Client Type'
@@ -620,6 +618,7 @@ class ProjectClientType(models.Model):
     _sql_constraints = [
         ('name_uniq', 'UNIQUE(name)', 'Project Client Type must be unique!'),
     ]
+
 
 class ProjectIndustry(models.Model):
     _name = 'project.industry'
@@ -637,6 +636,7 @@ class ProjectIndustry(models.Model):
         ('name_uniq', 'UNIQUE(name)', 'Project Industry must be unique!'),
     ]
 
+
 class ProjectLocation(models.Model):
     _name = 'project.location'
     _description = 'Project Location'
@@ -652,6 +652,7 @@ class ProjectLocation(models.Model):
     _sql_constraints = [
         ('name_uniq', 'UNIQUE(name)', 'Project Location must be unique!'),
     ]
+
 
 class ProjectObligation(models.Model):
     _name = 'project.obligation'
@@ -669,6 +670,7 @@ class ProjectObligation(models.Model):
         ('name_uniq', 'UNIQUE(name)', 'Project Obligation must be unique!'),
     ]
 
+
 class ProjectFrom(models.Model):
     _name = 'project.from'
     _description = 'Project From'
@@ -684,6 +686,7 @@ class ProjectFrom(models.Model):
     _sql_constraints = [
         ('name_uniq', 'UNIQUE(name)', 'Project From must be unique!'),
     ]
+
 
 class ProjectFunction(models.Model):
     _name = 'project.function'
@@ -701,6 +704,7 @@ class ProjectFunction(models.Model):
     _sql_constraints = [
         ('name_uniq', 'UNIQUE(name)', 'Project Function must be unique!'),
     ]
+
 
 class ProjectPosition(models.Model):
     _name = 'project.position'
@@ -735,6 +739,7 @@ class ProjectType(models.Model):
         ('name_uniq', 'UNIQUE(name)', 'Project Position must be unique!'),
     ]
 
+
 class ProjectCompetitor(models.Model):
     _name = 'project.competitor'
     _description = 'Project Competitor'
@@ -753,6 +758,7 @@ class ProjectCompetitor(models.Model):
     _sql_constraints = [
         ('name_uniq', 'UNIQUE(name)', 'Project Lost by must be unique!'),
     ]
+
 
 class ProjectLostReason(models.Model):
     _name = 'project.lost.reason'

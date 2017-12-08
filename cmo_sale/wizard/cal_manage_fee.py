@@ -23,7 +23,7 @@ class SaleCalManageFee(models.TransientModel):
         #         self.percent_rate / 100, 2)
         # else:
         #     fee = float_round(
-        #         quote.amount_before_management_fee * self.percent_rate / 100, 2
+        #       quote.amount_before_management_fee * self.percent_rate / 100, 2
         #     )
         fee = float_round(
             quote.amount_before_management_fee * self.percent_rate / 100, 2

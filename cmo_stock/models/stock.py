@@ -95,6 +95,7 @@ class StockMove(models.Model):
                 raise ValidationError(_("Source location and destination "
                                         "location should not be the same."))
 
+
 class StockPickingType(models.Model):
     _inherit = 'stock.picking.type'
 

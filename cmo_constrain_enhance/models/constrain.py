@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-
-from openerp import fields, models, api
-
+from openerp import models, api
 
 
 class SaleOrder(models.Model):

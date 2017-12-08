@@ -1,16 +1,12 @@
 # -*- coding: utf-8 -*-
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
 import logging
 import xlwt
 from xlwt.Style import default_style
 from datetime import datetime
-
-from openerp.exceptions import Warning as UserError
 from openerp.report import report_sxw
 from openerp.addons.report_xls.report_xls import report_xls
-from openerp.addons.report_xls.utils import rowcol_to_cell, _render
-from openerp.tools.translate import translate, _
+from openerp.addons.report_xls.utils import _render
+from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
 
@@ -31,6 +27,7 @@ class CostControlSheetReportXlsParser(report_sxw.rml_parse):
             'template_update_cost_control_sheet': tmpl_ccs_upd,
             '_': _,
         })
+
 
 class CostControlSheetReportXls(report_xls):
 
@@ -86,25 +83,25 @@ class CostControlSheetReportXls(report_xls):
                 'order_line': [
                     1, 0, 'text', _render("order_line_description"),
                     None, self.an_cell_style_date],
-                },
+            },
             'price_in_contract': {
                 'quote': [1, 0, 'text', None],
                 'custom_group': [1, 0, 'text', None],
                 'section': [1, 0, 'text', None],
                 'order_line': [1, 0, 'number', _render("price_in_contract")],
-                },
+            },
             'estimate_cost': {
                 'quote': [1, 0, 'text', None],
                 'custom_group': [1, 0, 'text', None],
                 'section': [1, 0, 'text', None],
                 'order_line': [1, 0, 'number', _render("estimate_cost")],
-                },
+            },
             'percent_margin': {
                 'quote': [1, 0, 'text', None],
                 'custom_group': [1, 0, 'text', None],
                 'section': [1, 0, 'text', None],
                 'order_line': [1, 0, 'number', _render("percent_margin")],
-                },
+            },
         }
 
     def xls_merge_row(self, ws, row_pos, row_data,
@@ -271,14 +268,16 @@ class CostControlSheetReportXls(report_xls):
             line_get = []
             if custom_groups:
                 cr.execute(
-                    "SELECT sale_layout_cat_id, COUNT(id) FROM sale_order_line "
+                    "SELECT sale_layout_cat_id, COUNT(id) "
+                    "FROM sale_order_line "
                     "WHERE order_id = %s AND order_lines_group = 'before' "
                     "GROUP BY sale_layout_cat_id "
                     "ORDER BY sale_layout_cat_id ASC"
                     % (quote_id.id))
             else:
                 cr.execute(
-                    "SELECT sale_layout_cat_id, COUNT(id) FROM sale_order_line "
+                    "SELECT sale_layout_cat_id, COUNT(id) "
+                    "FROM sale_order_line "
                     "WHERE order_id = %s GROUP BY sale_layout_cat_id "
                     "ORDER BY sale_layout_cat_id ASC"
                     % (quote_id.id))
@@ -347,7 +346,7 @@ class CostControlSheetReportXls(report_xls):
                 company_id.fax or '-',
                 company_id.website or '-',
                 company_id.email or '-'
-                ),
+            ),
             'Cost Control Sheet',
         ]
         for title in titles:
@@ -378,7 +377,7 @@ class CostControlSheetReportXls(report_xls):
         for entry in entries:
             data_obj = entry[1]
             if entry[0] == 'quote':
-                quote_description = 'Quotation %s' % (data_obj.name)
+                # quote_description = 'Quotation %s' % (data_obj.name)
                 c_specs = map(
                     lambda x: self.render(
                         x, template, 'quote'),
@@ -386,9 +385,10 @@ class CostControlSheetReportXls(report_xls):
                 row_data = self.xls_row_template(
                     c_specs, [x[0] for x in c_specs])
                 row_pos = self.xls_write_row(
-                    ws, row_pos, row_data, row_style=self.av_cell_style_decimal)
+                    ws, row_pos, row_data,
+                    row_style=self.av_cell_style_decimal)
             elif entry[0] == 'custom_group':
-                custom_group_name = data_obj
+                # custom_group_name = data_obj
                 c_specs = map(
                     lambda x: self.render(
                         x, template, 'custom_group'),
@@ -396,9 +396,10 @@ class CostControlSheetReportXls(report_xls):
                 row_data = self.xls_row_template(
                     c_specs, [x[0] for x in c_specs])
                 row_pos = self.xls_write_row(
-                    ws, row_pos, row_data, row_style=self.rt_cell_style_decimal)
+                    ws, row_pos, row_data,
+                    row_style=self.rt_cell_style_decimal)
             elif entry[0] == 'section':
-                section_name = data_obj.name
+                # section_name = data_obj.name
                 c_specs = map(
                     lambda x: self.render(
                         x, template, 'section'),
@@ -406,14 +407,15 @@ class CostControlSheetReportXls(report_xls):
                 row_data = self.xls_row_template(
                     c_specs, [x[0] for x in c_specs])
                 row_pos = self.xls_write_row(
-                    ws, row_pos, row_data, row_style=self.rt_cell_style_decimal)
+                    ws, row_pos, row_data,
+                    row_style=self.rt_cell_style_decimal)
             elif entry[0] == 'line':
-                order_line_description = data_obj.name
-                price_in_contract = data_obj.price_unit * \
-                    data_obj.product_uom_qty
-                estimate_cost = data_obj.purchase_price * \
-                    data_obj.product_uom_qty
-                percent_margin = data_obj.sale_order_line_margin
+                # order_line_description = data_obj.name
+                # price_in_contract = data_obj.price_unit * \
+                #     data_obj.product_uom_qty
+                # estimate_cost = data_obj.purchase_price * \
+                #     data_obj.product_uom_qty
+                # percent_margin = data_obj.sale_order_line_margin
                 c_specs = map(
                     lambda x: self.render(
                         x, template, 'order_line'),
@@ -450,9 +452,9 @@ class CostControlSheetReportXls(report_xls):
                             style=self.an_cell_style)
                         row_pos += row_i
 
-        expense_line_ids = expense_line_obj.search(cr, uid, [
-             ('analytic_account', '=', project_id.analytic_account_id.id),
-        ])
+        expense_line_ids = expense_line_obj.search(
+            cr, uid,
+            [('analytic_account', '=', project_id.analytic_account_id.id)])
         if expense_line_ids:
             for row_i, expense_line_id in enumerate(expense_line_ids):
                 expense_line_id = expense_line_obj.browse(
@@ -476,27 +478,32 @@ class CostControlSheetReportXls(report_xls):
                     style=self.an_cell_style)
 
         # totals
-        sum_price = 'SUM(B%s:B%s)' % (str(hr_row_pos+1), str(row_pos))
-        sum_estimate = 'SUM(C%s:C%s)' % (str(hr_row_pos+1), str(row_pos))
+        sum_price = 'SUM(B%s:B%s)' % (str(hr_row_pos + 1), str(row_pos))
+        sum_estimate = 'SUM(C%s:C%s)' % (str(hr_row_pos + 1), str(row_pos))
         sum_margin = '(B%s - C%s) * 100.0 / B%s' % (
-            str(row_pos+1), str(row_pos+1), str(row_pos+1))
-        sum_po_price = 'SUM(F%s:F%s)' % (str(hr_row_pos+1), str(row_pos))
-        sum_hr_price = 'SUM(K%s:K%s)' % (str(hr_row_pos+1), str(row_pos))
+            str(row_pos + 1), str(row_pos + 1), str(row_pos + 1))
+        sum_po_price = 'SUM(F%s:F%s)' % (str(hr_row_pos + 1), str(row_pos))
+        sum_hr_price = 'SUM(K%s:K%s)' % (str(hr_row_pos + 1), str(row_pos))
 
         ws.write(row_pos, 0, 'Totals', style=self.av_cell_style_decimal)
-        ws.write(row_pos, 1, xlwt.Formula(sum_price), style=self.av_cell_style_decimal)
-        ws.write(row_pos, 2, xlwt.Formula(sum_estimate), style=self.av_cell_style_decimal)
-        ws.write(row_pos, 3, xlwt.Formula(sum_margin), style=self.av_cell_style_decimal)
+        ws.write(row_pos, 1, xlwt.Formula(sum_price),
+                 style=self.av_cell_style_decimal)
+        ws.write(row_pos, 2, xlwt.Formula(sum_estimate),
+                 style=self.av_cell_style_decimal)
+        ws.write(row_pos, 3, xlwt.Formula(sum_margin),
+                 style=self.av_cell_style_decimal)
         ws.write(row_pos, 4, '', style=self.av_cell_style_decimal)
-        ws.write(row_pos, 5, xlwt.Formula(sum_po_price), style=self.av_cell_style_decimal)
+        ws.write(row_pos, 5, xlwt.Formula(sum_po_price),
+                 style=self.av_cell_style_decimal)
         ws.write(row_pos, 6, '', style=self.av_cell_style_decimal)
         ws.write(row_pos, 7, '', style=self.av_cell_style_decimal)
         ws.write(row_pos, 8, '', style=self.av_cell_style_decimal)
         ws.write(row_pos, 9, '', style=self.av_cell_style_decimal)
-        ws.write(row_pos, 10, xlwt.Formula(sum_hr_price), style=self.av_cell_style_decimal)
+        ws.write(row_pos, 10, xlwt.Formula(sum_hr_price),
+                 style=self.av_cell_style_decimal)
 
     def generate_xls_report(self, _p, _xs, data, objects, wb):
-        wl_ccs = _p.wanted_list_cost_control_sheet
+        # wl_ccs = _p.wanted_list_cost_control_sheet
         self.cost_control_sheet_template.update(
             _p.template_update_cost_control_sheet)
         fy = self.pool.get('account.fiscalyear').browse(
@@ -504,6 +511,7 @@ class CostControlSheetReportXls(report_xls):
         self.fiscalyear = fy
         self.projects = self.pool.get('project.project')
         self._cost_control_sheet_report(_p, _xs, data, objects, wb)
+
 
 CostControlSheetReportXls(
     'report.cost.control.sheet.xls',

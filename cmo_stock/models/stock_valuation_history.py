@@ -34,10 +34,15 @@ class StockHistory(models.Model):
                 product_categ_id,
                 SUM(quantity) as quantity,
                 date,
-                COALESCE(SUM(price_unit_on_quant * quantity) / NULLIF(SUM(quantity), 0), 0) as price_unit_on_quant,
-                case when source is null then picking_name else source end as source,
-                case when source is null then partner_id else supplier_id end as partner_id,
-                case when source is null then sp_operating_unit_id else po_operating_unit_id end as operating_unit_id
+                COALESCE(SUM(price_unit_on_quant * quantity) /
+                NULLIF(SUM(quantity), 0), 0) as price_unit_on_quant,
+                case when source is null
+                then picking_name else source end as source,
+                case when source is null
+                then partner_id else supplier_id end as partner_id,
+                case when source is null
+                then sp_operating_unit_id else po_operating_unit_id end
+                as operating_unit_id
                 FROM
                 ((SELECT
                     stock_move.id AS id,
@@ -58,24 +63,32 @@ class StockHistory(models.Model):
                 FROM
                     stock_move
                 JOIN
-                    stock_quant_move_rel on stock_quant_move_rel.move_id = stock_move.id
+                    stock_quant_move_rel on
+                    stock_quant_move_rel.move_id = stock_move.id
                 JOIN
-                    stock_quant as quant on stock_quant_move_rel.quant_id = quant.id
+                    stock_quant as quant on
+                    stock_quant_move_rel.quant_id = quant.id
                 JOIN
-                   stock_location dest_location ON stock_move.location_dest_id = dest_location.id
+                   stock_location dest_location ON
+                   stock_move.location_dest_id = dest_location.id
                 JOIN
-                    stock_location source_location ON stock_move.location_id = source_location.id
+                    stock_location source_location ON
+                    stock_move.location_id = source_location.id
                 JOIN
-                    product_product ON product_product.id = stock_move.product_id
+                    product_product ON
+                    product_product.id = stock_move.product_id
                 JOIN
-                    product_template ON product_template.id = product_product.product_tmpl_id
+                    product_template ON
+                    product_template.id = product_product.product_tmpl_id
                 FULL OUTER JOIN
                     stock_picking ON stock_move.picking_id = stock_picking.id
                 FULL OUTER JOIN
                     purchase_order ON stock_move.origin = purchase_order.name
-                WHERE quant.qty>0 AND stock_move.state = 'done' AND dest_location.usage in ('internal', 'transit')
+                WHERE quant.qty>0 AND stock_move.state = 'done'
+                AND dest_location.usage in ('internal', 'transit')
                   AND (
-                    not (source_location.company_id is null and dest_location.company_id is null) or
+                    not (source_location.company_id is null
+                    and dest_location.company_id is null) or
                     source_location.company_id != dest_location.company_id or
                     source_location.usage not in ('internal', 'transit'))
                 ) UNION ALL
@@ -98,27 +111,38 @@ class StockHistory(models.Model):
                 FROM
                     stock_move
                 JOIN
-                    stock_quant_move_rel on stock_quant_move_rel.move_id = stock_move.id
+                    stock_quant_move_rel on
+                    stock_quant_move_rel.move_id = stock_move.id
                 JOIN
-                    stock_quant as quant on stock_quant_move_rel.quant_id = quant.id
+                    stock_quant as quant on
+                    stock_quant_move_rel.quant_id = quant.id
                 JOIN
-                    stock_location source_location ON stock_move.location_id = source_location.id
+                    stock_location source_location ON
+                    stock_move.location_id = source_location.id
                 JOIN
-                    stock_location dest_location ON stock_move.location_dest_id = dest_location.id
+                    stock_location dest_location ON
+                    stock_move.location_dest_id = dest_location.id
                 JOIN
-                    product_product ON product_product.id = stock_move.product_id
+                    product_product ON
+                    product_product.id = stock_move.product_id
                 JOIN
-                    product_template ON product_template.id = product_product.product_tmpl_id
+                    product_template ON
+                    product_template.id = product_product.product_tmpl_id
                 FULL OUTER JOIN
-                    stock_picking ON stock_move.picking_id = stock_picking.id
+                    stock_picking ON
+                    stock_move.picking_id = stock_picking.id
                 FULL OUTER JOIN
                     purchase_order ON stock_move.origin = purchase_order.name
-                WHERE quant.qty>0 AND stock_move.state = 'done' AND source_location.usage in ('internal', 'transit')
+                WHERE quant.qty>0 AND stock_move.state = 'done' AND
+                source_location.usage in ('internal', 'transit')
                  AND (
-                    not (dest_location.company_id is null and source_location.company_id is null) or
+                    not (dest_location.company_id is null and
+                    source_location.company_id is null) or
                     dest_location.company_id != source_location.company_id or
                     dest_location.usage not in ('internal', 'transit'))
                 ))
                 AS foo
-                GROUP BY move_id, location_id, company_id, product_id, product_categ_id, date, source, picking_name, supplier_id, partner_id, po_operating_unit_id, sp_operating_unit_id
+                GROUP BY move_id, location_id, company_id, product_id,
+                product_categ_id, date, source, picking_name, supplier_id,
+                partner_id, po_operating_unit_id, sp_operating_unit_id
             )""")

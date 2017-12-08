@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-
-from openerp import fields, models, api
+from openerp import models, api
 
 
 class HrExpenseExpense(models.Model):
@@ -19,13 +18,13 @@ class HrExpenseExpense(models.Model):
 
     @api.model
     def fields_view_get(self, view_id=None, view_type='form',
-            toolbar=False,submenu=False):
+                        toolbar=False, submenu=False):
         res = super(HrExpenseExpense, self).fields_view_get(
             view_id, view_type, toolbar=toolbar, submenu=submenu)
         # HR Expense
-        if self._context.get('is_advance_clearing', False) is False and\
-                self._context.get('is_employee_advance', False) is False and\
-                self._context.get('default_is_advance_clearing', False) is False:
+        if not self._context.get('is_advance_clearing', False) and \
+                not self._context.get('is_employee_advance', False) and \
+                not self._context.get('default_is_advance_clearing', False):
             reports = [
                 u'HR/Expense',
             ]

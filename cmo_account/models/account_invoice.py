@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from openerp import fields, models, api
-from lxml import etree
 
 
 class AccountInvoice(models.Model):
@@ -61,13 +60,14 @@ class AccountInvoice(models.Model):
 class AccountInvoiceLine(models.Model):
     _inherit = "account.invoice.line"
 
-    state_related_invoice = fields.Selection([
-            ('draft', 'Draft'),
-            ('proforma', 'Pro-forma'),
-            ('proforma2', 'Pro-forma'),
-            ('open', 'Open'),
-            ('paid', 'Paid'),
-            ('cancel', 'Cancelled'),
-        ], string='Status',
-           related='invoice_id.state',
+    state_related_invoice = fields.Selection(
+        [('draft', 'Draft'),
+         ('proforma', 'Pro-forma'),
+         ('proforma2', 'Pro-forma'),
+         ('open', 'Open'),
+         ('paid', 'Paid'),
+         ('cancel', 'Cancelled'),
+         ],
+        string='Status',
+        related='invoice_id.state',
     )

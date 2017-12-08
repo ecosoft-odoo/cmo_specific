@@ -5,7 +5,6 @@ from openerp import models, fields, api
 class ProjectCloseReason(models.TransientModel):
     _name = 'project.close.reason'
 
-
     close_reason = fields.Selection(
         string='Close Reason',
         selection="_get_close_reason_list",
@@ -43,8 +42,7 @@ class ProjectCloseReason(models.TransientModel):
                 'reject_reason_id': self.reject_reason_id.id,
             })
             project.set_cancel()
-        elif self.close_reason == 'cancel' or \
-             self.close_reason == 'terminate':
+        elif self.close_reason == 'cancel' or self.close_reason == 'terminate':
             project.set_cancel()
         elif self.close_reason == 'close':
             project.set_done()
@@ -58,8 +56,7 @@ class ProjectCloseReason(models.TransientModel):
         vals = []
         if project_id:
             project = Project.browse(project_id[0])
-            if (project.state == "draft") or \
-               (project.state == "validate") :
+            if project.state == "draft" or project.state == "validate":
                 vals = [
                     ('reject', 'Reject'),
                     ('lost', 'Lost'),
