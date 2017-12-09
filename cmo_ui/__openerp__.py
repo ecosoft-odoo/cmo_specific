@@ -8,9 +8,10 @@
     'category': 'Tools',
     'version': '0.1.0',
     'depends': [
-
+        'web_m2x_options',
     ],
     'data': [
+        'data/system_params.xml',
         'views/login_view.xml',
     ],
     'demo': [
