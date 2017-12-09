@@ -18,6 +18,7 @@
         'project',
     ],
     "data": [
+        'wizard/account_tax_detail_view.xml',
         'views/product_view.xml',
         'views/account_view.xml',
     ],
