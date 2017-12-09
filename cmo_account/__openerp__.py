@@ -19,6 +19,7 @@
     ],
     "data": [
         'wizard/account_tax_detail_view.xml',
+        'wizard/edit_desc.xml',
         'views/product_view.xml',
         'views/account_view.xml',
     ],
