@@ -13,9 +13,9 @@ class AccountInvoice(models.Model):
         readonly=True,
         help="Reference project through sales order reference",
     )
-    project_ref_number = fields.Char(
-        related='project_ref_id.project_number',
-        string='Project Number',
+    project_ref_code = fields.Char(
+        related='project_ref_id.code',
+        string='Project Code',
         readonly=True,
     )
     project_ref_name = fields.Char(

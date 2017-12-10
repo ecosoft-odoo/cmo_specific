@@ -354,7 +354,7 @@ class CostControlSheetReportXls(report_xls):
 
         project_info = [
             'BU No. ' + project_id.operating_unit_id.name,
-            'Job: ' + project_id.project_number + ' ' + project_id.name,
+            'Job: ' + project_id.code + ' ' + project_id.name,
             'Event Date: ' +
             ('/'.join(project_id.date_start.split('-')) or '') + ' - ' +
             ('/'.join(project_id.date.split('-')) or ''),

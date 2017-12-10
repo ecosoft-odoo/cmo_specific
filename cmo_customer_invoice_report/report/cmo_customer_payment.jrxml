@@ -50,8 +50,8 @@
 	<field name="project_name" class="java.lang.String">
 		<fieldDescription><![CDATA[line_cr_ids/move_line_id/invoice/project_ref_name]]></fieldDescription>
 	</field>
-	<field name="project_number" class="java.lang.String">
-		<fieldDescription><![CDATA[line_cr_ids/move_line_id/invoice/project_ref_number]]></fieldDescription>
+	<field name="project_code" class="java.lang.String">
+		<fieldDescription><![CDATA[line_cr_ids/move_line_id/invoice/project_ref_code]]></fieldDescription>
 	</field>
 	<field name="quote_event_date" class="java.lang.String">
 		<fieldDescription><![CDATA[line_cr_ids/move_line_id/invoice/quote_ref_event_date]]></fieldDescription>
@@ -182,7 +182,7 @@ $F{partner_zip}]]></textFieldExpression>
 				<textElement>
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Project No. : " + $F{project_number} + "\n" +
+				<textFieldExpression class="java.lang.String"><![CDATA["Project No. : " + $F{project_code} + "\n" +
 "วันที่จัดงาน " + $F{quote_event_date} + "\n" +
 "สถานที่จัดงาน " + $F{quote_venue} + "\n" +
 $F{others_note}]]></textFieldExpression>

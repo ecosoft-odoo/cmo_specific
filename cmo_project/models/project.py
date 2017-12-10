@@ -7,6 +7,10 @@ from openerp.exceptions import ValidationError
 class ProjectProject(models.Model):
     _inherit = 'project.project'
 
+    code = fields.Char(
+        related='analytic_account_id.code',
+        help="For project.project, no default, and do sequence when created"
+    )
     use_tasks = fields.Boolean(
         default=False,
     )
@@ -130,12 +134,6 @@ class ProjectProject(models.Model):
         'res_competitor_rel', 'project_id', 'competitor_id',
         string='Competitors',
         states={'close': [('readonly', True)]},
-    )
-    project_number = fields.Char(
-        string='Project Code',
-        readonly=True,
-        states={'close': [('readonly', True)]},
-        copy=False,
     )
     project_member_ids = fields.One2many(
         'project.team.member',
@@ -313,17 +311,6 @@ class ProjectProject(models.Model):
                 else:
                     project.state = project.state_before_inactive
 
-    @api.model
-    def create(self, vals):
-        if vals.get('project_number', '/') == '/':
-            ctx = self._context.copy()
-            fiscalyear_id = self.env['account.fiscalyear'].find()
-            ctx["fiscalyear_id"] = fiscalyear_id
-            vals['project_number'] = self.env['ir.sequence'].\
-                with_context(ctx).get('cmo.project')  # create sequence number
-        project = super(ProjectProject, self).create(vals)
-        return project
-
     @api.multi
     def action_validate(self):
         res = self.write({'state': 'validate'})
@@ -484,8 +471,8 @@ class ProjectProject(models.Model):
         res = []
         for project in self:
             name = project.name or '/'
-            if name and project.project_number:
-                name = '[%s] %s' % (project.project_number, name)
+            if name and project.code:
+                name = '[%s] %s' % (project.code, name)
             res.append((project.id, name))
         return res
 

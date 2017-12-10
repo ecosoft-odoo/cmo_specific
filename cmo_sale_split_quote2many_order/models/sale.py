@@ -61,7 +61,7 @@ class sale_order(models.Model):
         description = '%s %s %s %s %s %s' % (
             self.name or '',
             self.date_order or '',
-            self.project_related_id.project_number or '',
+            self.project_related_id.code or '',
             self.project_related_id.name or '',
             self.event_date_description or '',
             self.venue_description or '',

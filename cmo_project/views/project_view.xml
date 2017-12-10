@@ -19,7 +19,7 @@
             <field name="inherit_id" ref="project.view_project_project_filter"/>
             <field name="arch" type="xml">
                   <field name="partner_id" position="after">
-                      <field name="project_number" string="Project Number"/>
+                      <field name="code" string="Project Code"/>
                   </field>
                   <xpath expr="//field[@name='name']" position="before">
                         <filter string="Latest" name="Latest" domain="[('date_start','&gt;',(context_today()-relativedelta(months=6)).strftime('%%Y-%%m-01'))]"/>
@@ -73,7 +73,7 @@
             <field name="inherit_id" ref="project.view_project"/>
             <field name="arch" type="xml">
               <xpath expr="/tree/field[@name='name']" position="before">
-                  <field name="project_number"/>
+                  <field name="code"/>
               </xpath>
               <xpath expr="/tree/field[@name='user_id']" position="attributes">
                   <attribute name="invisible">1</attribute>
@@ -120,7 +120,7 @@
             <field eval="17" name="priority"/>
             <field name="arch" type="xml">
                 <tree string="Projects">
-                    <field name="project_number"/>
+                    <field name="code"/>
                     <field name="name"/>
                     <field name="state"/>
                 </tree>
@@ -216,28 +216,34 @@
                 <xpath expr="//p" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
-                <xpath expr="//div[@name='buttons']" position="after">
-                    <div class="oe_right oe_button_box" name="sale_purchase_buttons" groups="base.group_user">
-                        <button class="oe_inline oe_stat_button" type="object" name="quotation_relate_project_tree_view" icon="fa-strikethrough" groups="base.group_sale_salesman,base.group_sale_salesman_all_leads,project.group_project_readonly">
-                            <field string="Sale Quotation" name="quote_related_count" widget="statinfo"/>
-                        </button>
-                        <button class="oe_inline oe_stat_button" type="object" name="purchase_relate_project_tree_view" icon="fa-shopping-cart" groups="purchase.group_purchase_user,project.group_project_readonly">
-                            <field string="Purchase Order" name="purchase_related_count" widget="statinfo"/>
-                        </button>
-                        <button class="oe_inline oe_stat_button" type="object" name="invoice_relate_project_tree_view" icon="fa-pencil-square-o" groups="project.group_project_readonly">
-                            <field string="Invoices" name="out_invoice_count" widget="statinfo"/>
-                        </button>
-                    </div>
+                <xpath expr="//div[@name='buttons']" position="inside">
+                    <button class="oe_inline oe_stat_button" type="object" name="quotation_relate_project_tree_view" icon="fa-strikethrough" groups="base.group_sale_salesman,base.group_sale_salesman_all_leads,project.group_project_readonly">
+                        <field string="Sale Quotation" name="quote_related_count" widget="statinfo"/>
+                    </button>
+                    <button class="oe_inline oe_stat_button" type="object" name="purchase_relate_project_tree_view" icon="fa-shopping-cart" groups="purchase.group_purchase_user,project.group_project_readonly">
+                        <field string="Purchase Order" name="purchase_related_count" widget="statinfo"/>
+                    </button>
+                    <button class="oe_inline oe_stat_button" type="object" name="invoice_relate_project_tree_view" icon="fa-pencil-square-o" groups="project.group_project_readonly">
+                        <field string="Invoices" name="out_invoice_count" widget="statinfo"/>
+                    </button>
                 </xpath>
                 <!-- install project portal group_alias will be hiden -->
                 <group name="group_alias" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </group>
-                <xpath expr="//field[@name='analytic_account_id']" position="before">
-                      <h1>
-                          <label for="name" string="Project Number"/>
-                          <field name="project_number" string="Project Number" class="oe_inline" readonly="1"/>
-                      </h1>
+                <xpath expr="//field[@name='use_tasks']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//label[@for='name']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="placeholder">Project Name</attribute>
+                </xpath>
+                <xpath expr="//label[@for='name']" position="before">
+                    <h1>
+                        <field name="code" string="Project Code" readonly="1"/>
+                    </h1>
                 </xpath>
                 <xpath expr="//group/group/field[@string='Project Manager']" position="attributes">
                       <attribute name="invisible">1</attribute>

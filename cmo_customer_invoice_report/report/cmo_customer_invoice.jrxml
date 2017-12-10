@@ -50,8 +50,8 @@
 	<field name="project_name" class="java.lang.String">
 		<fieldDescription><![CDATA[project_ref_name]]></fieldDescription>
 	</field>
-	<field name="project_number" class="java.lang.String">
-		<fieldDescription><![CDATA[project_ref_number]]></fieldDescription>
+	<field name="project_code" class="java.lang.String">
+		<fieldDescription><![CDATA[code]]></fieldDescription>
 	</field>
 	<field name="quote_event_date" class="java.lang.String">
 		<fieldDescription><![CDATA[quote_ref_event_date]]></fieldDescription>

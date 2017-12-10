@@ -45,8 +45,8 @@
 	<field name="product name" class="java.lang.String">
 		<fieldDescription><![CDATA[order_line/product_id/name]]></fieldDescription>
 	</field>
-	<field name="project_number" class="java.lang.String">
-		<fieldDescription><![CDATA[project_related_id/project_number]]></fieldDescription>
+	<field name="project_code" class="java.lang.String">
+		<fieldDescription><![CDATA[project_related_id/code]]></fieldDescription>
 	</field>
 	<field name="customer" class="java.lang.String">
 		<fieldDescription><![CDATA[partner_id/name]]></fieldDescription>
@@ -241,7 +241,7 @@ $P{REPORT_LOCALE}.toString() == "en_US" ? "Before Management Fee" : "รวม�
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="SansSerif" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{project_number}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{project_code}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="79" y="115" width="455" height="20"/>

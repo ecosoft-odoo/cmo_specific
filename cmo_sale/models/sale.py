@@ -134,12 +134,12 @@ class SaleOrder(models.Model):
     def _compute_before_management_fee(self):
         total = sum(self.order_line.filtered(
             lambda r: r.order_lines_group == 'before'
-            ).mapped(lambda r: r.product_uom_qty * r.price_unit))
+        ).mapped(lambda r: r.product_uom_qty * r.price_unit))
         self.amount_before_management_fee = total
 
     @api.multi
     @api.onchange('project_related_id')
-    def _onchange_project_number(self):
+    def _onchange_project(self):
         for sale_order in self:
             project = self.env['project.project']\
                 .browse(sale_order.project_related_id.id)
