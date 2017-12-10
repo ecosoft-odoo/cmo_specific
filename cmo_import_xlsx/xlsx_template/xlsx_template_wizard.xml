@@ -15,5 +15,13 @@
                      'template_context': {}}"/>
         </record>
 
+        <act_window id="action_journal_entry_export_xlsx_tempalte"
+            name="Export JE (.xlsx)"
+            res_model="export.xlsx.template"
+            src_model="account.move"
+            view_mode="form"
+            target="new"/>
+
+
     </data>
 </openerp>

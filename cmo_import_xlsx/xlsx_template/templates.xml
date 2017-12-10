@@ -18,6 +18,24 @@
             <field name="parent_id" eval="ref('dir_journal_entry_template')"/>
             <field name="description">
               {
+                '__EXPORT__': {
+                    'MasterData': {
+                        '_HEAD_': {
+                        },
+                        'list_account_ids': {
+                            'B3': 'code',
+                            'C3': 'name',
+                        },
+                        'list_ou_ids': {
+                            'E3': 'code',
+                            'F3': 'name',
+                        },
+                        'list_project_ids': {
+                            'H3': 'code',
+                            'I3': 'name',
+                        },
+                    },
+                },
                 '__IMPORT__': {
                     1: {
                         '_HEAD_': {
