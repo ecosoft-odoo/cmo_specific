@@ -36,6 +36,8 @@
         "l10n_th_account_pnd_form",
         "l10n_th_account_tax_detail",
         "l10n_th_address",
+        "account_pettycash",
+        "account_cancel_reversal",
         "web_m2x_options",
         "web_hideleftmenu",
         "web_sheet_full_width",

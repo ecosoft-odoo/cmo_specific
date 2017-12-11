@@ -15,9 +15,10 @@
         'cmo_project',
     ],
     'data': [
-        'views/hr_level_validation_view.xml',
-        'workflow/hr_level_validation_workflow.xml',
         'data/level_validation_data.xml',
+        'workflow/hr_level_validation_workflow.xml',
+        'views/hr_level_validation_view.xml',
+        'views/product_view.xml',
     ],
     'demo': [
     ],

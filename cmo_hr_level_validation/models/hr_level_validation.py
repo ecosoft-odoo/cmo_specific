@@ -15,7 +15,8 @@ class HrExpenseExpense(models.Model):
     )
     approver_ids = fields.Many2many(
         'res.users',
-        'hr_approver_rel', 'expense_id', 'user_id',
+        'hr_approver_rel',
+        'expense_id', 'user_id',
         string='Approver',
         track_visibility='onchange',
         copy=False,
@@ -25,15 +26,7 @@ class HrExpenseExpense(models.Model):
         compute='_compute_approve_permission',
     )
     state = fields.Selection(
-        selection=[
-            ('draft', 'New'),
-            ('cancelled', 'Refused'),
-            ('confirm', 'Waiting Approval'),
-            ('validate', 'Waiting Validate'),
-            ('accepted', 'Approved'),
-            ('done', 'Waiting Payment'),
-            ('paid', 'Paid'),
-        ],
+        selection_add=[('validate', 'Waiting Validate')],
     )
 
     @api.multi
@@ -123,14 +116,13 @@ class HrExpenseExpense(models.Model):
         product_lines = self.env['hr.expense.line'].search([
             ('expense_id', '=', self.id)
         ]).mapped('product_id')
-        hr_category_id = self.env['product.category'].search([
-            ('name', 'like', 'HR Products'),
-        ])
-        hr_product = product_lines.filtered(
-            lambda r: r.categ_id == hr_category_id
+        hr_categories = self.env['product.category'].search([('hr_product',
+                                                              '=', True)])
+        hr_products = product_lines.filtered(
+            lambda r: r.categ_id in hr_categories
         )
         group_hr = self.env.ref('base.group_hr_manager')
-        if hr_product and self.env.user not in group_hr.users:
-            raise ValidationError(_("Your user is not allowed to "
+        if hr_products and self.env.user not in group_hr.users:
+            raise ValidationError(_("You are not allowed to "
                                     "validate this document."))
         return res

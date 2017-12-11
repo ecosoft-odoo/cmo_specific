@@ -78,10 +78,11 @@ class HrExpenseExpense(models.Model):
         self.bank_transfer_ref = False
         self.ac_payee_ref = False
 
-    @api.multi
-    def action_validate(self):
-        res = self.write({'state': 'validate'})
-        return res
+    # This one is already in cmo_hr_level_validation
+    # @api.multi
+    # def action_validate(self):
+    #     res = self.write({'state': 'validate'})
+    #     return res
 
     @api.onchange('employee_id')
     def _onchange_hr_department(self):
