@@ -2,11 +2,11 @@
 <openerp>
     <data>
         <record id="cmo_customer_refund" model="ir.actions.report.xml">
-           <field name="string">Customer/Refund</field>
+           <field name="string">Credit Note/Tax Invoice</field>
            <field name="auto">True</field>
            <field name="model">account.invoice</field>
            <field name="jasper_model_id" ref="account.model_account_invoice"/>
-           <field name="name">Customer/Refund</field>
+           <field name="name">Credit Note/Tax Invoice</field>
            <field name="report_name">cmo.customer.refund</field>
            <field name="report_rml">cmo_customer_invoice_report/report/cmo_customer_refund.jrxml</field>
            <field name="force_locale">en_US</field>
@@ -16,18 +16,18 @@
            <field name="jasper_output">pdf</field>
         </record>
         <record id="cmo_customer_refund_values" model="ir.values">
-           <field name="name">Customer/Refund</field>
+           <field name="name">Credit Note/Tax Invoice</field>
            <field name="model">account.invoice</field>
            <field name="key2" eval="'client_print_multi'"/>
            <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_customer_refund)"/>
         </record>
 
         <record id="cmo_customer_invoice" model="ir.actions.report.xml">
-           <field name="string">Customer/Invoice</field>
+           <field name="string">Invoice</field>
            <field name="auto">True</field>
            <field name="model">account.invoice</field>
            <field name="jasper_model_id" ref="account.model_account_invoice"/>
-           <field name="name">Customer/Invoice</field>
+           <field name="name">Invoice</field>
            <field name="report_name">cmo.customer.invoice</field>
            <field name="report_rml">cmo_customer_invoice_report/report/cmo_customer_invoice.jrxml</field>
            <field name="force_locale">en_US</field>
@@ -37,18 +37,18 @@
            <field name="jasper_output">pdf</field>
         </record>
         <record id="cmo_customer_invoice_values" model="ir.values">
-           <field name="name">Customer/Invoice</field>
+           <field name="name">Invoice</field>
            <field name="model">account.invoice</field>
            <field name="key2" eval="'client_print_multi'"/>
            <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_customer_invoice)"/>
         </record>
 
         <record id="cmo_customer_invoice2" model="ir.actions.report.xml">
-           <field name="string">Customer/Invoice(Project)</field>
+           <field name="string">Invoice (Project)</field>
            <field name="auto">True</field>
            <field name="model">account.invoice</field>
            <field name="jasper_model_id" ref="account.model_account_invoice"/>
-           <field name="name">Customer/Invoice(Project)</field>
+           <field name="name">Invoice (Project)</field>
            <field name="report_name">cmo.customer.invoice2</field>
            <field name="report_rml">cmo_customer_invoice_report/report/cmo_customer_invoice2.jrxml</field>
            <field name="force_locale">en_US</field>
@@ -58,18 +58,18 @@
            <field name="jasper_output">pdf</field>
         </record>
         <record id="cmo_customer_invoice2_values" model="ir.values">
-           <field name="name">Customer/Invoice(Project)</field>
+           <field name="name">Invoice (Project)</field>
            <field name="model">account.invoice</field>
            <field name="key2" eval="'client_print_multi'"/>
            <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_customer_invoice2)"/>
         </record>
 
         <record id="cmo_customer_payment" model="ir.actions.report.xml">
-           <field name="string">Customer/Payment</field>
+           <field name="string">Receipt/Tax Invoice</field>
            <field name="auto">True</field>
            <field name="model">account.voucher</field>
            <field name="jasper_model_id" ref="account.model_account_invoice"/>
-           <field name="name">Customer/Payment</field>
+           <field name="name">Receipt/Tax Invoice</field>
            <field name="report_name">cmo.customer.payment</field>
            <field name="report_rml">cmo_customer_invoice_report/report/cmo_customer_payment.jrxml</field>
            <field name="force_locale">en_US</field>
@@ -79,7 +79,7 @@
            <field name="jasper_output">pdf</field>
         </record>
         <record id="cmo_customer_payment_values" model="ir.values">
-           <field name="name">Customer/Payment</field>
+           <field name="name">Receipt/Tax Invoice</field>
            <field name="model">account.voucher</field>
            <field name="key2" eval="'client_print_multi'"/>
            <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_customer_payment)"/>
@@ -87,11 +87,11 @@
         <delete id="account.account_invoices" model="ir.actions.report.xml"/>
 
         <record id="cmo_supplier_payment_cheque" model="ir.actions.report.xml">
-           <field name="string">Supplier/Payment(Cheque)</field>
+           <field name="string">BBL Cheque</field>
            <field name="auto">True</field>
            <field name="model">account.voucher</field>
            <field name="jasper_model_id" ref="account.model_account_invoice"/>
-           <field name="name">Supplier/Payment(Cheque)</field>
+           <field name="name">BBL Cheque</field>
            <field name="report_name">cmo.supplier.payment.cheque</field>
            <field name="report_rml">cmo_customer_invoice_report/report/cmo_supplier_payment_cheque.jrxml</field>
            <field name="force_locale">th_TH</field>
@@ -101,18 +101,18 @@
            <field name="jasper_output">pdf</field>
         </record>
         <record id="cmo_supplier_payment_cheque_values" model="ir.values">
-           <field name="name">Supplier/Payment(Cheque)</field>
+           <field name="name">BBL Cheque</field>
            <field name="model">account.voucher</field>
            <field name="key2" eval="'client_print_multi'"/>
            <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_supplier_payment_cheque)"/>
         </record>
 
         <record id="cmo_supplier_payment_voucher" model="ir.actions.report.xml">
-           <field name="string">Payment/Voucher</field>
+           <field name="string">Payment Voucher</field>
            <field name="auto">True</field>
            <field name="model">account.voucher</field>
            <field name="jasper_model_id" ref="account.model_account_invoice"/>
-           <field name="name">Payment/Voucher</field>
+           <field name="name">Payment Voucher</field>
            <field name="report_name">cmo.supplier.payment.voucher</field>
            <field name="report_rml">cmo_customer_invoice_report/report/cmo_supplier_payment_voucher.jrxml</field>
            <field name="force_locale">th_TH</field>
@@ -122,18 +122,18 @@
            <field name="jasper_output">pdf</field>
         </record>
         <record id="cmo_supplier_payment_voucher_values" model="ir.values">
-           <field name="name">Payment/Voucher</field>
+           <field name="name">Payment Voucher</field>
            <field name="model">account.voucher</field>
            <field name="key2" eval="'client_print_multi'"/>
            <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_supplier_payment_voucher)"/>
         </record>
 
         <record id="cmo_supplier_billing" model="ir.actions.report.xml">
-           <field name="string">Supplier Billing</field>
+           <field name="string">Billing</field>
            <field name="auto">True</field>
            <field name="model">supplier.billing</field>
            <field name="jasper_model_id" ref="account_supplier_billing.model_supplier_billing"/>
-           <field name="name">Supplier Billing</field>
+           <field name="name">Billing</field>
            <field name="report_name">cmo.supplier.billing</field>
            <field name="report_rml">cmo_customer_invoice_report/report/cmo_supplier_billing.jrxml</field>
            <field name="force_locale">th_TH</field>
@@ -143,7 +143,7 @@
            <field name="jasper_output">pdf</field>
         </record>
         <record id="cmo_supplier_billing_values" model="ir.values">
-           <field name="name">Supplier Billing</field>
+           <field name="name">Billing</field>
            <field name="model">supplier.billing</field>
            <field name="key2" eval="'client_print_multi'"/>
            <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_supplier_billing)"/>

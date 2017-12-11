@@ -2,11 +2,11 @@
 <openerp>
     <data>
         <record id="cmo_sale_order" model="ir.actions.report.xml">
-           <field name="string">Quotation/Order (Eng)</field>
+           <field name="string">Quotation (Eng)</field>
            <field name="auto">True</field>
            <field name="model">sale.order</field>
            <field name="jasper_model_id" ref="sale.model_sale_order"/>
-           <field name="name">Quotation/Order (Eng)</field>
+           <field name="name">Quotation (Eng)</field>
            <field name="report_name">cmo.sale.order</field>
            <field name="report_rml">cmo_sale_report/report/cmo_sale_order.jrxml</field>
            <field name="force_locale">en_US</field>
@@ -16,18 +16,18 @@
            <field name="jasper_output">pdf</field>
         </record>
         <record id="cmo_sale_order_values" model="ir.values">
-           <field name="name">Quotation/Order (Eng)</field>
+           <field name="name">Quotation (Eng)</field>
            <field name="model">sale.order</field>
            <field name="key2" eval="'client_print_multi'"/>
            <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_sale_order)"/>
         </record>
 
         <record id="cmo_sale_order_th" model="ir.actions.report.xml">
-           <field name="string">Quotation/Order (TH)</field>
+           <field name="string">Quotation (Thai)</field>
            <field name="auto">True</field>
            <field name="model">sale.order</field>
            <field name="jasper_model_id" ref="sale.model_sale_order"/>
-           <field name="name">Quotation/Order (TH)</field>
+           <field name="name">Quotation (Thai)</field>
            <field name="report_name">cmo.sale.order.th</field>
            <field name="report_rml">cmo_sale_report/report/cmo_sale_order.jrxml</field>
            <field name="force_locale">th_TH</field>
@@ -37,7 +37,7 @@
            <field name="jasper_output">pdf</field>
         </record>
         <record id="cmo_sale_order_values_th" model="ir.values">
-           <field name="name">Quotation/Order (TH)</field>
+           <field name="name">Quotation (Thai)</field>
            <field name="model">sale.order</field>
            <field name="key2" eval="'client_print_multi'"/>
            <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_sale_order_th)"/>
