@@ -1,0 +1,172 @@
+"id","name","cost_method","sale_ok","hr_expense_ok","purchase_ok","sale_layout_cat_id","management_fee","lst_price","categ_id","type","property_account_income","taxes_id","property_account_expense","supplier_taxes_id"
+"base.hr_product_1","Team Building","Standard Price","FALSE","TRUE","FALSE",,,,"HR Products","service","502700 ค่าอบรมสัมนา",,"502700 ค่าอบรมสัมนา",
+"base.hr_product_2","ค่ารถ - Team Building","Standard Price","FALSE","TRUE","FALSE",,,,"HR Products","service","502700 ค่าอบรมสัมนา",,"502700 ค่าอบรมสัมนา","PWHT1"
+"base.hr_product_3","ค่าที่จอดรถ - Project","Standard Price","FALSE","TRUE","FALSE",,,,"HR Products","service","5001-14 ต้นทุน - ค่าพาหนะ",,"5001-14 ต้นทุน - ค่าพาหนะ",
+"base.hr_product_4","ค่าน้ำมัน - Project","Standard Price","FALSE","TRUE","FALSE",,,,"HR Products","service","5001-14 ต้นทุน - ค่าพาหนะ",,"5001-14 ต้นทุน - ค่าพาหนะ",
+"base.hr_product_5","ค่า TAXI - Project","Standard Price","FALSE","TRUE","FALSE",,,,"HR Products","service","5001-14-1 ต้นทุน- ค่าTAXI",,"5001-14-1 ต้นทุน- ค่าTAXI",
+"base.hr_product_6","ค่าทางด่วน - Project","Standard Price","FALSE","TRUE","FALSE",,,,"HR Products","service","5001-14-2 ต้นทุน - ค่าทางด่วน",,"5001-14-2 ต้นทุน - ค่าทางด่วน",
+"base.hr_product_7","ค่าที่จอดรถ - ส่วนกลาง","Standard Price","FALSE","TRUE","FALSE",,,,"HR Products","service","500700 ค่าใช้จ่ายพาหนะและเดินทาง",,"500700 ค่าใช้จ่ายพาหนะและเดินทาง",
+"base.hr_product_8","ค่าน้ำมัน - ส่วนกลาง","Standard Price","FALSE","TRUE","FALSE",,,,"HR Products","service","500700 ค่าใช้จ่ายพาหนะและเดินทาง",,"500700 ค่าใช้จ่ายพาหนะและเดินทาง",
+"base.hr_product_9","ค่า TAXI - ส่วนกลาง","Standard Price","FALSE","TRUE","FALSE",,,,"HR Products","service","5007-1 ค่าใช้จ่าย - ค่า TAXI",,"5007-1 ค่าใช้จ่าย - ค่า TAXI",
+"base.hr_product_10","ค่าทางด่วน - ส่วนกลาง","Standard Price","FALSE","TRUE","FALSE",,,,"HR Products","service","5007-2 ค่าใช้จ่าย - ค่าทางด่วน",,"5007-2 ค่าใช้จ่าย - ค่าทางด่วน",
+"base.hr_product_11","ค่า TAXI - เดินทางอบรม","Standard Price","FALSE","TRUE","FALSE",,,,"HR Products","service","502700 ค่าอบรมสัมนา",,"502700 ค่าอบรมสัมนา",
+"base.hr_product_12","ค่าทางด่วน - เดินทางอบรม","Standard Price","FALSE","TRUE","FALSE",,,,"HR Products","service","502700 ค่าอบรมสัมนา",,"502700 ค่าอบรมสัมนา",
+"base.product_homepro_1","ค่าบริการส่วนกลาง","Standard Price","TRUE","FALSE","FALSE","Homepro",,,"Homepro","service","4013-26 รายได้ - ค่าบริการส่วนกลาง","DS7,IWHT3",,
+"base.product_homepro_2","ค่าบริการโทรศัพท์ชั่วคราว","Standard Price","TRUE","FALSE","FALSE","Homepro",,,"Homepro","service","4013-27 รายได้ - ค่าบริการโทรศัพท์","DS7,IWHT3",,
+"base.product_homepro_3","ค่าจ่ายน้ำ และน้ำทิ้ง","Standard Price","TRUE","FALSE","FALSE","Homepro",,,"Homepro","service","4013-28 รายได้ - ค่าบริการจ่ายน้ำและน้ำทิ้ง","DS7,IWHT3",,
+"base.product_homepro_4","ค่าบริการคูหามาตรฐาน","Standard Price","TRUE","FALSE","FALSE","Homepro",,,"Homepro","service","4013-29 รายได้ - ค่าติดตั้งบูธ","DS7,IWHT3",,
+"base.product_homepro_5","ค่าอุปกรณ์ไฟก่อสร้างและรื้อถอน","Standard Price","TRUE","FALSE","FALSE","Homepro",,,"Homepro","service","4013-31 รายได้ - ค่าไฟก่อสร้างรื้อถอน","DS7,IWHT3",,
+"base.product_homepro_6","ค่าบริการอุปกรณ์ไฟฟ้า/กระแสไฟฟ้า","Standard Price","TRUE","FALSE","FALSE","Homepro",,,"Homepro","service","4013-25 รายได้ - ค่าติดตั้งอุปกรณ์ไฟฟ้า","DS7,IWHT3",,
+"base.product_homepro_7","ค่าบริการ Internet Leased Line","Standard Price","TRUE","FALSE","FALSE","Homepro",,,"Homepro","service","4013-27 รายได้ - ค่าบริการโทรศัพท์","DS7,IWHT3",,
+"base.product_homepro_8","ค่าบริการทำความสะอาด","Standard Price","TRUE","FALSE","FALSE","Homepro",,,"Homepro","service","4013-12 รายได้ค่าบริการอื่นๆ","DS7,IWHT3",,
+"base.product_homepro_9","ค่าบริการพรมอัดสีเทาปูพื้น","Standard Price","TRUE","FALSE","FALSE","Homepro",,,"Homepro","service","4013-12 รายได้ค่าบริการอื่นๆ","DS7,IWHT3",,
+"base.product_homepro_10","ค่าบริการตู้ Container","Standard Price","TRUE","FALSE","FALSE","Homepro",,,"Homepro","service","4013-12 รายได้ค่าบริการอื่นๆ","DS7,IWHT3",,
+"base.product_homepro_11","ค่าธงราวประดับคูหา","Standard Price","TRUE","FALSE","FALSE","Homepro",,,"Homepro","service","4013-12 รายได้ค่าบริการอื่นๆ","DS7,IWHT3",,
+"base.product_project_cost_1","ค่าโครงสร้างและตกแต่ง","Standard Price","FALSE","FALSE","TRUE",,,,"Project Cost","service",,,"5001-01 ต้นทุน - ค่าตกแต่ง","D7,PWHT3"
+"base.product_project_cost_2","ค่าบริการ/ค่าเช่าอุปกรณ์","Standard Price","FALSE","FALSE","TRUE",,,,"Project Cost","service",,,"5001-03 ต้นทุน - ค่าบริการเช่าอุปกรณ์","D7,PWHT3"
+"base.product_project_cost_3","ค่าจัดแสดงและกิจกรรม","Standard Price","FALSE","FALSE","TRUE",,,,"Project Cost","service",,,"5001-04 ต้นทุน - ค่าจัดการแสดงและกิจกรรม","D7,PWHT3"
+"base.product_project_cost_4","ค่าติดตั้งอุปกรณ์ ภาพแสงเสียง","Standard Price","FALSE","FALSE","TRUE",,,,"Project Cost","service",,,"5001-05 ต้นทุน - ค่าจัดแสดงแสงเสียง","D7,PWHT3"
+"base.product_project_cost_5","ค่าใช้จ่ายในการดำเนินงาน","Standard Price","FALSE","FALSE","TRUE",,,,"Project Cost","service",,,"5001-06 ต้นทุน - ค่าใช้จ่ายในการดำเนินงาน","D7,PWHT3"
+"base.product_project_cost_6","ค่าจัดทำซาวน์โปรดักส์ชั่น","Standard Price","FALSE","FALSE","TRUE",,,,"Project Cost","service",,,"5001-09 ต้นทุน - ค่าจัดทำซาวน์โปรดักส์ชั่น","D7,PWHT3"
+"base.product_project_cost_7","ค่าบริการอื่นๆ","Standard Price","FALSE","FALSE","TRUE",,,,"Project Cost","service",,,"5001-12 ต้นทุน - ค่าบริการอื่นๆ","D7,PWHT3"
+"base.product_project_cost_8","ค่าจ้างประสานงาน","Standard Price","FALSE","FALSE","TRUE",,,,"Project Cost","service",,,"5001-13 ต้นทุน - ค่าจ้างประสานงาน","D7,PWHT3"
+"base.product_project_cost_9","ค่าพาหนะ","Standard Price","FALSE","FALSE","TRUE",,,,"Project Cost","service",,,"5001-14 ต้นทุน - ค่าพาหนะ",
+"base.product_project_cost_10","ค่า TAXI","Standard Price","FALSE","FALSE","TRUE",,,,"Project Cost","service",,,"5001-14-1 ต้นทุน- ค่าTAXI",
+"base.product_project_cost_11","ค่าทางด่วน","Standard Price","FALSE","FALSE","TRUE",,,,"Project Cost","service",,,"5001-14-2 ต้นทุน - ค่าทางด่วน",
+"base.product_project_cost_12","ค่าตั๋วเครื่องบิน","Standard Price","FALSE","FALSE","TRUE",,,,"Project Cost","service",,,"5001-14-3 ต้นทุน- ค่าตั๋วเครื่องบิน",
+"base.product_project_cost_13","ค่าจ้างช่างถ่ายภาพ","Standard Price","FALSE","FALSE","TRUE",,,,"Project Cost","service",,,"5001-15 ต้นทุน - ค่าถ่ายภาพ","PWHT3"
+"base.product_project_cost_14","ค่าจ้าง Staff","Standard Price","FALSE","FALSE","TRUE",,,,"Project Cost","service",,,"5001-16 ต้นทุน - ค่าจ้าง Staff","PWHT3"
+"base.product_project_cost_15","ค่าอาหารและเครื่องดื่ม","Standard Price","FALSE","FALSE","TRUE",,,,"Project Cost","service",,,"5001-19 ต้นทุน - ค่าอาหารและเครื่องดื่ม",
+"base.product_project_cost_16","ค่าจัดทำมีเดียพรีเซนเตชั่น","Standard Price","FALSE","FALSE","TRUE",,,,"Project Cost","service",,,"5001-21 ต้นทุนงาน - Multimedia Presentation","D7,PWHT3"
+"base.product_project_cost_17","ค่าบริการสถานที่","Standard Price","FALSE","FALSE","TRUE",,,,"Project Cost","service",,,"5001-23 ต้นทุนงาน - ค่าบริการสถานที่",
+"base.product_project_cost_18","ค่าเช่า Walkie-Talkie","Standard Price","FALSE","FALSE","TRUE",,,,"Project Cost","service",,,"5001-25 ต้นทุนงาน - ค่าเช่าWalkie-Talkie","PWHT3"
+"base.product_project_cost_19","ค่าเช่าเครื่องปั่นไฟ","Standard Price","FALSE","FALSE","TRUE",,,,"Project Cost","service",,,"5001-26 ต้นทุนงาน - ค่าเช่าเครื่องปั่นไฟ","D7,PWHT3"
+"base.product_project_cost_20","ค่า Printing","Standard Price","FALSE","FALSE","TRUE",,,,"Project Cost","service",,,"5001-31 ต้นทุนงาน- Printing","D7,PWHT3"
+"base.product_project_cost_21","ค่าGraphic & Inkjet","Standard Price","FALSE","FALSE","TRUE",,,,"Project Cost","service",,,"5001-32 ต้นทุนงาน-Graphic & Inkjet","D7,PWHT3"
+"base.product_project_cost_22","Accommodations","Standard Price","FALSE","FALSE","TRUE",,,,"Project Cost","service",,,"5001-33 ต้นทุนงาน - Accommodations","D7"
+"base.product_project_cost_23","ค่าขนส่ง","Standard Price","FALSE","FALSE","TRUE",,,,"Project Cost","service",,,"5001-34 ต้นทุนงาน- ค่าขนส่ง","PWHT1"
+"base.product_project_cost_24","ค่าติดตั้งอุปกรณ์ไฟฟ้า/ไฟฟ้า","Standard Price","FALSE","FALSE","TRUE",,,,"Project Cost","service",,,"5001-36 ต้นทุนงาน - ค่าติดตั้งอุปกรณ์ไฟฟ้า/ไฟฟ้า","D7,PWHT3"
+"base.product_project_cost_25","ค่าโฆษณาประชาสัมพันธ์","Standard Price","FALSE","FALSE","TRUE",,,,"Project Cost","service",,,"5001-37 ต้นทุนงาน -โฆษณาประชาสัมพันธ์","D7,PWHT2"
+"base.product_project_cost_26","ค่า Bid งาน","Standard Price","FALSE","FALSE","TRUE",,,,"Project Cost","service",,,"5001-38 ต้นทุนงาน - BID งาน",
+"base.product_project_1","Construction & Decoration","Standard Price","TRUE","FALSE","FALSE","Construction & Decoration","FALSE",,"Project","service","4013-01 รายได้ค่าบริการตกแต่ง","DS7,IWHT3",,
+"base.product_project_2","Graphic & Inkjet","Standard Price","TRUE","FALSE","FALSE","Construction & Decoration","FALSE",,"Project","service","4013-21 รายได้ค่าบริการ-Graphic & Inkjet","DS7,IWHT3",,
+"base.product_project_3","Lighting and Sound system","Standard Price","TRUE","FALSE","FALSE","Lighting and Sound system","FALSE",,"Project","service","4013-05 รายได้ค่าแสดงแสงสีเสียง","DS7,IWHT3",,
+"base.product_project_4","Equipment Rental","Standard Price","TRUE","FALSE","FALSE","Media and Equipment Rental ","FALSE",,"Project","service","4013-03 รายได้ค่าบริการเช่าอุปกรณ์","DS7,IWHT3",,
+"base.product_project_5","Sound Production","Standard Price","TRUE","FALSE","FALSE","Media and Equipment Rental ","FALSE",,"Project","service","4013-09 รายได้ค่าบริการจัดทำซาวน์โปรดักส์ชั่น","DS7,IWHT3",,
+"base.product_project_6","Media Presentation","Standard Price","TRUE","FALSE","FALSE","Media and Equipment Rental ","FALSE",,"Project","service","4013-19 รายได้ค่าบริการ - จัดทำมีเดียส์พรีเซนเตชั่น","DS7,IWHT3",,
+"base.product_project_7","Activity and Entertainment","Standard Price","TRUE","FALSE","FALSE","Activity and Entertainment","FALSE",,"Project","service","4013-04 รายได้ค่าจัดหาการแสดง","DS7,IWHT3",,
+"base.product_project_8","Photographer","Standard Price","TRUE","FALSE","FALSE","Other","FALSE",,"Project","service","4013-14 รายได้ค่าบริการถ่ายภาพ","DS7,IWHT3",,
+"base.product_project_9","Staff","Standard Price","TRUE","FALSE","FALSE","Other","FALSE",,"Project","service","4013-15 รายได้ค่าบริการจัดหาสตาฟท์","DS7,IWHT3",,
+"base.product_project_10","Food and Beverage","Standard Price","TRUE","FALSE","FALSE","Other","FALSE",,"Project","service","4013-17 รายได้ค่าบริการจัดหาอาหารและเครื่องดื่ม","DS7,IWHT3",,
+"base.product_project_11","Accommodations","Standard Price","TRUE","FALSE","FALSE","Other","FALSE",,"Project","service","4013-20 รายได้ค่าบริการ- Accommodations","DS7,IWHT3",,
+"base.product_project_12","Printing Ads.","Standard Price","TRUE","FALSE","FALSE","Other","FALSE",,"Project","service","4013-22 รายได้ค่าบริการ- Printing","DS7,IWHT3",,
+"base.product_project_13","Location Services","Standard Price","TRUE","FALSE","FALSE","Other","FALSE",,"Project","service","4013-23 รายได้ค่าบริการ-สถานที่","DS7,IWHT3",,
+"base.product_project_14","PR Fee","Standard Price","TRUE","FALSE","FALSE","Other","FALSE",,"Project","service","4013-24 รายได้ - ค่าประชาสัมพันธ์","DS7,IWHT3",,
+"base.product_project_15","Other","Standard Price","TRUE","FALSE","FALSE","Other","FALSE",,"Project","service","4013-12 รายได้ค่าบริการอื่นๆ","DS7,IWHT3",,
+"base.product_project_16","Management and Operation Fee","Standard Price","TRUE","FALSE","FALSE","Management and Operation Fee","TRUE",,"Project","service","4013-06 รายได้ค่าบริการดำเนินงาน","DS7,IWHT3",,
+"base.product_expense_product_1","เงินประกัน","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"113000 เงินมัดจำอื่น",
+"base.product_expense_product_2","ค่าเช่า","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"500900 ค่าเช่า","D7,CWHT3"
+"base.product_expense_product_3","ค่าไฟฟ้า","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"501000 ค่าไฟฟ้า","D7"
+"base.product_expense_product_4","ค่าน้ำประปา","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"501100 ค่าน้ำประปา","D7"
+"base.product_expense_product_5","ค่าโทรศัพท์","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"501200 ค่าโทรศัพท์","D7,CWHT3"
+"base.product_expense_product_6","ค่าเครื่องเขียนแบบพิมพ์","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"501400 ค่าเครื่องเขียนแบบพิมพ์","V7,CWHT3"
+"base.product_expense_product_7","ค่าใช้จ่ายสำนักงาน","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"501500 ค่าใช้จ่ายสำนักงาน","V7"
+"base.product_expense_product_8","ค่ารับรอง","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"501600 ค่ารับรอง",
+"base.product_expense_product_9","ค่าวารสารหนังสือ","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"501700 ค่าวารสารหนังสือ",
+"base.product_expense_product_10","ค่าวัสดุอุปกรณ์","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"501900 ค่าวัสดุอุปกรณ์","V7"
+"base.product_expense_product_11","ค่าเบี้ยประกันภัย","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"502500 ค่าเบี้ยประกันภัย","D7,CWHT1"
+"base.product_expense_product_12","ค่าซ่อมแซมบำรุงรักษา","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"502600 ค่าซ่อมแซมบำรุงรักษา","D7,CWHT3"
+"base.product_expense_product_13","ค่ารักษาความปลอดภัย","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"502800 ค่ารักษาความปลอดภัย","D7,CWHT3"
+"base.product_expense_product_14","ค่าบริจาคการกุศล","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"503100 ค่าบริจาคการกุศล",
+"base.product_expense_product_15","ค่าใช้จ่ายปีใหม่","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"503200 ค่าใช้จ่ายปีใหม่",
+"base.product_expense_product_16","เงินประกันสังคมส่วนของนายจ้าง","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"504100 เงินประกันสังคมส่วนของนายจ้าง",
+"base.product_expense_product_17","ค่าสอบบัญชี","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"504700 ค่าสอบบัญชี","D7,CWHT3"
+"base.product_expense_product_18","ค่าบริการอินเทอร์เนต","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"505200 ค่าบริการอินเทอร์เนต","D7,CWHT3"
+"base.product_expense_product_19","ค่าตอบแทนกรรมการ","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"505700 ค่าตอบแทนกรรมการ","CWHT1"
+"base.product_expense_product_20","ค่าตอบแทนกรรมการ - คุณเสริมคุณ","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"505700 ค่าตอบแทนกรรมการ","CWHT3"
+"base.product_expense_product_21","ค่าธรรมเนียมบ.ศูนย์รับฝากหลักทรัพย์","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"505800 ค่าธรรมเนียมบ.ศูนย์รับฝากหลักทรัพย์","D7,CWHT3"
+"base.product_expense_product_22","ค่าใช้จ่ายในการประชุมผู้ถือหุ้น","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"506000 ค่าใช้จ่ายในการประชุมผู้ถือหุ้น","D7,CWHT3"
+"base.product_expense_product_23","เงินสนับสนุนงานแสดงศิลปะ","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"506300 เงินสนับสนุนงานแสดงศิลปะ","D7,CWHT3"
+"base.product_expense_product_24","ค่าบริการและค่าเช่าพื้นที่ - หอศิลป","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"506300 เงินสนับสนุนงานแสดงศิลปะ","D7,CWHT1"
+"base.product_expense_product_25","ค่าอบรมพัฒนา - ดูงานต่างประเทศ","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5027-2 ค่าอบรมพัฒนา - ดูงานต่างประเทศ",
+"base.product_expense_product_26","ค่าเงินสมทบกองทุนทดแทน","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5030-1 ค่าเงินสมทบกองทุนทดแทน",
+"base.product_expense_product_27","เงินสบทมกองทุนส่งเสริมและพัฒนาคนพิการ","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5030-2 เงินสบทมกองทุนส่งเสริมและพัฒนาคนพิการ",
+"base.product_expense_product_28","เงินสมทบกองทุนสำรองเลี้ยงชีพ PVF","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5041-1 เงินสมทบกองทุนสำรองเลี้ยงชีพ PVF",
+"base.product_expense_product_29","คชจ.จากประมาณการตามหลักคณิตศาสตร์ประกันภัย","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5041-2 คชจ.จากประมาณการตามหลักคณิตศาสตร์ประกันภัย",
+"base.product_expense_product_30","ต้นทุน - ค่าใช้จ่ายยานพาหนะ","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5008-01 ต้นทุน - ค่าใช้จ่ายยานพาหนะ",
+"base.product_expense_product_31","ต้นทุน - ค่าเช่า","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5009-01 ต้นทุน - ค่าเช่า","D7,CWHT3"
+"base.product_expense_product_32","ต้นทุน - ค่าวัสดุอุปกรณ์","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5019-01 ต้นทุน - ค่าวัสดุอุปกรณ์",
+"base.product_expense_product_33","ต้นทุน - ภาษีซื้อไม่ขอคืนแต่ถือเป็นคชจ","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5034-3 ต้นทุน - ภาษีซื้อไม่ขอคืนแต่ถือเป็นคชจ",
+"base.product_expense_product_34","ต้นทุน-ค่าตอบแทนผู้บริหาร","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5051-1 ต้นทุน-ค่าตอบแทนผู้บริหาร",
+"base.product_expense_product_35","ค่าใช้จ่าย - ค่าตั๋วเครื่องบิน","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5007-3 ค่าใช้จ่าย - ค่าตั๋วเครื่องบิน","D7"
+"base.product_expense_product_36","ค่าโฆษณาประชาสัมพันธ์","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5018-1 ค่าโฆษณาประชาสัมพันธ์","D7,CWHT2"
+"base.product_expense_product_37","ค่าส่งเสริมการขาย","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5018-2 ค่าส่งเสริมการขาย","D7,CWHT3"
+"base.product_expense_product_38","รถตู้ออฟฟิศ","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"500800 ค่าใช้จ่ายยานพาหนะ","CWHT3"
+"base.product_expense_product_39","รถอัลผาด","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"500800 ค่าใช้จ่ายยานพาหนะ","CWHT3"
+"base.product_expense_product_40","รถจากัวร์","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"500800 ค่าใช้จ่ายยานพาหนะ","CWHT3"
+"base.product_expense_product_41","ค่าไปรษณีย์โทรเลข","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5013ขข ค่าไปรษณีย์โทรเลข",
+"base.product_expense_product_42","ค่าใช้จ่ายเพื่อการบริการสถานที่","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5015-01 ค่าใช้จ่ายเพื่อการบริการสถานที่","D7,CWHT3"
+"base.product_expense_product_43","ค่าโฆษณาและส่งเสริมการขาย","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"501800 ค่าโฆษณาและส่งเสริมการขาย","D7,CWHT2"
+"base.product_expense_product_44","ค่าธรรมเนียมธนาคาร","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"502000 ค่าธรรมเนียมธนาคาร",
+"base.product_expense_product_45","ค่าธรรมเนียมอื่น","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5020-1 ค่าธรรมเนียมอื่น",
+"base.product_expense_product_46","ค่าธรรมเนียมภาษีอากร","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"502100 ค่าธรรมเนียมภาษีอากร",
+"base.product_expense_product_47","ค่าคอมมิชชั่น","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"502200 ค่าคอมมิชชั่น","CWHT3"
+"base.product_expense_product_48","ค่าที่ปรึกษา","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5023-1 ค่าที่ปรึกษา","D7,CWHT3"
+"base.product_expense_product_49","ค่าใช้จ่ายจัดตั้งบริษัท","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"502900 ค่าใช้จ่ายจัดตั้งบริษัท",
+"base.product_expense_product_50","เงินสบทบกองทุน","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"503000 เงินสบทบกองทุน",
+"base.product_expense_product_51","ค่าใช้จ่ายเที่ยวประจำปี","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5032-1 ค่าใช้จ่ายเที่ยวประจำปี",
+"base.product_expense_product_52","ค่าใช้จ่ายทำบุญบริษัท","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5032-2 ค่าใช้จ่ายทำบุญบริษัท",
+"base.product_expense_product_53","ค่าใช้จ่ายที่ไม่ถือเป็นค่าใช้จ่าย","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"503400 ค่าใช้จ่ายที่ไม่ถือเป็นค่าใช้จ่าย",
+"base.product_expense_product_54","ภาษีซื้อไม่ขอคืน","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5034-1 ภาษีซื้อไม่ขอคืน",
+"base.product_expense_product_55","ภาษีซื้อไม่ขอคืนแต่ถือเป็นคชจ.","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5034-2 ภาษีซื้อไม่ขอคืนแต่ถือเป็นคชจ.",
+"base.product_expense_product_56","ค่าใช้จ่ายเบ็ดเตล็ด","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"503500 ค่าใช้จ่ายเบ็ดเตล็ด",
+"base.product_expense_product_57","ดอกเบี้ยจ่าย","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"503600 ดอกเบี้ยจ่าย","CWHT1"
+"base.product_expense_product_58","ดอกเบี้ยจ่าย - ขายลดลูกหนี้","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5036-2 ดอกเบี้ยจ่าย - ขายลดลูกหนี้",
+"base.product_expense_product_59","ส่วนลดจ่าย","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"503700 ส่วนลดจ่าย",
+"base.product_expense_product_60","ภาษีเงินได้นิติบุคคล","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"503800 ภาษีเงินได้นิติบุคคล",
+"base.product_expense_product_61","ขาดทุนจากการจำหน่ายทรัพย์สิน","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"503900 ขาดทุนจากการจำหน่ายทรัพย์สิน",
+"base.product_expense_product_62","ค่าใช้จ่ายสรรหาบุคลากร","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"504300 ค่าใช้จ่ายสรรหาบุคลากร","D7,CWHT2"
+"base.product_expense_product_63","ขาดทุนจากอัตราแลกเปลี่ยน","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"504500 ขาดทุนจากอัตราแลกเปลี่ยน",
+"base.product_expense_product_64","ค่าบริการดูแลรักษาความสะอาด","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"504600 ค่าบริการดูแลรักษาความสะอาด","D7,CWHT3"
+"base.product_expense_product_65","ขาดทุนจากการลงทุน","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"505600 ขาดทุนจากการลงทุน",
+"base.product_expense_product_66","ค่าใช้จ่ายจัดหาข้อมูลและข่าวสาร","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"505900 ค่าใช้จ่ายจัดหาข้อมูลและข่าวสาร","D7,CWHT3"
+"base.product_expense_product_67","ค่าธรรมเนียม กลต.และตลาดหลักทรัพย์","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"506100 ค่าธรรมเนียม กลต.และตลาดหลักทรัพย์","D7,CWHT3"
+"base.product_expense_product_68","ดอกเบี้ยจ่าย- บริษัทเกี่ยวข้องกัน","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5036-1 ดอกเบี้ยจ่าย- บริษัทเกี่ยวข้องกัน","CWHT1"
+"base.product_expense_product_69","ต้นทุน - เงินเดือน","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5003-1 ต้นทุน - เงินเดือน",
+"base.product_expense_product_70","ต้นทุน - เงินเดือนอื่น","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5003-2 ต้นทุน - เงินเดือนอื่น",
+"base.product_expense_product_71","ต้นทุน - ค่าเบี้ยเลี้ยงโอที","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5004-1 ต้นทุน - ค่าเบี้ยเลี้ยงโอที",
+"base.product_expense_product_72","ต้นทุน - ค่าเบี้ยเลี้ยงโอที อื่น","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5004-2 ต้นทุน - ค่าเบี้ยเลี้ยงโอที อื่น",
+"base.product_expense_product_73","ต้นทุน-ค่าโบนัส","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5005-1 ต้นทุน-ค่าโบนัส",
+"base.product_expense_product_74","ต้นทุน - ค่าสวัสดิการเนื่องจากตำแหน่ง","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5006-2 ต้นทุน - ค่าสวัสดิการเนื่องจากตำแหน่ง",
+"base.product_expense_product_75","เงินเดือนและค่าจ้าง","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"500300 เงินเดือนและค่าจ้าง",
+"base.product_expense_product_76","ค่าล่วงเวลาและเบี้ยเลี้ยง","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"500400 ค่าล่วงเวลาและเบี้ยเลี้ยง",
+"base.product_expense_product_77","ค่าธรรมเนียมธนาคาร","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"502000 ค่าธรรมเนียมธนาคาร",
+"base.product_expense_product_78","ค่าโบนัส","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"500500 ค่าโบนัส",
+"base.product_expense_product_79","ค่าสวัสดิการเนื่องจากตำแหน่ง","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"5006-1 ค่าสวัสดิการเนื่องจากตำแหน่ง",
+"base.product_expense_product_80","สวัสดิการของเยี่ยมพนักงาน","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"500600 สวัสดิการพนักงาน",
+"base.product_expense_product_81","สวัสดิการงานศพบิดา/มารดา","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"500600 สวัสดิการพนักงาน",
+"base.product_expense_product_82","สวัสดิการงานแต่งงาน","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"500600 สวัสดิการพนักงาน",
+"base.product_expense_product_83","สวัสดิการตรวจสุขภาพ","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"500600 สวัสดิการพนักงาน",
+"base.product_expense_product_84","สวัสดิการค่าอาหารทีม","Standard Price","FALSE","TRUE","TRUE",,,,"Expense Products","service",,,"500600 สวัสดิการพนักงาน",
+"base.product_other_income_1","กำไรจากการจำหน่ายเงินลงทุน","Standard Price","TRUE","FALSE","FALSE",,,,"Other Income","service","4040-01 กำไรจากการจำหน่ายเงินลงทุน",,,
+"base.product_other_income_2","กำไรจากการจำหน่ายทรัพย์สิน","Standard Price","TRUE","FALSE","FALSE",,,,"Other Income","service","404000 กำไรจากการจำหน่ายทรัพย์สิน","DS7",,
+"base.product_other_income_3","กำไรจากอัตราแลกเปลี่ยน","Standard Price","TRUE","FALSE","FALSE",,,,"Other Income","service","405000 กำไรจากอัตราแลกเปลี่ยน",,,
+"base.product_other_income_4","ค่าน้ำมันผู้บริหาร","Standard Price","TRUE","FALSE","FALSE",,,,"Other Income","service","111000 ลูกหนี้อื่น",,,
+"base.product_other_income_5","เงินปันผล","Standard Price","TRUE","FALSE","FALSE",,,,"Other Income","service","403600 รายได้เงินปันผล",,,
+"base.product_other_income_6","เงินมัดจำรับ","Standard Price","TRUE","FALSE","FALSE",,,,"Other Income","service","210900 เงินมัดจำรับ",,,
+"base.product_other_income_7","ดอกเบี้ยรับ","Standard Price","TRUE","FALSE","FALSE",,,,"Other Income","service","403700 ดอกเบี้ยรับ","IWHT1",,
+"base.product_other_income_8","ดอกเบี้ยรับ-บริษัทที่เกี่ยวข้องกัน","Standard Price","TRUE","FALSE","FALSE",,,,"Other Income","service","4037-1 ดอกเบี้ยรับ-บริษัทที่เกี่ยวข้องกัน","IWHT1",,
+"base.product_other_income_9","รายได้ค่าความนิยม","Standard Price","TRUE","FALSE","FALSE",,,,"Other Income","service","4039-2 รายได้ค่าความนิยม",,,
+"base.product_other_income_10","รายได้อื่น (Non Vat)","Standard Price","TRUE","FALSE","FALSE",,,,"Other Income","service","403900 รายได้อื่น (Non Vat)",,,
+"base.product_other_income_11","รับเงินค่าบัตรพนักงาน","Standard Price","TRUE","FALSE","FALSE",,,,"Other Income","service","403900 รายได้อื่น (Non Vat)",,,
+"base.product_other_income_12","รายได้อื่น มี VAT","Standard Price","TRUE","FALSE","FALSE",,,,"Other Income","service","4039-1 รายได้อื่น มี VAT","DS7",,
+"base.product_other_income_13","ส่วนได้เสียจากการลงทุน","Standard Price","TRUE","FALSE","FALSE",,,,"Other Income","service","4039-3 ส่วนได้เสียจากการลงทุน",,,
+"base.product_other_income_14","ส่วนแบ่งผลกำไรจากการดำเนินงาน","Standard Price","TRUE","FALSE","FALSE",,,,"Other Income","service","405100 ส่วนแบ่งผลกำไรจากการดำเนินงาน",,,
+"base.product_other_income_15","ส่วนลดรับ","Standard Price","TRUE","FALSE","FALSE",,,,"Other Income","service","403800 ส่วนลดรับ",,,
+"base.product_other_income_16","Marketing Fee","Standard Price","TRUE","FALSE","FALSE",,,,"Other Income","service","405200 รายได้อื่น - บริษัทในเครือ","DS7,IWHT3",,
+"base.product_other_income_17","บริการสถานที่-บริษัทในเครือ","Standard Price","TRUE","FALSE","FALSE",,,,"Other Income","service","405200 รายได้อื่น - บริษัทในเครือ","IWHT3",,
+"base.product_other_income_18","บริการสถานที่","Standard Price","TRUE","FALSE","FALSE",,,,"Other Income","service","4039-4 รายได้อื่น - บริการสถานที่","IWHT3",,
+"base.product_other_income_19","ประสานงานทางการตลาด-Rebate บริษัทในเครือ","Standard Price","TRUE","FALSE","FALSE",,,,"Other Income","service","405200 รายได้อื่น - บริษัทในเครือ","IWHT3",,
+"base.product_other_income_20","ประสานงานทางการตลาด-Rebate Suppliers","Standard Price","TRUE","FALSE","FALSE",,,,"Other Income","service","403900 รายได้อื่น (Non Vat)","IWHT3",,
+"base.product_other_income_21","หนี้สงสัยจะสูญรับคืน","Standard Price","TRUE","FALSE","FALSE",,,,"Other Income","service","405400 หนี้สงสัยจะสูญรับคืน",,,
+"base.product_other_income_22","ค่าบริการวิชาชีพ","Standard Price","TRUE","FALSE","FALSE",,,,"Other Income","service","405200 รายได้อื่น - บริษัทในเครือ","IWHT3",,

@@ -1,0 +1,4 @@
+"id","name","po_project","invoice_method","category_id/id"
+"base.purchase_order_type_config_stationary","Stationary","False","picking","base.product_category_stationary"
+"base.purchase_order_type_config_po_project","PO Project","True","order","base.product_category_project_cost"
+"base.purchase_order_type_config_service","Service","False","order","base.product_category_expense_product"

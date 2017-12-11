@@ -14,6 +14,8 @@
     ],
     'data': [
         'product/product.category.csv',
+        'purchase/purchase.order.type.config.csv',
+        'sale/sale_layout.category.csv',
     ],
     'demo': [
     ],

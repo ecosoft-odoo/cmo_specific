@@ -1,0 +1,8 @@
+"id","name","subtotal","separator","pagebreak","management_fee","sequence"
+"base.sale_layout_category_construction","Construction & Decoration","True","True","False","False","10"
+"base.sale_layout_category_lighting","Lighting and Sound system","True","True","False","False","20"
+"base.sale_layout_category_media","Media and Equipment Rental ","True","True","False","False","30"
+"base.sale_layout_category_activity","Activity and Entertainment","True","True","False","False","40"
+"base.sale_layout_category_other","Other","True","True","False","False","50"
+"base.sale_layout_category_mgnt","Management and Operation Fee","True","True","False","True","60"
+"base.sale_layout_category_homepro","Homepro","True","True","False","False","70"
