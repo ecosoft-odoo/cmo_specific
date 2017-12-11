@@ -12,12 +12,12 @@ class AccountAsset(models.Model):
     )
     purchase_date = fields.Date(
         string='Purchase Date',
-        required=True,
+        required=False,
         copy=False,
     )
     purchase_move_id = fields.Many2one(
         'account.move',
-        string='Purchase move',
+        string='Purchase Move',
         readonly=True,
     )
     operating_unit_id = fields.Many2one(
