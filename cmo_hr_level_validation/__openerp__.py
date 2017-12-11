@@ -12,6 +12,7 @@
         'hr_expense_advance_clearing',
         'hr_expense_operating_unit',
         'cmo_level_validation',
+        'cmo_project',
     ],
     'data': [
         'views/hr_level_validation_view.xml',

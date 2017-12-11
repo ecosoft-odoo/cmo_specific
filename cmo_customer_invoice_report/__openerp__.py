@@ -13,6 +13,7 @@
     'category': 'Tools',
     "version": "1.0",
     'depends': [
+        'account_supplier_billing',
         'report',
         'cmo_account',
     ],

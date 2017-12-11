@@ -12,8 +12,9 @@
     "license": "AGPL-3",
     "depends": [
         'stock_operating_unit',
+        'purchase_operating_unit',
         'stock_account',
-        'project',
+        'cmo_project',
     ],
     "data": [
         'data/stock_data.xml',
