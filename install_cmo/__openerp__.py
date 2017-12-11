@@ -54,6 +54,8 @@
         "sale_discount_total",
         "account_asset_management",
         # CMO Specific
+        "account_asset_depreciation_xls",
+        "account_asset_management_enhanced",
         "cmo_account",
         "cmo_account_bank_receipt",
         "cmo_constrain_enhance",

@@ -6,16 +6,19 @@
             <field name="model">wiz.cost.control.sheet.report</field>
             <field name="arch" type="xml">
                 <form string="Cost control Sheet report">
-                  <group col="2" colspan="4">
-                    <field name="fiscalyear_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
-                    <field name="project_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
-                  </group>
-                  <footer>
-                    <button name="xls_export" icon="gtk-execute" string="Generate Report" type="object"
-                            context="{'xls_export':1}" default_focus="1" class="oe_highlight"/>
-                    or
-                    <button string="Cancel" class="oe_link" special="cancel" />
-                  </footer>
+                    <group>
+                        <group>
+                            <field name="fiscalyear_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
+                        </group>
+                        <group>
+                            <field name="project_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="xls_export" icon="gtk-execute" string="Generate Report" type="object" context="{'xls_export':1}" default_focus="1" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
                 </form>
             </field>
         </record>
@@ -30,10 +33,6 @@
             <field name="target">new</field>
         </record>
 
-        <menuitem id="wiz_cost_control_sheet_report_menu"
-                  name="Cost Constrol Sheet"
-                  parent="base.menu_project_report"
-                  action="wiz_cost_control_sheet_report_action"
-                  sequence="50"/>
+        <menuitem id="wiz_cost_control_sheet_report_menu" name="Cost Constrol Sheet" parent="base.menu_project_report" action="wiz_cost_control_sheet_report_action" sequence="50"/>
     </data>
 </openerp>
