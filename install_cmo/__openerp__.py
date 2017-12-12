@@ -55,6 +55,7 @@
         "web_translate_dialog",
         "sale_discount_total",
         "account_asset_management",
+        "meta_group",
         # CMO Specific
         "account_asset_depreciation_xls",
         "account_asset_management_enhanced",
