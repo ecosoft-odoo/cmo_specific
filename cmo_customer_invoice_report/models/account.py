@@ -42,7 +42,9 @@ class AccountInvoice(models.Model):
         elif self._context.get('default_type', False) == 'in_invoice' and\
                 self._context.get('type', False) == 'in_invoice' and\
                 self._context.get('journal_type', False) == 'purchase':
-            reports = []
+            reports = [
+                u'cmo.purchase.daybook',
+            ]
             filter_print_report(res, reports)
         # Suplier Refund
         elif self._context.get('default_type', False) == 'in_refund' and\

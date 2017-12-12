@@ -24,6 +24,7 @@ class HrExpenseExpense(models.Model):
         # HR Expense
         if not self._context.get('is_advance_clearing', False) and \
                 not self._context.get('is_employee_advance', False) and \
+                self._context.get('default_pay_to', False) != 'pettycash' and \
                 not self._context.get('default_is_advance_clearing', False):
             reports = [
                 u'cmo.hr.expense',
@@ -40,6 +41,14 @@ class HrExpenseExpense(models.Model):
         elif self._context.get('default_is_employee_advance', False) is False \
                 and self._context.get('default_is_advance_clearing', False) \
                 and self._context.get('is_advance_clearing', False):
-            reports = []
+            reports = [
+                u'cmo.hr.clearing',
+            ]
+            filter_print_report(res, reports)
+        # HR Pettycash
+        elif self._context.get('default_pay_to', False) == 'pettycash':
+            reports = [
+                u'cmo.hr.pettycash',
+            ]
             filter_print_report(res, reports)
         return res
