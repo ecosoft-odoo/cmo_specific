@@ -15,7 +15,7 @@
     'data': [
         # 'product/product.category.csv',
         # 'product/product.product.csv',
-        'purchase/purchase.order.type.config.csv',
+        # 'purchase/purchase.order.type.config.csv',
         'sale/sale_layout.category.csv',
         # 'users/res.users.csv',
         # 'users/hr.employee.csv',
