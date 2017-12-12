@@ -1,55 +1,55 @@
 "id","operating_unit_id","doctype","level","limit_amount","user_ids"
-"base.advance_level_validation_1","CEO OFFICE(CEO)","employee_advance","1","50000.0",
-"base.advance_level_validation_2","CEO OFFICE(CEO)","employee_advance","2","300000.0",
-"base.advance_level_validation_3","CEO OFFICE(CEO)","employee_advance","3","99999999.0",
-"base.advance_level_validation_4","CMEX","employee_advance","1","50000.0",
-"base.advance_level_validation_5","CMEX","employee_advance","2","300000.0",
-"base.advance_level_validation_6","CMEX","employee_advance","3","99999999.0",
-"base.advance_level_validation_7","Museum","employee_advance","1","50000.0",
-"base.advance_level_validation_8","Museum","employee_advance","2","300000.0",
-"base.advance_level_validation_9","Museum","employee_advance","3","99999999.0",
-"base.advance_level_validation_10","Information Technology","employee_advance","1","50000.0",
-"base.advance_level_validation_11","Information Technology","employee_advance","2","300000.0",
-"base.advance_level_validation_12","Information Technology","employee_advance","3","99999999.0",
-"base.advance_level_validation_13","Odyssey","employee_advance","1","50000.0",
-"base.advance_level_validation_14","Odyssey","employee_advance","2","300000.0",
-"base.advance_level_validation_15","Odyssey","employee_advance","3","99999999.0",
-"base.advance_level_validation_16","CM Play","employee_advance","1","50000.0",
-"base.advance_level_validation_17","CM Play","employee_advance","2","300000.0",
-"base.advance_level_validation_18","CM Join","employee_advance","3","99999999.0",
-"base.advance_level_validation_19","CM Join","employee_advance","1","50000.0",
-"base.advance_level_validation_20","CM Join","employee_advance","2","300000.0",
-"base.advance_level_validation_21","CM Play","employee_advance","3","99999999.0",
-"base.advance_level_validation_22","Business Development","employee_advance","1","50000.0",
-"base.advance_level_validation_23","Business Development","employee_advance","2","300000.0",
-"base.advance_level_validation_24","Business Development","employee_advance","3","99999999.0",
-"base.advance_level_validation_25","CM One","employee_advance","1","50000.0",
-"base.advance_level_validation_26","CM One","employee_advance","2","300000.0",
-"base.advance_level_validation_27","CM One","employee_advance","3","99999999.0",
-"base.advance_level_validation_28","Finance&Accounting","employee_advance","1","50000.0",
-"base.advance_level_validation_29","Finance&Accounting","employee_advance","2","300000.0",
-"base.advance_level_validation_30","Finance&Accounting","employee_advance","3","99999999.0",
-"base.advance_level_validation_31","Facility Management","employee_advance","1","50000.0",
-"base.advance_level_validation_32","Facility Management","employee_advance","2","300000.0",
-"base.advance_level_validation_33","Facility Management","employee_advance","3","99999999.0",
-"base.advance_level_validation_34","Human Resource","employee_advance","1","50000.0",
-"base.advance_level_validation_35","Human Resource","employee_advance","2","300000.0",
-"base.advance_level_validation_36","Human Resource","employee_advance","3","99999999.0",
-"base.advance_level_validation_37","IT ISSUE","employee_advance","1","50000.0",
-"base.advance_level_validation_38","IT ISSUE","employee_advance","2","300000.0",
-"base.advance_level_validation_39","IT ISSUE","employee_advance","3","99999999.0",
-"base.advance_level_validation_40","FM ISSUE","employee_advance","1","50000.0",
-"base.advance_level_validation_41","FM ISSUE","employee_advance","2","300000.0",
-"base.advance_level_validation_42","FM ISSUE","employee_advance","3","99999999.0",
-"base.advance_level_validation_43","Legal","employee_advance","1","50000.0",
-"base.advance_level_validation_44","Legal","employee_advance","2","300000.0",
-"base.advance_level_validation_45","Legal","employee_advance","3","99999999.0",
-"base.advance_level_validation_46","Internal Audit","employee_advance","1","50000.0",
-"base.advance_level_validation_47","Internal Audit","employee_advance","2","300000.0",
-"base.advance_level_validation_48","Internal Audit","employee_advance","3","99999999.0",
-"base.advance_level_validation_49","Bangkok Sculpture","employee_advance","1","50000.0",
-"base.advance_level_validation_50","Bangkok Sculpture","employee_advance","2","300000.0",
-"base.advance_level_validation_51","Bangkok Sculpture","employee_advance","3","99999999.0",
-"base.advance_level_validation_52","Corporate Communications","employee_advance","1","50000.0",
-"base.advance_level_validation_53","Corporate Communications","employee_advance","2","300000.0",
-"base.advance_level_validation_54","Corporate Communications","employee_advance","3","99999999.0",
+"base.advance_level_validation_1","CEO OFFICE(CEO)","employee_advance","1","50000.0","admin"
+"base.advance_level_validation_2","CEO OFFICE(CEO)","employee_advance","2","300000.0","admin"
+"base.advance_level_validation_3","CEO OFFICE(CEO)","employee_advance","3","99999999.0","admin"
+"base.advance_level_validation_4","CMEX","employee_advance","1","50000.0","admin"
+"base.advance_level_validation_5","CMEX","employee_advance","2","300000.0","admin"
+"base.advance_level_validation_6","CMEX","employee_advance","3","99999999.0","admin"
+"base.advance_level_validation_7","Museum","employee_advance","1","50000.0","admin"
+"base.advance_level_validation_8","Museum","employee_advance","2","300000.0","admin"
+"base.advance_level_validation_9","Museum","employee_advance","3","99999999.0","admin"
+"base.advance_level_validation_10","Information Technology","employee_advance","1","50000.0","admin"
+"base.advance_level_validation_11","Information Technology","employee_advance","2","300000.0","admin"
+"base.advance_level_validation_12","Information Technology","employee_advance","3","99999999.0","admin"
+"base.advance_level_validation_13","Odyssey","employee_advance","1","50000.0","admin"
+"base.advance_level_validation_14","Odyssey","employee_advance","2","300000.0","admin"
+"base.advance_level_validation_15","Odyssey","employee_advance","3","99999999.0","admin"
+"base.advance_level_validation_16","CM Play","employee_advance","1","50000.0","admin"
+"base.advance_level_validation_17","CM Play","employee_advance","2","300000.0","admin"
+"base.advance_level_validation_18","CM Join","employee_advance","3","99999999.0","admin"
+"base.advance_level_validation_19","CM Join","employee_advance","1","50000.0","admin"
+"base.advance_level_validation_20","CM Join","employee_advance","2","300000.0","admin"
+"base.advance_level_validation_21","CM Play","employee_advance","3","99999999.0","admin"
+"base.advance_level_validation_22","Business Development","employee_advance","1","50000.0","admin"
+"base.advance_level_validation_23","Business Development","employee_advance","2","300000.0","admin"
+"base.advance_level_validation_24","Business Development","employee_advance","3","99999999.0","admin"
+"base.advance_level_validation_25","CM One","employee_advance","1","50000.0","admin"
+"base.advance_level_validation_26","CM One","employee_advance","2","300000.0","admin"
+"base.advance_level_validation_27","CM One","employee_advance","3","99999999.0","admin"
+"base.advance_level_validation_28","Finance&Accounting","employee_advance","1","50000.0","admin"
+"base.advance_level_validation_29","Finance&Accounting","employee_advance","2","300000.0","admin"
+"base.advance_level_validation_30","Finance&Accounting","employee_advance","3","99999999.0","admin"
+"base.advance_level_validation_31","Facility Management","employee_advance","1","50000.0","admin"
+"base.advance_level_validation_32","Facility Management","employee_advance","2","300000.0","admin"
+"base.advance_level_validation_33","Facility Management","employee_advance","3","99999999.0","admin"
+"base.advance_level_validation_34","Human Resource","employee_advance","1","50000.0","admin"
+"base.advance_level_validation_35","Human Resource","employee_advance","2","300000.0","admin"
+"base.advance_level_validation_36","Human Resource","employee_advance","3","99999999.0","admin"
+"base.advance_level_validation_37","IT ISSUE","employee_advance","1","50000.0","admin"
+"base.advance_level_validation_38","IT ISSUE","employee_advance","2","300000.0","admin"
+"base.advance_level_validation_39","IT ISSUE","employee_advance","3","99999999.0","admin"
+"base.advance_level_validation_40","FM ISSUE","employee_advance","1","50000.0","admin"
+"base.advance_level_validation_41","FM ISSUE","employee_advance","2","300000.0","admin"
+"base.advance_level_validation_42","FM ISSUE","employee_advance","3","99999999.0","admin"
+"base.advance_level_validation_43","Legal","employee_advance","1","50000.0","admin"
+"base.advance_level_validation_44","Legal","employee_advance","2","300000.0","admin"
+"base.advance_level_validation_45","Legal","employee_advance","3","99999999.0","admin"
+"base.advance_level_validation_46","Internal Audit","employee_advance","1","50000.0","admin"
+"base.advance_level_validation_47","Internal Audit","employee_advance","2","300000.0","admin"
+"base.advance_level_validation_48","Internal Audit","employee_advance","3","99999999.0","admin"
+"base.advance_level_validation_49","Bangkok Sculpture","employee_advance","1","50000.0","admin"
+"base.advance_level_validation_50","Bangkok Sculpture","employee_advance","2","300000.0","admin"
+"base.advance_level_validation_51","Bangkok Sculpture","employee_advance","3","99999999.0","admin"
+"base.advance_level_validation_52","Corporate Communications","employee_advance","1","50000.0","admin"
+"base.advance_level_validation_53","Corporate Communications","employee_advance","2","300000.0","admin"
+"base.advance_level_validation_54","Corporate Communications","employee_advance","3","99999999.0","admin"

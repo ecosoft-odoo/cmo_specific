@@ -54,20 +54,20 @@ class StockMove(models.Model):
         domain=lambda self: [
             ('operating_unit_id', 'in', self.env.user.operating_unit_ids.ids)],
     )
-    location_dest_id = fields.Many2one(
-        'stock.location',
-        default=lambda self: self._get_location_dest_id(),
-    )
-
-    @api.model
-    def _get_location_dest_id(self):
-        Location = self.env['stock.location']
-        user = self.env.user
-        ou_id = user.default_operating_unit_id.id or False
-        location = False
-        if ou_id:
-            location = Location.search([('operating_unit_id', '=', ou_id)])
-        return location and location[0].id or False
+    # location_dest_id = fields.Many2one(
+    #     'stock.location',
+    #     default=lambda self: self._get_location_dest_id(),
+    # )
+    #
+    # @api.model
+    # def _get_location_dest_id(self):
+    #     Location = self.env['stock.location']
+    #     user = self.env.user
+    #     ou_id = user.default_operating_unit_id.id or False
+    #     location = False
+    #     if ou_id:
+    #         location = Location.search([('operating_unit_id', '=', ou_id)])
+    #     return location and location[0].id or False
 
     # @api.multi
     # @api.onchange('product_id', 'location_id', 'location_dest_id',
