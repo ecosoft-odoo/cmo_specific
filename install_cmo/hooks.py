@@ -5,4 +5,7 @@
 
 def pre_init_hook(cr):
     # Enable crosstab feature in postgresql
-    cr.execute("CREATE EXTENSION tablefunc;")
+    try:
+        cr.execute("CREATE EXTENSION tablefunc;")
+    except Exception:
+        pass
