@@ -22,6 +22,7 @@
         "project",
         "account",
         # Thai Localization Module
+        "stock_no_negative",
         "sale_split_quote2order",
         "sale_invoice_plan",
         "purchase_invoice_plan",
@@ -41,7 +42,6 @@
         "web_hideleftmenu",
         "web_sheet_full_width",
         "web_invalid_tab",
-        "stock_no_negative",
         # "stock_asset",
         "account_financial_report",
         "hr_expense_advance_clearing",
@@ -56,6 +56,11 @@
         "sale_discount_total",
         "account_asset_management",
         "meta_groups",
+        "l10n_th_doctype_bank_payment",
+        "l10n_th_doctype_bank_receipt",
+        "l10n_th_doctype_expense",
+        "l10n_th_doctype_invoice",
+        "l10n_th_doctype_voucher",
         # CMO Specific
         "account_asset_depreciation_xls",
         "account_asset_management_enhanced",
