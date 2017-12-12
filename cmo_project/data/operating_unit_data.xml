@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        # operating_unit
+        <record model="operating.unit" id="operating_unit_ceo">
+            <field name="name">CEO OFFICE(CEO)</field>
+            <field name="code">CEO</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_cmex">
+            <field name="name">CMEX</field>
+            <field name="code">CMEX</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_museum">
+            <field name="name">Museum</field>
+            <field name="code">Museum</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_it">
+            <field name="name">Information Technology</field>
+            <field name="code">IT</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_odyssey">
+            <field name="name">Odyssey</field>
+            <field name="code">Odyssey</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_cm_play">
+            <field name="name">CM Play</field>
+            <field name="code">CM Play</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_cm_join">
+            <field name="name">CM Join</field>
+            <field name="code">CM Join</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_bd">
+            <field name="name">Business Development</field>
+            <field name="code">BD</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_cm_one">
+            <field name="name">CM One</field>
+            <field name="code">CM One</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_fa">
+            <field name="name">Finance&amp;Accounting</field>
+            <field name="code">FA</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_hr">
+            <field name="name">Human Resource</field>
+            <field name="code">HR</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_fm">
+            <field name="name">Facility Management</field>
+            <field name="code">FM</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_it_issue">
+            <field name="name">IT ISSUE</field>
+            <field name="code">IT ISSUE</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_fm_issue">
+            <field name="name">FM ISSUE</field>
+            <field name="code">FM ISSUE</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_legal">
+            <field name="name">Legal</field>
+            <field name="code">Legal</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_internal_audit">
+            <field name="name">Internal Audit</field>
+            <field name="code">Internal Audit</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_bangkok_suplture">
+            <field name="name">Bangkok Sculpture</field>
+            <field name="code">Bangkok Sculpture</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+        <record model="operating.unit" id="operating_unit_cooperate_communication">
+            <field name="name">Corporate Communications</field>
+            <field name="code">Corporate Communications</field>
+            <field name="active" eval="True"/>
+            <field name="partner_id">1</field>
+        </record>
+    </data>
+</openerp>

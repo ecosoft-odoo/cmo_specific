@@ -32,7 +32,6 @@ class LevelValidataion(models.Model):
     doctype = fields.Selection(
         DOCTYPE_SELECT,
         string='Doctype',
-        readonly=True,
         required=True,
         default=lambda self: self._get_default_doctype(),
     )

@@ -11,7 +11,7 @@
                     <field name="level"/>
                     <field name="limit_amount"/>
                     <field name="user_ids" string="Approval User" widget="many2many_tags" placeholder="Users..."/>
-                    <field name="doctype" invisible="0"/>
+                    <field name="doctype" invisible="1"/>
                 </tree>
             </field>
         </record>

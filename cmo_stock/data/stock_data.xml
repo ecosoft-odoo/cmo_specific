@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
-    <data>
+    <data noupdate="1">
         <record model="stock.location" id="stock_location_cmex">
             <field name="name">CMEX</field>
             <field name="usage">production</field>
@@ -8,7 +8,7 @@
         </record>
         <record model="stock.warehouse" id="warehouse_cmex">
             <field name="name">CMEX</field>
-            <field name="code">CMEX</field>
+            <field name="code">CMX</field>
             <field name="operating_unit_id" ref="cmo_project.operating_unit_cmex"/>
         </record>
 
@@ -19,7 +19,7 @@
         </record>
         <record model="stock.warehouse" id="warehouse_ceo">
             <field name="name">CEO OFFICE(CEO)</field>
-            <field name="code">CEO OFFICE(CEO)</field>
+            <field name="code">COF</field>
             <field name="operating_unit_id" ref="cmo_project.operating_unit_ceo"/>
         </record>
 
@@ -30,7 +30,7 @@
         </record>
         <record model="stock.warehouse" id="warehouse_museum">
             <field name="name">Museum</field>
-            <field name="code">Museum</field>
+            <field name="code">MUS</field>
             <field name="operating_unit_id" ref="cmo_project.operating_unit_museum"/>
         </record>
 
@@ -41,7 +41,7 @@
         </record>
         <record model="stock.warehouse" id="warehouse_it">
             <field name="name">Information Technology</field>
-            <field name="code">Information Technology</field>
+            <field name="code">ITH</field>
             <field name="operating_unit_id" ref="cmo_project.operating_unit_it"/>
         </record>
 
@@ -52,7 +52,7 @@
         </record>
         <record model="stock.warehouse" id="warehouse_odyssey">
             <field name="name">Odyssey</field>
-            <field name="code">Odyssey</field>
+            <field name="code">ODS</field>
             <field name="operating_unit_id" ref="cmo_project.operating_unit_odyssey"/>
         </record>
 
@@ -63,7 +63,7 @@
         </record>
         <record model="stock.warehouse" id="warehouse_cm_play">
             <field name="name">CM Play</field>
-            <field name="code">CM Play</field>
+            <field name="code">CMP</field>
             <field name="operating_unit_id" ref="cmo_project.operating_unit_cm_play"/>
         </record>
 
@@ -74,7 +74,7 @@
         </record>
         <record model="stock.warehouse" id="warehouse_cm_join">
             <field name="name">CM Join</field>
-            <field name="code">CM Join</field>
+            <field name="code">CMJ</field>
             <field name="operating_unit_id" ref="cmo_project.operating_unit_cm_join"/>
         </record>
 
@@ -85,7 +85,7 @@
         </record>
         <record model="stock.warehouse" id="warehouse_bd">
             <field name="name">Business Development</field>
-            <field name="code">Business Development</field>
+            <field name="code">BDE</field>
             <field name="operating_unit_id" ref="cmo_project.operating_unit_bd"/>
         </record>
 
@@ -96,7 +96,7 @@
         </record>
         <record model="stock.warehouse" id="warehouse_cm_one">
             <field name="name">CM One</field>
-            <field name="code">CM One</field>
+            <field name="code">CMO</field>
             <field name="operating_unit_id" ref="cmo_project.operating_unit_cm_one"/>
         </record>
 
@@ -107,7 +107,7 @@
         </record>
         <record model="stock.warehouse" id="warehouse_fa">
             <field name="name">Finance&amp;Accounting</field>
-            <field name="code">Finance&amp;Accounting</field>
+            <field name="code">FAC</field>
             <field name="operating_unit_id" ref="cmo_project.operating_unit_fa"/>
         </record>
 
@@ -118,7 +118,7 @@
         </record>
         <record model="stock.warehouse" id="warehouse_hr">
             <field name="name">Human Resource</field>
-            <field name="code">Human Resource</field>
+            <field name="code">HRM</field>
             <field name="operating_unit_id" ref="cmo_project.operating_unit_hr"/>
         </record>
 
@@ -129,7 +129,7 @@
         </record>
         <record model="stock.warehouse" id="warehouse_fm">
             <field name="name">Facility Management</field>
-            <field name="code">Facility Management</field>
+            <field name="code">FCM</field>
             <field name="operating_unit_id" ref="cmo_project.operating_unit_fm"/>
         </record>
 
@@ -140,7 +140,7 @@
         </record>
         <record model="stock.warehouse" id="warehouse_it_issue">
             <field name="name">IT ISSUE</field>
-            <field name="code">IT ISSUE</field>
+            <field name="code">ITM</field>
             <field name="operating_unit_id" ref="cmo_project.operating_unit_it_issue"/>
         </record>
 
@@ -151,12 +151,57 @@
         </record>
         <record model="stock.warehouse" id="warehouse_fm_issue">
             <field name="name">FM ISSUE</field>
-            <field name="code">FM ISSUE</field>
+            <field name="code">FMI</field>
             <field name="operating_unit_id" ref="cmo_project.operating_unit_fm_issue"/>
         </record>
 
-        <function id="function_warehouse_adjust_location"
-                  model="stock.warehouse"
-                  name="_adjust_dest_location"/>
+        <record model="stock.location" id="stock_location_legal">
+            <field name="name">Legal</field>
+            <field name="usage">production</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="stock.warehouse" id="warehouse_legal">
+            <field name="name">Legal</field>
+            <field name="code">LGL</field>
+            <field name="operating_unit_id" ref="cmo_project.operating_unit_legal"/>
+        </record>
+
+        <record model="stock.location" id="stock_location_internal_audit">
+            <field name="name">Internal Audit</field>
+            <field name="usage">production</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="stock.warehouse" id="warehouse_internal_audit">
+            <field name="name">Internal Audit</field>
+            <field name="code">INA</field>
+            <field name="operating_unit_id" ref="cmo_project.operating_unit_internal_audit"/>
+        </record>
+
+        <record model="stock.location" id="stock_location_bangkok_sculpture">
+            <field name="name">Bangkok Sculpture</field>
+            <field name="usage">production</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="stock.warehouse" id="warehouse_bangkok_sculpture">
+            <field name="name">Bangkok Sculpture</field>
+            <field name="code">BKS</field>
+            <field name="operating_unit_id" ref="cmo_project.operating_unit_bangkok_suplture"/>
+        </record>
+
+        <record model="stock.location" id="stock_location_cooperate_communication">
+            <field name="name">Corporate Communications</field>
+            <field name="usage">production</field>
+            <field name="active" eval="True"/>
+        </record>
+        <record model="stock.warehouse" id="warehouse_cooperate_communication">
+            <field name="name">Corporate Communications</field>
+            <field name="code">COC</field>
+            <field name="operating_unit_id" ref="cmo_project.operating_unit_cooperate_communication"/>
+        </record>
+
+    </data>
+
+    <data>
+        <function id="function_warehouse_adjust_location" model="stock.warehouse" name="_adjust_dest_location"/>
     </data>
 </openerp>

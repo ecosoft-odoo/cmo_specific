@@ -19,6 +19,7 @@
         'security/security.xml',
         'security/ir.model.access.csv',
         'data/cmo_project_sequence.xml',
+        'data/operating_unit_data.xml',
         'data/project_data.xml',
         'wizard/close_reason_view.xml',
         'wizard/hold_reason_view.xml',

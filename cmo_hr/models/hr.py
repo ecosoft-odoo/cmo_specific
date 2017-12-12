@@ -61,32 +61,11 @@ class HrExpenseExpense(models.Model):
             'confirm': [('readonly', True)],
         },
     )
-    # department_id = fields.Many2one(
-    #     states={
-    #         'draft': [('readonly', True)],
-    #         'confirm': [('readonly', True)],
-    #     },
-    # )
-    department_readonly_id = fields.Char(
-        string='Department',
-        related='department_id.name',
-        readonly=True,
-    )
 
     @api.onchange('payment_by')
     def _onchange_payment_by(self):
         self.bank_transfer_ref = False
         self.ac_payee_ref = False
-
-    # This one is already in cmo_hr_level_validation
-    # @api.multi
-    # def action_validate(self):
-    #     res = self.write({'state': 'validate'})
-    #     return res
-
-    @api.onchange('employee_id')
-    def _onchange_hr_department(self):
-        self.department_id = self.employee_id.department_id
 
     @api.multi
     @api.constrains('request_date', 'due_date')

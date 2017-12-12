@@ -15,7 +15,7 @@
         'cmo_project',
     ],
     'data': [
-        'data/level_validation_data.xml',
+        # 'data/level_validation_data.xml',  # Moved to master data
         'workflow/hr_level_validation_workflow.xml',
         'views/hr_level_validation_view.xml',
         'views/product_view.xml',
