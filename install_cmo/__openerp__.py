@@ -41,6 +41,7 @@
         "web_hideleftmenu",
         "web_sheet_full_width",
         "web_invalid_tab",
+        "stock_no_negative",
         # "stock_asset",
         "account_financial_report",
         "hr_expense_advance_clearing",
