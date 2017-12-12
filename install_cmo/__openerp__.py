@@ -17,7 +17,6 @@
         # Standard Module for most SMEs.
         'sale',
         "purchase",
-        "purchase_requisition",
         "stock",
         "sale_stock",
         "project",
