@@ -13,6 +13,7 @@
         'sale',
     ],
     'data': [
+        # 'product/product.uom.csv',
         # 'product/product.category.csv',
         # 'product/product.product.csv',
         # 'purchase/purchase.order.type.config.csv',
