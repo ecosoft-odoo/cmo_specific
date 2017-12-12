@@ -26,7 +26,15 @@ class HrExpenseExpense(models.Model):
         compute='_compute_approve_permission',
     )
     state = fields.Selection(
-        selection_add=[('validate', 'Waiting Validate')],
+        selection=[
+            ('draft', 'New'),
+            ('cancelled', 'Refused'),
+            ('confirm', 'Waiting Approval'),
+            ('validate', 'Waiting Validate'),
+            ('accepted', 'Approved'),
+            ('done', 'Waiting Payment'),
+            ('paid', 'Paid'),
+        ],
     )
 
     @api.multi
