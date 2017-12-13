@@ -67,6 +67,7 @@ class AccountVoucher(models.Model):
         if self._context.get('type', False) == 'receipt':
             reports = [
                 u'cmo.customer.payment',
+                u'cmo.receipt.voucher',
             ]
             filter_print_report(res, reports)
         # Customer Receipt

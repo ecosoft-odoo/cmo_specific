@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line&quot;]"/>
 	<property name="ireport.zoom" value="1.0000000000000022"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="218"/>
+	<property name="ireport.y" value="275"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -241,7 +241,7 @@ $F{partner_zip}]]></textFieldExpression>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[ภาษีมูลค่าเพิ่ม]]></text>
+				<text><![CDATA[ภาษีมูลค่าเพิ่ม 7%]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="309" y="50" width="90" height="20"/>
