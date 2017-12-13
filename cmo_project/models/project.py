@@ -460,6 +460,7 @@ class ProjectProject(models.Model):
         'purchase_related_ids.amount_untaxed',
     )
     def _compute_actual_po(self):
+        self = self.sudo()
         for project in self:
             purchase_orders = project.purchase_related_ids.filtered(
                 lambda r: r.state in ('approved', 'done')
