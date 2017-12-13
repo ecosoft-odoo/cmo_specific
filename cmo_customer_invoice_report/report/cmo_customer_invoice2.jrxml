@@ -220,7 +220,7 @@ $F{others_note}]]></textFieldExpression>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[ภาษีมูลค่าเพิ่ม]]></text>
+				<text><![CDATA[ภาษีมูลค่าเพิ่ม 7%]]></text>
 			</staticText>
 			<textField pattern="#,##0.00;#,##0.00-">
 				<reportElement x="400" y="38" width="155" height="20"/>
