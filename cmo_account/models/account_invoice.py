@@ -3,7 +3,7 @@ from openerp import fields, models, api
 
 
 class AccountInvoice(models.Model):
-    _inherit = "account.invoice"
+    _inherit = 'account.invoice'
 
     quote_ref_id = fields.Many2one(
         'sale.order',
