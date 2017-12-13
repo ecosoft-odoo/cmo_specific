@@ -1,5 +1,5 @@
 "id","name","login","active","default_operating_unit_id","operating_unit_ids","password","email"
-"base.res_users_1","Adinan Hayeedaramae","adinan.h","TRUE","Information Technology","Main Operating Unit,CEO OFFICE(CEO),CMEX,Museum,Information Technology,Odyssey,CM Play,CM Join,Business Development,Human Resource,Facility Management,CM One,Finance&Accounting,IT ISSUE,FM ISSUE","password","adinan.h@cmo-group.com"
+"base.res_users_1","Adinan Hayeedaramae","adinan.h","TRUE","Information Technology","CEO OFFICE(CEO),CMEX,Museum,Information Technology,Odyssey,CM Play,CM Join,Business Development,Human Resource,Facility Management,CM One,Finance&Accounting,IT ISSUE,FM ISSUE","password","adinan.h@cmo-group.com"
 "base.res_users_2","Akaradej Kuwawattananont","atitaya","TRUE","CM Play","CM Play","password","akaradej@cmo-group.com"
 "base.res_users_3","Akarawat Makawan","Akarawat.m","TRUE","CM Join","CM Join","password","Akarawat.m@cmo-group.com"
 "base.res_users_4","Anupap Nitiwattananon","Anupap.n","TRUE","Odyssey","Odyssey","password","Anupap.n@cmo-group.com"

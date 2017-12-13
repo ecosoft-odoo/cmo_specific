@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_supplier_payment_cheque" language="groovy" pageWidth="842" pageHeight="380" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
 	<property name="ireport.zoom" value="0.8264462809917354"/>
-	<property name="ireport.x" value="69"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;line_dr_ids&quot;]"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
@@ -16,6 +16,9 @@
 	</field>
 	<field name="date" class="java.lang.String">
 		<fieldDescription><![CDATA[date_value]]></fieldDescription>
+	</field>
+	<field name="payment_type" class="java.lang.String">
+		<fieldDescription><![CDATA[payment_type]]></fieldDescription>
 	</field>
 	<variable name="string_total" class="java.lang.String">
 		<variableExpression><![CDATA[(Math.round($F{amount}*100)/100).toString()]]></variableExpression>
@@ -56,10 +59,14 @@
 				<text><![CDATA[A/C PAYEE ONLY]]></text>
 			</staticText>
 			<line>
-				<reportElement x="777" y="108" width="43" height="1"/>
+				<reportElement x="777" y="108" width="43" height="1">
+					<printWhenExpression><![CDATA[$F{payment_type} != "cheque_cash"]]></printWhenExpression>
+				</reportElement>
 			</line>
 			<line>
-				<reportElement x="766" y="121" width="55" height="1"/>
+				<reportElement x="766" y="121" width="55" height="1">
+					<printWhenExpression><![CDATA[$F{payment_type} != "cheque_cash"]]></printWhenExpression>
+				</reportElement>
 			</line>
 		</band>
 	</title>
@@ -76,14 +83,14 @@
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="14" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["(" + (new Scriptlet()).getAmtInWords((new BigDecimal($V{string_total}==""?0:$V{string_total})).setScale(2).toString(),"THB") + ")"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[(new Scriptlet()).getAmtInWords((new BigDecimal($V{string_total}==""?0:$V{string_total})).setScale(2).toString(),"THB")]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement isPrintRepeatedValues="false" x="145" y="-119" width="561" height="20"/>
+				<reportElement isPrintRepeatedValues="false" x="145" y="-121" width="561" height="20"/>
 				<textElement>
 					<font size="16" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{supplier}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{payment_type} == "cheque_cash" ? "เงินสด" : $F{supplier}]]></textFieldExpression>
 			</textField>
 			<textField pattern="** #,##0.00 **;#,##0.00-" isBlankWhenNull="true">
 				<reportElement isPrintRepeatedValues="false" x="548" y="-52" width="243" height="25"/>

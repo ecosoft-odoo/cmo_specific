@@ -22,6 +22,7 @@
         'wizard/edit_desc.xml',
         'views/product_view.xml',
         'views/account_view.xml',
+        'views/account_voucher_view.xml',
     ],
     "application": False,
     "installable": True,
