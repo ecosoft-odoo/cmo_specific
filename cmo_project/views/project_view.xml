@@ -234,7 +234,7 @@
                 <xpath expr="//field[@name='use_tasks']" position="attributes">
                     <attribute name="invisible">True</attribute>
                 </xpath>
-                <xpath expr="//label[@for='name']" position="attributes">
+                <xpath expr="//label[@for='use_tasks']" position="attributes">
                     <attribute name="invisible">True</attribute>
                 </xpath>
                 <xpath expr="//field[@name='name']" position="attributes">
