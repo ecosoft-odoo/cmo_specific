@@ -46,6 +46,8 @@ class HrExpenseExpense(models.Model):
             doctype = 'employee_advance'
         elif self.is_advance_clearing:
             doctype = 'employee_clearing'
+        elif self.pay_to == 'pettycash':
+            doctype = 'employee_pettycash'
         elif not self.is_advance_clearing and not self.is_employee_advance:
             doctype = 'employee_expense'
 

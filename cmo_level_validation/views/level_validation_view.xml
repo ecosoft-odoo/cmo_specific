@@ -88,6 +88,24 @@
             </field>
         </record>
 
+        <record id="action_employee_pettycash_level_validation" model="ir.actions.act_window">
+            <field name="name">Employee Pettycash</field>
+            <field name="res_model">level.validation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="level_validation_tree"/>
+            <field name="context">{'doctype':'employee_pettycash'}</field>
+            <field name="domain">[('doctype', '=', 'employee_pettycash')]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a new Employee Pettycash Level Validation.
+                </p>
+                <p>
+                    Manage Employee Pettycash Level Validation you want to be used in the system.
+                </p>
+            </field>
+        </record>
+
         <menuitem id="menu_approval_level_validation"
                   name="Approval"
                   parent="base.menu_config"
@@ -112,5 +130,10 @@
                   id="menu_action_employee_clearing_level_validation"
                   parent="menu_approval_level_validation"
                   sequence="40"/>
+
+        <menuitem action="action_employee_pettycash_level_validation"
+                  id="menu_action_employee_pettycash_level_validation"
+                  parent="menu_approval_level_validation"
+                  sequence="50"/>
     </data>
 </openerp>
