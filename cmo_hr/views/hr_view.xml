@@ -63,6 +63,11 @@
 			<field name="model">hr.expense.expense</field>
 			<field name="inherit_id" ref="hr_expense_auto_invoice.view_expenses_form"/>
 			<field name="arch" type="xml">
+                <xpath expr="//sheet/group" position="before">
+                    <p attrs="{'invisible': [('pay_to', '!=', 'pettycash')]}" style="color:red;">
+                        <label string="Limit Petty Cash must not more than 1,000 Bath"/>
+                    </p>
+                </xpath>
                 <xpath expr="//tree[@string='Expense Lines']/field[@name='tax_ids']" position="after">
                     <field name="amount_line_untaxed" sum="Total Untaxed"/>
                 </xpath>
@@ -71,5 +76,17 @@
                 </xpath>
             </field>
         </record>
+        <!-- <record id="view_expenses_form_sequence" model="ir.ui.view">
+            <field name="name">hr.expense.form.sequence</field>
+            <field name="model">hr.expense.expense</field>
+            <field name="inherit_id" ref="hr_expense_sequence.view_expenses_form_sequence"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/group/h1" position="after">
+                    <p attrs="{'invisible': [('pay_to', '!=', 'pettycash')]}">
+                        <label string="จำกัดการเบิก Petty Cash ไม่เกิน 1,000 บาท"/>
+                    </p>
+                </xpath>
+            </field>
+        </record> -->
     </data>
 </openerp>

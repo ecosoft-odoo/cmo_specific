@@ -6,6 +6,7 @@ from openerp.exceptions import ValidationError
 DOCTYPE_SELECT = [('employee_expense', 'Employee Expense'),
                   ('employee_advance', 'Employee Advance'),
                   ('employee_clearing', 'Employee Clearing'),
+                  ('employee_pettycash', 'Employee Pettycash'),
                   ('purchase_order', 'Purchase Order'), ]
 
 
