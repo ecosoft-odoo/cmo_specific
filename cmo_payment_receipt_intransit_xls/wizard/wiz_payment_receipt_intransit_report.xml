@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="wiz_payment_receipt_intransit_view_form" model="ir.ui.view">
+            <field name="name">Payment Receipt Intransit Report</field>
+            <field name="model">wiz.payment.receipt.intransit.report</field>
+            <field name="arch" type="xml">
+                <form string="Payment Receipt Intransit report">
+                    <group>
+                        <group>
+                            <field name="posted_date"/>
+                        </group>
+                        <group>
+                            <field name="doc_type"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="xls_export" icon="gtk-execute" string="Generate Report" type="object" context="{'xls_export':1}" default_focus="1" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="wiz_payment_receipt_intransit_report_action" model="ir.actions.act_window">
+            <field name="name">Payment Receipt Intransit Sheet</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wiz.payment.receipt.intransit.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wiz_payment_receipt_intransit_view_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="wiz_payment_receipt_intransit_report_menu"
+                  name="Payment Receipt Intransit"
+                  parent="account.final_accounting_reports"
+                  action="wiz_payment_receipt_intransit_report_action"
+                  sequence="50"/>
+    </data>
+</openerp>
