@@ -79,22 +79,22 @@ class PaymentReceiptIntransitReportXls(report_xls):
         self.payment_receipt_intransit_template = {
             'date': {
                 'header': [
-                    1, 20, 'text', _render("_('Date Posted')"),
+                    1, 20, 'text', _render("_('Payment (Posted) date')"),
                     None, self.rh_cell_style_center],
-                'move_line': [1, 0, 'date', _render(
-                    "datetime.strptime(move_line_date,'%Y-%m-%d') or None"),
+                'move_line': [1, 0, 'text', _render(
+                    "move_line_date or None"),
                     None, self.an_cell_style_date],
                 'totals': [1, 0, 'text', None],
             },
             'ref': {
                 'header': [
-                    1, 20, 'text', _render("_('Number')"),
+                    1, 20, 'text', _render("_('Document Number')"),
                     None, self.rh_cell_style_center],
                 'move_line': [1, 0, 'text', _render("move_line_ref")],
             },
             'name': {
                 'header': [
-                    1, 20, 'text', _render("_('Name')"),
+                    1, 20, 'text', _render("_('Description')"),
                     None, self.rh_cell_style_center],
                 'move_line': [1, 0, 'text', _render("move_line_name")],
             },
@@ -106,15 +106,16 @@ class PaymentReceiptIntransitReportXls(report_xls):
             },
             'amount': {
                 'header': [
-                    1, 20, 'text', _render("_('amount')"),
+                    1, 20, 'text', _render("_('Amount')"),
                     None, self.rh_cell_style_center],
-                'move_line': [1, 0, 'number', _render("move_line_amount")],
+                'move_line': [1, 0, 'number', _render("move_line_amount"),
+                              None, self.an_cell_style_decimal],
             },
         }
 
     def _report_title(self, ws, _p, row_pos, _xs, title, offset=0, merge=1):
         cell_style = xlwt.easyxf(
-            _xs['center'] + 'font: color blue, bold false, height 220;')
+            _xs['right'] + 'font: color blue, bold false, height 220;')
         c_specs = [
             ('report_name', merge, 0, 'text', title),
         ]
@@ -145,15 +146,16 @@ class PaymentReceiptIntransitReportXls(report_xls):
             cr, uid, uid, context=context).company_id
         titles = [
             company_id.name or '',
-            company_id.street or '',
-            'TEL. %s  FAX %s  WEB %s  E-mail %s ' % (
-                company_id.phone or '-',
-                company_id.fax or '-',
-                company_id.website or '-',
-                company_id.email or '-'
-            ),
-            'Bank %s' % sheet_name,
+            'Unreconciled %s' % sheet_name,
+            datetime.strptime(
+                data['posted_date'], '%Y-%m-%d').strftime('%d/%m/%Y'),
         ]
+
+        u_obj = self.pool('res.users').browse(cr, uid, uid, context=context)
+        ws.write(row_pos, 8, u_obj.name, style=self.an_cell_style_decimal)
+        ws.write(
+            row_pos+1, 8, datetime.now().strftime('%d/%m/%Y'),
+            style=self.an_cell_style_decimal)
         for title in titles:
             row_pos = self._report_title(ws, _p, row_pos, _xs, title, merge=5)
 
@@ -186,7 +188,8 @@ class PaymentReceiptIntransitReportXls(report_xls):
         move_row_pos = row_pos + 1
 
         for entry in entries:
-            move_line_date = entry[0]
+            move_line_date = datetime.strptime(
+                entry[0], '%Y-%m-%d').strftime('%d/%m/%Y')
             move_line_ref = entry[1]
             move_line_name = entry[2]
             move_line_cheque = entry[3]
@@ -205,7 +208,7 @@ class PaymentReceiptIntransitReportXls(report_xls):
                 ws, row_pos, row_data, row_style=self.an_cell_style)
 
         sum_amount = 'SUM(E%s:E%s)' % (str(move_row_pos), str(row_pos))
-        ws.write(row_pos, 3, 'Totals', style=self.av_cell_style_decimal)
+        ws.write(row_pos, 3, 'Total', style=self.av_cell_style_decimal)
         ws.write(row_pos, 4, xlwt.Formula(sum_amount),
                  style=self.av_cell_style_decimal)
 
