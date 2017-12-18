@@ -33,9 +33,13 @@
             <field name="target">new</field>
         </record>
 
+        <menuitem id="menu_finance_bank_cash_reporting"
+                  name="Bank and Cash"
+                  parent="account.menu_finance_generic_reporting"
+                  sequence="10"/>
         <menuitem id="wiz_payment_receipt_intransit_report_menu"
                   name="Payment Receipt Intransit"
-                  parent="account.final_accounting_reports"
+                  parent="menu_finance_bank_cash_reporting"
                   action="wiz_payment_receipt_intransit_report_action"
                   sequence="50"/>
     </data>
