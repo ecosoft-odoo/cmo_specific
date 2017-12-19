@@ -377,7 +377,7 @@ class CostControlSheetReportXls(report_xls):
         for entry in entries:
             data_obj = entry[1]
             if entry[0] == 'quote':
-                # quote_description = 'Quotation %s' % (data_obj.name)
+                quote_description = 'Quotation %s' % (data_obj.name)
                 c_specs = map(
                     lambda x: self.render(
                         x, template, 'quote'),
@@ -388,7 +388,7 @@ class CostControlSheetReportXls(report_xls):
                     ws, row_pos, row_data,
                     row_style=self.av_cell_style_decimal)
             elif entry[0] == 'custom_group':
-                # custom_group_name = data_obj
+                custom_group_name = data_obj
                 c_specs = map(
                     lambda x: self.render(
                         x, template, 'custom_group'),
@@ -399,7 +399,7 @@ class CostControlSheetReportXls(report_xls):
                     ws, row_pos, row_data,
                     row_style=self.rt_cell_style_decimal)
             elif entry[0] == 'section':
-                # section_name = data_obj.name
+                section_name = data_obj.name
                 c_specs = map(
                     lambda x: self.render(
                         x, template, 'section'),
@@ -410,12 +410,12 @@ class CostControlSheetReportXls(report_xls):
                     ws, row_pos, row_data,
                     row_style=self.rt_cell_style_decimal)
             elif entry[0] == 'line':
-                # order_line_description = data_obj.name
-                # price_in_contract = data_obj.price_unit * \
-                #     data_obj.product_uom_qty
-                # estimate_cost = data_obj.purchase_price * \
-                #     data_obj.product_uom_qty
-                # percent_margin = data_obj.sale_order_line_margin
+                order_line_description = data_obj.name
+                price_in_contract = data_obj.price_unit * \
+                    data_obj.product_uom_qty
+                estimate_cost = data_obj.purchase_price * \
+                    data_obj.product_uom_qty
+                percent_margin = data_obj.sale_order_line_margin
                 c_specs = map(
                     lambda x: self.render(
                         x, template, 'order_line'),
