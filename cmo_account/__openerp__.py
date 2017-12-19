@@ -10,6 +10,7 @@
     "author": "Tharathip C., Phongyanon Y.",
     "license": "AGPL-3",
     "depends": [
+        'l10n_th_account',
         'account',
         'account_voucher',
         'account_operating_unit',
@@ -18,6 +19,7 @@
         'project',
     ],
     "data": [
+        'data/report_data.xml',
         'wizard/account_tax_detail_view.xml',
         'wizard/edit_desc.xml',
         'views/product_view.xml',
