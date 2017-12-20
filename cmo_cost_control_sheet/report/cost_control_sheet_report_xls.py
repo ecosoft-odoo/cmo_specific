@@ -88,13 +88,17 @@ class CostControlSheetReportXls(report_xls):
                 'quote': [1, 0, 'text', None],
                 'custom_group': [1, 0, 'text', None],
                 'section': [1, 0, 'text', None],
-                'order_line': [1, 0, 'number', _render("price_in_contract")],
+                'order_line': [
+                    1, 0, 'number', _render("price_in_contract"),
+                    None, self.an_cell_style_decimal],
             },
             'estimate_cost': {
                 'quote': [1, 0, 'text', None],
                 'custom_group': [1, 0, 'text', None],
                 'section': [1, 0, 'text', None],
-                'order_line': [1, 0, 'number', _render("estimate_cost")],
+                'order_line': [
+                    1, 0, 'number', _render("estimate_cost"),
+                    None, self.an_cell_style_decimal],
             },
             'percent_margin': {
                 'quote': [1, 0, 'text', None],
@@ -445,7 +449,7 @@ class CostControlSheetReportXls(report_xls):
                         ws.write(
                             purchase_row_pos + row_i - 1, 5,
                             order_line_id.price_subtotal,
-                            style=self.an_cell_style)
+                            style=self.an_cell_style_decimal)
                         ws.write(
                             purchase_row_pos + row_i - 1, 6,
                             order_line_id.order_id.partner_id.name,
@@ -475,7 +479,7 @@ class CostControlSheetReportXls(report_xls):
                 ws.write(
                     hr_row_pos + row_i, 10,
                     expense_line_id.amount_line_untaxed,
-                    style=self.an_cell_style)
+                    style=self.an_cell_style_decimal)
 
         # totals
         sum_price = 'SUM(B%s:B%s)' % (str(hr_row_pos + 1), str(row_pos))
@@ -501,6 +505,34 @@ class CostControlSheetReportXls(report_xls):
         ws.write(row_pos, 9, '', style=self.av_cell_style_decimal)
         ws.write(row_pos, 10, xlwt.Formula(sum_hr_price),
                  style=self.av_cell_style_decimal)
+
+        if project_id.adjustment_ids:
+            row_pos += 2
+            adjustment_obj = self.pool.get('project.adjustment')
+            ws.write(
+                row_pos, 0, 'Adjustment', style=self.av_cell_style_decimal)
+            ws.write(
+                row_pos, 1, 'Description', style=self.av_cell_style_decimal)
+            ws.write(row_pos, 2, 'Amount', style=self.av_cell_style_decimal)
+            row_pos += 1
+            for adjustment_id in project_id.adjustment_ids.ids:
+                adjustment_line = adjustment_obj.browse(
+                    self.cr, self.uid,
+                    adjustment_id, context=self.context)
+                ws.write(
+                    row_pos, 1,
+                    adjustment_line.name,
+                    style=self.an_cell_style)
+                ws.write(
+                    row_pos, 2,
+                    adjustment_line.amount,
+                    style=self.an_cell_style_decimal)
+                row_pos += 1
+            ws.write(
+                row_pos, 1, 'Adjustment Total',
+                style=self.av_cell_style_decimal)
+            ws.write(row_pos, 2, project_id.adjustment_amount,
+                     style=self.av_cell_style_decimal)
 
     def generate_xls_report(self, _p, _xs, data, objects, wb):
         # wl_ccs = _p.wanted_list_cost_control_sheet

@@ -143,6 +143,7 @@ class ProjectProject(models.Model):
     )
     close_reason = fields.Selection(
         [('close', 'Completed'),
+         ('it_close', 'IT Close Project'),
          ('reject', 'Reject'),
          ('lost', 'Lost'),
          ('cancel', 'Cancelled'),
@@ -270,6 +271,27 @@ class ProjectProject(models.Model):
         store=True,
         help="Triggered when at all sale order are done and cancel",
     )
+    adjustment_ids = fields.One2many(
+        'project.adjustment',
+        'project_id',
+        string='Adjustment Description',
+        states={'close': [('readonly', True)]},
+    )
+    adjustment_amount = fields.Float(
+        string='Adjustment',
+        compute='_compute_adjustment_amount',
+    )
+
+    @api.multi
+    @api.depends('adjustment_ids')
+    def _compute_adjustment_amount(self):
+        for project in self:
+            domain = [
+                ('project_id', '=', project.id),
+            ]
+            amount = sum(self.env['project.adjustment'].sudo().search(
+                domain).mapped('amount'))
+            project.adjustment_amount = amount
 
     @api.multi
     @api.depends('out_invoice_ids',

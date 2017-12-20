@@ -42,7 +42,7 @@ class ProjectCloseReason(models.TransientModel):
                 'reject_reason_id': self.reject_reason_id.id,
             })
             project.set_cancel()
-        elif self.close_reason == 'cancel' or self.close_reason == 'terminate':
+        elif self.close_reason in ('cancel', 'terminate', 'it_close'):
             project.set_cancel()
         elif self.close_reason == 'close':
             project.set_done()
@@ -67,6 +67,7 @@ class ProjectCloseReason(models.TransientModel):
                  (project.state == "invoices"):
                 vals = [
                     ('cancel', 'Cancelled'),
+                    ('it_close', 'IT Close Project'),
                     ('terminate', 'Terminated'),
                 ]
             elif (project.state == "received"):
