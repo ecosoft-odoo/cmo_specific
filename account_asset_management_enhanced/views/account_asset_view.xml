@@ -18,7 +18,7 @@
               </field>
               <field name="purchase_value" position="after">
                   <field name="purchase_move_id" invisible="1"/>
-                  <field name="purchase_date" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                  <field name="purchase_date" required="0" attrs="{'readonly':[('state','!=','draft')]}"/>
               </field>
               <field name="account_analytic_id" position="after">
                   <field name="operating_unit_id"/>
