@@ -6,6 +6,9 @@
             <field name="model">account.asset.profile</field>
             <field name="inherit_id" ref="account_asset_management.account_asset_profile_view_form"/>
             <field name="arch" type="xml">
+                <field name="name" position="before">
+                    <field name="prefix"/>
+                </field>
                 <field name="active" position="after">
                     <field name="sequence_id" readonly="1"/>
                 </field>
