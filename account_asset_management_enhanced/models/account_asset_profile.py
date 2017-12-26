@@ -9,12 +9,16 @@ class AccountAssetProfile(models.Model):
         'ir.sequence',
         string='Sequence',
     )
+    prefix = fields.Char(
+        string='Number',
+        required=True,
+    )
 
     @api.model
-    def _create_sequence_asset(self, account_id):
-        name = 'Asset-%s' % (account_id.code, )
+    def _create_sequence_asset(self, prefix):
+        name = 'Asset-%s' % (prefix, )
         seq_vals = {'name': name,
-                    'prefix': account_id.code + '-',
+                    'prefix': prefix + '-',
                     'padding': 4,
                     'implementation': 'no_gap'}
         new_sequence = self.env['ir.sequence'].create(seq_vals)
@@ -22,16 +26,15 @@ class AccountAssetProfile(models.Model):
 
     @api.model
     def create(self, vals):
-        account_asset_id = vals.get('account_asset_id')
-        if account_asset_id:
-            account_id = self.env['account.account'].browse(account_asset_id)
+        prefix = vals.get('prefix')
+        if prefix:
             sequence_id = self.env['ir.sequence'].search([
-                ('prefix', '=', account_id.code + '-'),
+                ('prefix', '=', prefix + '-'),
             ])
-            if sequence_id and account_id:
+            if sequence_id:
                 vals['sequence_id'] = sequence_id[0].id
-            elif account_id:
-                new_sequence = self._create_sequence_asset(account_id)
+            else:
+                new_sequence = self._create_sequence_asset(prefix)
                 vals['sequence_id'] = new_sequence.id
         res = super(AccountAssetProfile, self).create(vals)
         return res
@@ -39,17 +42,15 @@ class AccountAssetProfile(models.Model):
     @api.multi
     def write(self, vals):
         res = super(AccountAssetProfile, self).write(vals)
-        account_asset_id = vals.get('account_asset_id')
+        prefix = vals.get('prefix')
         for profile in self:
-            if account_asset_id:
-                account_id = self.env['account.account'].browse(
-                    account_asset_id)
+            if prefix:
                 sequence_id = self.env['ir.sequence'].search([
-                    ('prefix', '=', account_id.code + '-'),
+                    ('prefix', '=', prefix + '-'),
                 ])
-                if sequence_id and account_id:
+                if sequence_id:
                     profile.write({'sequence_id': sequence_id[0].id})
-                elif account_id:
-                    new_sequence = profile._create_sequence_asset(account_id)
+                else:
+                    new_sequence = profile._create_sequence_asset(prefix)
                     profile.write({'sequence_id': new_sequence.id})
         return res
