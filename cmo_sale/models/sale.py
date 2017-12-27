@@ -152,20 +152,20 @@ class SaleOrder(models.Model):
         covenants = Description.search([('active', '=', True), ])
         return covenants and covenants[0].description or False
 
-    @api.multi
-    @api.constrains('order_line')
-    def _constrains_order_line(self):
-        for rec in self:
-            if not self.order_line:
-                raise ValidationError(_('Must have at least 1 order line!'))
-            else:
-                for line in self.order_line:
-                    if ((line.price_unit <= 0) or (line.product_uom_qty <= 0))\
-                            and (line.order_lines_group == 'before'):
-                        raise ValidationError(
-                            _('Unit Price and Quantity in order \
-                            line must more than zero !')
-                        )
+    # @api.multi
+    # @api.constrains('order_line')
+    # def _constrains_order_line(self):
+    #     for rec in self:
+    #         if not self.order_line:
+    #             raise ValidationError(_('Must have at least 1 order line!'))
+    #         else:
+    #             for line in self.order_line:
+    #                 if ((line.price_unit <= 0) or (line.product_uom_qty <= 0))\
+    #                         and (line.order_lines_group == 'before'):
+    #                     raise ValidationError(
+    #                         _('Unit Price and Quantity in order \
+    #                         line must more than zero !')
+    #                     )
 
     # @api.multi
     # def _get_amount_by_custom_group(self, custom_group):
