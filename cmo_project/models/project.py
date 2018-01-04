@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from lxml import etree
+
 from openerp import fields, models, api
 from openerp.exceptions import ValidationError
 # TODO: foreign key use, idex and ondelete
@@ -282,6 +284,26 @@ class ProjectProject(models.Model):
         compute='_compute_adjustment_amount',
     )
 
+    @api.model
+    def fields_view_get(self, view_id=None, view_type='form',
+                        toolbar=False, submenu=False):
+        res = super(ProjectProject, self).fields_view_get(
+            view_id, view_type, toolbar=toolbar, submenu=submenu)
+
+        readonly_group = self.env.ref('project.group_project_readonly')
+        readonly_group_own = self.env.ref('project.group_project_readonly_own')
+        user = self.env['res.users'].search([
+            ('id', '=', self._context.get('uid')),
+        ])
+        meet_user = (user in readonly_group.users) or \
+            (user in readonly_group_own.users)
+
+        if meet_user and user.id != 1:
+            root = etree.fromstring(res['arch'])
+            root.set('edit', 'false')
+            res['arch'] = etree.tostring(root)
+        return res
+
     @api.multi
     @api.depends('adjustment_ids')
     def _compute_adjustment_amount(self):
@@ -292,6 +314,14 @@ class ProjectProject(models.Model):
             amount = sum(self.env['project.adjustment'].sudo().search(
                 domain).mapped('amount'))
             project.adjustment_amount = amount
+
+    @api.multi
+    def copy(self, defaults=None):
+        if not defaults:
+            defaults = {}
+        res = super(ProjectProject, self).copy(defaults)
+        res._write({'state': 'draft'})
+        return res
 
     @api.multi
     @api.depends('out_invoice_ids',
@@ -547,7 +577,7 @@ class ProjectProject(models.Model):
     @api.depends('quote_related_ids')
     def _compute_quote_related_count(self):
         for project in self:
-            quote_ids = self.env['sale.order'].search([
+            quote_ids = self.env['sale.order'].sudo().search([
                 ('project_related_id', 'like', project.id),
                 ('order_type', '=', 'quotation'),
             ])

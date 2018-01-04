@@ -3,7 +3,7 @@
     <data>
 
         <menuitem id="base.menu_main_pm" name="Project"
-            groups="project.group_project_manager,project.group_project_user,project.group_project_readonly"/>
+            groups="project.group_project_manager,project.group_project_user,project.group_project_readonly,project.group_project_readonly_own"/>
         <record id="project.act_project_project_2_project_task_all" model="ir.actions.act_window">
             <field name="view_mode">tree,form</field>
         </record>
