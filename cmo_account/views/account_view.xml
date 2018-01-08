@@ -140,5 +140,21 @@
             </field>
         </record>
 
+        <!-- shorten version of move line -->
+        <record id="view_account_move_line_tree" model="ir.ui.view">
+            <field name="name">view.account.move.line.tree</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account_bank_payment.view_account_move_line_tree"/>
+            <field name="arch" type="xml">
+                <field name="period_id" position="before">
+                    <field name="voucher_number_cheque"/>
+                    <field name="voucher_date_value"/>
+                </field>
+                <field name="name" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
+            </field>
+        </record>
+
     </data>
 </openerp>

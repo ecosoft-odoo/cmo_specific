@@ -14,6 +14,7 @@
         'account',
         'account_voucher',
         'account_operating_unit',
+        'account_bank_payment',
         'hr_expense_advance_clearing',
         'sale_layout',
         'project',
