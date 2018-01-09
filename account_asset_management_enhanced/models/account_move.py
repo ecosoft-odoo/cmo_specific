@@ -2,6 +2,23 @@
 from openerp import models, api
 
 
+class AccountMove(models.Model):
+    _inherit = 'account.move'
+
+    # Making sure that, then create actual move for cancel and refund
+    # do not create asset
+    @api.model
+    def _switch_move_dict_dr_cr(self, move_dict):
+        move_dict = super(AccountMove, self)._switch_move_dict_dr_cr(move_dict)
+        move_lines = []
+        for line_dict in move_dict['line_id']:
+            line_dict[2].update({
+                'asset_profile_id': False,  # No profile, no asset created
+            })
+            move_lines.append((0, 0, line_dict[2]))
+        return move_dict
+
+
 class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
 

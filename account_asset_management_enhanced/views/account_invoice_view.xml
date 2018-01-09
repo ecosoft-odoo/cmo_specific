@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="invoice_supplier_for2m" model="ir.ui.view">
+            <field name="name">invoice.supplier.form.ext</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='buttons']" position="inside">
+                    <button type="object" name="action_view_asset"
+                      class="oe_stat_button" icon="fa-building-o"
+                      attrs="{'invisible': [('asset_count', '=', 0)]}">
+                        <field name="asset_count" widget="statinfo" string="New Assets"/>
+                    </button>
+                </xpath>
+                <xpath expr="//h1" position="after">
+                    <h3 attrs="{'invisible': ['|', ('asset_count', '=', 0), ('state', '!=', 'cancel')]}">
+                        <label style="color:red;" string="There are asset(s) related to this cancelled document." colspan="2"/>
+                    </h3>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
