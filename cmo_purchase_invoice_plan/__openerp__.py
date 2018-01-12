@@ -16,6 +16,7 @@ Purchase Invoice Plan
     'demo': [],
     'data': [
         'security/ir.model.access.csv',
+        'views/purchase_view.xml',
     ],
     'test': [],
     'auto_install': False,
