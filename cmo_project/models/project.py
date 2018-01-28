@@ -461,7 +461,7 @@ class ProjectProject(models.Model):
     @api.depends('purchase_related_ids')
     def _compute_purchase_related_count(self):
         for project in self:
-            purchase_ids = self.env['purchase.order'].search([
+            purchase_ids = self.env['purchase.order'].sudo().search([
                 ('project_id', 'like', project.id),
             ])
             project.purchase_related_count = len(purchase_ids)
@@ -478,7 +478,7 @@ class ProjectProject(models.Model):
     @api.depends('out_invoice_ids')
     def _compute_out_invoice_count(self):
         for project in self:
-            invoice_ids = self.env['account.invoice'].search([
+            invoice_ids = self.env['account.invoice'].sudo().search([
                 ('id', 'in', project.out_invoice_ids.ids)
             ])
             project.out_invoice_count = len(invoice_ids)
@@ -494,7 +494,7 @@ class ProjectProject(models.Model):
         for project in self:
             actual_price = 0.0
             estimate_cost = 0.0
-            quotes = project.quote_related_ids.filtered(
+            quotes = project.sudo().quote_related_ids.filtered(
                 lambda r: r.state in ('draft', 'done')
             )
             for quote in quotes:
@@ -513,7 +513,7 @@ class ProjectProject(models.Model):
     )
     def _compute_actual_po(self):
         for project in self:
-            purchase_orders = project.purchase_related_ids.filtered(
+            purchase_orders = project.sudo().purchase_related_ids.filtered(
                 lambda r: r.state in ('approved', 'done')
             )
             project.actual_po = sum(purchase_orders.mapped('amount_untaxed'))
@@ -532,8 +532,9 @@ class ProjectProject(models.Model):
     @api.depends('estimate_cost', 'pre_cost', 'actual_po', 'expense')
     def _compute_remaining_cost(self):
         for project in self:
-            remaining = (project.estimate_cost + project.pre_cost) - \
-                (project.actual_po + project.expense)
+            remaining = \
+                (project.sudo().estimate_cost + project.sudo().pre_cost) - \
+                (project.sudo().actual_po + project.sudo().expense)
             project.remaining_cost = remaining
 
     @api.multi

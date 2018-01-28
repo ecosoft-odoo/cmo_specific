@@ -152,7 +152,10 @@ class PurchaseOrder(models.Model):
             if po_project and remaining_cost is not False:
                 if float_compare(order.amount_untaxed, remaining_cost, 2) > 0:
                     raise ValidationError(
-                        _("PO value over remaining cost, please change value")
+                        _("PO value (%s) over remaining cost (%s), "
+                          "please change value." %
+                          ('{:,.2f}'.format(order.amount_untaxed),
+                           '{:,.2f}'.format(remaining_cost)))
                     )
 
     @api.multi
