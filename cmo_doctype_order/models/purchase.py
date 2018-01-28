@@ -13,4 +13,5 @@ class PurchaseOrder(models.Model):
         # --
         self = self.with_context(doctype_id=doctype.id,
                                  fiscalyear_id=fiscalyear_id)
+        vals['name'] = self.env['ir.sequence'].next_by_doctype()
         return super(PurchaseOrder, self).create(vals)
