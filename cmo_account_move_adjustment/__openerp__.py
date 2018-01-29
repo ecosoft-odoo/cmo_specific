@@ -10,7 +10,7 @@
     'website': 'http://www.ecosoft.co.th',
     'images': [],
     'depends': [
-        'account',
+        'l10n_th_fields',
     ],
     'demo': [],
     'data': [
