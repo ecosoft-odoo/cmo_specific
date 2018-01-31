@@ -126,7 +126,7 @@
                            attrs="{'invisible': [('po_project', '!=', True)], 'required': [('po_project', '=', True)]}"
                            context="{'tree_view_ref':'cmo_project.inherit_view_project_tree'}"
                            />
-                    <field name="order_ref" domain="[('order_type', '=', 'quotation'), ('project_related_id', '!=', False), ('project_related_id', '=', project_id)]" attrs="{'invisible': [('po_project', '!=', True)]}"/>
+                    <field name="order_ref" domain="[('order_type', '=', 'quotation'), ('project_related_id', '!=', False), ('project_related_id', '=', project_id), ('state', 'not in', ['cancel'])]" attrs="{'invisible': [('po_project', '!=', True)]}"/>
                     <field name="event_date_description" style="width:150%" attrs="{'invisible': [('po_project', '!=', True)], 'required': [('order_ref', '!=', False)]}"/>
                     <field name="venue_description" style="width:150%" attrs="{'invisible': [('po_project', '!=', True)], 'required': [('order_ref', '!=', False)]}"/>
                 </field>
