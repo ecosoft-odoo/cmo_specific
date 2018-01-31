@@ -9,6 +9,8 @@ class PrintWhtCertWizard(models.TransientModel):
     @api.multi
     def run_report(self):
         data = {'parameters': {}}
+        self._save_selection()
+        self.voucher_id._assign_wht_sequence()
         form_data = self._get_form_data()
         data['parameters'] = form_data
         res = {
