@@ -9,11 +9,6 @@ class WizCostControlSheetReport(models.TransientModel):
     _name = 'wiz.cost.control.sheet.report'
     _description = 'Cost Control Sheet report'
 
-    fiscalyear_id = fields.Many2one(
-        comodel_name='account.fiscalyear',
-        string='Fiscal Year',
-        required=True,
-    )
     project_id = fields.Many2one(
         'project.project',
         string='Project',
@@ -31,7 +26,6 @@ class WizCostControlSheetReport(models.TransientModel):
         datas = {
             'model': 'project.project',
             'project_id': self.project_id.id,
-            'fiscalyear_id': self.fiscalyear_id.id,
         }
         return {'type': 'ir.actions.report.xml',
                 'report_name': 'cost.control.sheet.xls',
