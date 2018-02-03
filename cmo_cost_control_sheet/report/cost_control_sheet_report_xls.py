@@ -433,8 +433,12 @@ class CostControlSheetReportXls(report_xls):
                 purchase_order_line_ids = purchase_order_line_obj.search(
                     cr, uid, [
                         ('sale_order_line_ref_id', '=', data_obj.id),
-                        ('state', 'in', ('confirmed', 'approved', 'done')),
+                        ('state', 'in', ('confirmed', 'done')),
                     ])
+                purchase_order_line = purchase_order_line_obj.browse(
+                    cr, uid, purchase_order_line_ids)
+                purchase_order_line_ids = purchase_order_line.filtered(
+                    lambda l: l.order_id.state != 'confirmed').ids
                 if purchase_order_line_ids:
                     purchase_row_pos = row_pos
                     for row_i, purchase_order_line_id in enumerate(
@@ -459,6 +463,14 @@ class CostControlSheetReportXls(report_xls):
         expense_line_ids = expense_line_obj.search(
             cr, uid,
             [('analytic_account', '=', project_id.analytic_account_id.id)])
+        expense_line = expense_line_obj.browse(cr, uid, expense_line_ids)
+        expense_line_ids = expense_line.filtered(
+            lambda l:
+            ((l.expense_id.is_employee_advance is False and
+              l.expense_id.is_advance_clearing is False and
+              l.expense_id.pay_to != 'pettycash') or
+             l.expense_id.is_advance_clearing is True) and
+            l.expense_id.state in ('done', 'paid')).ids
         if expense_line_ids:
             for row_i, expense_line_id in enumerate(expense_line_ids):
                 expense_line_id = expense_line_obj.browse(
@@ -538,9 +550,6 @@ class CostControlSheetReportXls(report_xls):
         # wl_ccs = _p.wanted_list_cost_control_sheet
         self.cost_control_sheet_template.update(
             _p.template_update_cost_control_sheet)
-        fy = self.pool.get('account.fiscalyear').browse(
-            self.cr, self.uid, data['fiscalyear_id'], context=self.context)
-        self.fiscalyear = fy
         self.projects = self.pool.get('project.project')
         self._cost_control_sheet_report(_p, _xs, data, objects, wb)
 
