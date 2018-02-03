@@ -466,9 +466,7 @@ class CostControlSheetReportXls(report_xls):
         expense_line = expense_line_obj.browse(cr, uid, expense_line_ids)
         expense_line_ids = expense_line.filtered(
             lambda l:
-            ((l.expense_id.is_employee_advance is False and
-              l.expense_id.is_advance_clearing is False and
-              l.expense_id.pay_to != 'pettycash') or
+            (l.expense_id.is_employee_advance is False or
              l.expense_id.is_advance_clearing is True) and
             l.expense_id.state in ('done', 'paid')).ids
         if expense_line_ids:
