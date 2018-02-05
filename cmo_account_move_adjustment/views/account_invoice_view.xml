@@ -16,5 +16,21 @@
                 </xpath>
             </field>
         </record>
+
+        <record id="invoice_form" model="ir.ui.view">
+            <field name="name">account.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="l10n_th_fields.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/notebook//group//field[@name='move_id']" position="after">
+                    <field name="adjust_move_id" invisible="1"/>
+                </xpath>
+                <xpath expr="//div[@name='buttons']" position="inside">
+                    <button class="oe_inline oe_stat_button" name="action_open_adjust_journal" type="object" icon="fa-file-text"
+                      attrs="{'invisible': [('adjust_move_id', '=', False)]}"
+                      string="Adj. Journal"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>
