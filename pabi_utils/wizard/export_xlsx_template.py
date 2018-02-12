@@ -286,7 +286,7 @@ class ExportXlsxTemplate(models.TransientModel):
         wb.save(content)
         content.seek(0)  # Set index to 0, and start reading
         out_file = base64.encodestring(content.read())
-        if record and 'name' in record and record.name:
+        if record and 'name' in record and record.name and record.name != '/':
             out_name = record.name.replace('/', '')
         return (out_file, '%s.xlsx' % out_name)
 
