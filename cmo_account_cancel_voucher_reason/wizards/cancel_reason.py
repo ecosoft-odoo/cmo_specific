@@ -16,11 +16,11 @@ class AccountVoucherCancel(models.TransientModel):
         if voucher.type == 'receipt' and voucher.bank_receipt_id and \
            voucher.bank_receipt_id.state != 'cancel':
             raise UserError(_('Error !!'), _(
-                'Customer Payment "Cannot UnReconcile. Please cancel all '
-                'related Bank Receipts first"'))
+                'Cannot UnReconcile. Please cancel all '
+                'related Bank Receipts first'))
         if voucher.type == 'payment' and voucher.bank_payment_id and \
            voucher.bank_payment_id.state != 'cancel':
             raise UserError(_('Error !!'), _(
-                'Supplier Payment "Cannot UnReconcile. Please cancel all '
-                'related Bank Payment first"'))
+                'Cannot UnReconcile. Please cancel all '
+                'related Bank Payment first'))
         return super(AccountVoucherCancel, self).confirm_cancel()
