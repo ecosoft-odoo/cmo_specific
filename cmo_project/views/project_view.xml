@@ -253,14 +253,14 @@
                 <xpath expr="//group" position="after">
                     <group>
                         <group>
-                            <field name="project_budget"/>
-                            <field name="date_brief"/>
-                            <field name="date_start"/>
-                            <field name="date" string="End Date"/>
+                            <field name="project_budget" required="1"/>
+                            <field name="date_brief" required="1"/>
+                            <field name="date_start" required="1"/>
+                            <field name="date" string="End Date" required="1"/>
                             <field name="project_parent_id"
                                 context="{'tree_view_ref':'cmo_project.inherit_view_project_tree'}"
                                 options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
-                            <field name="operating_unit_id" string="Department" readonly="1"/>
+                            <field name="operating_unit_id" string="Department" readonly="1" required="1"/>
                             <field name="state_before_inactive" invisible="1"/>
                             <field name="is_active_state" invisible="1"/>
                         </group>
@@ -335,14 +335,14 @@
                                  options="{'no_open':True,'no_create':1,'no_create_edit':1}"
                             />
                             <field name="agency_partner_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
-                            <field name="client_type_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
-                            <field name="project_from_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
-                            <field name="project_type_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
-                            <field name="obligation_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
+                            <field name="client_type_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}" required="1"/>
+                            <field name="project_from_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}" required="1"/>
+                            <field name="project_type_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}" required="1"/>
+                            <field name="obligation_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}" required="1"/>
                           </group>
                           <group>
-                            <field name="function_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
-                            <field name="location_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
+                            <field name="function_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}" required="1"/>
+                            <field name="location_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}" required="1"/>
                             <field name="project_place" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
                             <field name="industry_id" readonly="1"/>
                             <field name="brand_type_id" readonly="1"/>
