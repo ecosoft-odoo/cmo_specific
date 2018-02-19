@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;line_cr_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.1"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="268"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -95,11 +95,32 @@
 	<field name="number" class="java.lang.String">
 		<fieldDescription><![CDATA[number]]></fieldDescription>
 	</field>
+	<field name="amount" class="java.lang.Number">
+		<fieldDescription><![CDATA[line_cr_ids/amount]]></fieldDescription>
+	</field>
+	<field name="amount_tax" class="java.lang.Number">
+		<fieldDescription><![CDATA[line_cr_ids/move_line_id/invoice/tax_line/amount]]></fieldDescription>
+	</field>
+	<field name="amount_base" class="java.lang.Number">
+		<fieldDescription><![CDATA[line_cr_ids/move_line_id/invoice/tax_line/base]]></fieldDescription>
+	</field>
 	<variable name="string_total" class="java.lang.String">
 		<variableExpression><![CDATA[(Math.round($F{amount_total}*100)/100).toString()]]></variableExpression>
 	</variable>
 	<variable name="string_tax" class="java.lang.String">
 		<variableExpression><![CDATA[(Math.round($F{tax_amount}*100)/100).toString()]]></variableExpression>
+	</variable>
+	<variable name="amount_untaxed" class="java.lang.Number">
+		<variableExpression><![CDATA[(100 * $F{amount}) / (100 + ($F{amount_base} && $F{amount_tax} ? ($F{amount_tax} / $F{amount_base} * 100) : 0))]]></variableExpression>
+	</variable>
+	<variable name="total_amount_untaxed" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$V{amount_untaxed}]]></variableExpression>
+	</variable>
+	<variable name="total_amount" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{amount}]]></variableExpression>
+	</variable>
+	<variable name="total_amount_tax" class="java.lang.Number">
+		<variableExpression><![CDATA[$V{total_amount} - $V{total_amount_untaxed}]]></variableExpression>
 	</variable>
 	<background>
 		<band height="802" splitType="Stretch">
@@ -174,7 +195,7 @@ $F{partner_zip}]]></textFieldExpression>
 				<textElement textAlignment="Right">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Float"><![CDATA[$F{amount_untaxed}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Float"><![CDATA[$V{amount_untaxed}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement isPrintRepeatedValues="false" x="15" y="40" width="385" height="38" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
@@ -226,14 +247,14 @@ $F{others_note}]]></textFieldExpression>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Float"><![CDATA[$F{amount_untaxed}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Float"><![CDATA[$V{total_amount_untaxed}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;#,##0.00-" isBlankWhenNull="true">
 				<reportElement x="400" y="60" width="155" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Float"><![CDATA[$F{amount_total}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Float"><![CDATA[$V{total_amount}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="0" y="61" width="310" height="20"/>
@@ -247,7 +268,7 @@ $F{others_note}]]></textFieldExpression>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Float"><![CDATA[$F{tax_amount}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Float"><![CDATA[$V{total_amount_tax}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="15" y="0" width="385" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
