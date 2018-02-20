@@ -156,5 +156,15 @@
             </field>
         </record>
 
+        <record id="view_account_move_line_filter" model="ir.ui.view">
+            <field name="name">Journal Items</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account.view_account_move_line_filter"/>
+            <field name="arch" type="xml">
+                <field name="name" position="before">
+                    <field name="voucher_number_cheque" invisible="context.get('type', False) != 'bank_payment'"/>
+                </field>
+            </field>
+        </record>
     </data>
 </openerp>
