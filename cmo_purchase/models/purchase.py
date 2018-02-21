@@ -188,7 +188,7 @@ class PurchaseOrderLine(models.Model):
     )
     sale_order_line_ref_id = fields.Many2one(
         'sale.order.line',
-        string='Sale Order Line Ref.',
+        string='Sale Order Line Ref. for Project only',
     )
     custom_group_readonly = fields.Char(
         related='product_ref_custom_group',
