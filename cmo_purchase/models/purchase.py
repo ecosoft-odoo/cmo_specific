@@ -232,8 +232,10 @@ class PurchaseOrderTypeConfig(models.Model):
     name = fields.Char(
         string='PO Type',
     )
-    category_id = fields.Many2one(
+    category_ids = fields.Many2many(
         'product.category',
+        'purchase_order_type_config_product_category_rel',
+        'config_id', 'categ_id',
         string='Internal Category',
     )
     active = fields.Boolean(

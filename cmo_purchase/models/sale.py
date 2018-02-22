@@ -23,31 +23,72 @@ class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
     @api.model
-    def name_search(self, name, args=None, operator='ilike', limit=100):
+    def _get_domain(self, domain):
         context = self._context.copy()
         # filter order line from quotation
         if context.get('order_ref', False):
             order = self.env['sale.order'].browse(context.get('order_ref'))
-            args = [('id', 'in', order.order_line.ids)] + args
+            domain = [('id', 'in', order.order_line.ids)] + domain
         elif 'order_ref' in context:
-            args = [('id', 'in', [])]
+            domain = [('id', 'in', [])]
+        return domain
 
+    @api.model
+    def name_search(self, name, args=None, operator='ilike', limit=100):
         return super(SaleOrderLine, self).name_search(
-            name, args=args, operator=operator, limit=limit)
+            name, args=self._get_domain(args), operator=operator, limit=limit)
+
+    @api.model
+    def search_read(self, domain=None, fields=None, offset=0,
+                    limit=None, order=None):
+        res = super(SaleOrderLine, self).search_read(
+            domain=self._get_domain(domain), fields=fields, offset=offset,
+            limit=limit, order=order)
+        return res
+
+    @api.model
+    def read_group(self, domain, fields, groupby, offset=0, limit=None,
+                   orderby=False, lazy=True):
+        res = super(SaleOrderLine, self).read_group(
+            self._get_domain(domain), fields, groupby, offset=offset,
+            limit=limit, orderby=orderby, lazy=lazy)
+        return res
 
 
 class SaleLayoutCategory(models.Model):
     _inherit = 'sale_layout.category'
 
     @api.model
-    def name_search(self, name, args=None, operator='ilike', limit=100):
+    def _get_domain(self, domain):
         context = self._context.copy()
         # filter section from sale order line
         if context.get('sale_order_line_ref_id', False):
             order_line = self.env['sale.order.line'].browse(
                 context.get('sale_order_line_ref_id'))
-            args = [('id', 'in', [order_line.sale_layout_cat_id.id])] + args
+            domain = [('id', 'in', [order_line.sale_layout_cat_id.id])] + \
+                domain
         elif 'sale_order_line_ref_id' in context:
-            args = [('id', 'in', [])]
+            domain = [('id', 'in', [])]
+        return domain
+
+    @api.model
+    def name_search(self, name, args=None, operator='ilike', limit=100):
         return super(SaleLayoutCategory, self).name_search(
-            name, args=args, operator=operator, limit=limit)
+            name, args=self._get_domain(args),
+            operator=operator, limit=limit)
+
+    @api.model
+    def search_read(self, domain=None, fields=None, offset=0,
+                    limit=None, order=None):
+        res = super(SaleOrderLine, self).search_read(
+            domain=self._get_domain(domain), fields=fields, offset=offset,
+            limit=limit, order=order)
+        return res
+
+    @api.model
+    def read_group(self, domain, fields, groupby, offset=0, limit=None,
+                   orderby=False, lazy=True):
+        res = super(SaleOrderLine, self).read_group(
+            self._get_domain(domain), fields, groupby, offset=offset,
+            limit=limit, orderby=orderby, lazy=lazy)
+        return res
