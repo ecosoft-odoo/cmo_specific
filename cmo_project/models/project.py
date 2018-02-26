@@ -194,9 +194,8 @@ class ProjectProject(models.Model):
         string='Lost Reason',
     )
     lost_by_id = fields.Many2one(
-        'res.partner',
+        'project.competitor',
         string='Lost By',
-        domain=[('category_id', 'like', 'Competitor'), ],
     )
     reject_reason_id = fields.Many2one(
         'project.reject.reason',

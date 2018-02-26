@@ -10,9 +10,8 @@ class ProjectCloseReason(models.TransientModel):
         selection="_get_close_reason_list",
     )
     lost_by_id = fields.Many2one(
-        'res.partner',
+        'project.competitor',
         string='Lost By',
-        domain=[('category_id', 'like', 'Competitor'), ],
     )
     lost_reason_id = fields.Many2one(
         'project.lost.reason',
