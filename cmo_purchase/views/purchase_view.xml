@@ -213,7 +213,7 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="name"/>
-                    <field name="category_id"/>
+                    <field name="category_ids"/>
                     <field name="invoice_method"/>
                     <field name="active"/>
                 </tree>
@@ -230,7 +230,7 @@
                         <group>
                             <group>
                                 <field name="name" required="True"/>
-                                <field name="category_id" required="True" options="{'no_create':true,'no_create_edit':true}"/>
+                                <field name="category_ids" required="True" options="{'no_create':true,'no_create_edit':true}" widget="many2many_tags"/>
                                 <field name="invoice_method"/>
                             </group>
                             <group>
