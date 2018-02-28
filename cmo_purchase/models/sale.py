@@ -80,7 +80,7 @@ class SaleLayoutCategory(models.Model):
     @api.model
     def search_read(self, domain=None, fields=None, offset=0,
                     limit=None, order=None):
-        res = super(SaleOrderLine, self).search_read(
+        res = super(SaleLayoutCategory, self).search_read(
             domain=self._get_domain(domain), fields=fields, offset=offset,
             limit=limit, order=order)
         return res
