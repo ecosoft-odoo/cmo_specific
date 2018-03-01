@@ -20,6 +20,9 @@
 	<field name="payment_type" class="java.lang.String">
 		<fieldDescription><![CDATA[payment_type]]></fieldDescription>
 	</field>
+	<field name="payee" class="java.lang.String">
+		<fieldDescription><![CDATA[payee]]></fieldDescription>
+	</field>
 	<variable name="string_total" class="java.lang.String">
 		<variableExpression><![CDATA[(Math.round($F{amount}*100)/100).toString()]]></variableExpression>
 	</variable>
@@ -90,7 +93,7 @@
 				<textElement>
 					<font size="16" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{payment_type} == "cheque_cash" ? "เงินสด" : $F{supplier}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{payment_type} == "cheque_cash" ? "เงินสด" : $F{payee}]]></textFieldExpression>
 			</textField>
 			<textField pattern="** #,##0.00 **;#,##0.00-" isBlankWhenNull="true">
 				<reportElement isPrintRepeatedValues="false" x="548" y="-52" width="243" height="25"/>

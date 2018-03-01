@@ -21,5 +21,15 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="view_vendor_payment_form">
+            <field name="name">account.voucher.payment.form</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_vendor_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/group/group[1]" position="inside">
+                    <field name="payee"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>
