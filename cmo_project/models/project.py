@@ -782,6 +782,7 @@ class ProjectType(models.Model):
 class ProjectCompetitor(models.Model):
     _name = 'project.competitor'
     _description = 'Project Competitor'
+    _rec_name = 'company'
 
     name = fields.Char(
         string='Name',
