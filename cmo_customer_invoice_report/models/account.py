@@ -28,6 +28,7 @@ class AccountInvoice(models.Model):
             reports = [
                 u'cmo.customer.invoice',
                 u'cmo.customer.invoice2',
+                u'cmo.sale.daybook',
             ]
             filter_print_report(res, reports)
         # Customer Refund
@@ -36,6 +37,7 @@ class AccountInvoice(models.Model):
                 self._context.get('journal_type', False) == 'sale_refund':
             reports = [
                 u'cmo.customer.refund',
+                u'cmo.sale.daybook',
             ]
             filter_print_report(res, reports)
         # Suplier Invoice

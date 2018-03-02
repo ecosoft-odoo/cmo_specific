@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_sale_voucher" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="OPENERP_RELATIONS" value="[&quot;line_id&quot;]"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_sale_day_book" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="OPENERP_RELATIONS" value="[&quot;move_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -9,34 +9,31 @@
 		<![CDATA[/data/record]]>
 	</queryString>
 	<field name="number" class="java.lang.String">
-		<fieldDescription><![CDATA[name]]></fieldDescription>
+		<fieldDescription><![CDATA[number]]></fieldDescription>
 	</field>
 	<field name="date" class="java.util.Date">
-		<fieldDescription><![CDATA[date]]></fieldDescription>
+		<fieldDescription><![CDATA[date_invoice]]></fieldDescription>
 	</field>
 	<field name="account_name" class="java.lang.String">
-		<fieldDescription><![CDATA[line_id/account_id/name]]></fieldDescription>
-	</field>
-	<field name="due_value" class="java.util.Date">
-		<fieldDescription><![CDATA[due_value]]></fieldDescription>
+		<fieldDescription><![CDATA[move_ids/account_id/name]]></fieldDescription>
 	</field>
 	<field name="account_code" class="java.lang.String">
-		<fieldDescription><![CDATA[line_id/account_id/code]]></fieldDescription>
+		<fieldDescription><![CDATA[move_ids/account_id/code]]></fieldDescription>
 	</field>
 	<field name="debit" class="java.lang.Number">
-		<fieldDescription><![CDATA[line_id/debit]]></fieldDescription>
+		<fieldDescription><![CDATA[move_ids/debit]]></fieldDescription>
 	</field>
 	<field name="credit" class="java.lang.Number">
-		<fieldDescription><![CDATA[line_id/credit]]></fieldDescription>
+		<fieldDescription><![CDATA[move_ids/credit]]></fieldDescription>
 	</field>
 	<field name="operating_unit" class="java.lang.String">
-		<fieldDescription><![CDATA[line_id/operating_unit_id/code]]></fieldDescription>
-	</field>
-	<field name="narration" class="java.lang.String">
-		<fieldDescription><![CDATA[narration]]></fieldDescription>
+		<fieldDescription><![CDATA[move_ids/operating_unit_id/code]]></fieldDescription>
 	</field>
 	<field name="line_des" class="java.lang.String">
-		<fieldDescription><![CDATA[line_id/name]]></fieldDescription>
+		<fieldDescription><![CDATA[move_ids/name]]></fieldDescription>
+	</field>
+	<field name="narration" class="java.lang.String">
+		<fieldDescription><![CDATA[move_ids/move_id/narration]]></fieldDescription>
 	</field>
 	<variable name="total_debit" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{debit}]]></variableExpression>
@@ -196,7 +193,7 @@ Senior Accounting Manager]]></text>
 				<textElement textAlignment="Center">
 					<font size="16" isBold="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[Sale Voucher]]></text>
+				<text><![CDATA[Sale Day Book]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="351" y="71" width="71" height="20"/>
