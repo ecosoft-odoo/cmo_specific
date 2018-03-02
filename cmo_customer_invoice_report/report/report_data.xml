@@ -170,25 +170,25 @@
            <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_purchase_daybook)"/>
         </record>
 
-        <record id="cmo_sale_voucher" model="ir.actions.report.xml">
-           <field name="string">Sale Voucher</field>
+        <record id="cmo_sale_daybook" model="ir.actions.report.xml">
+           <field name="string">Sale Day Book</field>
            <field name="auto">True</field>
-           <field name="model">account.move</field>
-           <field name="jasper_model_id" ref="account.model_account_move"/>
-           <field name="name">Sale Voucher</field>
-           <field name="report_name">cmo.sale.voucher</field>
-           <field name="report_rml">cmo_customer_invoice_report/report/cmo_sale_voucher.jrxml</field>
+           <field name="model">account.invoice</field>
+           <field name="jasper_model_id" ref="account.model_account_invoice"/>
+           <field name="name">Sale Day Book</field>
+           <field name="report_name">cmo.sale.daybook</field>
+           <field name="report_rml">cmo_customer_invoice_report/report/cmo_sale_daybook.jrxml</field>
            <field name="force_locale">en_US</field>
            <field name="menu">True</field>
            <field name="header">False</field>
            <field name="jasper_report">True</field>
            <field name="jasper_output">pdf</field>
         </record>
-        <record id="cmo_sale_voucher_values" model="ir.values">
-           <field name="name">Sale Voucher</field>
-           <field name="model">account.move</field>
+        <record id="cmo_sale_daybook_values" model="ir.values">
+           <field name="name">Sale Day Book</field>
+           <field name="model">account.invoice</field>
            <field name="key2" eval="'client_print_multi'"/>
-           <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_sale_voucher)"/>
+           <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_sale_daybook)"/>
         </record>
 
         <record id="cmo_journal_voucher" model="ir.actions.report.xml">
