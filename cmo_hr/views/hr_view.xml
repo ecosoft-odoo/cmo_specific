@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
+        <!-- Add default pay to in context -->
+        <record id="hr_expense.expense_all" model="ir.actions.act_window">
+            <field name="context">{'is_advance_clearing':False, 'is_employee_advance':False,
+                                    'default_is_advance_clearing':False, 'default_is_employee_advance':False, 'default_pay_to': 'employee'}</field>
+        </record>
+        <record id="hr_expense_advance_clearing.action_expense_advance" model="ir.actions.act_window">
+            <field name="context">{'default_is_employee_advance':True, 'is_employee_advance':True, 'default_pay_to': 'employee'}</field>
+        </record>
+        <record id="hr_expense_advance_clearing.action_expense_clearing" model="ir.actions.act_window">
+            <field name="context">{'default_is_employee_advance':False, 'default_is_advance_clearing': True, 'default_pay_to': 'employee',
+                                    'is_advance_clearing': True}</field>
+
+        </record>
+
+        <!-- Change Label Petty Cash -->
+        <record id="view_expenses_form_sequence" model="ir.ui.view">
+            <field name="name">view.expenses.form.sequence</field>
+            <field name="model">hr.expense.expense</field>
+            <field name="inherit_id" ref="hr_expense_advance_clearing.view_expenses_form_sequence"/>
+            <field name="arch" type="xml">
+                <xpath expr="//label[@string='Expense ']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', ('is_employee_advance', '=', True), ('pay_to', '=', 'pettycash')]}</attribute>
+                </xpath>
+                <xpath expr="//label[@string='Advance ']" position="after">
+                    <label string="Petty Cash " attrs="{'invisible': ['|', ('is_employee_advance', '=', True), '|', ('is_advance_clearing', '=', True), ('pay_to', '!=', 'pettycash')]}" />
+                </xpath>
+            </field>
+        </record>
+
         <record id="view_expenses_tree_request" model="ir.ui.view">
             <field name="name">hr.expense.expense.tree.request</field>
             <field name="model">hr.expense.expense</field>
@@ -73,6 +102,9 @@
                 </xpath>
                 <xpath expr="//tree[@string='Expense Lines']/field[@name='tax_ids']" position="attributes">
                     <attribute name="options">{'no_open':True,'no_create':1,'no_create_edit':1}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='pay_to']" position="attributes">
+                    <attribute name="readonly">1</attribute>
                 </xpath>
             </field>
         </record>
