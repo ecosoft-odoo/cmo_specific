@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;move_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="96"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -49,6 +49,9 @@
 	</field>
 	<field name="date_cheque" class="java.lang.String">
 		<fieldDescription><![CDATA[date_cheque]]></fieldDescription>
+	</field>
+	<field name="str_journal_items" class="java.lang.String">
+		<fieldDescription><![CDATA[str_journal_items]]></fieldDescription>
 	</field>
 	<variable name="total_debit" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{debit}]]></variableExpression>
@@ -257,12 +260,12 @@ RECEIPT VOUCHER]]></text>
 				<text><![CDATA[Detail : ]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="70" y="147" width="414" height="40"/>
+				<reportElement x="70" y="142" width="414" height="40"/>
 				<box leftPadding="2"/>
-				<textElement textAlignment="Left">
+				<textElement textAlignment="Left" lineSpacing="1_1_2">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{cheque_number}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{str_journal_items}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="71" y="159" width="425" height="1"/>
