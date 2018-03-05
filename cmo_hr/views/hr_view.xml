@@ -84,6 +84,7 @@
                 </xpath>
                 <xpath expr="//tree[@string='Expense Lines']/field[@name='analytic_account']" position="attributes">
                     <attribute name="attrs">{'readonly': [('is_advance_clearing','=',True)]}</attribute>
+                    <attribute name="context">{'is_project_expense_line': True}</attribute>
                 </xpath>
             </field>
         </record>

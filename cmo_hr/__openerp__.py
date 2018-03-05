@@ -12,6 +12,7 @@
         'hr_expense_advance_clearing',
         'l10n_th_doctype_expense',
         'account_pettycash',
+        'cmo_project',
     ],
     'data': [
         'views/hr_view.xml',

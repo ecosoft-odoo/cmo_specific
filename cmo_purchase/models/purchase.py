@@ -29,9 +29,7 @@ class PurchaseOrder(models.Model):
         'project.project',
         string='Project Name',
         ondelete='restrict',
-        domain=[
-            ('state', 'in', ['validate', 'open', 'ready_billing']),
-        ],
+        domain=lambda self: self._get_domain_project(),
         states={
             'confirmed': [('readonly', True)],
             'approved': [('readonly', True)],
@@ -163,6 +161,15 @@ class PurchaseOrder(models.Model):
         for rec in self:
             for line in rec.order_line:
                 line.account_analytic_id = self.project_id.analytic_account_id
+
+    @api.model
+    def _get_domain_project(self):
+        operating_unit_ids = self.env.user.operating_unit_ids.ids
+        domain = [
+            ('state', 'in', ['validate', 'open', 'ready_billing']),
+            ('operating_unit_id', 'in', operating_unit_ids),
+        ]
+        return domain
 
 
 class PurchaseOrderLine(models.Model):
