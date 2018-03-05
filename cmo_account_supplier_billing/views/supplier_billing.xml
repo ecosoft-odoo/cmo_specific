@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_filter_supplier_billing" model="ir.ui.view">
+            <field name="name">Supplier Billing Filter</field>
+            <field name="model">supplier.billing</field>
+            <field name="inherit_id" ref="account_supplier_billing.view_filter_supplier_billing"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search/filter[1]" position="before">
+                    <field name="number"/>
+                    <field name="partner_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
