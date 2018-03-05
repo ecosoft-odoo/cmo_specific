@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line&quot;]"/>
 	<property name="ireport.zoom" value="1.0000000000000022"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="275"/>
+	<property name="ireport.y" value="480"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -59,13 +59,13 @@
 	<field name="quote_venue" class="java.lang.String">
 		<fieldDescription><![CDATA[quote_ref_venue]]></fieldDescription>
 	</field>
-	<field name="amount_untaxed" class="java.lang.Float">
+	<field name="amount_untaxed" class="java.lang.Number">
 		<fieldDescription><![CDATA[amount_untaxed]]></fieldDescription>
 	</field>
-	<field name="tax_amount" class="java.lang.Float">
+	<field name="tax_amount" class="java.lang.Number">
 		<fieldDescription><![CDATA[amount_tax]]></fieldDescription>
 	</field>
-	<field name="amount_total" class="java.lang.Float">
+	<field name="amount_total" class="java.lang.Number">
 		<fieldDescription><![CDATA[amount_total]]></fieldDescription>
 	</field>
 	<field name="origin" class="java.lang.String">
@@ -80,7 +80,7 @@
 	<field name="project_note" class="java.lang.String">
 		<fieldDescription><![CDATA[project_note]]></fieldDescription>
 	</field>
-	<field name="invoice_line_subtotal" class="java.lang.Float">
+	<field name="invoice_line_subtotal" class="java.lang.Number">
 		<fieldDescription><![CDATA[invoice_line/price_subtotal]]></fieldDescription>
 	</field>
 	<field name="district_id" class="java.lang.String">
@@ -173,7 +173,7 @@ $F{partner_zip}]]></textFieldExpression>
 				<textElement textAlignment="Right">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Float"><![CDATA[$F{invoice_line_subtotal}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{invoice_line_subtotal}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -190,14 +190,14 @@ $F{partner_zip}]]></textFieldExpression>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Float"><![CDATA[$F{amount_untaxed}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{amount_untaxed}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;#,##0.00-">
 				<reportElement x="429" y="50" width="155" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Float"><![CDATA[$F{amount_total}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{amount_total}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement x="15" y="50" width="294" height="20" isPrintWhenDetailOverflows="true"/>
@@ -218,7 +218,7 @@ $F{partner_zip}]]></textFieldExpression>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Float"><![CDATA[$F{tax_amount}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{tax_amount}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="14" y="85" width="180" height="20" isPrintWhenDetailOverflows="true"/>
