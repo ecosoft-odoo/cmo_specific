@@ -283,25 +283,25 @@ class ProjectProject(models.Model):
         compute='_compute_adjustment_amount',
     )
 
-    @api.model
-    def fields_view_get(self, view_id=None, view_type='form',
-                        toolbar=False, submenu=False):
-        res = super(ProjectProject, self).fields_view_get(
-            view_id, view_type, toolbar=toolbar, submenu=submenu)
-
-        readonly_group = self.env.ref('project.group_project_readonly')
-        readonly_group_own = self.env.ref('project.group_project_readonly_own')
-        user = self.env['res.users'].search([
-            ('id', '=', self._context.get('uid')),
-        ])
-        meet_user = (user in readonly_group.users) or \
-            (user in readonly_group_own.users)
-
-        if meet_user and user.id != 1:
-            root = etree.fromstring(res['arch'])
-            root.set('edit', 'false')
-            res['arch'] = etree.tostring(root)
-        return res
+    # @api.model
+    # def fields_view_get(self, view_id=None, view_type='form',
+    #                     toolbar=False, submenu=False):
+    #     res = super(ProjectProject, self).fields_view_get(
+    #         view_id, view_type, toolbar=toolbar, submenu=submenu)
+    #
+    #     readonly_group = self.env.ref('project.group_project_readonly')
+    #     readonly_group_own = self.env.ref('project.group_project_readonly_own')
+    #     user = self.env['res.users'].search([
+    #         ('id', '=', self._context.get('uid')),
+    #     ])
+    #     meet_user = (user in readonly_group.users) or \
+    #         (user in readonly_group_own.users)
+    #
+    #     if meet_user and user.id != 1:
+    #         root = etree.fromstring(res['arch'])
+    #         root.set('edit', 'false')
+    #         res['arch'] = etree.tostring(root)
+    #     return res
 
     @api.multi
     @api.depends('adjustment_ids')
@@ -428,7 +428,7 @@ class ProjectProject(models.Model):
                     (project.state != 'pending') and \
                     (project.state != 'close') and \
                     (project.state != 'cancelled'):
-                project.write({'state_before_inactive': project.state})
+                project.sudo().write({'state_before_inactive': project.state})
 
     @api.onchange('project_parent_id')
     def _onchange_project_parent_id(self):
