@@ -11,6 +11,7 @@ class ProjectProject(models.Model):
 
     code = fields.Char(
         related='analytic_account_id.code',
+        store=True,
         help="For project.project, no default, and do sequence when created"
     )
     use_tasks = fields.Boolean(
