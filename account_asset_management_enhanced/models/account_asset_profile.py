@@ -13,6 +13,12 @@ class AccountAssetProfile(models.Model):
         string='Number',
         required=True,
     )
+    account_depreciation_id = fields.Many2one(
+        required=False,
+    )
+    account_expense_depreciation_id = fields.Many2one(
+        required=False,
+    )
 
     @api.model
     def _create_sequence_asset(self, prefix):
