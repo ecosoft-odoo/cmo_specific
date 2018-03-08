@@ -29,20 +29,20 @@
 	<field name="analytic_account" class="java.lang.String">
 		<fieldDescription><![CDATA[line_ids/analytic_account/name]]></fieldDescription>
 	</field>
-	<field name="amount_line_untaxed" class="java.lang.Float">
-		<fieldDescription><![CDATA[line_ids/amount_line_untaxed]]></fieldDescription>
-	</field>
 	<field name="line_ids_date" class="java.util.Date">
 		<fieldDescription><![CDATA[line_ids/date_value]]></fieldDescription>
 	</field>
 	<field name="line_ids_code" class="java.lang.String">
 		<fieldDescription><![CDATA[line_ids/analytic_account/code]]></fieldDescription>
 	</field>
-	<variable name="sum_amount_untaxed" class="java.lang.Float" resetType="Column" calculation="Sum">
-		<variableExpression><![CDATA[$F{amount_line_untaxed}]]></variableExpression>
+	<field name="total_amount" class="java.lang.Number">
+		<fieldDescription><![CDATA[line_ids/total_amount]]></fieldDescription>
+	</field>
+	<variable name="sum_total_amount" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_amount}]]></variableExpression>
 	</variable>
 	<variable name="string_total" class="java.lang.String">
-		<variableExpression><![CDATA[(Math.round($V{sum_amount_untaxed}*100)/100).toString()]]></variableExpression>
+		<variableExpression><![CDATA[(Math.round($V{sum_total_amount}*100)/100).toString()]]></variableExpression>
 	</variable>
 	<title>
 		<band height="100" splitType="Stretch">
@@ -104,7 +104,7 @@
 				<text><![CDATA[DATE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="164" y="60" width="241" height="40"/>
+				<reportElement x="164" y="60" width="268" height="40"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -128,7 +128,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{employee_request}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="405" y="60" width="151" height="20"/>
+				<reportElement x="432" y="60" width="124" height="40"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -138,20 +138,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[AMOUNT]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="505" y="80" width="51" height="20"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[STG.]]></text>
+				<text><![CDATA[AMOUNT (BAHT)]]></text>
 			</staticText>
 			<frame>
 				<reportElement x="451" y="0" width="105" height="60"/>
@@ -174,18 +161,6 @@
 				<text><![CDATA[JOB]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="405" y="80" width="100" height="20"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[BATH]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="179" y="30" width="37" height="20"/>
 				<box leftPadding="2" rightPadding="0"/>
 				<textElement textAlignment="Left">
@@ -202,9 +177,9 @@
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="20" splitType="Stretch">
+		<band height="20" splitType="Prevent">
 			<textField>
-				<reportElement x="164" y="0" width="241" height="20"/>
+				<reportElement x="164" y="0" width="268" height="20"/>
 				<box leftPadding="2">
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -215,9 +190,11 @@
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{line_ids_product}+" "+$F{line_ids_name}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00;#,##0.00-">
-				<reportElement x="405" y="0" width="100" height="20"/>
+			<textField pattern="#,##0.00;#,##0.00-" isBlankWhenNull="true">
+				<reportElement x="432" y="0" width="124" height="20"/>
 				<box rightPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
@@ -225,7 +202,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Float"><![CDATA[$F{amount_line_untaxed}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{total_amount} != null ? $F{total_amount} : 0.0]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="83" y="0" width="81" height="20"/>
@@ -250,17 +227,6 @@
 				</textElement>
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{line_ids_date}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="505" y="0" width="51" height="20"/>
-				<box>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
 		</band>
 	</detail>
 	<columnFooter>
@@ -272,7 +238,7 @@
 	<summary>
 		<band height="121" splitType="Stretch">
 			<staticText>
-				<reportElement x="349" y="0" width="56" height="20"/>
+				<reportElement x="349" y="0" width="83" height="20"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -282,8 +248,8 @@
 				</textElement>
 				<text><![CDATA[TOTAL]]></text>
 			</staticText>
-			<textField pattern="#,##0.00;#,##0.00-">
-				<reportElement x="405" y="0" width="151" height="20"/>
+			<textField pattern="#,##0.00;#,##0.00-" isBlankWhenNull="true">
+				<reportElement x="432" y="0" width="124" height="20"/>
 				<box rightPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -293,7 +259,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Float"><![CDATA[$V{sum_amount_untaxed}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$V{sum_total_amount} != null ? $V{sum_total_amount} : 0.0]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="44" y="0" width="305" height="20"/>
@@ -316,7 +282,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[BATH]]></text>
+				<text><![CDATA[BAHT]]></text>
 			</staticText>
 			<frame>
 				<reportElement x="186" y="20" width="185" height="60"/>
