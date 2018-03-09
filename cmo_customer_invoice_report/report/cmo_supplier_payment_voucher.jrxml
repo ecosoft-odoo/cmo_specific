@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;move_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.1000000000000014"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="196"/>
+	<property name="ireport.y" value="244"/>
 	<style name="style1">
 		<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
 	</style>
@@ -610,7 +610,7 @@ $F{payment_type} == "cheque")
 				</textElement>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{credit}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="style1" x="149" y="0" width="125" height="20"/>
 				<textElement verticalAlignment="Top">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
