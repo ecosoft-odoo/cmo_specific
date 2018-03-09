@@ -14,6 +14,9 @@
                                     'is_advance_clearing': True}</field>
 
         </record>
+        <record id="account_pettycash.action_expense_pettycash" model="ir.actions.act_window">
+            <field name="context">{'default_pay_to': 'pettycash', 'search_default_confirm': True, 'default_payment_by': 'cash'}</field>
+        </record>
 
         <!-- Change Label Petty Cash -->
         <record id="view_expenses_form_sequence" model="ir.ui.view">
