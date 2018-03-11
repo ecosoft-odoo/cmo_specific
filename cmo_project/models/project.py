@@ -277,7 +277,6 @@ class ProjectProject(models.Model):
         'project.adjustment',
         'project_id',
         string='Adjustment Description',
-        states={'close': [('readonly', True)]},
     )
     adjustment_amount = fields.Float(
         string='Adjustment',
