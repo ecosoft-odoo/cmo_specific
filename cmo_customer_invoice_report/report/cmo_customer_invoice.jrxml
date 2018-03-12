@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line&quot;]"/>
 	<property name="ireport.zoom" value="1.0000000000000022"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="48"/>
+	<property name="ireport.y" value="96"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -131,12 +131,13 @@
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{partner_name}+ "\n" +
-$F{partner_street}+ " " +
-$F{partner_street2}+ " "+
-$F{township_id} +" "+
-$F{district_id}+ " " +
-$F{province_id} + " "+
-$F{partner_zip}]]></textFieldExpression>
+(new Scriptlet()).getAddress(
+    $F{partner_street},
+    $F{partner_street2},
+    $F{partner_city},
+    $F{partner_zip},
+    null,
+    null)]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="15" y="210" width="110" height="20"/>
