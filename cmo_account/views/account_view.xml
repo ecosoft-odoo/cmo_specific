@@ -50,6 +50,9 @@
                 <xpath expr="//tree[@string='Invoice Lines']/field[@name='invoice_line_tax_id']" position="attributes">
                     <attribute name="attrs">{'readonly':[('state_related_invoice','in',['open','paid','cancel'])]}</attribute>
                 </xpath>
+                <xpath expr="//form/sheet/group/group[1]" position="inside">
+                    <field name="preprint_number"/>
+                </xpath>
             </field>
         </record>
 
