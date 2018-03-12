@@ -35,10 +35,7 @@ class HrExpenseExpense(models.Model):
         },
     )
     payment_by = fields.Selection(
-        [('cash', 'Cash'),
-         ('cashier_cheque', 'Cashier Cheque'),
-         ('bank_transfer', 'Bank Transfer'),
-         ('ac_payee', 'A/C Payee'), ],
+        selection=lambda self: self._get_payment_by_selection(),
         string='Payment By',
     )
     bank_transfer_ref = fields.Text(
@@ -135,6 +132,17 @@ class HrExpenseExpense(models.Model):
         for rec in self:
             if not rec.line_ids:
                 raise ValidationError(_('Must have at least 1 line!'))
+
+    @api.model
+    def _get_payment_by_selection(self):
+        context = self._context.copy()
+        res = [('cash', 'Cash'),
+               ('cashier_cheque', 'Cashier Cheque'),
+               ('bank_transfer', 'Bank Transfer'),
+               ('ac_payee', 'A/C Payee'), ]
+        if context.get('default_pay_to', False) == 'pettycash':
+            res = [('cash', 'Cash'), ]
+        return res
 
 
 class HrExpenseLine(models.Model):
