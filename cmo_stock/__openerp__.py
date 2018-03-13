@@ -15,6 +15,7 @@
         'purchase_operating_unit',
         'stock_account',
         'cmo_project',
+        'cmo_operating_unit',
     ],
     "data": [
         'data/stock_data.xml',
