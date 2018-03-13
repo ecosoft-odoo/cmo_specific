@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line&quot;]"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="336"/>
+	<property name="ireport.y" value="96"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -101,6 +101,14 @@
 				<reportElement x="0" y="0" width="595" height="802"/>
 				<imageExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "cmo_invoice_1.jpg"]]></imageExpression>
 			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="14" y="623" width="226" height="20"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{invoice_number} != null && $F{invoice_number} != "" ? "Ref." + $F{invoice_number} : ""]]></textFieldExpression>
+			</textField>
 		</band>
 	</background>
 	<title>
@@ -108,13 +116,6 @@
 	</title>
 	<pageHeader>
 		<band height="265" splitType="Stretch">
-			<textField isBlankWhenNull="true">
-				<reportElement x="430" y="125" width="111" height="20"/>
-				<textElement>
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{invoice_number}]]></textFieldExpression>
-			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="430" y="190" width="110" height="20"/>
 				<textElement>
@@ -142,12 +143,13 @@
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{partner_name}+ "\n" +
-$F{partner_street}+ " " +
-$F{partner_street2}+ " "+
-$F{township_id} +" "+
-$F{district_id}+ " " +
-$F{province_id} + " "+
-$F{partner_zip}]]></textFieldExpression>
+(new Scriptlet()).getAddress(
+    $F{partner_street},
+    $F{partner_street2},
+    $F{partner_city},
+    $F{partner_zip},
+    null,
+    null)]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

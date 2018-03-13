@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line&quot;]"/>
 	<property name="ireport.zoom" value="1.0000000000000022"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="480"/>
+	<property name="ireport.y" value="96"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -111,13 +111,6 @@
 	</title>
 	<pageHeader>
 		<band height="270" splitType="Stretch">
-			<textField isBlankWhenNull="true">
-				<reportElement x="430" y="125" width="111" height="20"/>
-				<textElement>
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{invoice_number}]]></textFieldExpression>
-			</textField>
 			<textField pattern="dd MMMMM yyyy" isBlankWhenNull="true">
 				<reportElement x="430" y="190" width="110" height="20"/>
 				<textElement>
@@ -138,12 +131,13 @@
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{partner_name}+ "\n" +
-$F{partner_street}+ " " +
-$F{partner_street2}+ " "+
-$F{township_id} +" "+
-$F{district_id}+ " " +
-$F{province_id} + " "+
-$F{partner_zip}]]></textFieldExpression>
+(new Scriptlet()).getAddress(
+    $F{partner_street},
+    $F{partner_street2},
+    $F{partner_city},
+    $F{partner_zip},
+    null,
+    null)]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="15" y="210" width="110" height="20"/>
@@ -177,11 +171,17 @@ $F{partner_zip}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="201" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
-		<band splitType="Stretch"/>
+		<band height="214" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="15" y="0" width="226" height="20"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{invoice_number} != null && $F{invoice_number} != "" ? "Ref." + $F{invoice_number} : ""]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<lastPageFooter>
 		<band height="246" splitType="Prevent">
@@ -251,6 +251,14 @@ $F{partner_zip}]]></textFieldExpression>
 				</textElement>
 				<text><![CDATA[จำนวนเงินสุทธิ]]></text>
 			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="15" y="20" width="226" height="20"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{invoice_number} != null && $F{invoice_number} != "" ? "Ref." + $F{invoice_number} : ""]]></textFieldExpression>
+			</textField>
 		</band>
 	</lastPageFooter>
 	<summary>
