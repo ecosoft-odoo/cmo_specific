@@ -8,7 +8,13 @@ class ResPartner(models.Model):
     @api.model
     def _get_domain(self, domain):
         context = self._context.copy()
-        if context.get('group_partner_operating_unit', False):
+        picking_type_code = False
+        if context.get('picking_type_id', False):
+            PickingType = self.env['stock.picking.type']
+            picking_type = PickingType.browse(context['picking_type_id'])
+            picking_type_code = picking_type.code
+        if context.get('group_partner_operating_unit', False) and \
+           picking_type_code == 'internal':
             user = self.env.user
             # Partner of all users
             if user.default_operating_unit_id.access_all_operating_unit is \
