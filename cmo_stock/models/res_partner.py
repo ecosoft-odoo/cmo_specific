@@ -9,12 +9,20 @@ class ResPartner(models.Model):
     def _get_domain(self, domain):
         context = self._context.copy()
         if context.get('group_partner_operating_unit', False):
-            users = self.env.user
-            operating_unit_id = users.default_operating_unit_id.id or False
+            user = self.env.user
+            # Partner of all users
+            if user.default_operating_unit_id.access_all_operating_unit is \
+               True:
+                users = self.env['res.users'].search([])
+                partner_ids = users.mapped('partner_id.id')
+                domain += [('id', 'in', partner_ids)]
+                return domain
+            # Partner of ou partner same ou user login
+            operating_unit_id = user.default_operating_unit_id.id or False
             users = self.env['res.users'].search(
                 [('default_operating_unit_id', '=', operating_unit_id)])
             partner_ids = users.mapped('partner_id.id')
-            domain = [('id', 'in', partner_ids)] + domain
+            domain += [('id', 'in', partner_ids)]
         return domain
 
     @api.model
