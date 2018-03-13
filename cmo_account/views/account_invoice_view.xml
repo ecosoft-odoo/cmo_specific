@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Edit Desc in Invoice Line -->
+        <record id="invoice_form" model="ir.ui.view">
+            <field name="name">invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_line']/tree/field[@name='name']" position="after">
+                    <button name="%(action_edit_desc)d" string="Edit" type="action" icon="gtk-justify-fill"
+                        context="{'edit_field': 'name'}" groups="account.group_invoice_edit_desc"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

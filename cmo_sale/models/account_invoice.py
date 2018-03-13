@@ -16,7 +16,8 @@ class AccountInvoice(models.Model):
         readonly=True,
     )
     others_note = fields.Text(
-        related='quote_ref_id.payment_term_description',
+        # related='quote_ref_id.payment_term_description',
         string='Other',
-        states={'paid': [('readonly', True)]},
+        readonly=True,
+        states={'draft': [('readonly', False)]},
     )

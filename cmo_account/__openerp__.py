@@ -21,8 +21,10 @@
     ],
     "data": [
         'data/report_data.xml',
+        'data/security.xml',
         'wizard/account_tax_detail_view.xml',
         'wizard/edit_desc.xml',
+        'views/account_invoice_view.xml',
         'views/product_view.xml',
         'views/account_view.xml',
         'views/account_voucher_view.xml',
