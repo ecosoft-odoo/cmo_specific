@@ -65,11 +65,11 @@
         </record>
 
         <record id="cmo_hr_pettycash" model="ir.actions.report.xml">
-           <field name="string">Employee Pettycash</field>
+           <field name="string">Cash Payment Voucher</field>
            <field name="auto">True</field>
            <field name="model">hr.expense.expense</field>
            <field name="jasper_model_id" ref="hr_expense.model_hr_expense_expense"/>
-           <field name="name">Employee Pettycash</field>
+           <field name="name">Cash Payment Voucher</field>
            <field name="report_name">cmo.hr.pettycash</field>
            <field name="report_rml">cmo_hr_expense_report/report/cmo_hr_pettycash.jrxml</field>
            <field name="force_locale">en_US</field>
@@ -79,7 +79,7 @@
            <field name="jasper_output">pdf</field>
         </record>
         <record id="cmo_hr_pettycash_values" model="ir.values">
-           <field name="name">Employee Pettycash</field>
+           <field name="name">Cash Payment Voucher</field>
            <field name="model">hr.expense.expense</field>
            <field name="key2" eval="'client_print_multi'"/>
            <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_hr_pettycash)"/>
