@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.y" value="144"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -20,8 +20,8 @@
 	<field name="line_ids_name" class="java.lang.String">
 		<fieldDescription><![CDATA[line_ids/name]]></fieldDescription>
 	</field>
-	<field name="line_ids_product" class="java.lang.String">
-		<fieldDescription><![CDATA[line_ids/product_id/name]]></fieldDescription>
+	<field name="line_ids_ref" class="java.lang.String">
+		<fieldDescription><![CDATA[line_ids/ref]]></fieldDescription>
 	</field>
 	<field name="unit_price" class="java.lang.Float">
 		<fieldDescription><![CDATA[line_ids/unit_amount]]></fieldDescription>
@@ -410,7 +410,7 @@
 				<textElement verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{line_ids_product}+" "+$F{line_ids_name}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{line_ids_name}+" "+$F{line_ids_ref}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00">
 				<reportElement x="400" y="0" width="155" height="20"/>
