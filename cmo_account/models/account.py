@@ -6,7 +6,7 @@ class AccountMove(models.Model):
     _inherit = 'account.move'
 
     ref_invoice_id = fields.Many2one(
-        'account.inoice',
+        'account.invoice',
         string='Ref Invoice',
         compute='_compute_ref_invoice_id',
     )

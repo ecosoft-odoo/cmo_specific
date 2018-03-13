@@ -26,9 +26,6 @@ class AccountInvoice(models.Model):
     invoice_line = fields.One2many(
         states={'draft': [('readonly', False)], 'open': [('readonly', False)]}
     )
-    preprint_number = fields.Char(
-        string='Preprint Number',
-    )
 
     @api.model
     def _prepare_refund(self, invoice, date=None, period_id=None,

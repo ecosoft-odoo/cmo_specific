@@ -29,9 +29,6 @@ class AccountVoucher(models.Model):
         compute='_compute_str_journal_items',
         string='Journal Items (String)',
     )
-    preprint_number = fields.Char(
-        string='Preprint Number',
-    )
 
     @api.multi
     def onchange_partner_id(self, partner_id, journal_id, amount, currency_id,

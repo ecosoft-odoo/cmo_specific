@@ -10,7 +10,7 @@
                     <field name="move_id" readonly="1"/>
                 </field>
                 <xpath expr="//form/sheet/group/group[1]" position="inside">
-                    <field name="preprint_number"/>
+                    <field name="number_preprint"/>
                 </xpath>
             </field>
         </record>
