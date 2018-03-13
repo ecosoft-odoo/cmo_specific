@@ -93,6 +93,7 @@ class PurchaseOrder(models.Model):
             'cancel': [('readonly', True)],
         },
         required=True,
+        domain=lambda self: self._get_domain_approve(),
     )
     operating_unit_id = fields.Many2one(
         change_default=True,
@@ -170,6 +171,11 @@ class PurchaseOrder(models.Model):
             ('operating_unit_id', 'in', operating_unit_ids),
         ]
         return domain
+
+    @api.model
+    def _get_domain_approve(self):
+        operating_unit_id = self.env.user.default_operating_unit_id.id
+        return [('user_id.default_operating_unit_id', '=', operating_unit_id)]
 
 
 class PurchaseOrderLine(models.Model):
