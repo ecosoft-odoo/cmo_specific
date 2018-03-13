@@ -8,8 +8,8 @@
             <field name="arch" type="xml">
                 <field name="partner_id" position="attributes">
                     <!-- <attribute name="domain">[('customer', '=', False), ('supplier', '=', False)]</attribute> -->
-                    <attribute name="string">Issue For</attribute>
-                    <attribute name="context">{'group_partner_operating_unit': True}</attribute>
+                    <attribute name="string">Partner/Issue For</attribute>
+                    <attribute name="context">{'group_partner_operating_unit': True, 'picking_type_id': picking_type_id}</attribute>
                 </field>
                 <field name="partner_id" position="after">
                     <field name="default_operating_unit_id" invisible="1"/>
