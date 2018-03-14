@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line&quot;]"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.y" value="184"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -161,45 +161,18 @@
 			<textField pattern="#,##0.00;(#,##0.00-)">
 				<reportElement isPrintRepeatedValues="false" x="400" y="0" width="155" height="20"/>
 				<box rightPadding="2"/>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" lineSpacing="1_1_2">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{amount_untaxed}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement isPrintRepeatedValues="false" x="15" y="40" width="386" height="38" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
-				<box topPadding="2" leftPadding="2"/>
-				<textElement>
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Project No. : " + $F{project_code} + "\n" +
-"วันที่จัดงาน " + $F{quote_event_date} + "\n" +
-"สถานที่จัดงาน " + $F{quote_venue} + "\n" +
-$F{others_note}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement isPrintRepeatedValues="false" x="14" y="0" width="386" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
 				<box topPadding="2" leftPadding="2"/>
-				<textElement>
+				<textElement lineSpacing="1_1_2">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{project_note} + "  " + $F{project_name}]]></textFieldExpression>
-			</textField>
-			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement isPrintRepeatedValues="false" x="220" y="20" width="110" height="20"/>
-				<box topPadding="2"/>
-				<textElement>
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.util.Date"><![CDATA[$F{quote_date}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement isPrintRepeatedValues="false" x="15" y="20" width="386" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
-				<box topPadding="2" leftPadding="2"/>
-				<textElement>
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["( Quotation No. : " + $F{Quote_number} + " / Date:                       )"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{others_note}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

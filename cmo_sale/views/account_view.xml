@@ -12,8 +12,10 @@
                 </xpath>
                 <xpath expr="//page[@name='invoice_project']/group/group" position="after">
                     <group>
-                        <button name="%(cmo_account.action_edit_desc)d" string="Edit" type="action" icon="gtk-justify-fill"
-                            context="{'edit_field': 'others_note'}" states="open,paid,cancel" groups="account.group_invoice_edit_desc"/>
+                        <div>
+                            <button name="%(cmo_account.action_edit_desc)d" string="Edit" type="action" icon="gtk-justify-fill"
+                                context="{'edit_field': 'others_note'}" states="open,paid,cancel" groups="account.group_invoice_edit_desc"/>
+                        </div>
                         <br/>
                         <field name="others_note" nolabel="1" placeholder="Invoice Description..."/>
                     </group>
