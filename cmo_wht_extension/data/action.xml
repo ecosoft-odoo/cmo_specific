@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<openerp>
+		<data>
+		    <act_window
+		      id="action_expense_create_wht_cert"
+		      name="Create WHT Cert."
+		      src_model="hr.expense.expense"
+		      res_model="account.wht.cert"
+		      view_type="form"
+		      view_mode="form"
+		      key2="client_action_multi"
+		      target="new"
+		      />
+		</data>
+</openerp>

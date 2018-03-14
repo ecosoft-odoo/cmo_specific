@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_print_wht_cert" model="ir.ui.view">
+            <field name="name">view.print.wht.cert</field>
+            <field name="model">account.wht.cert</field>
+            <field name="inherit_id" ref="l10n_th_account.view_print_wht_cert"/>
+            <field name="arch" type="xml">
+                <field name="state" position="attributes">
+                    <attribute name="statusbar_visible">draft,cancel,done</attribute>
+                </field>
+                <field name="voucher_id" position="after">
+                    <field name="expense_id" invisible="1"/>
+                </field>
+                <xpath expr="//field[@name='wht_line']/tree" position="attributes">
+                    <attribute name="create">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='wht_line']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='wht_line']/tree/field[@name='base']" position="attributes">
+                    <attribute name="readonly">0</attribute>
+                </xpath>
+                <xpath expr="//field[@name='wht_line']/tree/field[@name='amount']" position="attributes">
+                    <attribute name="readonly">0</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
