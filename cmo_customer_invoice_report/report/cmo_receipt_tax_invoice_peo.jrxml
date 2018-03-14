@@ -2,14 +2,14 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_receipt_tax_invoice_peo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
 	<property name="ireport.zoom" value="1.1"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="528"/>
+	<property name="ireport.y" value="1536"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line&quot;]"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
 	</queryString>
-	<field name="date_invoice" class="java.util.Date">
-		<fieldDescription><![CDATA[date_invoice]]></fieldDescription>
+	<field name="date_payment" class="java.util.Date">
+		<fieldDescription><![CDATA[payment_ids/move_id/date]]></fieldDescription>
 	</field>
 	<field name="partner_name" class="java.lang.String">
 		<fieldDescription><![CDATA[partner_id/name]]></fieldDescription>
@@ -44,8 +44,8 @@
 	<field name="amount_total" class="java.lang.Number">
 		<fieldDescription><![CDATA[amount_total]]></fieldDescription>
 	</field>
-	<field name="number" class="java.lang.String">
-		<fieldDescription><![CDATA[number]]></fieldDescription>
+	<field name="payment_number" class="java.lang.String">
+		<fieldDescription><![CDATA[payment_ids/move_id/name]]></fieldDescription>
 	</field>
 	<background>
 		<band height="802" splitType="Stretch">
@@ -59,7 +59,7 @@
 				<textElement verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{number} != null && $F{number} != "" ? "Ref." + $F{number} : ""]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{payment_number} != null && $F{payment_number} != "" ? "Ref." + $F{payment_number} : ""]]></textFieldExpression>
 			</textField>
 		</band>
 	</background>
@@ -70,7 +70,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression class="java.util.Date"><![CDATA[$F{date_invoice}]]></textFieldExpression>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{date_payment}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="69" y="160" width="280" height="24" forecolor="#000000" backcolor="#FFFFFF"/>
