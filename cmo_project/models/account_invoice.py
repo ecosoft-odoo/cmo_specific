@@ -52,4 +52,5 @@ class AccountInvoice(models.Model):
                 invoice.quote_ref_venue and
                 _('สถานที่จัดงาน: ') + '%s' % (invoice.quote_ref_venue, ) or ''
             ]
-            invoice.others_note = '\n'.join(inv_project_data)
+            invoice.others_note = \
+                '\n'.join(list(filter(lambda x: x != '', inv_project_data)))
