@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+       <record id="account_financial_report_webkit.account_report_general_ledger_webkit" model="ir.actions.report.xml">
+            <field name="report_rml">cmo_account_report_webkit/reports/account_report_general_ledger.mako</field>
+            <field name="report_file">cmo_account_report_webkit/reports/account_report_general_ledger.mako</field>
+        </record>
+    </data>
+</openerp>
