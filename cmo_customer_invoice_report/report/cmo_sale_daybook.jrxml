@@ -38,8 +38,8 @@
 	<field name="job_code" class="java.lang.String">
 		<fieldDescription><![CDATA[move_ids/analytic_account_id/code]]></fieldDescription>
 	</field>
-	<sortField name="debit" order="Descending"/>
-	<sortField name="credit" order="Descending"/>
+	<sortField name="debit" order="Descending" type="Variable"/>
+	<sortField name="credit" order="Descending" type="Variable"/>
 	<variable name="total_debit" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{debit}]]></variableExpression>
 	</variable>
@@ -48,6 +48,12 @@
 	</variable>
 	<variable name="string_total" class="java.lang.String">
 		<variableExpression><![CDATA[(Math.round($V{total_credit}*100)/100).toString()]]></variableExpression>
+	</variable>
+	<variable name="debit" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{debit}]]></variableExpression>
+	</variable>
+	<variable name="credit" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{credit}]]></variableExpression>
 	</variable>
 	<filterExpression><![CDATA[$F{credit} != null || $F{debit} != null]]></filterExpression>
 	<background>
