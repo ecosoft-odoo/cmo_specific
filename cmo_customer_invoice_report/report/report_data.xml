@@ -253,5 +253,26 @@
            <field name="key2" eval="'client_print_multi'"/>
            <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_receipt_voucher)"/>
         </record>
+
+        <record id="cmo_receipt" model="ir.actions.report.xml">
+           <field name="string">Receipt</field>
+           <field name="auto">True</field>
+           <field name="model">account.invoice</field>
+           <field name="jasper_model_id" ref="account.model_account_invoice"/>
+           <field name="name">Receipt</field>
+           <field name="report_name">cmo.receipt</field>
+           <field name="report_rml">cmo_customer_invoice_report/report/cmo_receipt.jrxml</field>
+           <field name="force_locale">th_TH</field>
+           <field name="menu">True</field>
+           <field name="header">False</field>
+           <field name="jasper_report">True</field>
+           <field name="jasper_output">pdf</field>
+        </record>
+        <record id="cmo_receipt_values" model="ir.values">
+           <field name="name">Receipt</field>
+           <field name="model">account.invoice</field>
+           <field name="key2" eval="'client_print_multi'"/>
+           <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_receipt)"/>
+        </record>
     </data>
 </openerp>

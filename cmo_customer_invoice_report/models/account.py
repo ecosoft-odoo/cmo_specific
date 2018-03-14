@@ -30,6 +30,7 @@ class AccountInvoice(models.Model):
                 u'cmo.customer.invoice2',
                 u'cmo.sale.daybook',
                 u'cmo.receipt.tax.invoice.peo',
+                u'cmo.receipt',
             ]
             filter_print_report(res, reports)
         # Customer Refund
