@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from openerp import fields, models
+from openerp import fields, models, api
+from openerp.tools.translate import _
 
 
 class AccountInvoice(models.Model):
@@ -35,3 +36,21 @@ class AccountInvoice(models.Model):
     #                         rec.project_ref_id.state = 'invoiced'
     #                         break
     #     return res
+
+    @api.multi
+    def action_get_invoice_project_data(self):
+        for invoice in self:
+            inv_project_data = [
+                invoice.project_ref_name or '',
+                invoice.quote_ref_number and 'Quotation Number: %s / %s'
+                % (invoice.quote_ref_number, invoice.quote_ref_date, ) or '',
+                invoice.project_ref_code and 'Project No: %s'
+                % (invoice.project_ref_code, ) or '',
+                invoice.quote_ref_event_date and
+                _('วันที่จัดงาน: ') +
+                '%s' % (invoice.quote_ref_event_date, ) or '',
+                invoice.quote_ref_venue and
+                _('สถานที่จัดงาน: ') + '%s' % (invoice.quote_ref_venue, ) or ''
+            ]
+            invoice.others_note = \
+                '\n'.join(list(filter(lambda x: x != '', inv_project_data)))
