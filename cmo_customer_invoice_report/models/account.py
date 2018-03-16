@@ -27,7 +27,8 @@ class AccountInvoice(models.Model):
                 self._context.get('journal_type', False) == 'sale':
             reports = [
                 u'cmo.customer.invoice',
-                u'cmo.customer.invoice2',
+                u'cmo.customer.invoice2.en',
+                u'cmo.customer.invoice2.th',
                 u'cmo.sale.daybook',
                 u'cmo.receipt.tax.invoice.peo',
                 u'cmo.receipt',
@@ -70,7 +71,8 @@ class AccountVoucher(models.Model):
         # Customer Payment
         if self._context.get('type', False) == 'receipt':
             reports = [
-                u'cmo.customer.payment',
+                u'cmo.customer.payment.en',
+                u'cmo.customer.payment.th',
                 u'cmo.receipt.voucher',
             ]
             filter_print_report(res, reports)

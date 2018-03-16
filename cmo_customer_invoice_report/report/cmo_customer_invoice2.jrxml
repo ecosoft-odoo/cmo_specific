@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line&quot;]"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="184"/>
+	<property name="ireport.y" value="96"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -89,6 +89,12 @@
 	<field name="province_id" class="java.lang.String">
 		<fieldDescription><![CDATA[partner_id/province_id]]></fieldDescription>
 	</field>
+	<field name="amount_total_text_en" class="java.lang.String">
+		<fieldDescription><![CDATA[amount_total_text_en]]></fieldDescription>
+	</field>
+	<field name="amount_total_text_th" class="java.lang.String">
+		<fieldDescription><![CDATA[amount_total_text_th]]></fieldDescription>
+	</field>
 	<variable name="string_total" class="java.lang.String">
 		<variableExpression><![CDATA[(Math.round($F{amount_total}*100)/100).toString()]]></variableExpression>
 	</variable>
@@ -124,18 +130,18 @@
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{date_invoice}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="135" y="210" width="210" height="20"/>
+				<reportElement x="157" y="210" width="210" height="20"/>
 				<textElement>
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{partner_tax_id}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="25" y="210" width="110" height="20"/>
+				<reportElement x="25" y="210" width="156" height="20"/>
 				<textElement>
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[เลขประจำตัวผู้เสียภาษี]]></text>
+				<text><![CDATA[Tax ID/เลขประจำตัวผู้เสียภาษี]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="25" y="130" width="321" height="63" isPrintWhenDetailOverflows="true"/>
@@ -157,7 +163,7 @@
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="78" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<textField pattern="#,##0.00;(#,##0.00-)">
 				<reportElement isPrintRepeatedValues="false" x="400" y="0" width="155" height="20"/>
 				<box rightPadding="2"/>
@@ -182,20 +188,20 @@
 	<lastPageFooter>
 		<band height="238">
 			<staticText>
-				<reportElement x="310" y="38" width="90" height="20"/>
+				<reportElement x="254" y="38" width="146" height="20"/>
 				<box rightPadding="2"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[จำนวนเงินสุทธิ]]></text>
+				<text><![CDATA[Net Amount/จำนวนเงินสุทธิ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="310" y="18" width="90" height="20"/>
+				<reportElement x="181" y="18" width="219" height="20"/>
 				<box rightPadding="2"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[ภาษีมูลค่าเพิ่ม 7%]]></text>
+				<text><![CDATA[VAT Amount/ภาษีมูลค่าเพิ่ม 7%]]></text>
 			</staticText>
 			<textField pattern="#,##0.00;#,##0.00-">
 				<reportElement x="400" y="38" width="155" height="20"/>
@@ -232,7 +238,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["(" + (new Scriptlet()).getAmtInWords((new BigDecimal($V{string_total}==""?0:$V{string_total})).setScale(2).toString(),"THB") + ")"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["(" + ($P{REPORT_LOCALE}.toString() == "en_US" ? $F{amount_total_text_en} : $F{amount_total_text_th}) + ")"]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>

@@ -16,6 +16,7 @@
         'account_supplier_billing',
         'report',
         'cmo_account',
+        'l10n_th_amount_text',
     ],
     'data': [
         'report/report_data.xml',
