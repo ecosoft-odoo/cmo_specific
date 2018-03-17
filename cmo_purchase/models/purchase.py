@@ -205,7 +205,7 @@ class PurchaseOrderLine(models.Model):
     )
     custom_group_readonly = fields.Char(
         related='product_ref_custom_group',
-        string='Custome Group',
+        string='Customer Group',
         readonly=True,
     )
     section_readonly = fields.Many2one(

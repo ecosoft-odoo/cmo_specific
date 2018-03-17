@@ -366,12 +366,14 @@
                             <group>
                                 <field name="remain_advance" readonly="1"/>
                                 <field name="adjustment_amount"/>
-                                <field name="adjustment_ids" nolabel="1" widget="one2many_list">
-                                    <tree string="Adjustment Description" editable="bottom">
-                                        <field name="name"/>
-                                        <field name="amount"/>
-                                    </tree>
-                                </field>
+                                <div colspan="2">
+                                    <field name="adjustment_ids" widget="one2many_list">
+                                        <tree string="Adjustment Description" editable="bottom">
+                                            <field name="name"/>
+                                            <field name="amount"/>
+                                        </tree>
+                                    </field>
+                                </div>
                             </group>
                         </group>
                     </page>

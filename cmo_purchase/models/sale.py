@@ -54,6 +54,23 @@ class SaleOrderLine(models.Model):
             limit=limit, orderby=orderby, lazy=lazy)
         return res
 
+    @api.multi
+    def name_get(self):
+        if self._context.get('display_extended_name', False):
+            result = []
+            for rec in self:
+                names = []
+                if rec.sale_layout_custom_group:
+                    names.append('%s' % rec.sale_layout_custom_group)
+                if rec.sale_layout_cat_id:
+                    names.append('%s' % rec.sale_layout_cat_id.name)
+                if rec.name:
+                    names.append(rec.name)
+                result.append((rec.id, ' | '.join(names)))
+        else:
+            result = super(SaleOrderLine, self).name_get()
+        return result
+
 
 class SaleLayoutCategory(models.Model):
     _inherit = 'sale_layout.category'

@@ -7,6 +7,40 @@
             <field name="domain"></field>
         </record>
 
+        <record id="view_sale_order_line_for_project_tree" model="ir.ui.view">
+            <field name="name">view.sale.order.line.for.project.tree</field>
+            <field name="model">sale.order.line</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="order_id"/>
+                    <field name="sale_layout_custom_group"/>
+                    <field name="sale_layout_cat_id"/>
+                    <field name="name"/>
+                    <field name="product_uom_qty"/>
+                    <field name="price_subtotal"/>
+                    <field name="state" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_sale_order_line_for_project_search" model="ir.ui.view">
+            <field name="name">view.sale.order.line.for.project.search</field>
+            <field name="model">sale.order.line</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="order_id"/>
+                    <field name="sale_layout_custom_group"/>
+                    <field name="sale_layout_cat_id"/>
+                    <field name="name"/>
+                    <group expand="1" string="Group By...">
+                        <filter string="Order Reference" name="order_id" context="{'group_by':'order_id'}"/>
+                        <filter string="Custom Group" name="sale_layout_custom_group" context="{'group_by':'sale_layout_custom_group'}"/>
+                        <filter string="Section" name="sale_layout_cat_id" context="{'group_by':'sale_layout_cat_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
         <record id="purchase_order_form" model="ir.ui.view">
             <field name="name">purchase.order.form</field>
             <field name="model">purchase.order</field>
@@ -17,10 +51,18 @@
                 </xpath>
                 <xpath expr="//field[@name='order_line']" position="inside">
                     <form string="Purchase Order Lines">
+                        <group colspan="8">
+                            <field name="sale_order_line_ref_id"
+                              options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"
+                              context="{'operating_unit_id': operating_unit_id,
+                                        'order_ref': order_ref,
+                                        'po_type_id': po_type_id,
+                                        'tree_view_ref': 'cmo_purchase.view_sale_order_line_for_project_tree',
+                                        'search_view_ref': 'cmo_purchase.view_sale_order_line_for_project_search',
+                                        'display_extended_name': True}" />
+                        </group>
                         <group>
                             <group>
-                                <field name="sale_order_line_ref_id" context="{'operating_unit_id': operating_unit_id, 'order_ref': order_ref, 'po_type_id': po_type_id}" options="{'no_create': True, 'no_create_edit': True}"/>
-
                                 <field name="product_ref_custom_group"
                                        context="{'order_ref': order_ref}"
                                        options="{'no_create': True, 'no_create_edit': True}"
