@@ -125,7 +125,7 @@ class AssetReportXls(report_xls):
                 'asset': [
                     1, 0, 'date',
                     _render("asset.date_start and "
-                            "datetime.strptime(asset.purchase_date,'%Y-%m-%d') "
+                            "datetime.strptime(asset.date_start,'%Y-%m-%d') "
                             "or None"),
                     None, self.an_cell_style_date],
                 'totals': [1, 0, 'text', None]},
@@ -177,7 +177,7 @@ class AssetReportXls(report_xls):
                 'asset_view': [1, 0, 'text', None],
                 'asset': [
                     1, 0, 'date',
-                    _render("asset.date_start and "
+                    _render("asset.purchase_date and "
                             "datetime.strptime(asset.purchase_date,'%Y-%m-%d') "
                             "or None"),
                     None, self.an_cell_style_date],
@@ -319,7 +319,7 @@ class AssetReportXls(report_xls):
                 'asset_view': [1, 0, 'text', None],
                 'asset': [
                     1, 0, 'date',
-                    _render("asset.date_start and "
+                    _render("asset.purchase_date and "
                             "datetime.strptime(asset.purchase_date,'%Y-%m-%d') "
                             "or None"),
                     None, self.an_cell_style_date],
