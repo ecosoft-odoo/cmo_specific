@@ -9,6 +9,11 @@ class AccountWhtCert(models.Model):
         'hr.expense.expense',
         string='Expense',
     )
+    expense_number = fields.Char(
+        string='Expense',
+        related='expense_id.number',
+        readonly=True,
+    )
     income_tax_form = fields.Selection(
         [('pnd1', 'PND1'),
          ('pnd3', 'PND3'),
@@ -35,7 +40,7 @@ class AccountWhtCert(models.Model):
         """ PND1: XSCMYY, PND3: XPCMYY, PND53: XCCMYY """
         tax_forms = {'pnd1': 'XSCM',
                      'pnd3': 'XPCM',
-                     'pnd53': 'XCC'}
+                     'pnd53': 'XCCM'}
         super(AccountWhtCert, self)._assign_number()
         for cert in self:
             if cert.sequence:
