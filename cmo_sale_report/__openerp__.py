@@ -9,6 +9,7 @@
     "version": "1.0",
     'depends': [
         'sale',
+        'sale_split_quote2order',
         'cmo_sale_discount_total_enhance',
         'report',
     ],
