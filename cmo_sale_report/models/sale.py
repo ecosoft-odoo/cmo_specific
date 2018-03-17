@@ -23,7 +23,7 @@ class SaleOrder(models.Model):
             view_id=view_id, view_type=view_type, toolbar=toolbar,
             submenu=submenu)
         context = self._context.copy()
-        if context.get('order_type', False) == 'quotation':
+        if context.get('order_type', False) == 'sale_order':
             # Report name for remove out from print button
             reports = [
                 u'cmo.sale.order',
