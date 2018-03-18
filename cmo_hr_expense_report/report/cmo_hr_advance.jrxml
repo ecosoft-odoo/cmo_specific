@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.y" value="50"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -157,7 +157,7 @@
 				</textElement>
 				<text><![CDATA[วันที่ : ]]></text>
 			</staticText>
-			<textField pattern="dd/MM/yy" isBlankWhenNull="true">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="405" y="55" width="150" height="20"/>
 				<textElement>
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
@@ -281,7 +281,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				</textElement>
 				<text><![CDATA[วันครบกำหนดคืน]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true" pattern="dd MMMMM yyyy" isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="255" y="20" width="150" height="44" isPrintWhenDetailOverflows="true"/>
 				<box leftPadding="2">
 					<topPen lineWidth="1.0"/>
@@ -294,7 +294,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				</textElement>
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{request_date}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="dd MMMMM yyyy" isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="404" y="20" width="150" height="44" isPrintWhenDetailOverflows="true"/>
 				<box leftPadding="2">
 					<topPen lineWidth="1.0"/>
