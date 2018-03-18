@@ -162,7 +162,7 @@
            <field name="name">BBL Cheque</field>
            <field name="report_name">cmo.supplier.payment.cheque</field>
            <field name="report_rml">cmo_customer_invoice_report/report/cmo_supplier_payment_cheque.jrxml</field>
-           <field name="force_locale">th_TH</field>
+           <field name="force_locale">en_US</field>
            <field name="menu">True</field>
            <field name="header">False</field>
            <field name="jasper_report">True</field>
@@ -183,7 +183,7 @@
            <field name="name">Payment Voucher</field>
            <field name="report_name">cmo.supplier.payment.voucher</field>
            <field name="report_rml">cmo_customer_invoice_report/report/cmo_supplier_payment_voucher.jrxml</field>
-           <field name="force_locale">th_TH</field>
+           <field name="force_locale">en_US</field>
            <field name="menu">True</field>
            <field name="header">False</field>
            <field name="jasper_report">True</field>
@@ -204,7 +204,7 @@
            <field name="name">Billing</field>
            <field name="report_name">cmo.supplier.billing</field>
            <field name="report_rml">cmo_customer_invoice_report/report/cmo_supplier_billing.jrxml</field>
-           <field name="force_locale">th_TH</field>
+           <field name="force_locale">en_US</field>
            <field name="menu">True</field>
            <field name="header">False</field>
            <field name="jasper_report">True</field>
@@ -288,7 +288,7 @@
            <field name="name">Receipt Voucher</field>
            <field name="report_name">cmo.receipt.voucher</field>
            <field name="report_rml">cmo_customer_invoice_report/report/cmo_receipt_voucher.jrxml</field>
-           <field name="force_locale">th_TH</field>
+           <field name="force_locale">en_US</field>
            <field name="menu">True</field>
            <field name="header">False</field>
            <field name="jasper_report">True</field>
@@ -309,7 +309,7 @@
            <field name="name">Receipt</field>
            <field name="report_name">cmo.receipt</field>
            <field name="report_rml">cmo_customer_invoice_report/report/cmo_receipt.jrxml</field>
-           <field name="force_locale">th_TH</field>
+           <field name="force_locale">en_US</field>
            <field name="menu">True</field>
            <field name="header">False</field>
            <field name="jasper_report">True</field>
