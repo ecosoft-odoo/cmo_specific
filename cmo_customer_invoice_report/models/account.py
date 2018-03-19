@@ -55,7 +55,9 @@ class AccountInvoice(models.Model):
         elif self._context.get('default_type', False) == 'in_refund' and\
                 self._context.get('type', False) == 'in_refund' and\
                 self._context.get('journal_type', False) == 'purchase_refund':
-            reports = []
+            reports = [
+                u'cmo.purchase.daybook',
+            ]
             filter_print_report(res, reports)
         return res
 

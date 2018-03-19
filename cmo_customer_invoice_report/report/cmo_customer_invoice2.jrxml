@@ -122,12 +122,12 @@
 	</title>
 	<pageHeader>
 		<band height="265" splitType="Stretch">
-			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+			<textField pattern="" isBlankWhenNull="true">
 				<reportElement x="430" y="190" width="110" height="20"/>
 				<textElement>
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.util.Date"><![CDATA[$F{date_invoice}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[(new java.text.SimpleDateFormat("dd/MM/yyyy",new Locale("en", "US"))).format($F{date_invoice})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="157" y="210" width="210" height="20"/>
