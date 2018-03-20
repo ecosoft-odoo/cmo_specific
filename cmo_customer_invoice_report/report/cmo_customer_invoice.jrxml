@@ -111,7 +111,7 @@
 	</title>
 	<pageHeader>
 		<band height="270" splitType="Stretch">
-			<textField pattern="dd MMMMM yyyy" isBlankWhenNull="true">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="430" y="190" width="110" height="20"/>
 				<textElement>
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>

@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;move_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.1000000000000014"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="4"/>
+	<property name="ireport.y" value="196"/>
 	<style name="style1">
 		<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
 	</style>
@@ -71,15 +71,19 @@
 	<field name="job_code" class="java.lang.String">
 		<fieldDescription><![CDATA[move_ids/analytic_account_id/code]]></fieldDescription>
 	</field>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<sortField name="id"/>
 	<sortField name="debit" order="Descending" type="Variable"/>
 	<sortField name="credit" order="Descending" type="Variable"/>
-	<variable name="total_debit" class="java.lang.Number" calculation="Sum">
+	<variable name="total_debit" class="java.lang.Number" resetType="Group" resetGroup="UniqueID" calculation="Sum">
 		<variableExpression><![CDATA[$F{debit}]]></variableExpression>
 	</variable>
-	<variable name="total_credit" class="java.lang.Number" calculation="Sum">
+	<variable name="total_credit" class="java.lang.Number" resetType="Group" resetGroup="UniqueID" calculation="Sum">
 		<variableExpression><![CDATA[$F{credit}]]></variableExpression>
 	</variable>
-	<variable name="string_total" class="java.lang.String">
+	<variable name="string_total" class="java.lang.String" resetType="Group" resetGroup="UniqueID">
 		<variableExpression><![CDATA[(Math.round($V{total_credit}*100)/100).toString()]]></variableExpression>
 	</variable>
 	<variable name="debit" class="java.lang.Double">
@@ -89,6 +93,36 @@
 		<variableExpression><![CDATA[$F{credit}]]></variableExpression>
 	</variable>
 	<filterExpression><![CDATA[$F{credit} != null || $F{debit} != null]]></filterExpression>
+	<group name="UniqueID" isStartNewPage="true" isResetPageNumber="true" footerPosition="ForceAtBottom" keepTogether="true">
+		<groupExpression><![CDATA[$F{id}]]></groupExpression>
+		<groupFooter>
+			<band height="20">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="UniqueID" isBlankWhenNull="true">
+					<reportElement isPrintRepeatedValues="false" x="0" y="0" width="402" height="20" isPrintWhenDetailOverflows="true"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font size="10" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["(" + (new Scriptlet()).getAmtInWords((new BigDecimal($V{string_total}==""?0:$V{string_total})).setScale(2).toString(),"THB") + ")"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="UniqueID" pattern="#,##0.00;#,##0.00-" isBlankWhenNull="true">
+					<reportElement x="402" y="0" width="77" height="20" isPrintWhenDetailOverflows="true"/>
+					<box rightPadding="2"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Number"><![CDATA[$V{total_debit}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="UniqueID" pattern="#,##0.00;#,##0.00-" isBlankWhenNull="true">
+					<reportElement x="479" y="0" width="77" height="20" isPrintWhenDetailOverflows="true"/>
+					<box rightPadding="2"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Number"><![CDATA[$V{total_credit}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
 	<background>
 		<band height="802" splitType="Stretch">
 			<frame>
@@ -481,7 +515,7 @@ $F{payment_type} == "cheque")
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["หน้าที่ "+$V{PAGE_NUMBER}+"/"]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report">
+			<textField evaluationTime="Group" evaluationGroup="UniqueID">
 				<reportElement mode="Transparent" x="530" y="223" width="106" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
@@ -629,35 +663,8 @@ $F{payment_type} == "cheque")
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="161" splitType="Stretch"/>
+		<band height="155" splitType="Stretch"/>
 	</pageFooter>
-	<lastPageFooter>
-		<band height="191">
-			<textField isStretchWithOverflow="true" pattern="#,##0.00;#,##0.00-" isBlankWhenNull="true">
-				<reportElement x="402" y="21" width="77" height="20" isPrintWhenDetailOverflows="true"/>
-				<box rightPadding="2"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.lang.Number"><![CDATA[$V{total_debit}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" pattern="#,##0.00;#,##0.00-" isBlankWhenNull="true">
-				<reportElement x="479" y="21" width="77" height="20" isPrintWhenDetailOverflows="true"/>
-				<box rightPadding="2"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.lang.Number"><![CDATA[$V{total_credit}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement isPrintRepeatedValues="false" x="0" y="21" width="402" height="20" isPrintWhenDetailOverflows="true"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["(" + (new Scriptlet()).getAmtInWords((new BigDecimal($V{string_total}==""?0:$V{string_total})).setScale(2).toString(),"THB") + ")"]]></textFieldExpression>
-			</textField>
-		</band>
-	</lastPageFooter>
 	<summary>
 		<band splitType="Stretch"/>
 	</summary>
