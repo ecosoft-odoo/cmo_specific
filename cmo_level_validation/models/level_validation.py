@@ -12,6 +12,7 @@ DOCTYPE_SELECT = [('employee_expense', 'Employee Expense'),
 
 class LevelValidataion(models.Model):
     _name = 'level.validation'
+    _rec_name = 'level'
 
     level = fields.Integer(
         string='Level',
