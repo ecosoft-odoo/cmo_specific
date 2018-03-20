@@ -94,21 +94,21 @@ class HrExpenseExpense(models.Model):
             ])
             error_names = []
             for analytic_account in expense_lines.mapped('analytic_account'):
-                project_id = self.env['project.project'].search([
+                project = self.env['project.project'].search([
                     ('analytic_account_id', '=', analytic_account.id),
-                ])
+                ], limit=1)
                 amount_lines = sum(expense_lines.filtered(
                     lambda r: r.analytic_account == analytic_account
                 ).mapped('amount_line_untaxed'))
-                if project_id:
-                    remaining_cost = project_id.remaining_cost or 0.0
+                if project:
+                    remaining_cost = project.remaining_cost or 0.0
                     if float_compare(amount_lines, remaining_cost, 2) > 0:
-                        error_names.append(project_id.name)
+                        error_names.append(project.name)
             if error_names:
                 raise ValidationError(
-                    _("Document value is over remaining "
-                      "cost please change value in line that "
-                      "select analytic account %s" % ', '.join(error_names))
+                    _("Amount over remaining "
+                      "cost, please change amount in line with "
+                      "project %s" % ', '.join(error_names))
                 )
 
     @api.model
