@@ -23,9 +23,9 @@ class AccountInvoice(models.Model):
         string='Description',
         states={'paid': [('readonly', True)]},
     )
-    invoice_line = fields.One2many(
-        states={'draft': [('readonly', False)], 'open': [('readonly', False)]}
-    )
+    # invoice_line = fields.One2many(
+    #     states={'draft': [('readonly', False)], 'open': [('readonly', False)]}
+    # )
 
     @api.model
     def _prepare_refund(self, invoice, date=None, period_id=None,
