@@ -18,7 +18,7 @@
         'cmo_operating_unit',
     ],
     "data": [
-        'data/stock_data.xml',
+        # 'data/stock_data.xml',
         'security/cmo_stock_security.xml',
         'security/ir.model.access.csv',
         'views/stock_view.xml',
