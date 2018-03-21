@@ -110,6 +110,30 @@ class SaleOrder(models.Model):
         readonly=True,
         compute='_compute_margin_percentage',
     )
+    active = fields.Boolean(
+        string='Active',
+        default=True,
+    )
+
+    @api.model
+    def create(self, vals):
+        # On creation of sales order, auto create dummy lines
+        lines = []
+        prod = self.env.ref('product.product_unknown')
+        for section in self.env['sale_layout.category'].search([]):
+            line_dict = {
+                'sale_layout_cat_id': section.id,
+                'order_lines_group': 'before',
+                'product_id': prod.id,
+                'name': prod.name,
+                'price_unit': 0.0,
+                'tax_id': [],
+                'active': False,
+            }
+            lines.append((0, 0, line_dict))
+        if lines:
+            vals['order_line'] = lines + vals.get('order_line', [])
+        return super(SaleOrder, self).create(vals)
 
     @api.multi
     def action_button_convert_to_order(self):  # overwrite split2order

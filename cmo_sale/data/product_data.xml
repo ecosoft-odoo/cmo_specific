@@ -3,7 +3,7 @@
     <data noupdate="0">
 
         <record id="product.product_unknown" model="product.product">
-            <field name="name">Unknown</field>
+            <field name="name">Other Item</field>
             <field name="type">service</field>
             <field name="description">Dummy product used for dummy sales order lines</field>
             <field name="sale_ok">False</field>
