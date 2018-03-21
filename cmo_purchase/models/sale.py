@@ -1,6 +1,34 @@
 # -*- coding: utf-8 -*-
-from openerp import models, api
+from openerp import models, api, fields
 
+
+class SaleOrder(models.Model):
+    _inherit = 'sale.order'
+
+    active = fields.Boolean(
+        string='Active',
+        default=True,
+    )
+
+    @api.model
+    def create(self, vals):
+        # On creation of sales order, auto create dummy lines
+        lines = []
+        prod = self.env.ref('product.product_unknown')
+        for section in self.env['sale_layout.category'].search([]):
+            line_dict = {
+                'sale_layout_cat_id': section.id,
+                'order_lines_group': 'before',
+                'product_id': prod.id,
+                'name': prod.name,
+                'price_unit': 0.0,
+                'tax_id': [],
+                'active': False,
+            }
+            lines.append((0, 0, line_dict))
+        if lines:
+            vals['order_line'] = lines + vals.get('order_line', [])
+        return super(SaleOrder, self).create(vals)
 
 # class SaleLayoutCustomGroup(models.Model):
 #     _inherit = 'sale_layout.custom_group'

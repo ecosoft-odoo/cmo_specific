@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+
+        <record id="product.product_unknown" model="product.product">
+            <field name="name">Unknown</field>
+            <field name="type">service</field>
+            <field name="description">Dummy product used for dummy sales order lines</field>
+            <field name="sale_ok">False</field>
+            <field name="purchase_ok">False</field>
+        </record>
+
+    </data>
+</openerp>

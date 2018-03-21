@@ -59,7 +59,8 @@
                                         'po_type_id': po_type_id,
                                         'tree_view_ref': 'cmo_purchase.view_sale_order_line_for_project_tree',
                                         'search_view_ref': 'cmo_purchase.view_sale_order_line_for_project_search',
-                                        'display_extended_name': True}" />
+                                        'display_extended_name': True,
+                                        'active_test': False}" />
                         </group>
                         <group>
                             <group>

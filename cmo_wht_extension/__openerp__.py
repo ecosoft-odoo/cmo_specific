@@ -11,6 +11,7 @@
         'l10n_th_account',
     ],
     'data': [
+        'security/ir.model.access.csv',
         'data/action.xml',
         'views/account_wht_cert.xml',
         'views/hr_expense_view.xml',

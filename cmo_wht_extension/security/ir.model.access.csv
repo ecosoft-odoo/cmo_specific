@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+l10n_th_account.group_account_model_wht_cert_tax_line,group_account_model_wht_cert_tax_line,l10n_th_account.model_wht_cert_tax_line,,1,1,1,1
