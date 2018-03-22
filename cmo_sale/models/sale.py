@@ -110,10 +110,6 @@ class SaleOrder(models.Model):
         readonly=True,
         compute='_compute_margin_percentage',
     )
-    active = fields.Boolean(
-        string='Active',
-        default=True,
-    )
 
     @api.model
     def create(self, vals):
@@ -280,6 +276,10 @@ class SaleOrderLine(models.Model):
         string='Management Fee (%)',
         states={'draft': [('readonly', False)]},
         default=0.0,
+    )
+    active = fields.Boolean(
+        string='Active',
+        default=True,
     )
 
     _sql_constraints = [
