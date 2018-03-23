@@ -98,14 +98,13 @@
                   <attribute name="string">Project Status</attribute>
               </xpath>
               <xpath expr="/tree/field[@name='state']" position="before">
-                  <field name="date_brief"/>
                   <field name="date_start"/>
+                  <field name="date" string="End Date"/>
               </xpath>
               <xpath expr="/tree/field[@name='state']" position="after">
                   <field name="operating_unit_id" string="Department"/>
                   <field name="partner_id" string="Customer"/>
-                  <field name="project_from_id"/>
-                  <field name="project_type_id"/>
+                  <field name="function_id"/>
                   <field name="project_budget" groups="project.group_project_admin,project.group_project_manager,project.group_project_readonly"/>
                   <field name="actual_price" groups="project.group_project_admin,project.group_project_manager,project.group_project_readonly"/>
                   <field name="estimate_cost" groups="project.group_project_admin,project.group_project_manager,project.group_project_readonly"/>
