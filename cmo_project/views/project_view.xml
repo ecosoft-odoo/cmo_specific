@@ -94,6 +94,7 @@
                   <attribute name="invisible">1</attribute>
               </xpath>
               <xpath expr="/tree/field[@name='state']" position="attributes">
+                  <attribute name="invisible">1</attribute>
                   <attribute name="string">Project Status</attribute>
               </xpath>
               <xpath expr="/tree/field[@name='state']" position="before">
@@ -110,6 +111,7 @@
                   <field name="estimate_cost" groups="project.group_project_admin,project.group_project_manager,project.group_project_readonly"/>
                   <field name="pre_cost" groups="project.group_project_admin,project.group_project_manager,project.group_project_readonly"/>
                   <field name="actual_po" groups="project.group_project_admin,project.group_project_manager,project.group_project_readonly"/>
+                  <field name="state" string="Project Status"/>
                   <field name="close_reason"/>
               </xpath>
             </field>
