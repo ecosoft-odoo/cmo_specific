@@ -21,7 +21,7 @@
                     <button name="recheck_approve" type="workflow"
                             string="Approve"
                             attrs="{'invisible':['|', ['approve_permission','=',False], ['state', 'not in', ['confirm']]]}"
-                            groups="base.group_hr_user"
+                            groups="base.group_user"
                             />
                 </xpath>
                 <xpath expr="//header/button[@name='refuse']" position="replace">

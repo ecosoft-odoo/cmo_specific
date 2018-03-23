@@ -25,6 +25,9 @@ class AccountWhtCert(models.Model):
         res = super(AccountWhtCert, self).default_get(fields)
         active_model = self._context.get('active_model')
         active_id = self._context.get('active_id')
+        if active_model is None:
+            company_partner = self.env.user.company_id.partner_id
+            res['company_partner_id'] = company_partner.id
         if active_model == 'hr.expense.expense':
             expense = self.env[active_model].browse(active_id)
             company_partner = self.env.user.company_id.partner_id
