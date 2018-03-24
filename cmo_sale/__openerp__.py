@@ -18,7 +18,6 @@
         'cmo_account',
     ],
     'data': [
-        'security/security.xml',
         'security/ir.model.access.csv',
         'data/sale_data.xml',
         # 'data/product_data.xml',
