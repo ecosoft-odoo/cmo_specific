@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_project" model="ir.ui.view">
+            <field name="name">project.project.tree</field>
+            <field name="model">project.project</field>
+            <field name="priority">1000</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code" string="Project Number"/>
+                    <field name="name" string="Project Name"/>
+                    <field name="date_start"/>
+                    <field name="date" string="End Date"/>
+                    <field name="operating_unit_id" string="Department"/>
+                    <field name="partner_id" string="Customer"/>
+                    <field name="project_budget"/>
+                    <field name="actual_price"/>
+                    <field name="state" string="Project Status"/>
+                    <field name="close_reason"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</openerp>

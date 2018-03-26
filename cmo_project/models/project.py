@@ -8,6 +8,7 @@ from openerp.exceptions import ValidationError
 
 class ProjectProject(models.Model):
     _inherit = 'project.project'
+    _order = "date_start desc"
 
     code = fields.Char(
         related='analytic_account_id.code',
