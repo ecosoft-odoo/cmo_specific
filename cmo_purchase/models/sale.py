@@ -28,7 +28,8 @@ class SaleOrderLine(models.Model):
         # filter order line from quotation
         if context.get('order_ref', False):
             order = self.env['sale.order'].browse(context.get('order_ref'))
-            domain = [('id', 'in', order.order_line.ids)] + domain
+            domain = [('id', 'in', order.order_line.ids),
+                      ('active', '=', True)] + domain
         elif 'order_ref' in context:
             domain = [('id', 'in', [])]
         return domain
