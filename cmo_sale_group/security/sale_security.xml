@@ -29,10 +29,10 @@
             <field name="groups" eval="[(4, ref('base.group_sale_salesman_all_leads')), (4, ref('base.group_sale_manager'))]"/>
         </record>
         <record id="sale.sale_order_see_all" model="ir.rule">
-            <field name="groups" eval="[(4, ref('base.group_sale_salesman_all_leads_all_ou')), (4, ref('base.group_sale_salesman_all_leads_all_ou_readonly'))]"/>
+            <field name="groups" eval="[(6, 0, [ref('base.group_sale_salesman_all_leads_all_ou'), ref('base.group_sale_salesman_all_leads_all_ou_readonly')])]"/>
         </record>
         <record id="sale.sale_order_line_see_all" model="ir.rule">
-            <field name="groups" eval="[(4, ref('base.group_sale_salesman_all_leads_all_ou')), (4, ref('base.group_sale_salesman_all_leads_all_ou_readonly'))]"/>
+            <field name="groups" eval="[(6, 0, [ref('base.group_sale_salesman_all_leads_all_ou'), ref('base.group_sale_salesman_all_leads_all_ou_readonly')])]"/>
         </record>
     </data>
 </openerp>
