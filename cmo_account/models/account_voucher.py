@@ -12,6 +12,7 @@ class AccountVoucher(models.Model):
          ('transfer', 'Transfer'),
          ],
         string='Payment Type',
+        change_default=1,
         readonly=True, states={'draft': [('readonly', False)]},
     )
     company_bank_id = fields.Many2one(
