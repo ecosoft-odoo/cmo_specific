@@ -59,6 +59,9 @@
                   <xpath expr="//group/filter[@string='Manager']" position="attributes">
                         <attribute name="invisible">1</attribute>
                   </xpath>
+                  <xpath expr="//filter[@string='Open']" position="attributes">
+                      <attribute name="string">In Progress</attribute>
+                  </xpath>
             </field>
         </record>
 
