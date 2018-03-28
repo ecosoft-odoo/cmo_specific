@@ -24,16 +24,17 @@
                   <xpath expr="//field[@name='name']" position="before">
                         <filter string="Latest" name="Latest" domain="[('date_start','&gt;',(context_today()-relativedelta(months=6)).strftime('%%Y-%%m-01'))]"/>
                         <filter string="Draft" name="Draft" domain="[('state','=','draft')]"/>
+                        <filter string="In Progress" name="In Progress" domain="[('state', '=','open')]"/>
                         <filter string="Ready to Billing" name="Ready_billing" domain="[('state','=','ready_billing')]"/>
-                        <!-- <filter string="Invoices" name="Invoices" domain="[('state','=','invoices')]"/>
-                        <filter string="Received" name="Received" domain="[('state','=','received')]"/> -->
-                        <filter string="Cancelled" name="Cancelled" domain="[('state','=','cancelled')]"/>
-                        <filter string="Completed" name="Completed" domain="[('state','=','close')]"/>
-                        <filter string="Lost" name="Lost" domain="[('close_reason','=','lost')]"/>
                         <filter string="Invoiced" name="Invoiced" domain="[('is_invoiced', '=', True)]"/>
                         <filter string="Paid" name="Paid" domain="[('is_paid', '=', True)]"/>
-                        <!-- # TODO: filter won = close_reason != cancel, reject, lost
-                        <filter string="Won" name="Won" domain="[('state','!=','cancelled'),('state','!=','draft')]"/> -->
+                        <filter string="Completed" name="Completed" domain="[('state','=','close')]"/>
+                        <filter string="Incompleted" name="Incompleted" domain="[('state','=','cancelled')]"/>
+                        <filter string="Cancelled" name="Cancelled" domain="[('state','=','cancelled'), ('close_reason', '=', 'cancel')]"/>
+                        <filter string="Lost" name="Lost" domain="[('state','=','cancelled'), ('close_reason','=','lost')]"/>
+                        <filter string="Reject" name="Reject" domain="[('state','=','cancelled'), ('close_reason', '=', 'reject')]"/>
+                        <filter string="Terminated" name="Terminated" domain="[('state','=','cancelled'), ('close_reason', '=', 'terminate')]"/>
+                        <filter string="Hold" name="Hold" domain="[('state', '=','pending')]"/>
                   </xpath>
                   <xpath expr="//group/filter[@name='Parent']" position="after">
                         <filter string="Department" name="Department" context="{'group_by':'operating_unit_id'}"/>
@@ -60,7 +61,13 @@
                         <attribute name="invisible">1</attribute>
                   </xpath>
                   <xpath expr="//filter[@string='Open']" position="attributes">
-                      <attribute name="string">In Progress</attribute>
+                      <attribute name="invisible">1</attribute>
+                  </xpath>
+                  <xpath expr="//filter[@string='Pending']" position="attributes">
+                      <attribute name="invisible">1</attribute>
+                  </xpath>
+                  <xpath expr="//filter[@string='Template']" position="attributes">
+                      <attribute name="invisible">1</attribute>
                   </xpath>
             </field>
         </record>
