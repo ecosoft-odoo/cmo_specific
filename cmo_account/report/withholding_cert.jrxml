@@ -142,8 +142,8 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{supplier_taxid}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="53" y="161" width="300" height="39"/>
-				<textElement verticalAlignment="Top" lineSpacing="1_1_2">
+				<reportElement x="53" y="166" width="300" height="56"/>
+				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font fontName="Monospaced" size="14" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{supplier_address}]]></textFieldExpression>
