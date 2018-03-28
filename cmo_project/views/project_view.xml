@@ -48,6 +48,7 @@
                         <filter string="Project from" name="Project from" context="{'group_by':'project_from_id'}"/>
                         <filter string="Project type" name="Project type" context="{'group_by':'project_type_id'}"/>
                         <filter string="Close reason" name="Close reason" context="{'group_by':'close_reason'}"/>
+                        <filter string="Project Status" name="Project Status" context="{'group_by': 'state'}"/>
                   </xpath>
                   <xpath expr="//filter[@string='New Mail']" position="attributes">
                         <attribute name="invisible">1</attribute>
