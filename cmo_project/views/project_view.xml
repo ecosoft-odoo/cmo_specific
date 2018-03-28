@@ -28,7 +28,7 @@
                         <!-- <filter string="Invoices" name="Invoices" domain="[('state','=','invoices')]"/>
                         <filter string="Received" name="Received" domain="[('state','=','received')]"/> -->
                         <filter string="Cancelled" name="Cancelled" domain="[('state','=','cancelled')]"/>
-                        <filter string="Completed" name="Completed" domain="['&amp;',('state','=','close'),('close_reason','=','close')]"/>
+                        <filter string="Completed" name="Completed" domain="[('state','=','close')]"/>
                         <filter string="Lost" name="Lost" domain="[('close_reason','=','lost')]"/>
                         <filter string="Invoiced" name="Invoiced" domain="[('is_invoiced', '=', True)]"/>
                         <filter string="Paid" name="Paid" domain="[('is_paid', '=', True)]"/>
