@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_sale_order_eng" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0000000000000004"/>
-	<property name="ireport.x" value="19"/>
-	<property name="ireport.y" value="844"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="192"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;order_line&quot;]"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<parameter name="parameter1" class="java.lang.String"/>
@@ -437,7 +437,7 @@ $P{REPORT_LOCALE}.toString() == "en_US" ? "Before Management Fee" : "รวม�
 				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{qty}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;#,##0.00-" isBlankWhenNull="true">
-				<reportElement x="355" y="1" width="100" height="20" isPrintWhenDetailOverflows="true"/>
+				<reportElement x="355" y="1" width="100" height="20"/>
 				<box topPadding="3"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
@@ -453,7 +453,7 @@ $P{REPORT_LOCALE}.toString() == "en_US" ? "Before Management Fee" : "รวม�
 				<textFieldExpression class="java.lang.String"><![CDATA[$V{section_COUNT} + "."]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;#,##0.00-" isBlankWhenNull="true">
-				<reportElement x="456" y="1" width="98" height="20" isPrintWhenDetailOverflows="true"/>
+				<reportElement x="456" y="1" width="98" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
