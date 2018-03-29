@@ -121,7 +121,7 @@
 	<pageHeader>
 		<band height="802">
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="53" y="131" width="300" height="35"/>
+				<reportElement x="53" y="131" width="657" height="35"/>
 				<textElement verticalAlignment="Bottom" lineSpacing="1_1_2">
 					<font fontName="Monospaced" size="14" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
