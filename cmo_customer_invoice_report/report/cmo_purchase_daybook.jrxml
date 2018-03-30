@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;move_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="144"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -297,7 +297,7 @@ Senior Accounting Manager]]></text>
 				</textElement>
 				<text><![CDATA[Detail : ]]></text>
 			</staticText>
-			<textField isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="45" y="147" width="501" height="63"/>
 				<box leftPadding="2"/>
 				<textElement textAlignment="Left">
