@@ -9,7 +9,7 @@
         <form string="Financial Assets report" style="padding-bottom:5%%;">
           <group col="2" colspan="4">
             <field name="fiscalyear_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
-            <field name="period_id" domain="[('fiscalyear_id', '=', fiscalyear_id),('special', '=', False)]" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
+            <field name="period_id" domain="[('fiscalyear_id', '=', fiscalyear_id)]" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
             <field name="profile_ids" options="{'no_open':True,'no_create':1,'no_create_edit':1}" widget="many2many_tags"/>
             <field name="parent_asset_id" string="Parent Asset" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
           </group>

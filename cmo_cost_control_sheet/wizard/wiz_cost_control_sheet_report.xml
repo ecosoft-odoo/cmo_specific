@@ -8,7 +8,7 @@
                 <form string="Cost control Sheet report">
                     <group>
                         <group>
-                            <field name="project_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
+                            <field name="project_id" context="{'tree_view_ref': 'cmo_cost_control_sheet.view_project'}" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
                         </group>
                         <group></group>
                     </group>
@@ -31,6 +31,6 @@
             <field name="target">new</field>
         </record>
 
-        <menuitem id="wiz_cost_control_sheet_report_menu" name="Cost Constrol Sheet" parent="base.menu_project_report" action="wiz_cost_control_sheet_report_action" sequence="50"/>
+        <menuitem id="wiz_cost_control_sheet_report_menu" name="Cost Control Sheet" parent="base.menu_project_report" action="wiz_cost_control_sheet_report_action" sequence="50"/>
     </data>
 </openerp>

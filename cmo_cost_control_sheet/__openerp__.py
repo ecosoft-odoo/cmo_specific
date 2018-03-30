@@ -16,6 +16,7 @@
         'report_xls',
     ],
     'data': [
+        'views/project_view.xml',
         'wizard/wiz_cost_control_sheet_report.xml',
     ],
     'installable': True,
