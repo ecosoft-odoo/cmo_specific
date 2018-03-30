@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record id="view_edit_unit_amount" model="ir.ui.view">
+			<field name="name">view.edit.unit.amount</field>
+			<field name="model">edit.unit.amount</field>
+			<field name="arch" type="xml">
+				<form string="Edit Amount">
+					<group>
+							<group>
+									<field name="unit_amount"/>
+							</group>
+							<group>
+							</group>
+					</group>
+					<footer>
+						<button name="save" type="object" string="Save" class="oe_highlight"/>
+						or
+						<button special="cancel" class="oe_link" string="Cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_edit_unit_amount" model="ir.actions.act_window">
+			<field name="name">Edit Unit Amount.</field>
+			<field name="res_model">edit.unit.amount</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="context">{}</field>
+			<field name="target">new</field>
+		</record>
+
+	</data>
+</openerp>
