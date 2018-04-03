@@ -68,6 +68,9 @@
 	<field name="advance_amount" class="java.lang.Number">
 		<fieldDescription><![CDATA[advance_expense_id/amount_advanced]]></fieldDescription>
 	</field>
+	<field name="total_amount" class="java.lang.Number">
+		<fieldDescription><![CDATA[line_ids/total_amount]]></fieldDescription>
+	</field>
 	<variable name="sum_amount_untaxed" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{amount_line_untaxed}]]></variableExpression>
 	</variable>
@@ -77,6 +80,9 @@
 	<variable name="checque_year" class="java.util.Date"/>
 	<variable name="string_total" class="java.lang.String">
 		<variableExpression><![CDATA[(Math.round($V{sum_amount_untaxed}*100)/100).toString()]]></variableExpression>
+	</variable>
+	<variable name="sum_total_amount" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_amount}]]></variableExpression>
 	</variable>
 	<background>
 		<band height="802" splitType="Stretch">
@@ -421,7 +427,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Number"><![CDATA[$F{amount_line_untaxed}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{total_amount}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="0" width="45" height="20"/>
@@ -457,7 +463,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Number"><![CDATA[$V{sum_amount_untaxed}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$V{sum_total_amount}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="300" y="40" width="100" height="20"/>
@@ -503,7 +509,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Number"><![CDATA[$F{advance_amount} - $V{sum_amount_untaxed} < 0 ? (-1) * ($F{advance_amount} - $V{sum_amount_untaxed}) : null]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{advance_amount} - $V{sum_total_amount} < 0 ? (-1) * ($F{advance_amount} - $V{sum_total_amount}) : null]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="400" y="60" width="155" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
@@ -511,7 +517,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Number"><![CDATA[$F{advance_amount} - $V{sum_amount_untaxed} > 0 ? ($F{advance_amount} - $V{sum_amount_untaxed}) : null]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{advance_amount} - $V{sum_total_amount} > 0 ? ($F{advance_amount} - $V{sum_total_amount}) : null]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnFooter>
