@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;move_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -336,7 +336,7 @@ RECEIPT VOUCHER]]></text>
 				<textFieldExpression class="java.lang.String"><![CDATA["หน้าที่ "+$V{PAGE_NUMBER}+"/"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Group" evaluationGroup="UniqueID" pattern="" isBlankWhenNull="false">
-				<reportElement mode="Transparent" x="538" y="184" width="111" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement mode="Transparent" x="538" y="184" width="17" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
@@ -345,7 +345,7 @@ RECEIPT VOUCHER]]></text>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="21" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<staticText>
 				<reportElement x="402" y="0" width="77" height="20"/>
 				<box>
@@ -383,7 +383,7 @@ RECEIPT VOUCHER]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[Dept]]></text>
+				<text><![CDATA[Dept.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="0" width="51" height="20"/>
@@ -409,7 +409,7 @@ RECEIPT VOUCHER]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[Job Code]]></text>
+				<text><![CDATA[Job Code.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="479" y="0" width="77" height="20"/>
@@ -445,7 +445,7 @@ RECEIPT VOUCHER]]></text>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="0" y="0" width="51" height="20"/>
 				<box topPadding="3" leftPadding="2" rightPadding="2"/>
-				<textElement textAlignment="Center" verticalAlignment="Top">
+				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{account_code}]]></textFieldExpression>

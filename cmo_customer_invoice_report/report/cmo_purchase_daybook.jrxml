@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_supplier_payment_voucher" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="OPENERP_RELATIONS" value="[&quot;move_ids&quot;]"/>
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.6105100000000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="50"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -59,6 +59,9 @@
 	<field name="id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[id]]></fieldDescription>
 	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[move_ids/name]]></fieldDescription>
+	</field>
 	<sortField name="id"/>
 	<sortField name="debit" order="Descending" type="Variable"/>
 	<sortField name="credit" order="Descending" type="Variable"/>
@@ -111,7 +114,7 @@
 	<background>
 		<band height="802" splitType="Stretch">
 			<frame>
-				<reportElement x="135" y="226" width="139" height="400"/>
+				<reportElement x="50" y="226" width="224" height="400"/>
 				<box>
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -147,7 +150,7 @@
 				</box>
 			</frame>
 			<frame>
-				<reportElement x="0" y="226" width="135" height="400"/>
+				<reportElement x="0" y="226" width="50" height="400"/>
 				<box>
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -344,7 +347,7 @@ Senior Accounting Manager]]></text>
 				<textFieldExpression class="java.lang.String"><![CDATA["หน้าที่ "+$V{PAGE_NUMBER}+"/"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Group" evaluationGroup="UniqueID">
-				<reportElement mode="Transparent" x="522" y="109" width="79" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement mode="Transparent" x="522" y="109" width="33" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
@@ -353,7 +356,7 @@ Senior Accounting Manager]]></text>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="21" splitType="Stretch">
+		<band height="22" splitType="Stretch">
 			<staticText>
 				<reportElement x="402" y="0" width="77" height="20"/>
 				<box>
@@ -368,7 +371,7 @@ Senior Accounting Manager]]></text>
 				<text><![CDATA[DR.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="135" y="0" width="139" height="20"/>
+				<reportElement x="50" y="0" width="224" height="20"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -391,10 +394,10 @@ Senior Accounting Manager]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[Dept]]></text>
+				<text><![CDATA[Dept.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="0" width="135" height="20"/>
+				<reportElement x="0" y="0" width="50" height="20"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -417,7 +420,7 @@ Senior Accounting Manager]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[Job Code]]></text>
+				<text><![CDATA[Job Code.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="479" y="0" width="77" height="20"/>
@@ -437,12 +440,12 @@ Senior Accounting Manager]]></text>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="135" y="0" width="139" height="20" isPrintWhenDetailOverflows="true"/>
+				<reportElement x="50" y="0" width="224" height="20" isPrintWhenDetailOverflows="true"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{line_name}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[($F{account_name} != null ? $F{account_name} : "") + ($F{description} != null ? ($F{account_name} != null ? "\n" : "") + $F{description} : "")]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;#,##0.00-" isBlankWhenNull="true">
 				<reportElement x="402" y="0" width="77" height="20"/>
@@ -455,7 +458,7 @@ Senior Accounting Manager]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{operating_unit}]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="316" y="0" width="86" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
@@ -469,12 +472,12 @@ Senior Accounting Manager]]></text>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{credit}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="0" y="0" width="135" height="20" isPrintWhenDetailOverflows="true"/>
+				<reportElement x="0" y="0" width="50" height="20" isPrintWhenDetailOverflows="true"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{account_code} + " " + $F{account_name}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{account_code}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
