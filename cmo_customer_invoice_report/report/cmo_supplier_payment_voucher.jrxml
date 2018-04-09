@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;move_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.1000000000000014"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="39"/>
+	<property name="ireport.y" value="999"/>
 	<style name="style1">
 		<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
 	</style>
@@ -53,7 +53,7 @@
 	<field name="credit" class="java.lang.Number">
 		<fieldDescription><![CDATA[move_ids/credit]]></fieldDescription>
 	</field>
-	<field name="desc" class="java.lang.String">
+	<field name="description" class="java.lang.String">
 		<fieldDescription><![CDATA[move_ids/name]]></fieldDescription>
 	</field>
 	<field name="bank_name" class="java.lang.String">
@@ -129,7 +129,7 @@
 	<background>
 		<band height="802" splitType="Stretch">
 			<frame>
-				<reportElement x="149" y="250" width="125" height="383"/>
+				<reportElement x="51" y="250" width="223" height="383"/>
 				<box>
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -137,7 +137,7 @@
 				</box>
 			</frame>
 			<frame>
-				<reportElement x="0" y="250" width="149" height="383"/>
+				<reportElement x="0" y="250" width="51" height="383"/>
 				<box>
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -180,7 +180,7 @@
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement x="139" y="662" width="140" height="70"/>
+				<reportElement x="139" y="662" width="140" height="140"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -191,13 +191,6 @@
 				<reportElement x="278" y="662" width="140" height="140"/>
 				<box>
 					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-				</box>
-			</frame>
-			<frame>
-				<reportElement x="139" y="732" width="140" height="70"/>
-				<box>
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 				</box>
@@ -256,11 +249,6 @@
 				<reportElement x="24" y="732" width="100" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Prepared Chq By]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="164" y="732" width="100" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Verify By]]></text>
 			</staticText>
 			<frame>
 				<reportElement x="417" y="662" width="140" height="70"/>
@@ -519,7 +507,7 @@ $F{payment_type} == "cheque")
 				<textFieldExpression class="java.lang.String"><![CDATA["หน้าที่ "+$V{PAGE_NUMBER}+"/"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Group" evaluationGroup="UniqueID">
-				<reportElement mode="Transparent" x="530" y="223" width="106" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement mode="Transparent" x="530" y="223" width="26" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
@@ -543,7 +531,7 @@ $F{payment_type} == "cheque")
 				<text><![CDATA[DR.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="149" y="0" width="125" height="20"/>
+				<reportElement x="51" y="0" width="223" height="20"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -566,10 +554,10 @@ $F{payment_type} == "cheque")
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[OU]]></text>
+				<text><![CDATA[Dept.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="0" width="149" height="20"/>
+				<reportElement x="0" y="0" width="51" height="20"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -592,7 +580,7 @@ $F{payment_type} == "cheque")
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[Project Code]]></text>
+				<text><![CDATA[Job Code.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="479" y="0" width="77" height="20"/>
@@ -626,11 +614,11 @@ $F{payment_type} == "cheque")
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{debit}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="style1" x="0" y="0" width="149" height="20"/>
+				<reportElement style="style1" x="0" y="0" width="51" height="20"/>
 				<textElement verticalAlignment="Top">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{account_code} + " " + $F{account_name}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{account_code}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="style1" x="274" y="0" width="42" height="20"/>
@@ -654,11 +642,11 @@ $F{payment_type} == "cheque")
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{credit}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="style1" x="149" y="0" width="125" height="20"/>
+				<reportElement style="style1" x="51" y="0" width="223" height="20"/>
 				<textElement verticalAlignment="Top">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{desc}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[($F{account_name} != null ? $F{account_name} : "") + ($F{description} != null ? ($F{account_name} != null ? "\n" : "") + $F{description} : "")]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
