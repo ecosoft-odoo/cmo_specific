@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.2100000000000006"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="22"/>
+	<property name="ireport.y" value="591"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -668,6 +668,13 @@
 				</textElement>
 				<text><![CDATA[Voucher No.]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="0" y="100" width="146" height="39"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{employee_request}]]></textFieldExpression>
+			</textField>
 		</band>
 	</lastPageFooter>
 </jasperReport>
