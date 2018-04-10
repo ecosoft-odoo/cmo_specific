@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.2100000000000006"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="785"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -396,7 +396,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				</textElement>
 				<text><![CDATA[Payment By]]></text>
 			</staticText>
-			<textField isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="78" y="60" width="100" height="20" isRemoveLineWhenBlank="true"/>
 				<textElement>
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
@@ -414,7 +414,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				</textElement>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$V{sum_amount_untaxed}==null?0:$V{sum_amount_untaxed}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="78" y="80" width="100" height="20" isRemoveLineWhenBlank="true"/>
 				<textElement>
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>

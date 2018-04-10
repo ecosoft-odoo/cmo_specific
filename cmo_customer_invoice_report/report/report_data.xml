@@ -321,5 +321,36 @@
            <field name="key2" eval="'client_print_multi'"/>
            <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_receipt)"/>
         </record>
+
+        <delete id="account_bank_receipt.report_bank_receipt" model="ir.actions.report.xml"/>
+
+        <report string="Bank Receipt"
+          model="account.bank.receipt"
+          auto="True"
+          name="cmo.bank.receipt"
+          rml="cmo_customer_invoice_report/report/cmo_bank_receipt.jrxml"
+          id="cmo_bank_receipt"
+          menu="True"
+          header="False"
+        />
+        <record id="cmo_bank_receipt" model="ir.actions.report.xml">
+          <field name="jasper_report">True</field>
+          <field name="jasper_output">pdf</field>
+        </record>
+
+        <report string="Bank Payment"
+          model="account.bank.payment"
+          auto="True"
+          name="cmo.bank.payment"
+          rml="cmo_customer_invoice_report/report/cmo_bank_payment.jrxml"
+          id="cmo_bank_payment"
+          menu="True"
+          header="False"
+        />
+        <record id="cmo_bank_payment" model="ir.actions.report.xml">
+          <field name="jasper_report">True</field>
+          <field name="jasper_output">pdf</field>
+        </record>
+
     </data>
 </openerp>
