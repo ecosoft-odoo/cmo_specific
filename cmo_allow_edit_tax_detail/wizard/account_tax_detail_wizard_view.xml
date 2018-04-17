@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+      <record id="view_tax_wizard" model="ir.ui.view">
+    			<field name="name">view.tax.wizard</field>
+    			<field name="model">account.tax.wizard</field>
+    			<field name="inherit_id" ref="l10n_th_account_tax_detail.view_tax_wizard"/>
+    			<field name="arch" type="xml">
+              <field name="partner_id" position="attributes">
+                  <attribute name="attrs">{}</attribute>
+              </field>
+              <field name="invoice_date" position="attributes">
+  					      <attribute name="attrs">{}</attribute>
+      				</field>
+    			</field>
+  		</record>
+    </data>
+</openerp>
