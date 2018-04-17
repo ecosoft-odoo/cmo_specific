@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record id="view_edit_analytic_account" model="ir.ui.view">
+			<field name="name">view.edit.analytic.account</field>
+			<field name="model">edit.analytic.account</field>
+			<field name="arch" type="xml">
+				<form string="Edit Project">
+					<group>
+							<group>
+									<field name="analytic_account_id"/>
+							</group>
+							<group>
+							</group>
+					</group>
+					<footer>
+						<button name="save" type="object" string="Save" class="oe_highlight"/>
+						or
+						<button special="cancel" class="oe_link" string="Cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_edit_analytic_account" model="ir.actions.act_window">
+			<field name="name">Edit Project.</field>
+			<field name="res_model">edit.analytic.account</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="context">{}</field>
+			<field name="target">new</field>
+		</record>
+
+	</data>
+</openerp>

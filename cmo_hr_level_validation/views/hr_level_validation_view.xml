@@ -31,17 +31,26 @@
                             confirm="Are you sure to refuse this document?"
                             groups="base.group_hr_user"
                             />
+                    <!-- On Waiting Validate, allow refuse -->
+                    <button name="refuse" type="workflow"
+                            string="Refuse" states="validate"
+                            confirm="Are you sure to refuse this document?"
+                            groups="account.group_account_user"
+                            />
                 </xpath>
                 <field name="name" position="before">
                     <field name="approver_ids" widget="many2many_tags" readonly="1"/>
                     <field name="approve_permission" invisible="1"/>
                 </field>
-                  <xpath expr="//field[@name='line_ids']/tree/field[@name='unit_amount']" position="after">
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='unit_amount']" position="after">
                     <field name="expense_state" invisible="1"/>
                     <button name="%(action_edit_unit_amount)d" string="Edit" type="action" icon="gtk-justify-fill"
                       attrs="{'invisible': [('expense_state', '!=', 'validate')]}"/>
                 </xpath>
-
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='analytic_account']" position="after">
+                    <button name="%(action_edit_analytic_account)d" string="Edit" type="action" icon="gtk-justify-fill"
+                      attrs="{'invisible': [('expense_state', '!=', 'validate')]}"/>
+                </xpath>
             </field>
         </record>
     </data>
