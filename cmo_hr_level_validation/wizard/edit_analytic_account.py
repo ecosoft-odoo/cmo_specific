@@ -9,7 +9,6 @@ class EditAnalyticAccount(models.TransientModel):
     analytic_account_id = fields.Many2one(
         'account.analytic.account',
         string='Project',
-        required=True,
     )
 
     @api.model
@@ -30,5 +29,5 @@ class EditAnalyticAccount(models.TransientModel):
         active_model = self._context.get('active_model')
         active_id = self._context.get('active_id')
         rec = self.env[active_model].browse(active_id)
-        rec.write({'analytic_account': rec.analytic_account.id})
+        rec.write({'analytic_account': self.analytic_account_id.id})
         return True

@@ -13,6 +13,7 @@
         'hr_expense_operating_unit',
         'cmo_level_validation',
         'cmo_project',
+        'hr_expense_cancel_reason',
     ],
     'data': [
         # 'data/level_validation_data.xml',  # Moved to master data

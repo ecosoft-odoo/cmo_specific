@@ -24,20 +24,6 @@
                             groups="base.group_user"
                             />
                 </xpath>
-                <xpath expr="//header/button[@name='refuse']" position="replace">
-                    <button name="refuse" type="workflow"
-                            string="Refuse"
-                            attrs="{'invisible':['|', ['approve_permission','=',False], ['state', 'not in', ['confirm']]]}"
-                            confirm="Are you sure to refuse this document?"
-                            groups="base.group_hr_user"
-                            />
-                    <!-- On Waiting Validate, allow refuse -->
-                    <button name="refuse" type="workflow"
-                            string="Refuse" states="validate"
-                            confirm="Are you sure to refuse this document?"
-                            groups="account.group_account_user"
-                            />
-                </xpath>
                 <field name="name" position="before">
                     <field name="approver_ids" widget="many2many_tags" readonly="1"/>
                     <field name="approve_permission" invisible="1"/>
@@ -53,5 +39,25 @@
                 </xpath>
             </field>
         </record>
+
+        <record id="view_expenses_form" model="ir.ui.view">
+            <field name="name">hr.expense.form</field>
+            <field name="model">hr.expense.expense</field>
+            <field name="inherit_id" ref="hr_expense_cancel_reason.view_expenses_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='%(hr_expense_cancel_reason.action_hr_expense_cancel)d']" position="attributes">
+                    <attribute name="states"></attribute>
+                    <attribute name="attrs">{'invisible':['|', ['approve_permission','=',False], ['state', 'not in', ['confirm']]]}</attribute>
+                </xpath>
+                <xpath expr="//button[@name='%(hr_expense_cancel_reason.action_hr_expense_cancel)d']" position="after">
+                    <button name="%(hr_expense_cancel_reason.action_hr_expense_cancel)d"
+                            type="action"
+                            states="validate"
+                            string="Refuse"
+                            groups="account.group_account_user"/>
+                </xpath>
+            </field>
+        </record>
+
     </data>
 </openerp>
