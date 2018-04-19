@@ -6,6 +6,8 @@ import xlwt
 import itertools
 import cStringIO
 import time
+from datetime import date, datetime as dt
+from openerp.tools import float_compare
 from openerp import models, fields, api, _
 from openerp.exceptions import except_orm, ValidationError, RedirectWarning
 from openerp.tools.safe_eval import safe_eval as eval
@@ -13,13 +15,13 @@ from openerp.tools.safe_eval import safe_eval as eval
 
 def get_field_condition(field):
     """ i..e, 'field${value > 0 and value or False}' """
-    if '${' in field and '}' in field:
+    if field and '${' in field and '}' in field:
         i = field.index('${')
-        j = field.index('}')
+        j = field.index('}', i)
         cond = field[i + 2:j]
         try:
             if len(cond) > 0:
-                return (field[:i], cond)
+                return (field.replace('${%s}' % cond, ''), cond)
         except:
             return (field, False)
     return (field, False)
@@ -27,9 +29,9 @@ def get_field_condition(field):
 
 def get_line_max(line_field):
     """ i.e., line_field = line_ids[100], max = 100 else 0 """
-    if '[' in line_field and ']' in line_field:
+    if line_field and '[' in line_field and ']' in line_field:
         i = line_field.index('[')
-        j = line_field.index(']')
+        j = line_field.index(']', i)
         max_str = line_field[i + 1:j]
         try:
             if len(max_str) > 0:
@@ -105,9 +107,17 @@ class ImportXlsxTemplate(models.TransientModel):
         messages = []
         valid = True
         # For all import, only allow import in draft state (for documents)
-        if 'state' in record and record['state'] != 'draft':
-            messages.append(_('Document must be in draft state!'))
-            valid = False
+        import_states = self._context.get('template_import_states', [])
+        if import_states:  # states specified in context, test this
+            if 'state' in record and \
+                    record['state'] not in import_states:
+                messages.append(
+                    _('Document must be in %s states!') % import_states)
+                valid = False
+        else:  # no specific state specified, test with draft
+            if 'state' in record and 'draft' not in record['state']:  # not in
+                messages.append(_('Document must be in draft state!'))
+                valid = False
         # Context testing
         if self._context.get('template_context', False):
             template_context = self._context['template_context']
@@ -125,7 +135,10 @@ class ImportXlsxTemplate(models.TransientModel):
 
     @api.model
     def get_eval_context(self, model=False, value=False):
-        eval_context = {'time': time,
+        eval_context = {'float_compare': float_compare,
+                        'time': time,
+                        'datetime': dt,
+                        'date': date,
                         'env': self.env,
                         'context': self._context,
                         'value': False,
@@ -141,7 +154,8 @@ class ImportXlsxTemplate(models.TransientModel):
     def default_get(self, fields):
         res_model = self._context.get('active_model', False)
         res_id = self._context.get('active_id', False)
-        template_dom = [('res_model', '=', res_model)]
+        template_dom = [('res_model', '=', res_model),
+                        ('parent_id', '!=', False)]
         template_fname = self._context.get('template_fname', False)
         if template_fname:  # Specific template
             template_dom.append(('datas_fname', '=', template_fname))
@@ -179,7 +193,7 @@ class ImportXlsxTemplate(models.TransientModel):
                 # Line Items
                 line_fields = filter(lambda l: l != '_HEAD_', worksheet)
                 for line_field in line_fields:
-                    line_field, max_row = get_line_max(line_field)
+                    line_field, _ = get_line_max(line_field)
                     if line_field in record and record[line_field]:
                         record[line_field].unlink()  # Delete all lines
         except Exception, e:
@@ -203,22 +217,24 @@ class ImportXlsxTemplate(models.TransientModel):
                 vals.update({out_field: []})
                 # Case default value from an eval
                 for idx in range(row, st.nrows):
-                    value = False
+                    if max_row and (idx - row) > (max_row - 1):
+                        break
+                    value = XLS._get_cell_value(st.cell(idx, col),
+                                                field_type=field_type)
+                    eval_context = self.get_eval_context(model=model,
+                                                         value=value)
                     if key_eval_cond:
-                        eval_context = self.get_eval_context()
-                        value = str(eval(key_eval_cond, eval_context))
-                    else:
-                        value = XLS._get_cell_value(st.cell(idx, col),
-                                                    field_type=field_type)
+                        # str() will throw cordinal not in range error
+                        # value = str(eval(key_eval_cond, eval_context))
+                        value = eval(key_eval_cond, eval_context)
                     # Case Eval
                     if val_eval_cond:
-                        eval_context = self.get_eval_context(model=model,
-                                                             value=value)
-                        value = str(eval(val_eval_cond, eval_context))
-                    # --
+                        # value = str(eval(val_eval_cond, eval_context))
+                        value = eval(val_eval_cond, eval_context)
                     vals[out_field].append(value)
-                    if max_row and (idx - row) >= max_row:
-                        break
+                # if all value in vals[out_field] == '', we don't need it
+                if not filter(lambda x: x != '', vals[out_field]):
+                    vals.pop(out_field)
         return vals
 
     @api.model
@@ -257,17 +273,14 @@ class ImportXlsxTemplate(models.TransientModel):
                     field, val_eval_cond = get_field_condition(field)
                     row, col = XLS.pos2idx(rc)
                     field_type = XLS._get_field_type(model, field)
-                    value = False
+                    value = XLS._get_cell_value(st.cell(row, col),
+                                                field_type=field_type)
+                    eval_context = self.get_eval_context(model=model,
+                                                         value=value)
                     if key_eval_cond:
-                        eval_context = self.get_eval_context()
                         value = str(eval(key_eval_cond, eval_context))
-                    else:
-                        value = XLS._get_cell_value(st.cell(row, col),
-                                                    field_type=field_type)
                     # Case Eval
                     if val_eval_cond:
-                        eval_context = self.get_eval_context(model=model,
-                                                             value=value)
                         value = str(eval(val_eval_cond, eval_context))
                     # --
                     out_st.write(0, col_idx, field)  # Next Column
@@ -322,6 +335,7 @@ class ImportXlsxTemplate(models.TransientModel):
         - Delete fields' data according to data_dict['__IMPORT__']
         - Import data from excel according to data_dict['__IMPORT__']
         """
+        self = self.sudo()
         record = self.env[res_model].browse(res_id)
         data_dict = literal_eval(template.description.strip())
         if not data_dict.get('__IMPORT__'):
