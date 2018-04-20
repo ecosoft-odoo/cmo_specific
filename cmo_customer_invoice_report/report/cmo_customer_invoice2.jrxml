@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line&quot;]"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.y" value="48"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -95,6 +95,9 @@
 	<field name="amount_total_text_th" class="java.lang.String">
 		<fieldDescription><![CDATA[amount_total_text_th]]></fieldDescription>
 	</field>
+	<field name="comment" class="java.lang.String">
+		<fieldDescription><![CDATA[comment]]></fieldDescription>
+	</field>
 	<variable name="string_total" class="java.lang.String">
 		<variableExpression><![CDATA[(Math.round($F{amount_total}*100)/100).toString()]]></variableExpression>
 	</variable>
@@ -107,14 +110,6 @@
 				<reportElement x="0" y="0" width="595" height="802"/>
 				<imageExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "cmo_invoice_1.jpg"]]></imageExpression>
 			</image>
-			<textField isBlankWhenNull="true">
-				<reportElement x="14" y="623" width="226" height="20"/>
-				<box leftPadding="2"/>
-				<textElement verticalAlignment="Middle">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{invoice_number} != null && $F{invoice_number} != "" ? "Ref." + $F{invoice_number} : ""]]></textFieldExpression>
-			</textField>
 		</band>
 	</background>
 	<title>
@@ -239,6 +234,21 @@
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["(" + ($P{REPORT_LOCALE}.toString() == "en_US" ? $F{amount_total_text_en} : $F{amount_total_text_th}) + ")"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="15" y="18" width="226" height="20"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{invoice_number} != null && $F{invoice_number} != "" ? "Ref." + $F{invoice_number} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="0" width="226" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{comment}]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>
