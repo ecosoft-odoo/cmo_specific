@@ -2,6 +2,18 @@
 <openerp>
     <data>
 
+        <!--Search-->
+        <record id="view_account_invoice_filter" model="ir.ui.view">
+            <field name="name">view.account.invoice.filter</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='number']" position="after">
+                    <field name="number_preprint"/>
+                </xpath>
+            </field>
+        </record>
+
         <!-- Edit Desc in Invoice Line -->
         <record id="invoice_form" model="ir.ui.view">
             <field name="name">invoice.form</field>

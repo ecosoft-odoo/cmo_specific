@@ -105,6 +105,9 @@
                 <!-- <field name="origin" position="after">
                     <field name="invoice_type"/>
                 </field> -->
+                <field name="number" position="after">
+                    <field name="number_preprint" invisible="context.get('type') not in ['out_invoice','out_refund']"/>
+                </field>
             </field>
         </record>
 
