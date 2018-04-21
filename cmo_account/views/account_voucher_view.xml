@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
+
+        <!--Search-->
+        <record id="view_voucher_filter_customer_pay" model="ir.ui.view">
+            <field name="name">view.voucher.filter.customer.pay</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_voucher_filter_customer_pay"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='number']" position="after">
+                    <field name="number_preprint"/>
+                </xpath>
+            </field>
+        </record>
+
         <record model="ir.ui.view" id="view_vendor_receipt_form">
             <field name="name">account.voucher.receipt.form</field>
             <field name="model">account.voucher</field>
@@ -51,15 +64,20 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="view_voucher_tree">
+        <!--Tree View-->
+        <record id="view_voucher_tree" model="ir.ui.view">
             <field name="name">account.voucher.tree</field>
             <field name="model">account.voucher</field>
             <field name="inherit_id" ref="account_voucher.view_voucher_tree"/>
             <field name="arch" type="xml">
+                <field name="number" position="after">
+                    <field name="number_preprint" invisible="context.get('type', True) != 'receipt'"/>
+                </field>
                 <field name="amount" position="after">
                     <field name="date_value"/>
                 </field>
             </field>
         </record>
+
     </data>
 </openerp>
