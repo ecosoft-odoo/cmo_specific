@@ -68,17 +68,6 @@
              </field>
         </record>
 
-        <record id="account_operating_unit_invoice_form" model="ir.ui.view">
-            <field name="name">account.invoice.form</field>
-            <field name="model">account.invoice</field>
-            <field name="inherit_id" ref="account_operating_unit.invoice_form" />
-            <field name="arch" type="xml">
-                <field name="operating_unit_id" position="attributes">
-                    <attribute name="readonly">True</attribute>
-                </field>
-            </field>
-        </record>
-
         <record id="hr_expense_advance_clearing_invoice_form" model="ir.ui.view">
 	        <field name="name">invoice.form</field>
 	        <field name="model">account.invoice</field>
