@@ -41,6 +41,14 @@ class AccountMoveLine(models.Model):
         string='Value Date',
         compute='_compute_voucher_ref',
     )
+    voucher_number_preprint = fields.Char(
+        string='Preprint Number',
+        related='move_id.ref_voucher_id.number_preprint',
+    )
+    invoices_ref = fields.Char(
+        string='Invoices Ref',
+        related='move_id.ref_voucher_id.invoices_ref',
+    )
 
     @api.multi
     def _compute_voucher_ref(self):
@@ -64,12 +72,12 @@ class AccountMoveLine(models.Model):
         lines = self.search(domain)
         if operator == 'ilike':
             lines = lines.filtered(
-                lambda l: l.move_id.ref_voucher_id.number_cheque is not False
-                and value in l.move_id.ref_voucher_id.number_cheque)
+                lambda l:
+                l.move_id.ref_voucher_id.number_cheque is not False and
+                value in l.move_id.ref_voucher_id.number_cheque)
         if operator == 'not ilike':
             lines = lines.filtered(
-                lambda l: l.move_id.ref_voucher_id.number_cheque is False
-                or
+                lambda l: l.move_id.ref_voucher_id.number_cheque is False or
                 (l.move_id.ref_voucher_id.number_cheque is not False and
                  value not in l.move_id.ref_voucher_id.number_cheque))
         if operator == '=':
