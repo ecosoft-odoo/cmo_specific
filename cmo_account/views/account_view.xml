@@ -74,7 +74,7 @@
             <field name="inherit_id" ref="account_operating_unit.invoice_form" />
             <field name="arch" type="xml">
                 <field name="operating_unit_id" position="attributes">
-                    <attribute name="attrs">{'readonly':[('state','in',['open','paid','cancel'])]}</attribute>
+                    <attribute name="readonly">True</attribute>
                 </field>
             </field>
         </record>
