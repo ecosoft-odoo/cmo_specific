@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line&quot;]"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="48"/>
+	<property name="ireport.y" value="13"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -41,7 +41,7 @@
 	<field name="partner_zip" class="java.lang.String">
 		<fieldDescription><![CDATA[partner_id/zip]]></fieldDescription>
 	</field>
-	<field name="Quote_number" class="java.lang.String">
+	<field name="quote_number" class="java.lang.String">
 		<fieldDescription><![CDATA[quote_ref_number]]></fieldDescription>
 	</field>
 	<field name="quote_date" class="java.util.Date">
@@ -215,14 +215,7 @@
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{tax_amount}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="1" y="76" width="180" height="20" isPrintWhenDetailOverflows="true"/>
-				<textElement textAlignment="Center">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{partner_name}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="190" y="76" width="180" height="20" isPrintWhenDetailOverflows="true"/>
+				<reportElement x="1" y="116" width="180" height="20" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Center">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -249,6 +242,13 @@
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{comment}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="220" y="116" width="180" height="20" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Center">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{quote_number}]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>
