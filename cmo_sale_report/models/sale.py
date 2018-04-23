@@ -2,16 +2,16 @@
 from openerp import models, api
 
 
-def filter_print_report(res, reports):
-    action = []
-    if res.get('toolbar', {}) and res.get('toolbar').get('print', False):
-        for act in res.get('toolbar').get('print'):
-            if act.get('report_name') in reports:
-                continue
-            action.append(act)
-        res['toolbar']['print'] = action
-    return res
-
+# def filter_print_report(res, reports):
+#     action = []
+#     if res.get('toolbar', {}) and res.get('toolbar').get('print', False):
+#         for act in res.get('toolbar').get('print'):
+#             if act.get('report_name') in reports:
+#                 continue
+#             action.append(act)
+#         res['toolbar']['print'] = action
+#     return res
+#
 # class SaleOrder(models.Model):
 #     _inherit = 'sale.order'
 #
@@ -22,8 +22,7 @@ def filter_print_report(res, reports):
 #             view_id=view_id, view_type=view_type, toolbar=toolbar,
 #             submenu=submenu)
 #         context = self._context.copy()
-#         if context.get('order_type', False) == 'sale_order':
-#             # Report name for remove out from print button
+#         if context.get('order_type') in ['sale_order','quotation']:
 #             reports = [
 #                 u'cmo.sale.order',
 #                 u'cmo.sale.order.th',
