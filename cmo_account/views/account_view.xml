@@ -73,9 +73,9 @@
 	        <field name="model">account.invoice</field>
 	        <field name="inherit_id" ref="hr_expense_advance_clearing.invoice_form"/>
 	        <field name="arch" type="xml">
-	           <field name="advance_expense_id" position="attributes">
-                   <attribute name="attrs">{'readonly':[('state','in',['open','paid','cancel'])]}</attribute>
-               </field>
+              <field name="advance_expense_id" position="attributes">
+                  <attribute name="attrs">{'readonly':[('state','in',['open','paid','cancel'])]}</attribute>
+              </field>
 	        </field>
 	    </record>
 

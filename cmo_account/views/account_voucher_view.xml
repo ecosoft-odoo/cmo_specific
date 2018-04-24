@@ -61,6 +61,12 @@
                 <xpath expr="//field[@name='number']" position="before">
                     <field name="move_id" readonly="1"/>
                 </xpath>
+                <field name="reference" position="attributes">
+                    <attribute name="attrs">{'readonly':[('state','in',['open','paid','cancel'])]}</attribute>
+                </field>
+                <field name="name" position="attributes">
+                    <attribute name="attrs">{'readonly':[('state','in',['open','paid','cancel'])]}</attribute>
+                </field>
             </field>
         </record>
 
