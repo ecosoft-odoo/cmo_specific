@@ -563,7 +563,7 @@
 						<printWhenExpression><![CDATA[$F{analytic_account_name}]]></printWhenExpression>
 					</reportElement>
 					<box leftPadding="2"/>
-					<textElement verticalAlignment="Bottom">
+					<textElement verticalAlignment="Middle">
 						<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA["[" + $F{analytic_account_code} + "] " + $F{analytic_account_name}]]></textFieldExpression>
