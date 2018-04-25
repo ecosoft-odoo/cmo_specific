@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.2100000000000006"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="591"/>
+	<property name="ireport.y" value="15"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -41,8 +41,11 @@
 	<field name="ac_payee" class="java.lang.String">
 		<fieldDescription><![CDATA[ac_payee_ref]]></fieldDescription>
 	</field>
-	<field name="analytic_account" class="java.lang.String">
+	<field name="analytic_account_name" class="java.lang.String">
 		<fieldDescription><![CDATA[line_ids/analytic_account/name]]></fieldDescription>
+	</field>
+	<field name="analytic_account_code" class="java.lang.String">
+		<fieldDescription><![CDATA[line_ids/analytic_account/code]]></fieldDescription>
 	</field>
 	<field name="amount_line_untaxed" class="java.lang.Number">
 		<fieldDescription><![CDATA[line_ids/amount_line_untaxed]]></fieldDescription>
@@ -341,7 +344,7 @@
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="168" splitType="Stretch">
+		<band height="173" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
 				<reportElement x="56" y="97" width="145" height="20"/>
 				<box leftPadding="2">
@@ -556,12 +559,14 @@
 					<text><![CDATA[JOB]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement x="45" y="20" width="193" height="20"/>
+					<reportElement x="45" y="0" width="190" height="40">
+						<printWhenExpression><![CDATA[$F{analytic_account_name}]]></printWhenExpression>
+					</reportElement>
 					<box leftPadding="2"/>
-					<textElement verticalAlignment="Middle">
+					<textElement verticalAlignment="Bottom">
 						<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{analytic_account}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA["[" + $F{analytic_account_code} + "] " + $F{analytic_account_name}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
@@ -571,7 +576,7 @@
 			<textField isStretchWithOverflow="true">
 				<reportElement mode="Transparent" x="45" y="0" width="394" height="20"/>
 				<box leftPadding="2"/>
-				<textElement verticalAlignment="Bottom" lineSpacing="1_1_2">
+				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{line_ids_name}+" "+$F{line_ids_ref}]]></textFieldExpression>
@@ -579,7 +584,7 @@
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
 				<reportElement x="439" y="0" width="116" height="20"/>
 				<box rightPadding="2"/>
-				<textElement textAlignment="Right" verticalAlignment="Bottom" lineSpacing="1_1_2">
+				<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Single">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{total_amount}==null?0:$F{total_amount}]]></textFieldExpression>
@@ -587,7 +592,7 @@
 			<textField>
 				<reportElement x="0" y="0" width="45" height="20"/>
 				<box leftPadding="2"/>
-				<textElement verticalAlignment="Bottom" lineSpacing="1_1_2">
+				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["No. " + $V{REPORT_COUNT}.toString()]]></textFieldExpression>

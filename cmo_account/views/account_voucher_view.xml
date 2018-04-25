@@ -2,7 +2,7 @@
 <openerp>
     <data>
 
-        <!--Search-->
+        <!--Search customer payment-->
         <record id="view_voucher_filter_customer_pay" model="ir.ui.view">
             <field name="name">view.voucher.filter.customer.pay</field>
             <field name="model">account.voucher</field>
@@ -10,6 +10,18 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='number']" position="after">
                     <field name="number_preprint"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!--Search supplier payment-->
+        <record id="view_voucher_filter_vendor_pay" model="ir.ui.view">
+            <field name="name">view.voucher.filter.vendor.pay</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_voucher_filter_vendor_pay"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='number']" position="after">
+                    <field name="number_cheque"/>
                 </xpath>
             </field>
         </record>
@@ -61,6 +73,12 @@
                 <xpath expr="//field[@name='number']" position="before">
                     <field name="move_id" readonly="1"/>
                 </xpath>
+                <field name="reference" position="attributes">
+                    <attribute name="attrs">{'readonly':[('state','in',['open','paid','cancel'])]}</attribute>
+                </field>
+                <field name="name" position="attributes">
+                    <attribute name="attrs">{'readonly':[('state','in',['open','paid','cancel'])]}</attribute>
+                </field>
             </field>
         </record>
 
@@ -72,6 +90,9 @@
             <field name="arch" type="xml">
                 <field name="number" position="after">
                     <field name="number_preprint" invisible="context.get('type', True) != 'receipt'"/>
+                </field>
+                <field name="number" position="after">
+                    <field name="number_cheque" invisible="context.get('type', True) != 'payment'"/>
                 </field>
                 <field name="amount" position="after">
                     <field name="date_value"/>
