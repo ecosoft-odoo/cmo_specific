@@ -344,7 +344,7 @@
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="168" splitType="Stretch">
+		<band height="173" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
 				<reportElement x="56" y="97" width="145" height="20"/>
 				<box leftPadding="2">
@@ -576,7 +576,7 @@
 			<textField isStretchWithOverflow="true">
 				<reportElement mode="Transparent" x="45" y="0" width="394" height="20"/>
 				<box leftPadding="2"/>
-				<textElement verticalAlignment="Bottom" lineSpacing="1_1_2">
+				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{line_ids_name}+" "+$F{line_ids_ref}]]></textFieldExpression>
@@ -584,7 +584,7 @@
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
 				<reportElement x="439" y="0" width="116" height="20"/>
 				<box rightPadding="2"/>
-				<textElement textAlignment="Right" verticalAlignment="Bottom" lineSpacing="1_1_2">
+				<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Single">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{total_amount}==null?0:$F{total_amount}]]></textFieldExpression>
@@ -592,7 +592,7 @@
 			<textField>
 				<reportElement x="0" y="0" width="45" height="20"/>
 				<box leftPadding="2"/>
-				<textElement verticalAlignment="Bottom" lineSpacing="1_1_2">
+				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["No. " + $V{REPORT_COUNT}.toString()]]></textFieldExpression>
