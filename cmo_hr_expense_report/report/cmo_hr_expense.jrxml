@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.1000000000000005"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="362"/>
+	<property name="ireport.y" value="122"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -47,8 +47,11 @@
 	<field name="ac_payee" class="java.lang.String">
 		<fieldDescription><![CDATA[ac_payee_ref]]></fieldDescription>
 	</field>
-	<field name="analytic_account" class="java.lang.String">
+	<field name="analytic_account_name" class="java.lang.String">
 		<fieldDescription><![CDATA[line_ids/analytic_account/name]]></fieldDescription>
+	</field>
+	<field name="analytic_account_code" class="java.lang.String">
+		<fieldDescription><![CDATA[line_ids/analytic_account/code]]></fieldDescription>
 	</field>
 	<field name="amount_line_untaxed" class="java.lang.Number">
 		<fieldDescription><![CDATA[line_ids/amount_line_untaxed]]></fieldDescription>
@@ -517,12 +520,14 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{amount_line_untaxed}==null?0:$F{amount_line_untaxed}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="343" y="0" width="112" height="20"/>
+				<reportElement x="343" y="0" width="112" height="20">
+					<printWhenExpression><![CDATA[$F{analytic_account_name}]]></printWhenExpression>
+				</reportElement>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{analytic_account}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["[" + $F{analytic_account_code} + "] " + $F{analytic_account_name}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
