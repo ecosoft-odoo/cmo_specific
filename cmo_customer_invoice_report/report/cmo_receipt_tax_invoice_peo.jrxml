@@ -63,7 +63,7 @@
 				<imageExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "cmo_receipt_1.jpg"]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="true">
-				<reportElement x="15" y="507" width="389" height="20"/>
+				<reportElement x="36" y="507" width="357" height="20"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
