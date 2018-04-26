@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <!-- Only user in this group can validate expense with hr_prouct -->
+        <record id="hr.group_validate_hr_product" model="res.groups">
+            <field name="name">Validate Expense with HR Product</field>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+    </data>
+</openerp>

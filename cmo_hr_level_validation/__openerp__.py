@@ -18,6 +18,7 @@
     'data': [
         # 'data/level_validation_data.xml',  # Moved to master data
         'security/ir_rule.xml',
+        'security/security.xml',
         'workflow/hr_level_validation_workflow.xml',
         'wizard/edit_unit_amount.xml',
         'wizard/edit_analytic_account.xml',

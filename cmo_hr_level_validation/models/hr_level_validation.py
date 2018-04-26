@@ -131,8 +131,8 @@ class HrExpenseExpense(models.Model):
         hr_products = product_lines.filtered(
             lambda r: r.categ_id in hr_categories
         )
-        group_hr = self.env.ref('base.group_hr_manager')
+        group_hr = self.env.ref('hr.group_validate_hr_product')
         if hr_products and self.env.user not in group_hr.users:
-            raise ValidationError(_("You are not allowed to "
-                                    "validate this document."))
+            raise ValidationError(
+                _("You are not allowed to validate document with HR Product."))
         return res
