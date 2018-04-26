@@ -59,6 +59,9 @@
 	<field name="amount_total_text_en" class="java.lang.String">
 		<fieldDescription><![CDATA[amount_total_text_en]]></fieldDescription>
 	</field>
+	<field name="id" class="java.lang.String">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
 	<sortField name="invoice_type"/>
 	<variable name="amount_untaxed" class="java.lang.Number">
 		<variableExpression><![CDATA[$F{amount} - ($F{amount} * $F{invoice_amount_tax} / $F{invoice_amount_total})]]></variableExpression>
@@ -72,6 +75,9 @@
 	<variable name="total_amount_tax" class="java.lang.Number">
 		<variableExpression><![CDATA[$V{total_amount} - $V{total_amount_untaxed}]]></variableExpression>
 	</variable>
+	<group name="UniqueID" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{id}]]></groupExpression>
+	</group>
 	<background>
 		<band height="802" splitType="Stretch">
 			<image>
