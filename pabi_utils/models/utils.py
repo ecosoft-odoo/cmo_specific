@@ -1,11 +1,19 @@
 # -*- coding: utf-8 -*-
 from openerp import models, api, _
-from openerp.exceptions import ValidationError
 
 
 class PABIUtils(models.AbstractModel):
     _name = 'pabi.utils'
     _description = 'Useful Functions'
+
+    @api.model
+    def track_lines(self, vals, fk_field, track_fields, lines):
+        """ Helper method """
+        change_dict = {f: vals.get(f) for f in track_fields}
+        for line in lines:
+            msg_title = line.display_name
+            self.env['pabi.utils']._track_line_change(
+                msg_title, fk_field, line, change_dict)
 
     @api.model
     def _track_line_change(self, msg_title, fk_field, line, change_dict):
