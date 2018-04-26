@@ -98,12 +98,18 @@
 	<field name="comment" class="java.lang.String">
 		<fieldDescription><![CDATA[comment]]></fieldDescription>
 	</field>
+	<field name="id" class="java.lang.String">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
 	<variable name="string_total" class="java.lang.String">
 		<variableExpression><![CDATA[(Math.round($F{amount_total}*100)/100).toString()]]></variableExpression>
 	</variable>
 	<variable name="string_tax" class="java.lang.String">
 		<variableExpression><![CDATA[(Math.round($F{tax_amount}*100)/100).toString()]]></variableExpression>
 	</variable>
+	<group name="UniqueID" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{id}]]></groupExpression>
+	</group>
 	<background>
 		<band height="802" splitType="Stretch">
 			<image>

@@ -29,12 +29,18 @@
 	<field name="due_date" class="java.util.Date">
 		<fieldDescription><![CDATA[due_date]]></fieldDescription>
 	</field>
+	<field name="id" class="java.lang.String">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
 	<variable name="Grand_total" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{amount_total}]]></variableExpression>
 	</variable>
 	<variable name="invoice_count" class="java.lang.Integer" calculation="Count">
 		<variableExpression><![CDATA[$F{supplier_invoice_number}]]></variableExpression>
 	</variable>
+	<group name="UniqueID" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{id}]]></groupExpression>
+	</group>
 	<background>
 		<band height="802" splitType="Stretch">
 			<frame>
