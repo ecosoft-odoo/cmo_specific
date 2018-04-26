@@ -48,9 +48,6 @@
             <field name="model">hr.expense.expense</field>
             <field name="inherit_id" ref="hr_expense.view_expenses_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//button[@name='confirm']" position="attributes">
-                    <attribute name="groups">base.group_hr_user,hr.group_hr_director,base.group_user</attribute>
-                </xpath>
                 <field name="department_id" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </field>
