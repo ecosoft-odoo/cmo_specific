@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_receipt_tax_invoice_peo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
 	<property name="ireport.zoom" value="1.1"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1152"/>
+	<property name="ireport.y" value="1328"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line&quot;]"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
@@ -53,19 +53,21 @@
 	<field name="number" class="java.lang.String">
 		<fieldDescription><![CDATA[number]]></fieldDescription>
 	</field>
+	<field name="preprint_number" class="java.lang.String">
+		<fieldDescription><![CDATA[number_preprint]]></fieldDescription>
+	</field>
 	<background>
 		<band height="802" splitType="Stretch">
 			<image>
 				<reportElement x="1" y="0" width="594" height="802"/>
 				<imageExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "cmo_receipt_1.jpg"]]></imageExpression>
 			</image>
-			<textField isBlankWhenNull="true">
-				<reportElement x="15" y="566" width="389" height="20"/>
-				<box leftPadding="2"/>
-				<textElement verticalAlignment="Middle">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="18" y="487" width="386" height="20"/>
+				<textElement>
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Ref." + $F{number}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{comment} + "\n" + "     ตามใบแจ้งหนี้เลขที่ " + $F{preprint_number}]]></textFieldExpression>
 			</textField>
 		</band>
 	</background>
