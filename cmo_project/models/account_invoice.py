@@ -41,6 +41,7 @@ class AccountInvoice(models.Model):
     def action_get_invoice_project_data(self):
         for invoice in self:
             inv_project_data = [
+                _('รายได้ค่าบริการจัดงาน ') +
                 invoice.project_ref_name or '',
                 invoice.quote_ref_number and 'Quotation Number: %s / %s'
                 % (invoice.quote_ref_number, invoice.quote_ref_date, ) or '',
