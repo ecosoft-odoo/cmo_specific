@@ -40,9 +40,8 @@ class AccountInvoice(models.Model):
     @api.multi
     def action_get_invoice_project_data(self):
         for invoice in self:
-            inv_project_data = [
-                _('รายได้ค่าบริการจัดงาน ') +
-                invoice.project_ref_name or '',
+            inv_project_data = [invoice.project_ref_name and
+                _('รายได้ค่าบริการจัดงาน ') + '%s' % (invoice.project_ref_name, ) or '',
                 invoice.quote_ref_number and 'Quotation Number: %s / %s'
                 % (invoice.quote_ref_number, invoice.quote_ref_date, ) or '',
                 invoice.project_ref_code and 'Project No: %s'
