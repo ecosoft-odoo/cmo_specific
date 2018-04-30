@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_print_wht_cert" model="ir.ui.view">
+            <field name="name">view.print.wht.cert</field>
+            <field name="model">account.wht.cert</field>
+            <field name="priority" eval="200"/>
+            <field name="inherit_id" ref="l10n_th_account.view_print_wht_cert"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='income_tax_form']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='tax_payer']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

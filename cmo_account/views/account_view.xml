@@ -135,6 +135,16 @@
                 </xpath>
             </field>
         </record>
+        <record id="view_move_form2" model="ir.ui.view">
+            <field name="name">account.move.form2</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="l10n_th_account_tax_detail.view_move_form"/>
+            <field name="arch" type="xml">
+                <field name="doc_type" position="after">
+                    <field name="tax_id" string="Tax Type" required="1"/>
+                </field>
+            </field>
+        </record>
 
         <!-- shorten version of move line -->
         <record id="view_account_move_line_tree" model="ir.ui.view">
