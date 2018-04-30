@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from openerp import fields, models, api
+from openerp import fields, models, api, _
+from openerp.exceptions import ValidationError
 
 
 class AccountMove(models.Model):
@@ -27,6 +28,13 @@ class AccountMove(models.Model):
         Voucher = self.env['account.voucher']
         for rec in self:
             rec.ref_voucher_id = Voucher.search([('move_id', '=', rec.id)])
+
+    @api.multi
+    def button_validate(self):
+        for rec in self:
+            if self.env['account.fiscalyear'].find(rec.date) != \
+                    rec.period_id.fiscalyear_id.id:
+                raise ValidationError(_('Date and period mismatch!'))
 
 
 class AccountMoveLine(models.Model):
