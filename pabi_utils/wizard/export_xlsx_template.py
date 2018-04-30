@@ -605,7 +605,7 @@ class ExportXlsxTemplate(models.TransientModel):
             ts = fields.Datetime.context_timestamp(self, dt.now())
             out_name = '%s_%s' % (fname, ts.strftime('%Y%m%d_%H%M%S'))
         if not out_name or len(out_name) == 0:
-            out_name = 'noname'
+            out_name = 'Journal Entry'
         return (out_file, '%s.xlsx' % out_name)
 
     @api.multi

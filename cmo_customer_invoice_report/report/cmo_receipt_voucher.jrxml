@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_receipt_voucher" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="OPENERP_RELATIONS" value="[&quot;move_ids&quot;]"/>
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.1"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="757"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -150,7 +150,7 @@
 				</box>
 			</frame>
 			<frame>
-				<reportElement x="0" y="203" width="51" height="423"/>
+				<reportElement x="0" y="203" width="64" height="423"/>
 				<box>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
@@ -360,7 +360,7 @@ RECEIPT VOUCHER]]></text>
 				<text><![CDATA[DR.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="51" y="0" width="223" height="20"/>
+				<reportElement x="64" y="0" width="210" height="20"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -386,7 +386,7 @@ RECEIPT VOUCHER]]></text>
 				<text><![CDATA[Dept.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="0" width="51" height="20"/>
+				<reportElement x="0" y="0" width="64" height="20"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -427,11 +427,11 @@ RECEIPT VOUCHER]]></text>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20" splitType="Stretch">
+		<band height="25" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="51" y="0" width="223" height="20" isPrintWhenDetailOverflows="true"/>
+				<reportElement x="64" y="0" width="210" height="20" isPrintWhenDetailOverflows="true"/>
 				<box topPadding="3" leftPadding="2" rightPadding="2"/>
-				<textElement verticalAlignment="Top">
+				<textElement verticalAlignment="Top" lineSpacing="1_1_2">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[($F{account_name} != null ? $F{account_name} : "") + ($F{description} != null ? ($F{account_name} != null ? "\n" : "") + $F{description} : "")]]></textFieldExpression>
@@ -439,13 +439,13 @@ RECEIPT VOUCHER]]></text>
 			<textField pattern="#,##0.00;#,##0.00-" isBlankWhenNull="true">
 				<reportElement x="402" y="0" width="77" height="20"/>
 				<box topPadding="3" leftPadding="2" rightPadding="2"/>
-				<textElement textAlignment="Right" verticalAlignment="Top"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="1_1_2"/>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{debit}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="0" y="0" width="51" height="20"/>
+				<reportElement x="0" y="0" width="64" height="20"/>
 				<box topPadding="3" leftPadding="2" rightPadding="2"/>
-				<textElement textAlignment="Left" verticalAlignment="Top">
+				<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="1_1_2">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{account_code}]]></textFieldExpression>
@@ -453,13 +453,13 @@ RECEIPT VOUCHER]]></text>
 			<textField isBlankWhenNull="true">
 				<reportElement x="274" y="0" width="42" height="20"/>
 				<box topPadding="3" leftPadding="2" rightPadding="2"/>
-				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" lineSpacing="1_1_2"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{operating_unit}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="316" y="0" width="86" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 				<box topPadding="3" leftPadding="2" rightPadding="2"/>
-				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="1_1_2" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{job_code}]]></textFieldExpression>
@@ -467,7 +467,7 @@ RECEIPT VOUCHER]]></text>
 			<textField pattern="#,##0.00;#,##0.00-" isBlankWhenNull="true">
 				<reportElement x="478" y="0" width="77" height="20"/>
 				<box topPadding="3" leftPadding="2" rightPadding="2"/>
-				<textElement textAlignment="Right" verticalAlignment="Top"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="1_1_2"/>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{credit}]]></textFieldExpression>
 			</textField>
 		</band>

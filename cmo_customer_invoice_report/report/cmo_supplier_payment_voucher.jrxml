@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;move_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.1000000000000014"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="999"/>
+	<property name="ireport.y" value="480"/>
 	<style name="style1">
 		<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
 	</style>
@@ -129,15 +129,15 @@
 	<background>
 		<band height="802" splitType="Stretch">
 			<frame>
-				<reportElement x="51" y="250" width="223" height="383"/>
+				<reportElement x="65" y="250" width="209" height="383"/>
 				<box>
-					<leftPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
 			</frame>
 			<frame>
-				<reportElement x="0" y="250" width="51" height="383"/>
+				<reportElement x="0" y="250" width="65" height="383"/>
 				<box>
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -531,7 +531,7 @@ $F{payment_type} == "cheque")
 				<text><![CDATA[DR.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="51" y="0" width="223" height="20"/>
+				<reportElement x="65" y="0" width="209" height="20"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -557,7 +557,7 @@ $F{payment_type} == "cheque")
 				<text><![CDATA[Dept.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="0" width="51" height="20"/>
+				<reportElement x="0" y="0" width="65" height="20"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -598,52 +598,52 @@ $F{payment_type} == "cheque")
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20" splitType="Stretch">
+		<band height="25" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="style1" x="149" y="0" width="125" height="20" isPrintWhenDetailOverflows="true"/>
+				<reportElement style="style1" x="149" y="0" width="125" height="25" isPrintWhenDetailOverflows="true"/>
 				<box leftPadding="2"/>
-				<textElement verticalAlignment="Top">
+				<textElement verticalAlignment="Top" lineSpacing="1_1_2">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;#,##0.00-" isBlankWhenNull="true">
-				<reportElement style="style1" x="402" y="0" width="77" height="20"/>
-				<textElement textAlignment="Right" verticalAlignment="Top">
+				<reportElement style="style1" x="402" y="0" width="77" height="25"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="1_1_2">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{debit}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="style1" x="0" y="0" width="51" height="20"/>
-				<textElement verticalAlignment="Top">
+				<reportElement style="style1" x="0" y="0" width="65" height="25"/>
+				<textElement verticalAlignment="Top" lineSpacing="1_1_2">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{account_code}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="style1" x="274" y="0" width="42" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Top">
+				<reportElement style="style1" x="274" y="0" width="42" height="25"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" lineSpacing="1_1_2">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{operating_unit}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement style="style1" mode="Transparent" x="316" y="0" width="86" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
-				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+				<reportElement style="style1" mode="Transparent" x="316" y="0" width="86" height="25" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="1_1_2" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{job_code}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;#,##0.00-" isBlankWhenNull="true">
-				<reportElement style="style1" x="478" y="0" width="77" height="20"/>
-				<textElement textAlignment="Right" verticalAlignment="Top">
+				<reportElement style="style1" x="478" y="0" width="77" height="25"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="1_1_2">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{credit}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="style1" x="51" y="0" width="223" height="20"/>
-				<textElement verticalAlignment="Top">
+				<reportElement style="style1" x="65" y="0" width="209" height="25"/>
+				<textElement verticalAlignment="Top" lineSpacing="1_1_2">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[($F{account_name} != null ? $F{account_name} : "") + ($F{description} != null ? ($F{account_name} != null ? "\n" : "") + $F{description} : "")]]></textFieldExpression>
