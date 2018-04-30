@@ -154,7 +154,7 @@
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="25" y="130" width="321" height="63" isPrintWhenDetailOverflows="true"/>
-				<textElement>
+				<textElement lineSpacing="1_1_2">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{partner_name}+ "\n" +
@@ -179,19 +179,19 @@
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="20" splitType="Stretch">
+		<band height="25" splitType="Stretch">
 			<textField pattern="#,##0.00;(#,##0.00-)">
-				<reportElement isPrintRepeatedValues="false" x="415" y="0" width="140" height="20"/>
+				<reportElement isPrintRepeatedValues="false" x="415" y="0" width="140" height="25"/>
 				<box rightPadding="2"/>
-				<textElement textAlignment="Right" lineSpacing="1_1_2">
+				<textElement textAlignment="Right" lineSpacing="Double">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{amount_untaxed}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement isPrintRepeatedValues="false" x="14" y="0" width="399" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<reportElement isPrintRepeatedValues="false" x="14" y="0" width="399" height="25" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
 				<box topPadding="2" leftPadding="2"/>
-				<textElement lineSpacing="1_1_2">
+				<textElement lineSpacing="Double">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{others_note}]]></textFieldExpression>

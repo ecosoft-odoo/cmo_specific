@@ -120,7 +120,9 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{date}.substring(6,7)]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="109" y="59" width="142" height="30"/>
+				<reportElement x="109" y="59" width="142" height="30">
+					<printWhenExpression><![CDATA[$F{payment_type} != "cheque_cash"]]></printWhenExpression>
+				</reportElement>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
