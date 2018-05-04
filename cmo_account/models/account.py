@@ -35,6 +35,7 @@ class AccountMove(models.Model):
             if self.env['account.fiscalyear'].find(rec.date) != \
                     rec.period_id.fiscalyear_id.id:
                 raise ValidationError(_('Date and period mismatch!'))
+        return super(AccountMove, self).button_validate()
 
 
 class AccountMoveLine(models.Model):
