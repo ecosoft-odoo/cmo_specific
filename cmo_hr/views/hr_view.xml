@@ -86,6 +86,12 @@
                     <attribute name="attrs">{'readonly': [('is_advance_clearing','=',True)]}</attribute>
                     <attribute name="context">{'is_project_expense_line': True}</attribute>
                 </xpath>
+                <xpath expr="//field[@name='line_ids']/form/group/group/field[@name='product_id']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='product_id']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
             </field>
         </record>
         <record id="view_expenses_form" model="ir.ui.view">
