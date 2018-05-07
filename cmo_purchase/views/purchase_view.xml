@@ -85,7 +85,7 @@
                                 />
                                 <field name="product_ref_readonly"/>
 
-                                <field name="product_id" context="{'po_type_id': po_type_id}" options="{'no_create': True, 'no_create_edit': True}" on_change="onchange_product_id(parent.pricelist_id,product_id,0,False,parent.partner_id, parent.date_order,parent.fiscal_position,date_planned,False,False,parent.state,context)"/>
+                                <field name="product_id" required="1" context="{'po_type_id': po_type_id}" options="{'no_create': True, 'no_create_edit': True}" on_change="onchange_product_id(parent.pricelist_id,product_id,0,False,parent.partner_id, parent.date_order,parent.fiscal_position,date_planned,False,False,parent.state,context)"/>
                                 <field name="product_qty" on_change="onchange_product_id(parent.pricelist_id,product_id,product_qty,product_uom,parent.partner_id,parent.date_order,parent.fiscal_position,date_planned,name,False,parent.state,context)"/>
                                 <field name="product_uom" invisible="1"/>
                                 <field name="price_unit"/>
@@ -199,6 +199,7 @@
                 <field name="product_id" position="attributes">
                     <attribute name="context">{'po_type_id': po_type_id}</attribute>
                     <attribute name="options">{'no_create': True, 'no_create_edit': True}</attribute>
+                    <attribute name="required">1</attribute>
                 </field>
                 <field name="product_qty" position="attributes">
                     <attribute name="string">QTY</attribute>
