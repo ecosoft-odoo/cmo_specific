@@ -59,12 +59,18 @@ class AccountMoveLine(models.Model):
         related='move_id.ref_voucher_id.invoices_ref',
     )
 
+    voucher_payee = fields.Char(
+        string='Payee',
+        compute='_compute_voucher_ref',
+    )
+
     @api.multi
     def _compute_voucher_ref(self):
         for rec in self:
             voucher = rec.move_id.ref_voucher_id
             rec.voucher_number_cheque = voucher.number_cheque
             rec.voucher_date_value = voucher.date_value
+            rec.voucher_payee = voucher.payee
 
     @api.model
     def _search_voucher_number_cheque(self, operator, value):
