@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "CMO Account Bank Payment Deduction",
+    'name': "Account Bank Payment Deduction",
     'author': "Ecosoft",
     'website': "http://www.ecosoft.co.th/",
     'category': 'Accounting & Finance',
