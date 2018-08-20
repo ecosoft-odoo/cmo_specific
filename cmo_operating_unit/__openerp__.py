@@ -8,6 +8,7 @@
     "category": "Accounting and finance",
     "depends": [
         "operating_unit",
+        "stock_account",
     ],
     "license": "AGPL-3",
     "data": [
