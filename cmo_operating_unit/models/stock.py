@@ -9,8 +9,8 @@ class StockPicking(models.Model):
     @api.model
     def _get_invoice_vals(self, key, inv_type, journal_id, move, context=None):
         context = dict(self._context or {})
-        active_ids = context.get('active_ids', [])
-        operating_unit = self.env['stock.picking'].browse(active_ids)
+        active_id = context.get('active_id', [])
+        operating_unit = self.env['stock.picking'].browse(active_id)
         inv_vals = super(StockPicking, self)._get_invoice_vals(
               key, inv_type, journal_id, move, context=context)
         inv_vals.update({
