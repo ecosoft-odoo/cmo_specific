@@ -2,12 +2,14 @@
 from openerp import models, api
 
 
-def filter_print_report(res, reports):
+def filter_print_report(res, reports, res_model=[]):
     action = []
     if res.get('toolbar', False) and \
             res.get('toolbar').get('print', False):
         for act in res.get('toolbar').get('print'):
             if act.get('report_name') in reports:
+                action.append(act)
+            if act.get('res_model') in res_model:
                 action.append(act)
         res['toolbar']['print'] = action
     return res
@@ -86,10 +88,13 @@ class AccountVoucher(models.Model):
         # Suplier Payment
         elif self._context.get('type', False) == 'payment':
             reports = [
-                u'cmo.supplier.payment.cheque',
-                u'cmo.supplier.payment.voucher',
+                # u'cmo.supplier.payment.cheque',
+                # u'cmo.supplier.payment.voucher',
             ]
-            filter_print_report(res, reports)
+            res_model = [
+                u'print.document.wizard',
+            ]
+            filter_print_report(res, reports, res_model)
         # Customer Receipt
         elif self._context.get('type', False) == 'purchase' and\
                 self._context.get('default_type', False) == 'purchase':
