@@ -20,6 +20,7 @@
     ],
     'data': [
         'report/report_data.xml',
+        'report/print_document_view.xml',
     ],
     'demo': [
     ],
