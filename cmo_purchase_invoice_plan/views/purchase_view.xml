@@ -13,6 +13,9 @@
                                         '|',('plan_invoice_created','=',True)]}
                     </attribute>
                 </xpath>
+                <xpath expr="//page[@string='Invoice Plan']/field[@name='invoice_plan_ids']/tree/field[@name='state']" position="after">
+                    <field name="require_prq"/>
+                </xpath>
             </field>
         </record>
     </data>
