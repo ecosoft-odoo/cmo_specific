@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="doctype_purchase_prq" model="res.doctype">
+            <field name="name">Purchase PRQ</field>
+            <field name="sequence_id" ref="doctype_purchase_prq_seq"/>
+            <field name="refer_type">purchase_prq</field>
+        </record>
+    </data>
+</openerp>
