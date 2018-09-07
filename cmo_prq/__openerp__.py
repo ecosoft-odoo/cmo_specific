@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 {
     'name': "PRQ",
-    'summary': "",
+    'summary': "Add field PRQ for some document need boss approve before"
+               "(Purchase Order and Expense)",
     'author': "Saran Lim.",
     'website': "http://ecosoft.co.th",
     'category': 'Purchase Management',
