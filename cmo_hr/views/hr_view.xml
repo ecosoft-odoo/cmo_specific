@@ -110,10 +110,10 @@
                 <xpath expr="//tree[@string='Expense Lines']/field[@name='tax_ids']" position="attributes">
                     <attribute name="options">{'no_open':True,'no_create':1,'no_create_edit':1}</attribute>
                 </xpath>
-                <xpath expr="//field[@name='pay_to']" position="attributes">
-                    <attribute name="readonly">1</attribute>
+                <xpath expr="//div[@name='payto_div1']" position="after">
+                  <field name="supplier_text" attrs="{'invisible': [('pay_to', '!=', 'supplier')]}"/>
                 </xpath>
-            </field>
+          </field>
         </record>
         <!-- <record id="view_expenses_form_sequence" model="ir.ui.view">
             <field name="name">hr.expense.form.sequence</field>

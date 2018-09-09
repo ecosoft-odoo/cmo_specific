@@ -58,6 +58,11 @@ class HrExpenseExpense(models.Model):
             'confirm': [('readonly', True)],
         },
     )
+    supplier_text = fields.Char(
+        string='Supplier Name',
+        readonly=True,
+        states={'draft': [('readonly', False)]},
+    )
 
     @api.onchange('payment_by')
     def _onchange_payment_by(self):
