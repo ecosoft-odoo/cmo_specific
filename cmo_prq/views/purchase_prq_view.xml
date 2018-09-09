@@ -77,13 +77,9 @@
                                         <field name="uos_id"/>
                                         <field name="price_unit"/>
                                         <field name="invoice_line_tax_id"/>
-                                        <field name="price_subtotal"/>
+                                        <field name="price_subtotal" sum="Total"/>
                                     </tree>
                                 </field>
-                                <div class="oe_clear">
-                                    <label for="note"/>
-                                </div>
-                                <field name="note" class="oe_inline" placeholder="note" attrs="{'invisible':[('type','not in',('purchase'))]}"/>
                             </page>
                             <page string="Expense Details" attrs="{'invisible':[('type','not in',('expense'))]}">
                                 <field name="expense_line_ids">
@@ -96,16 +92,15 @@
                                         <field name="unit_amount"/>
                                         <field name="unit_quantity"/>
                                         <field name="tax_ids"/>
-                                        <!-- <field name="amount_line_untaxed"/>
-                                        <field name="total_amount"/> -->
+                                        <field name="total_amount" sum="Total"/>
                                     </tree>
                                 </field>
-                                <div class="oe_clear">
-                                    <label for="note"/>
-                                </div>
-                                <field name="note" class="oe_inline" placeholder="note"/>
                             </page>
                         </notebook>
+                        <div class="oe_clear">
+                            <label for="note"/>
+                        </div>
+                        <field name="note" class="oe_inline" placeholder="note"/>
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers"/>

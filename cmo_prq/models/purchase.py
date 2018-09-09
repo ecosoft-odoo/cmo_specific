@@ -23,7 +23,8 @@ class PurchaseOrder(models.Model):
             if order.invoice_method != 'invoice_plan':
                 continue
             installments = Plan.search([('order_id', '=', order.id)]) \
-                .filtered(lambda l: l.is_prq is True).mapped('installment')
+                .filtered(lambda l: l.require_prq is True) \
+                .mapped('installment')
             for installment in list(set(installments)):
                 invoice = Plan.search(
                     [('order_id', '=', order.id),

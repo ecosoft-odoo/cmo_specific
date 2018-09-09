@@ -7,7 +7,9 @@ class ExpenseCreateSupplierInvoice(models.TransientModel):
 
     require_prq = fields.Boolean(
         string='Require PRQ',
-        default=False,
+        default=lambda self: self.env['hr.expense.line'].search(
+            [('expense_id', '=', self._context.get('active_id', False))]
+            ).expense_id.require_prq,
     )
 
     @api.multi
@@ -21,7 +23,7 @@ class ExpenseCreateSupplierInvoice(models.TransientModel):
 
     @api.multi
     def action_create_supplier_invoice(self):
-        super(ExpenseCreateSupplierInvoice, self) \
+        res = super(ExpenseCreateSupplierInvoice, self) \
             .action_create_supplier_invoice()
         Expense = self.env['hr.expense.line']
         expense = Expense.search(
@@ -30,4 +32,5 @@ class ExpenseCreateSupplierInvoice(models.TransientModel):
             prepare_prq = self._prepare_prq(expense)
             prq = self.env['purchase.prq'].create(prepare_prq)
             prq.invoice_id.write({'prq_id': prq.id})
-        return True
+        expense.expense_id.write({'require_prq': self.require_prq})
+        return res

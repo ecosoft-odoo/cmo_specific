@@ -9,6 +9,7 @@ class PurchasePRQ(models.Model):
 
     name = fields.Char(
         string='Number',
+        readonly=True,
     )
     type = fields.Selection(
         [('purchase', 'Purchase Order'),
@@ -18,22 +19,29 @@ class PurchasePRQ(models.Model):
     purchase_id = fields.Many2one(
         'purchase.order',
         string='Purchase Order Ref',
+        readonly=True,
     )
     invoice_id = fields.Many2one(
         'account.invoice',
         string='Invoice Ref',
+        readonly=True,
     )
     installment = fields.Integer(
         string='Installment',
+        readonly=True,
     )
     prepare_user_id = fields.Many2one(
         'res.users',
         string='Prepared By',
         default=lambda self: self.env.user,
+        readonly=True,
+        track_visibility='onchange',
     )
     approve_user_id = fields.Many2one(
         'res.users',
         string='Approved By',
+        readonly=True,
+        track_visibility='onchange',
     )
     state = fields.Selection(
         [('draft', 'Draft'),
@@ -42,6 +50,8 @@ class PurchasePRQ(models.Model):
         default='draft',
         string='Status',
         copy=False,
+        readonly=True,
+        track_visibility='onchange',
     )
     note = fields.Text(
         string='Note',
@@ -50,15 +60,18 @@ class PurchasePRQ(models.Model):
         'account.invoice.line',
         related='invoice_id.invoice_line',
         string='Invoice Detailed',
+        readonly=True,
     )
     expense_id = fields.Many2one(
         'hr.expense.expense',
         string='Expense Ref',
+        readonly=True,
     )
     expense_line_ids = fields.One2many(
         'hr.expense.line',
         related='expense_id.line_ids',
         string='Expense Detailed',
+        readonly=True,
     )
 
     @api.multi

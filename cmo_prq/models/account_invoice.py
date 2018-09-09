@@ -9,6 +9,8 @@ class AccountInvoice(models.Model):
     prq_id = fields.Many2one(
         'purchase.prq',
         string='PRQ',
+        index=True,
+        ondelete='set null',
     )
 
     @api.multi

@@ -19,6 +19,7 @@
         'views/purchase_view.xml',
         'views/purchase_prq_view.xml',
         'views/account_invoice.xml',
+        'views/hr_expense_view.xml',
         'wizards/expense_create_supplier_invoice_wizard.xml',
     ],
     'demo': [
