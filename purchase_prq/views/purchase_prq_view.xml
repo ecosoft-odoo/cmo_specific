@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+      <record id="view_purchase_prq_form" model="ir.ui.view">
+       <field name="name">view.purchase.prq.form</field>
+       <field name="model">purchase.prq</field>
+       <field name="arch" type="xml">
+         <form string="PRQ">
+           <header>
+               <button name="prq_approve" states="draft" string="Approve" type="object" class="oe_highlight"/>
+               <button name="prq_reject" states="draft" string="Reject" type="object"/>
+               <button name="prq_set_to_draft" states="approved" string="Set to Draft" type="object"/>
+               <button name="prq_set_to_draft" states="rejected" string="Set to Draft" type="object"/>
+               <field name="state" widget="statusbar" statusbar_visible="draft,approved,rejected"/>
+           </header>
+           <sheet>
+               <h1>
+                   <label string="PRQ"/>
+                   <field name="name" class="oe_inline"/>
+               </h1>
+               <group>
+                   <group name="left">
+                       <field name="type"/>
+                       <field name="installment"/>
+                       <field name="note"/>
+                   </group>
+                   <group name ="right">
+                     <field name="approve_user_id"/>
+                      <field name="prepare_user_id"/>
+                      <field name="purchase_id"/>
+                   </group>
+               </group>
+               <notebook>
+                 <page name="prq" string="PRQ">
+                   <!-- <field name="invoice_line_ids" nolabel="1">
+                       <tree string="Invoice Lines" editable="bottom">
+                          <field name="invoice_amount"/>
+                       </tree>
+                   </field> -->
+                 </page>
+               </notebook>
+           </sheet>
+         </form>
+       </field>
+     </record>
+
+     <record id="view_purchase_prq_tree" model="ir.ui.view">
+         <field name="name">view.purchase.prq.tree</field>
+         <field name="model">purchase.prq</field>
+         <field name="arch" type="xml">
+             <tree string="PRQ" colors="blue:state=='draft';">
+                 <field name="name"/>
+                 <field name="purchase_id"/>
+                 <field name="state"/>
+             </tree>
+         </field>
+     </record>
+
+      <record id="action_purchase_prq" model="ir.actions.act_window">
+          <field name="name">PRQ</field>
+          <field name="res_model">purchase.prq</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">tree,form</field>
+      </record>
+
+       <menuitem id="menu_purchase_prq" name="PRQ" parent="purchase.menu_procurement_management" action="action_purchase_prq" sequence="10"/>
+    </data>
+</openerp>
