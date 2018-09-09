@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="purchase_prq_view_search" model="ir.ui.view">
+            <field name="name">purchase.prq.view.search</field>
+            <field name="model">purchase.prq</field>
+            <field name="arch" type="xml">
+                <search string="Search PRQ">
+                    <field name="name" position="attributes">
+                        <attribute name="filter_domain">[('name', 'ilike', self)]</attribute>
+                    </field>
+                    <filter string="Draft" domain="[('state','=','draft')]" help="Draft PRQ"/>
+                    <filter string="Approved" domain="[('state','=','approve')]" help="Approved PRQ"/>
+                    <filter string="Rejected" domain="[('state','=','reject')]" help="Rejected PRQ"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Type" domain="[]" context="{'group_by':'type'}"/>
+                        <filter string="Prepare By" domain="[]" context="{'group_by':'prepare_user_id'}"/>
+                        <filter string="Status" domain="[]" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_purchase_prq_tree" model="ir.ui.view">
+            <field name="name">view.purchase.prq.tree</field>
+            <field name="model">purchase.prq</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="prepare_user_id"/>
+                    <field name="approve_user_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_purchase_prq_form" model="ir.ui.view">
+            <field name="name">view.purchase.prq.form</field>
+            <field name="model">purchase.prq</field>
+            <field name="arch" type="xml">
+                <form string="PRQ Sheet">
+                    <header>
+                        <button name="action_draft" string="Set to Draft" type="object" states="approve,reject"/>
+                        <button name="action_approve" string="Approve" type="object" states="draft" class="oe_highlight"/>
+                        <button name="action_reject" string="Reject" type="object" states="draft"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,approve,reject"/>
+                    </header>
+                    <sheet>
+                        <h1>
+                            <label string="Number "/>
+                            <field name="name" class="oe_inline" readonly="1"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="type"/>
+                                <field name="purchase_id" attrs="{'invisible':[('type','not in',('purchase'))]}"/>
+                                <field name="expense_id" attrs="{'invisible':[('type','not in',('expense'))]}"/>
+                                <field name="invoice_id"/>
+                                <field name="installment" attrs="{'invisible':[('type','not in',('purchase'))]}"/>
+                            </group>
+                            <group>
+                                <field name="prepare_user_id" readonly="1"/>
+                                <field name="approve_user_id" readonly="1"/>
+                            </group>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Invoice Details" attrs="{'invisible':[('type','not in',('purchase'))]}">
+                                <field name="invoice_line_ids">
+                                    <tree editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="name"/>
+                                        <field name="account_id"/>
+                                        <field name="account_analytic_id"/>
+                                        <field name="asset_profile_id"/>
+                                        <field name="quantity"/>
+                                        <field name="uos_id"/>
+                                        <field name="price_unit"/>
+                                        <field name="invoice_line_tax_id"/>
+                                        <field name="price_subtotal" sum="Total"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Expense Details" attrs="{'invisible':[('type','not in',('expense'))]}">
+                                <field name="expense_line_ids">
+                                    <tree editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="date_value"/>
+                                        <field name="name"/>
+                                        <field name="ref"/>
+                                        <field name="analytic_account"/>
+                                        <field name="unit_amount"/>
+                                        <field name="unit_quantity"/>
+                                        <field name="tax_ids"/>
+                                        <field name="total_amount" sum="Total"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                        <div class="oe_clear">
+                            <label for="note"/>
+                        </div>
+                        <field name="note" class="oe_inline" placeholder="note"/>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_purchase_prq" model="ir.actions.act_window">
+            <field name="name">PRQ</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.prq</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem action="action_purchase_prq"
+                  id="menu_purchase_prq"
+                  name="PRQ"
+                  parent="purchase.menu_procurement_management"
+                  sequence="70"/>
+    </data>
+</openerp>
