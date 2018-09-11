@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Purchase Order PRQ -->
+        <record id="purchase_order_prq_form" model="ir.actions.report.xml">
+            <field name="string">PRQ Form</field>
+            <field name="auto">True</field>
+            <field name="model">purchase.prq</field>
+            <field name="jasper_model_id" ref="purchase.model_purchase_order"/>
+            <field name="name">PRQ Form</field>
+            <field name="report_name">purchase.prq.form</field>
+            <field name="report_rml">cmo_prq/reports/jrxml_reports/purchase_order_prq.jrxml</field>
+            <field name="menu">True</field>
+            <field name="header">False</field>
+            <field name="jasper_report">True</field>
+            <field name="jasper_output">pdf</field>
+        </record>
+
+        <!-- Expense PRQ -->
+        <record id="expense_prq_form" model="ir.actions.report.xml">
+            <field name="string">PRQ Form</field>
+            <field name="auto">True</field>
+            <field name="model">purchase.prq</field>
+            <field name="jasper_model_id" ref="purchase.model_purchase_order"/>
+            <field name="name">PRQ Form</field>
+            <field name="report_name">expense.prq.form</field>
+            <field name="report_rml">cmo_prq/reports/jrxml_reports/expense_prq.jrxml</field>
+            <field name="menu">True</field>
+            <field name="header">False</field>
+            <field name="jasper_report">True</field>
+            <field name="jasper_output">pdf</field>
+        </record>
+    </data>
+</openerp>
