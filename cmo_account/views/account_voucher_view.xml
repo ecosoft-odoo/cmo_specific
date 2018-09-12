@@ -59,6 +59,9 @@
                 <field name="date_value" position="attributes">
                     <attribute name="string">Payment Date</attribute>
                 </field>
+                <xpath expr="//button[@string='Unreconcile']" position="attributes">
+                    <attribute name="string">Cancel</attribute>
+                </xpath>
             </field>
         </record>
 
