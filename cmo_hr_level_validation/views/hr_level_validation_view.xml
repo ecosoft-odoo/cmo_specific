@@ -47,15 +47,16 @@
             <field name="arch" type="xml">
                 <xpath expr="//button[@name='%(hr_expense_cancel_reason.action_hr_expense_cancel)d']" position="attributes">
                     <attribute name="states"></attribute>
-                    <attribute name="attrs">{'invisible':['|', ['approve_permission','=',False], ['state', 'not in', ['confirm']]]}</attribute>
+                    <attribute name="attrs">{'invisible':[('state', '!=', 'accepted')]}</attribute>
+                    <attribute name="groups">account.group_account_invoice</attribute>
                 </xpath>
-                <xpath expr="//button[@name='%(hr_expense_cancel_reason.action_hr_expense_cancel)d']" position="after">
+                <!-- <xpath expr="//button[@name='%(hr_expense_cancel_reason.action_hr_expense_cancel)d']" position="after">
                     <button name="%(hr_expense_cancel_reason.action_hr_expense_cancel)d"
                             type="action"
                             states="validate"
                             string="Refuse"
                             groups="account.group_account_user"/>
-                </xpath>
+                </xpath> -->
             </field>
         </record>
 
