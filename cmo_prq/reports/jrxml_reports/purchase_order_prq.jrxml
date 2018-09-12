@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="purchase_order_prq" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="2.14358881000003"/>
-	<property name="ireport.x" value="803"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.3310000000000184"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="1408"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line_ids&quot;]"/>
 	<style name="column_header">
 		<box>
@@ -55,7 +55,7 @@
 		<fieldDescription><![CDATA[approve_user_id/display_name]]></fieldDescription>
 	</field>
 	<field name="notes" class="java.lang.String">
-		<fieldDescription><![CDATA[notes]]></fieldDescription>
+		<fieldDescription><![CDATA[note]]></fieldDescription>
 	</field>
 	<field name="invoice_project_name" class="java.lang.String">
 		<fieldDescription><![CDATA[invoice_line_ids/account_analytic_id/name]]></fieldDescription>
@@ -75,10 +75,10 @@
 	<background>
 		<band height="802" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="175" width="48" height="428"/>
+				<reportElement x="0" y="175" width="48" height="368"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="48" y="175" width="200" height="408"/>
+				<reportElement x="48" y="175" width="200" height="368"/>
 			</rectangle>
 			<rectangle>
 				<reportElement x="395" y="175" width="80" height="368"/>
@@ -87,7 +87,7 @@
 				<reportElement x="475" y="175" width="80" height="368"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="48" y="583" width="307" height="20"/>
+				<reportElement x="0" y="543" width="355" height="60"/>
 			</rectangle>
 			<rectangle>
 				<reportElement x="475" y="583" width="80" height="20"/>
@@ -167,17 +167,18 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{approve_name}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="detail" mode="Transparent" x="48" y="459" width="307" height="140" forecolor="#000000" backcolor="#FFFFFF"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" lineSpacing="1_1_2" markup="none">
+				<reportElement style="detail" mode="Transparent" x="3" y="540" width="352" height="60" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="1_1_2" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{notes}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{notes}==null?"":
+"NOTE : " + $F{notes}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement x="355" y="175" width="40" height="368"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="248" y="175" width="107" height="408"/>
+				<reportElement x="248" y="175" width="107" height="368"/>
 			</rectangle>
 			<textField isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="43" y="681" width="185" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
