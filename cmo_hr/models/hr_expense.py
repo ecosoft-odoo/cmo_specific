@@ -19,7 +19,7 @@ class HrExpenseExpense(models.Model):
         default=lambda self: self.env.user.partner_id.employee_id,
     )
     request_date = fields.Date(
-        string='Request Date',
+        string='Received Date',
         default=lambda self: fields.Date.context_today(self),
         states={
             'draft': [('readonly', False)],
@@ -27,7 +27,7 @@ class HrExpenseExpense(models.Model):
         },
     )
     due_date = fields.Date(
-        string='Due Date',
+        string='Due Date Clearing',
         default=lambda self: fields.Date.context_today(self),
         states={
             'draft': [('readonly', False)],

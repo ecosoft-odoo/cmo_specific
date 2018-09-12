@@ -56,6 +56,9 @@
                 <field name="bank_branch" position="attributes">
                     <attribute name="invisible">True</attribute>
                 </field>
+                <field name="date_value" position="attributes">
+                    <attribute name="string">Payment Date</attribute>
+                </field>
             </field>
         </record>
 
@@ -96,6 +99,9 @@
                 </field>
                 <field name="amount" position="after">
                     <field name="date_value"/>
+                </field>
+                <field name="date_value" position="attributes">
+                    <attribute name="string">Payment Date</attribute>
                 </field>
             </field>
         </record>
