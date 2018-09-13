@@ -73,6 +73,32 @@ class PurchasePRQ(models.Model):
         string='Expense Detailed',
         readonly=True,
     )
+    date_approve = fields.Date(
+        string='Approved Date',
+        index=True,
+        readonly=True,
+        copy=False,
+    )
+    date = fields.Date(
+        required=True,
+        default=fields.Date.context_today
+    )
+    amount_po_untaxed = fields.Float(
+        related='invoice_id.amount_untaxed',
+        store=False,
+    )
+    amount_po_tax = fields.Float(
+        related='invoice_id.amount_tax',
+        store=False,
+    )
+    amount_po_total = fields.Float(
+        related='invoice_id.amount_total',
+        store=False,
+    )
+    amount_expense_total = fields.Float(
+        related='expense_id.amount',
+        store=False,
+    )
 
     @api.multi
     def action_draft(self):
@@ -81,6 +107,9 @@ class PurchasePRQ(models.Model):
 
     @api.multi
     def action_approve(self):
+        for rec in self:
+            if not rec.date_approve:
+                rec.date_approve = fields.Date.context_today(self)
         self.write({'state': 'approve', 'approve_user_id': self.env.user.id})
         return True
 

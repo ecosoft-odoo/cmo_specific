@@ -21,6 +21,8 @@
         'views/account_invoice.xml',
         'views/hr_expense_view.xml',
         'wizards/expense_create_supplier_invoice_wizard.xml',
+        'wizards/print_prq_wizard.xml',
+        'reports/jasper_data.xml',
     ],
     'demo': [
     ],
