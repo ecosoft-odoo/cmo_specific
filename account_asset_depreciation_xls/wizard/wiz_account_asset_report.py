@@ -9,25 +9,47 @@ from openerp.exceptions import Warning as UserError
 class WizAccountAssetReport(models.TransientModel):
 
     _name = 'wiz.account.asset.report'
+    _inherit = 'account.common.report'
     _description = 'Financial Assets report'
 
-    fiscalyear_id = fields.Many2one(
-        comodel_name='account.fiscalyear',
-        string='Fiscal Year', required=True)
-    parent_asset_id = fields.Many2one(
-        comodel_name='account.asset',
-        string='Asset Filter', domain=[('type', '=', 'view')])
-    period_id = fields.Many2one(
-        'account.period',
-        string='Period',
+    # fiscalyear_id = fields.Many2one(
+    #     comodel_name='account.fiscalyear',
+    #     string='Fiscal Year', required=True)
+    # parent_asset_id = fields.Many2one(
+    #     comodel_name='account.asset',
+    #     string='Asset Filter', domain=[('type', '=', 'view')])
+    # period_id = fields.Many2one(
+    #     'account.period',
+    #     string='Period',
+    # )
+    # profile_ids = fields.Many2many(
+    #     'account.asset.profile',
+    #     string='Asset Profile',
+    # )
+    asset_status = fields.Selection(
+        [('running', 'Running'),
+         ('close', 'Close'),
+         ('remove', 'Removed')],
+    )
+    filter = fields.Selection(
+        [('filter_no', 'No Filters'),
+         ('filter_period', 'Periods')],
+        string='Filter by',
+        default='filter_no',
+        required=True
     )
     profile_ids = fields.Many2many(
         'account.asset.profile',
         string='Asset Profile',
     )
+    parent_asset_id = fields.Many2one(
+        comodel_name='account.asset',
+        string='Asset Filter',
+        domain=[('type', '=', 'view')]
+    )
 
     @api.multi
-    def xls_export(self):
+    def check_report(self):
         self.ensure_one()
         asset_obj = self.env['account.asset']
         # profile_asset = self.profile_ids
@@ -67,7 +89,7 @@ class WizAccountAssetReport(models.TransientModel):
             'model': 'account.asset',
             'fiscalyear_id': self.fiscalyear_id.id,
             # 'ids': parent_asset.ids,  # [parent_asset.id],
-            'period_id': self.period_id.id or False,
+            'period_id': False,
             'profile_ids': self.profile_ids.ids or False,
         }
         return {'type': 'ir.actions.report.xml',
