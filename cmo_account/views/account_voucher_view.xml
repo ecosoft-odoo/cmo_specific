@@ -56,6 +56,9 @@
                 <field name="bank_branch" position="attributes">
                     <attribute name="invisible">True</attribute>
                 </field>
+                <field name="date_value" position="attributes">
+                    <attribute name="string">Payment Date</attribute>
+                </field>
             </field>
         </record>
 
@@ -82,6 +85,17 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="view_voucher_payment_form2">
+            <field name="name">account.voucher.payment.form</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher_cancel_reason.view_vendor_payment_form"/>
+            <field name="arch" type="xml">
+                <button name="%(account_voucher_cancel_reason.action_account_voucher_cancel)d" position="attributes">
+                    <attribute name="string">Cancel</attribute>
+                </button>
+            </field>
+        </record>
+
         <!--Tree View-->
         <record id="view_voucher_tree" model="ir.ui.view">
             <field name="name">account.voucher.tree</field>
@@ -96,6 +110,9 @@
                 </field>
                 <field name="amount" position="after">
                     <field name="date_value"/>
+                </field>
+                <field name="date_value" position="attributes">
+                    <attribute name="string">Payment Date</attribute>
                 </field>
             </field>
         </record>
