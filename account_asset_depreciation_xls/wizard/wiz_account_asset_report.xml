@@ -5,8 +5,36 @@
     <record id="wiz_account_asset_report_view_form" model="ir.ui.view">
       <field name="name">Financial Assets report</field>
       <field name="model">wiz.account.asset.report</field>
+      <field name="inherit_id" ref="account.account_common_report_view"/>
       <field name="arch" type="xml">
-        <form string="Financial Assets report" style="padding-bottom:5%%;">
+          <data>
+              <xpath expr="//field[@name='target_move']" position="attributes">
+                  <attribute name="invisible">True</attribute>
+              </xpath>
+              <xpath expr="//field[@name='target_move']" position="after">
+                  <field name="asset_status"/>
+              </xpath>
+              <xpath expr="//form/notebook/page[@name='journal_ids']" position="attributes">
+                  <attribute name="invisible">True</attribute>
+              </xpath>
+              <xpath expr="//form/notebook/page[@name='filters']/group[1]/field[@name='filter']" position="replace">
+                  <field name="filter"/>
+              </xpath>
+              <xpath expr="//form/notebook/page[@name='filters']" position="after">
+                  <page string="Asset Profile Filters">
+                      <field name="profile_ids"/>
+                  </page>
+                  <page string="Asset Filters">
+                      <group>
+                          <field name="parent_asset_id"/>
+                      </group>
+                  </page>
+              </xpath>
+              <xpath expr="//form/footer/button[@name='check_report']" position="attributes">
+                  <attribute name="context">{'xls_export': 1}</attribute>
+              </xpath>
+          </data>
+        <!-- <form string="Financial Assets report" style="padding-bottom:5%%;">
           <group col="2" colspan="4">
             <field name="fiscalyear_id" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
             <field name="period_id" domain="[('fiscalyear_id', '=', fiscalyear_id)]" options="{'no_open':True,'no_create':1,'no_create_edit':1}"/>
@@ -19,7 +47,7 @@
             or
             <button string="Cancel" class="oe_link" special="cancel" />
           </footer>
-        </form>
+        </form> -->
       </field>
     </record>
 
