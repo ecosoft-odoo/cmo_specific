@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="cmo_journal_voucher_group" model="ir.actions.report.xml">
+           <field name="string">Journal Voucher</field>
+           <field name="auto">True</field>
+           <field name="model">cmo.asset.depre.batch</field>
+           <field name="name">Journal Voucher</field>
+           <field name="report_name">cmo.journal.voucher.group</field>
+           <field name="report_rml">cmo_async_process/cmo_action_asset_compute/reports/cmo_journal_voucher_group.jrxml</field>
+           <field name="menu">True</field>
+           <field name="header">False</field>
+           <field name="jasper_report">True</field>
+           <field name="jasper_output">pdf</field>
+        </record>
+        <record id="cmo_journal_voucher_group_values" model="ir.values">
+           <field name="name">Journal Voucher</field>
+           <field name="model">cmo.asset.depre.batch</field>
+           <field name="key2" eval="'client_print_multi'"/>
+           <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_journal_voucher_group)"/>
+        </record>
+    </data>
+</openerp>

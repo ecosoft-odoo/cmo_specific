@@ -22,6 +22,7 @@
         'cmo_action_asset_compute/xlsx_template/load_template.xml',
         'cmo_action_asset_compute/xlsx_template/xlsx_template_wizard.xml',
         'cmo_action_asset_compute/cmo_action_asset_compute.xml',
+        'cmo_action_asset_compute/reports/report_data.xml',
     ],
     'installable': True,
     'application': False,
