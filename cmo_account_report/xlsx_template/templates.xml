@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- Directory for Account XLSX Reports -->
+        <record model="document.directory" id="dir_account_reports">
+            <field name="name">Account Reports</field>
+            <field name="parent_id" ref="document.dir_root"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="ressource_id">0</field>
+            <field name="group_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        # Input Tax Report
+        <record id="xlsx_report_input_tax" model="ir.attachment">
+            <field name="res_model">xlsx.report.input.tax</field>
+            <field name="datas"></field>
+            <field name="datas_fname">xlsx_report_input_tax.xlsx</field>
+            <field name="name">Input Tax Report</field>
+            <field name="parent_id" eval="ref('dir_account_reports')"/>
+            <field name="description">
+                {
+                    '__EXPORT__': {
+                        'Input Tax Report': {
+                            '_HEAD_': {
+                                'A2': 'calendar_period_id.name${value and "รายงานภาษีซื้อ (รวมใบเพิ่มหนี้ลดหนี้) นำยื่นในเดือน %s" % value or ""}',
+                                'B4': '${env.user.company_id.partner_id.name}',
+                                'B5': '${env.user.company_id.partner_id.name}',
+                                'B6': 'company_id${value and " ".join([value.street, value.street2]) or ""}',
+                                'J5': '${env.user.company_id.partner_id.taxbranch == "00000" and "[ X ]" or "[    ]"}',
+                                'J6': '${env.user.company_id.partner_id.taxbranch != "00000" and "[ X ]" or "[    ]"}',
+                                'K4': '${env.user.company_id.partner_id.vat}',
+                                'K6': 'company_id.partner_id.taxbranch${value and value != "00000" and "สาขาที่ %s" % value or "สาขาย่อย"}',
+                            },
+                            'results': {
+                                'A10': 'invoice_date${value or ""}#{number_format=date}',
+                                'B10': 'invoice_number${value or ""}',
+                                'C10': 'tax_sequence_display${value or ""}',
+                                'D10': 'partner_id${value and " ".join(list(filter(lambda l: l != False, [value.title.name, value.name]))) or ""}',
+                                'E10': 'partner_id.vat${value or ""}',
+                                'F10': 'partner_id.taxbranch${value and (value == "00000" and value) or ""}',
+                                'G10': 'partner_id.taxbranch${value and (value != "00000" and value) or ""}',
+                                'H10': 'base${value or 0}#{number_format=number}',
+                                'I10': 'amount${value or 0}#{number_format=number}',
+                                'J10': '${"?"}',
+                                'K10': 'move_number${value or ""}',
+                            },
+                            '_TAIL_0': {
+                                'G10': '${"รวม"}#{font=bold}',
+                                'H10': '@{sum}#{font=bold;number_format=number}',
+                                'I10': '@{sum}#{font=bold;number_format=number}',
+                            }
+                        }
+                    }
+                }
+            </field>
+        </record>
+
+        # Output Tax Report
+        <record id="xlsx_report_output_tax" model="ir.attachment">
+            <field name="res_model">xlsx.report.output.tax</field>
+            <field name="datas"></field>
+            <field name="datas_fname">xlsx_report_output_tax.xlsx</field>
+            <field name="name">Output Tax Report</field>
+            <field name="parent_id" eval="ref('dir_account_reports')"/>
+            <field name="description">
+                {
+                    '__EXPORT__': {
+                        'Output Tax Report': {
+                            '_HEAD_': {
+                                'A2': 'calendar_period_id.name${value and "รายงานภาษีขาย (รวมใบเพิ่มหนี้ลดหนี้) นำยื่นในเดือน %s" % value or ""}',
+                                'B6': 'company_id${value and " ".join([value.street, value.street2]) or ""}',
+                                'C4': '${env.user.company_id.partner_id.name}',
+                                'C5': '${env.user.company_id.partner_id.name}',
+                                'J5': '${env.user.company_id.partner_id.taxbranch == "00000" and "[ X ]" or "[    ]"}',
+                                'J6': '${env.user.company_id.partner_id.taxbranch != "00000" and "[ X ]" or "[    ]"}',
+                                'K4': '${env.user.company_id.partner_id.vat}',
+                                'K6': 'company_id.partner_id.taxbranch${value and value != "00000" and "สาขาที่ %s" % value or "สาขาย่อย"}',
+                            },
+                            'results': {
+                                'A10': 'cancel${value and "C" or ""}',
+                                'B10': 'invoice_date${value or ""}#{number_format=date}',
+                                'C10': 'invoice_number${value or ""}',
+                                'D10': 'partner_id${value and " ".join(list(filter(lambda l: l != False, [value.title.name, value.name]))) or ""}',
+                                'E10': 'partner_id.vat${value or ""}',
+                                'F10': 'partner_id.taxbranch${value and (value == "00000" and value) or ""}',
+                                'G10': 'partner_id.taxbranch${value and (value != "00000" and value) or ""}',
+                                'H10': 'base${value or 0}#{number_format=number}',
+                                'I10': 'amount${value or 0}#{number_format=number}',
+                                'J10': '${"?"}',
+                                'K10': 'move_number${value or ""}',
+                            },
+                            '_TAIL_0': {
+                                'G10': '${"รวม"}#{font=bold}',
+                                'H10': '@{sum}#{font=bold;number_format=number}',
+                                'I10': '@{sum}#{font=bold;number_format=number}',
+                            }
+                        }
+                    }
+                }
+            </field>
+        </record>
+
+    </data>
+</openerp>
