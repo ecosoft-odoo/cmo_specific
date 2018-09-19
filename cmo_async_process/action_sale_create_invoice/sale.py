@@ -38,9 +38,8 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     async_process = fields.Boolean(
-        string='Run task in background?',
+        string='Create invoices in background?',
         default=True,
-        help="This will run compute asset depreciation in back ground",
     )
     job_id = fields.Many2one(
         'queue.job',
