@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api, _
+from openerp import models, fields, api, tools, _
 from openerp.exceptions import Warning as UserError, ValidationError
 
 
@@ -20,7 +20,7 @@ class CMOActionAssetCompute(models.TransientModel):
         [('standard', 'Standard - 1 JE per Asset (more JEs)'),
          ('grouping', 'Grouping - 1 JE per Asset Profile'), ],
         string='Compute Method',
-        default='grouping',
+        default='standard',
         required=True,
         help="Method of generating depreciation journal entries\n"
         "* Standard: create 1 JE for each asset depreciation line\n"
@@ -321,6 +321,66 @@ class CMOActionAssetComputeTestLog(models.TransientModel):
     )
 
 
+class SummaryJournalView(models.Model):
+    _name = 'summary.journal.view'
+    _auto = False
+
+    id = fields.Integer(
+        string='ID',
+        readonly=True,
+    )
+    asset_depre_batch_id = fields.Many2one(
+        'cmo.asset.depre.batch',
+        string='Asset Depreciation Batch ID',
+        readonly=True,
+        help="To group move line on same computation",
+    )
+    account_id = fields.Many2one(
+        'account.account',
+        string='Account',
+        readonly=True,
+    )
+    operating_unit_id = fields.Many2one(
+        'operating.unit',
+        string='Operating Unit',
+        readonly=True,
+    )
+    analytic_account_id = fields.Many2one(
+        'account.analytic.account',
+        string='Project',
+        readonly=True,
+    )
+    debit = fields.Float(
+        string='debit',
+        readonly=True,
+    )
+    credit = fields.Float(
+        string='credit',
+        readonly=True,
+    )
+
+    def _get_sql_view(self):
+        sql_view = """
+            SELECT ROW_NUMBER() OVER(ORDER BY asset_depre_batch_id) AS id,
+                   account_id,
+                   operating_unit_id,
+                   analytic_account_id,
+                   asset_depre_batch_id,
+                   sum(debit) AS debit, sum(credit) AS credit
+            FROM account_move_line
+            GROUP BY operating_unit_id,
+                     analytic_account_id,
+                     asset_depre_batch_id,
+                     account_id
+        """
+        return sql_view
+
+    def init(self, cr):
+        tools.drop_view_if_exists(cr, self._table)
+        cr.execute("""CREATE OR REPLACE VIEW %s AS (%s)"""
+                   % (self._table, self._get_sql_view()))
+
+
 class CMOAssetDepreBatch(models.Model):
     _name = 'cmo.asset.depre.batch'
     _order = 'id desc'
@@ -366,6 +426,11 @@ class CMOAssetDepreBatch(models.Model):
         'account.move.line',
         'asset_depre_batch_id',
         string='Journal Items',
+    )
+    summary_ids = fields.One2many(
+        'summary.journal.view',
+        'asset_depre_batch_id',
+        string='Summary',
     )
     amount = fields.Float(
         string='Depreciation Amount',
