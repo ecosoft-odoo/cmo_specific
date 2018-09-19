@@ -14,7 +14,7 @@
                           <group>
                               <group>
                                   <field name="calendar_period_id"/>
-                                  <field name="compute_method"/>
+                                  <field name="compute_method" invisible="1"/>
                               </group>
                               <group>
                                   <field name="batch_note" required="1"/>
@@ -46,7 +46,6 @@
                                       - Period is open<br/>
                                       - Asset's profile account is active<br/>
                                       - All previous period depreciation posted<br/>
-                                      - All assets' cost center is active<br/>
                                   </p>
                               </group>
                           </group>
@@ -141,6 +140,17 @@
                             </group>
                         </group>
                         <notebook>
+                            <page string="Summary">
+                                <field name="summary_ids">
+                                    <tree editable="bottom">
+                                        <field name="account_id"/>
+                                        <field name="operating_unit_id"/>
+                                        <field name="analytic_account_id"/>
+                                        <field name="debit" sum="Total"/>
+                                        <field name="credit" sum="Total"/>
+                                    </tree>
+                                </field>
+                            </page>
                             <page string="Journal Entries">
                                 <field name="move_ids">
                                     <tree editable="bottom">
@@ -160,6 +170,8 @@
                                         <field name="move_id"/>
                                         <field name="name"/>
                                         <field name="account_id"/>
+                                        <field name="operating_unit_id"/>
+                                        <field name="analytic_account_id"/>
                                         <field name="debit" sum="Total"/>
                                         <field name="credit" sum="Total"/>
                                         <!-- <field name="chartfield_id"/> -->
