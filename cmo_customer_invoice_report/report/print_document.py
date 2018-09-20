@@ -22,11 +22,13 @@ class PrintDocumentWizard(models.TransientModel):
         data['parameters']['ids'] = ids
         voucher_id = self._context.get('active_id')
         voucher = self.env['account.voucher'].browse(voucher_id)
-
-        if voucher.payment_type in ('transfer', 'cash'):
-            raise ValidationError(
-                ('The Payment Type is not Cheque and Cheque(cash) will not \
-                  allow print Cheque.'))
+        print self.document_type
+        print "====================================="
+        if voucher.payment_type not in ('cheque', 'cheque_cash'):
+            if self.document_type == 'bbl':
+                raise ValidationError(
+                    ('The Payment Type is not Cheque and Cheque(cash) will not \
+                      allow print Cheque.'))
 
         if self.document_type == "bbl":
             action = self.env.ref(
