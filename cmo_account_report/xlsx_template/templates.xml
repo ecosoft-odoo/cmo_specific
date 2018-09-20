@@ -124,7 +124,7 @@
                                 'C6': 'supplier_name_th${value or ""}',
                                 'D6': 'cert_id.supplier_partner_id${value and (value.street2 and " ".join([value.street, value.street2]) or value.street) or ""}',
                                 'E6': 'date_value${value or ""}#{number_format=date}',
-                                'F6': 'wht_cert_id${value and value.wht_cert_income_desc or ""}',
+                                'F6': 'cert_line_id${value and value.wht_cert_income_desc or ""}',
                                 'G6': "${'=IF(AND(?(H6)&lt;&gt;\"\",?(I6)&lt;&gt;\"\"),(I6/H6),\"\")'}#{number_format=percent}",
                                 'H6': 'base_total${value or ""}#{number_format=number}',
                                 'I6': 'tax_total${value or ""}#{number_format=number}',
@@ -153,17 +153,18 @@
                     '__EXPORT__': {
                         'Withholding Income Tax': {
                             'results': {
-                                'A1': "${'=ROW(?(A1))'}",
+                                'A1': 'sequence${value or ""}',
                                 'B1': 'supplier_taxid${value or ""}',
                                 'C1': 'supplier_name_th${value or ""}',
                                 'D1': 'cert_id.supplier_partner_id${value and (value.street2 and " ".join([value.street, value.street2]) or value.street) or ""}',
                                 'E1': 'date_value${value or ""}#{number_format=date}',
-                                'F1': 'wht_cert_id${value and value.wht_cert_income_desc or ""}',
-                                'G1': "${'=IF(AND(?(H1)&lt;&gt;\"\",?(I1)&lt;&gt;\"\"),(I1/H1),\"\")'}#{number_format=percent}",
+                                'F1': 'cert_line_id${value and value.wht_cert_income_desc or ""}',
+                                'G1': '${"3"}',
                                 'H1': 'base_total${value or ""}#{number_format=number}',
                                 'I1': 'tax_total${value or ""}#{number_format=number}',
                                 'J1': '${"??????"}',
                                 'K1': 'cert_id${value and value.number or ""}',
+                                'Y1': '${" "}',
                             }
                         }
                     }
