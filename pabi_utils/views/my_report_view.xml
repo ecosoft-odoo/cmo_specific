@@ -120,6 +120,7 @@
             <field name="groups_id" eval="[(4,ref('group_see_own_spool_report'))]"/>
         </record>
 
+
         # All Spool Report
 
         <record id="action_all_spool_report" model="ir.actions.act_window">

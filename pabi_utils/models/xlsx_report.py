@@ -46,6 +46,7 @@ class XLSXReport(models.AbstractModel):
     name = fields.Char(
         string='File Name',
         readonly=True,
+        size=500,
     )
     data = fields.Binary(
         string='File',
@@ -63,11 +64,36 @@ class XLSXReport(models.AbstractModel):
     uuid = fields.Char(
         string='UUID',
         readonly=True,
+        size=500,
         help="Job queue unique identifier",
     )
     to_csv = fields.Boolean(
         string='Convert to CSV?',
         default=False,
+    )
+    csv_delimiter = fields.Char(
+        string='CSV Delimiter',
+        size=1,
+        default=',',
+        required=True,
+        help="Optional for CSV, default is comma.",
+    )
+    csv_extension = fields.Char(
+        string='CSV File Extension',
+        size=5,
+        default='csv',
+        required=True,
+        help="Optional for CSV, default is .csv"
+    )
+    csv_quote = fields.Boolean(
+        string='CSV Quoting',
+        default=True,
+        help="Optional for CSV, default is full quoting."
+    )
+    specific_template = fields.Selection(
+        [],
+        string='Template',
+        help="Optional field, if derived report want to have selection",
     )
 
     @api.multi
@@ -75,13 +101,21 @@ class XLSXReport(models.AbstractModel):
         self.ensure_one()
         Export = self.env['export.xlsx.template']
         Attachment = self.env['ir.attachment']
-        template = Attachment.search([('res_model', '=', self._name)])
+        template = []
+        # By default, use template by model
+        if self.specific_template:
+            template = self.env.ref(self.specific_template, [])
+        else:
+            template = Attachment.search([('res_model', '=', self._name)])
         if len(template) != 1:
             raise ValidationError(
-                _('The report template "%s" must be single') % self._name)
-        return Export._export_template(template, self._name,
-                                       self.id,
-                                       to_csv=self.to_csv)
+                _('No one template selected for "%s"') % self._name)
+        return Export._export_template(
+            template, self._name, self.id,
+            to_csv=self.to_csv,
+            csv_delimiter=self.csv_delimiter,
+            csv_extension=self.csv_extension,
+            csv_quote=self.csv_quote)
 
     @api.multi
     def action_get_report(self):
