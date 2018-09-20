@@ -22,8 +22,6 @@ class PrintDocumentWizard(models.TransientModel):
         data['parameters']['ids'] = ids
         voucher_id = self._context.get('active_id')
         voucher = self.env['account.voucher'].browse(voucher_id)
-        print self.document_type
-        print "====================================="
         if voucher.payment_type not in ('cheque', 'cheque_cash'):
             if self.document_type == 'bbl':
                 raise ValidationError(
