@@ -7,9 +7,6 @@ class ExpenseCreateSupplierInvoice(models.TransientModel):
 
     require_prq = fields.Boolean(
         string='Require PRQ',
-        default=lambda self: self.env['hr.expense.line'].search(
-            [('expense_id', '=', self._context.get('active_id', False))]
-            ).expense_id.require_prq,
     )
 
     @api.multi
