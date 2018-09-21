@@ -15,3 +15,12 @@ class AccountAssetLine(models.Model):
         res = super(AccountAssetLine, self).with_context(
             write_ctx)._write(vals)
         return res
+
+    @api.model
+    def _setup_move_line_data(self, depreciation_date, period,
+                              account, type, move_id):
+        res = super(AccountAssetLine, self)._setup_move_line_data(
+            depreciation_date, period, account, type, move_id)
+        asset = self.asset_id
+        res['operating_unit_id'] = asset.operating_unit_id.id
+        return res
