@@ -7,8 +7,10 @@
         <field name="arch" type="xml">
           <form string="Bank Account Transfer">
             <header>
-                <button name="bank_transfer" states="draft" string="Transfer" type="object" class="oe_highlight"/>
-                <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                <button name="action_bank_transfer" states="draft" string="Transfer" type="object" class="oe_highlight"/>
+                <button name="action_cancel" states="draft" string="Cancel" type="object"/>
+                <button name="action_draft" states="cancel" string="Set to Draft" type="object"/>
+                <field name="state" widget="statusbar" statusbar_visible="draft,done,cancel"/>
             </header>
             <sheet>
                 <h1>
@@ -21,12 +23,12 @@
                         <field name="from_account_id" string="From Account"/>
                         <field name="to_account_id" string="To Account"/>
                         <field name="fee_account_id" string="Fee Account"/>
-                        <field name="note"/>
                     </group>
                     <group name ="right">
                         <field name="journal_id"/>
                         <field name="currency_id" groups="base.group_multi_currency"/>
                         <field name="move_id"/>
+                        <field name="deduct_from"/>
                     </group>
                 </group>
                 <notebook>
@@ -34,12 +36,24 @@
                     <field name="transfer_line_ids" nolabel="1">
                         <tree string="Transfer Lines" editable="bottom">
                             <field name="date_transfer"/>
-                            <field name="transfer_amount"/>
-                            <field name="fee"/>
+                            <field name="transfer_amount" sum="Total transfer"/>
+                            <field name="fee" sum="Total fee"/>
                         </tree>
                     </field>
+                    <group class="oe_subtotal_footer oe_right">
+                        <field name="amount_transfer" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                        <div>
+                            <label for="amount_fee"/>
+                        </div>
+                        <field name="amount_fee" nolabel="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                        <field name="amount_total" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    </group>
+                    <div class="oe_clear">
+                        <label for="note"/>
+                    </div>
+                    <field name="note" class="oe_inline" placeholder="note"/>
                   </page>
-                  <page string="Journal Items" attrs="{'invisible': [('state','in', ('draft'))]}">
+                  <page string="Journal Items" attrs="{'invisible': [('state','in', ['draft','cancel'])]}">
                       <field name="move_ids" readonly="1">
                           <tree string="Journal Items">
                               <field name="move_id"/>
@@ -85,6 +99,7 @@
                   <field name="name" string="Bank Account Transfer"/>
                   <filter name="draft" string="Draft" domain="[('state', '=', 'draft')]"/>
                   <filter name="done" string="Done" domain="[('state', '=', 'done')]"/>
+                  <filter name="cancel" string="Cancel" domain="[('state', '=', 'cancel')]"/>
               </search>
           </field>
       </record>
