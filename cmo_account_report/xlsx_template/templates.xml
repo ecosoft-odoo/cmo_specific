@@ -128,7 +128,7 @@
                                 'G6': "${'=IF(AND(?(H6)&lt;&gt;\"\",?(I6)&lt;&gt;\"\"),(I6/H6),\"\")'}#{number_format=percent}",
                                 'H6': 'base_total${value or ""}#{number_format=number}',
                                 'I6': 'tax_total${value or ""}#{number_format=number}',
-                                'J6': '${"??????"}',
+                                'J6': 'tax_payer${value and (value == "withholding" and "1" or (value == "paid_one_time" and "3")) or ""}',
                                 'K6': 'cert_id${value and value.number or ""}',
                             },
                             '_TAIL_0': {
@@ -162,7 +162,7 @@
                                 'G1': '${"3"}',
                                 'H1': 'base_total${value or ""}#{number_format=number}',
                                 'I1': 'tax_total${value or ""}#{number_format=number}',
-                                'J1': '${"??????"}',
+                                'J1': 'tax_payer${value and (value == "withholding" and "1" or (value == "paid_one_time" and "3")) or ""}',
                                 'K1': 'cert_id${value and value.number or ""}',
                                 'Y1': '${" "}',
                             }

@@ -8,6 +8,9 @@
 			<field name="model">hr.expense.expense</field>
 			<field name="inherit_id" ref="hr_expense_auto_invoice.view_expenses_form"/>
 			<field name="arch" type="xml">
+				<button string="Create Supplier Invoice" position="attributes">
+					<attribute name="context">{'default_require_prq': require_prq}</attribute>
+				</button>
 				<xpath expr='//field[@name="operating_unit_id"]' position="after">
 					<field name="require_prq"/>
 				</xpath>
