@@ -47,7 +47,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//button[@name='%(hr_expense_cancel_reason.action_hr_expense_cancel)d']" position="attributes">
                     <attribute name="states"></attribute>
-                    <attribute name="attrs">{'invisible':[('state', '!=', 'accepted')]}</attribute>
+                    <attribute name="attrs">{'invisible':[('state', 'not in', ('confirm', 'validate', 'accepted'))]}</attribute>
                     <attribute name="groups">account.group_account_invoice</attribute>
                 </xpath>
                 <!-- <xpath expr="//button[@name='%(hr_expense_cancel_reason.action_hr_expense_cancel)d']" position="after">
