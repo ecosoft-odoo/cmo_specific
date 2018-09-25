@@ -12,7 +12,7 @@
 					<attribute name="context">{'default_require_prq': require_prq}</attribute>
 				</button>
 				<xpath expr='//field[@name="operating_unit_id"]' position="after">
-					<field name="require_prq"/>
+					<field name="require_prq" invisible="True"/>
 				</xpath>
 			</field>
 		</record>

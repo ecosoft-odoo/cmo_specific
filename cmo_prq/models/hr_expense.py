@@ -7,4 +7,5 @@ class HRExpenseExpese(models.Model):
 
     require_prq = fields.Boolean(
         string='Require PRQ',
+        default=False,
     )
