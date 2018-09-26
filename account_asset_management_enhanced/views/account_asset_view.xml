@@ -12,6 +12,9 @@
                       <field name="number" string="Asset" class="oe_inline" readonly="1"/>
                   </h1>
               </xpath>
+              <xpath expr="//field[@name='value_residual']" position="after">
+                  <field name="value_net_book" widget="monetary" options="{'currency_field': 'company_currency_id'}"/>
+              </xpath>
               <field name="salvage_value" position="replace">
                   <field name="salvage_value" widget="monetary" options="{'currency_field': 'company_currency_id'}"
                          attrs="{'readonly': [('state', '!=', 'draft')]}"/>

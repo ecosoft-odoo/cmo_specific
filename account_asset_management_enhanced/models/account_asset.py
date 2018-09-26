@@ -20,6 +20,10 @@ class AccountAsset(models.Model):
         string='Purchase Move',
         readonly=True,
     )
+    value_net_book = fields.Float(
+        string='Net Book Value',
+        compute='_compute_value_net_book',
+    )
     operating_unit_id = fields.Many2one(
         'operating.unit',
         string='Operating Unit',
@@ -27,6 +31,11 @@ class AccountAsset(models.Model):
         default=lambda self:
             self.env['res.users'].operating_unit_default_get(self._uid)
     )
+
+    @api.depends('value_residual', 'salvage_value')
+    @api.multi
+    def _compute_value_net_book(self):
+        self.value_net_book = self.value_residual + self.salvage_value
 
     @api.multi
     def validate(self):
