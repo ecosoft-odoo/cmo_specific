@@ -35,7 +35,7 @@ class AccountAsset(models.Model):
     @api.multi
     @api.depends('value_residual', 'salvage_value')
     def _compute_value_net_book(self):
-        self.value_net_book = self.value_residual + self.salvage_value
+        self.value_net_book = self.purchase_value - self.value_depreciated
 
     @api.multi
     def validate(self):
