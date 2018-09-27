@@ -14,6 +14,7 @@
     ],
     'data': [
         'security/ir.model.access.csv',
+        'security/prq_security.xml',
         'data/ir_sequence_data.xml',
         'data/doctype_data.xml',
         'views/purchase_view.xml',

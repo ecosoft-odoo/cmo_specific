@@ -5,3 +5,4 @@ from . import purchase_prq
 from . import purchase
 from . import account_invoice
 from . import hr_expense
+from . import account_voucher
