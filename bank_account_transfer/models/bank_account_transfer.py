@@ -67,7 +67,6 @@ class BankAccountTransfer(models.Model):
     journal_id = fields.Many2one(
         'account.journal',
         string='Journal',
-        domain=lambda self: self._get_domain_journal(),
         default=lambda self: self._get_journal(),
         required=True,
         readonly=True,
@@ -86,7 +85,7 @@ class BankAccountTransfer(models.Model):
         readonly=True,
         copy=False,
     )
-    deduct_from = fields.Many2one(
+    deduct_account_id = fields.Many2one(
         'account.account',
         string='Deduct From',
         readonly=True,
@@ -116,34 +115,29 @@ class BankAccountTransfer(models.Model):
 
     @api.model
     def _get_journal(self):
-        return self.env.ref('bank_account_transfer.journal_bank_transfer')
+        return self.env.ref(
+            'bank_account_transfer.journal_bank_transfer', False)
 
     @api.model
     def _get_domain_journal(self):
         return [('id', '=', self._get_journal().id)]
 
-    @api.onchange('from_account_id', 'to_account_id')
-    def _onchange_account(self):
-        self.deduct_from = False
-        if self.from_account_id or self.to_account_id:
-            print "=="
-
-    @api.depends('transfer_line_ids')
     @api.multi
+    @api.depends('transfer_line_ids')
     def _compute_transfer_amount(self):
         for rec in self:
             rec.amount_transfer = sum(
                 rec.transfer_line_ids.mapped('transfer_amount'))
 
-    @api.depends('transfer_line_ids')
     @api.multi
+    @api.depends('transfer_line_ids')
     def _compute_fee(self):
         for rec in self:
             rec.amount_fee = sum(
                 rec.transfer_line_ids.mapped('fee'))
 
-    @api.depends('amount_transfer', 'amount_fee')
     @api.multi
+    @api.depends('amount_transfer', 'amount_fee')
     def _compute_amount_total(self):
         for rec in self:
             rec.amount_total = rec.amount_transfer + rec.amount_fee
@@ -153,21 +147,21 @@ class BankAccountTransfer(models.Model):
         date = transfer.date
         Period = self.env['account.period']
         period_ids = Period.find(dt=date)
+        name = transfer.env['ir.sequence'].next_by_doctype()
         move_vals = {
             'journal_id': transfer.journal_id.id,
             'date': date,
             'period_id': period_ids[0].id,
-            'name': transfer.name,
-            'ref': transfer.name,
+            'name': name,
+            'ref': name,
         }
         return move_vals
 
     @api.model
-    def _prepare_credit_line_vals(self, transfer,
-                                  company_amount, company_currency):
+    def _prepare_credit_line_vals(self, company_amount, company_currency):
         assert (company_amount > 0), 'Credit must have a value'
         return {
-            'name': _('Bank Transfer - Ref. %s') % transfer.name,
+            'name': _('Bank Transfer'),
             'credit': company_amount,
             'debit': 0.0,
             'account_id': self.from_account_id.id,
@@ -177,11 +171,10 @@ class BankAccountTransfer(models.Model):
         }
 
     @api.model
-    def _prepare_dedit_line_vals(self, transfer,
-                                 company_amount, company_currency):
+    def _prepare_dedit_line_vals(self, company_amount, company_currency):
         assert (company_amount > 0), 'Credit must have a value'
         return {
-            'name': _('Bank Transfer - Ref. %s') % transfer.name,
+            'name': _('Bank Transfer'),
             'credit': 0.0,
             'debit': company_amount,
             'account_id': self.to_account_id.id,
@@ -191,23 +184,21 @@ class BankAccountTransfer(models.Model):
         }
 
     @api.model
-    def _prepare_fee_credit_move_lines_vals(
-            self, transfer, total_fee, company_currency):
+    def _prepare_fee_credit_move_lines_vals(self, total_fee, company_currency):
         return {
-            'name': _('Bank Transfer %s') % transfer.name,
+            'name': _('Bank Transfer'),
             'debit': 0.0,
             'credit': total_fee,
-            'account_id': self.deduct_from.id,
+            'account_id': self.deduct_account_id.id,
             'currency_id':
                 self.currency_id.id
                 if company_currency != self.currency_id else False,
         }
 
     @api.model
-    def _prepare_fee_debit_move_lines_vals(
-            self, transfer, total_fee, company_currency):
+    def _prepare_fee_debit_move_lines_vals(self, total_fee, company_currency):
         return {
-            'name': _('Bank Transfer %s') % transfer.name,
+            'name': _('Bank Transfer'),
             'debit': total_fee,
             'credit': 0.0,
             'account_id': self.fee_account_id.id,
@@ -236,12 +227,6 @@ class BankAccountTransfer(models.Model):
             fiscalyear_id = transfer.env['account.fiscalyear'].find()
             transfer = transfer.with_context(doctype_id=doctype.id,
                                              fiscalyear_id=fiscalyear_id)
-            name = transfer.env['ir.sequence'].next_by_code(
-                'bank.account.transfer')
-            # print name
-            # print "======================1========================"
-            transfer.write({'name': name})
-
             move_vals = self._prepare_account_move_vals(transfer)
             move = Move.create(move_vals)
             trans_currency = transfer.currency_id
@@ -255,18 +240,18 @@ class BankAccountTransfer(models.Model):
                 total_credit += company_amount
                 total_fee += company_fee
                 credit_line_vals = self._prepare_credit_line_vals(
-                    transfer, company_amount, company_currency)
+                    company_amount, company_currency)
                 dedit_line_vals = self._prepare_dedit_line_vals(
-                    transfer, company_amount, company_currency)
+                    company_amount, company_currency)
                 credit_line_vals['move_id'] = move.id
                 dedit_line_vals['move_id'] = move.id
                 MoveLine.create(credit_line_vals)
                 MoveLine.create(dedit_line_vals)
-            if total_fee > 0:
+            if total_fee > 0.0:
                 fee_debit_vals = self._prepare_fee_debit_move_lines_vals(
-                          transfer, total_fee, company_currency)
+                          total_fee, company_currency)
                 fee_credit_vals = self._prepare_fee_credit_move_lines_vals(
-                          transfer, total_fee, company_currency)
+                          total_fee, company_currency)
                 fee_debit_vals['move_id'] = move.id
                 fee_credit_vals['move_id'] = move.id
                 MoveLine.create(fee_debit_vals)
@@ -274,6 +259,7 @@ class BankAccountTransfer(models.Model):
             move.post()
             transfer.write({'state': 'done',
                             'move_id': move.id,
+                            'name': move.name,
                             })
         return True
 

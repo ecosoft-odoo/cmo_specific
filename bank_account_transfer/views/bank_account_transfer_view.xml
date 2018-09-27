@@ -28,7 +28,7 @@
                         <field name="journal_id"/>
                         <field name="currency_id" groups="base.group_multi_currency"/>
                         <field name="move_id"/>
-                        <field name="deduct_from" domain="[('id', 'in', [from_account_id, to_account_id])]"/>
+                        <field name="deduct_account_id" domain="[('id', 'in', [from_account_id, to_account_id])]"/>
                     </group>
                 </group>
                 <notebook>
