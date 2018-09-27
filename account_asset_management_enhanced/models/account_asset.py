@@ -32,8 +32,8 @@ class AccountAsset(models.Model):
             self.env['res.users'].operating_unit_default_get(self._uid)
     )
 
-    @api.depends('value_residual', 'salvage_value')
     @api.multi
+    @api.depends('value_residual', 'salvage_value')
     def _compute_value_net_book(self):
         self.value_net_book = self.value_residual + self.salvage_value
 
