@@ -155,7 +155,7 @@
                                 'B1': 'supplier_taxid${value or ""}',
                                 'C1': 'supplier_name_th${value or ""}',
                                 'D1': 'cert_id.supplier_partner_id${value and (value.street2 and " ".join([value.street, value.street2]) or value.street) or ""}',
-                                'E1': 'date_value${value or ""}#{number_format=date}',
+                                'E1': 'date_value${value and "%s " % (str(value).split()[0]) or ""}',
                                 'F1': 'cert_line_id${value and value.wht_cert_income_desc or ""}',
                                 'G1': '${"3"}',
                                 'H1': 'base_total${value or ""}#{number_format=number}',
