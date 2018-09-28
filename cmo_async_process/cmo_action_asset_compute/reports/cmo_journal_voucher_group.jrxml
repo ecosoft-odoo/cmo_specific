@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_journal_voucher_group" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.1000000000000048"/>
-	<property name="ireport.x" value="6"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.9487171000000094"/>
+	<property name="ireport.x" value="106"/>
+	<property name="ireport.y" value="209"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;summary_ids&quot;]"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
@@ -31,6 +31,12 @@
 	</field>
 	<field name="project" class="java.lang.String">
 		<fieldDescription><![CDATA[summary_ids/analytic_account_id/display_name]]></fieldDescription>
+	</field>
+	<field name="batch_note" class="java.lang.String">
+		<fieldDescription><![CDATA[note]]></fieldDescription>
+	</field>
+	<field name="journal_number" class="java.lang.String">
+		<fieldDescription><![CDATA[journal_number]]></fieldDescription>
 	</field>
 	<variable name="total_debit" class="java.lang.Number" resetType="Group" resetGroup="UniqueID" calculation="Sum">
 		<variableExpression><![CDATA[$F{debit}]]></variableExpression>
@@ -275,6 +281,29 @@ Senior Accounting Manager]]></text>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="47" y="149" width="508" height="46" isPrintWhenDetailOverflows="true"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Bottom" lineSpacing="1_1_2">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{batch_note}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="128" y="195" width="388" height="20" isPrintWhenDetailOverflows="true"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Bottom" lineSpacing="1_1_2">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{journal_number}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="49" y="203" width="100" height="20"/>
+				<textElement>
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[Journal Number :]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>

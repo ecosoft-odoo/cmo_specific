@@ -132,6 +132,7 @@
                                 <field name="period_id"/>
                                 <field name="run_number"/>
                                 <field name="note"/>
+                                <field name="journal_number"/>
                             </group>
                             <group>
                                 <field name="amount"/>

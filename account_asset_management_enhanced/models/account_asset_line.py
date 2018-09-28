@@ -24,3 +24,12 @@ class AccountAssetLine(models.Model):
         asset = self.asset_id
         res['operating_unit_id'] = asset.operating_unit_id.id
         return res
+
+    @api.multi
+    def _setup_move_data(self, depreciation_date, period):
+        self.ensure_one()
+        move_data = super(AccountAssetLine, self).\
+            _setup_move_data(depreciation_date, period)
+        move_data.update({'name': '/',
+                          'ref': self.name})
+        return move_data
