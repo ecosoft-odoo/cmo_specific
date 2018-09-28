@@ -118,26 +118,19 @@ class BankAccountTransfer(models.Model):
         return self.env.ref(
             'bank_account_transfer.journal_bank_transfer', False)
 
-    @api.model
-    def _get_domain_journal(self):
-        return [('id', '=', self._get_journal().id)]
-
     @api.multi
-    @api.depends('transfer_line_ids')
     def _compute_transfer_amount(self):
         for rec in self:
             rec.amount_transfer = sum(
                 rec.transfer_line_ids.mapped('transfer_amount'))
 
     @api.multi
-    @api.depends('transfer_line_ids')
     def _compute_fee(self):
         for rec in self:
             rec.amount_fee = sum(
                 rec.transfer_line_ids.mapped('fee'))
 
     @api.multi
-    @api.depends('amount_transfer', 'amount_fee')
     def _compute_amount_total(self):
         for rec in self:
             rec.amount_total = rec.amount_transfer + rec.amount_fee
