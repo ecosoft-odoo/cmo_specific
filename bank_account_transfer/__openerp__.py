@@ -7,8 +7,11 @@
     'version': '0.1',
     'depends': [
         'pabi_utils',
+        'l10n_th_doctype_base',
     ],
     'data': [
+        'data/account_data.xml',
+        'data/doctype_data.xml',
         'security/ir.model.access.csv',
         'views/bank_account_transfer_view.xml',
         'xlsx_template/templates.xml',

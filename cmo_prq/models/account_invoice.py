@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp import fields, models, api, _
-from openerp.exceptions import ValidationError
+from openerp import fields, models
 
 
 class AccountInvoice(models.Model):
@@ -12,12 +11,3 @@ class AccountInvoice(models.Model):
         index=True,
         ondelete='set null',
     )
-
-    @api.multi
-    def invoice_validate(self):
-        for rec in self:
-            if rec.prq_id:
-                if rec.prq_id.state != 'approve':
-                    raise ValidationError(_(
-                        "PRQ for this invoice is not yet approved"))
-        return super(AccountInvoice, self).invoice_validate()

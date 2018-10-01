@@ -74,7 +74,7 @@
 
         # Project list view
         <record id="project.open_view_project_all" model="ir.actions.act_window">
-            <field name="view_mode">tree,form,gantt</field>
+            <field name="view_mode">tree,form,gantt,graph</field>
             <field name="context">{'search_default_Latest': 1}</field>
         </record>
 
@@ -138,6 +138,18 @@
                 </tree>
             </field>
         </record>
+        <record id="inherit_view_project_graph" model="ir.ui.view">
+            <field name="name">project.project.inherit.graph</field>
+            <field name="model">project.project</field>
+            <field eval="17" name="priority"/>
+            <field name="arch" type="xml">
+                <graph string="Projects" type="pivot">
+                    <field name="state" type="col"/>
+                    <field name="project_budget" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
         # Project  # TODO Administration selection only public and access
         <record id="edit_project" model="ir.ui.view">
             <field name="name">edit.project</field>

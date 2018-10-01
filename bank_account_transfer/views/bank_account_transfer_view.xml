@@ -28,7 +28,7 @@
                         <field name="journal_id"/>
                         <field name="currency_id" groups="base.group_multi_currency"/>
                         <field name="move_id"/>
-                        <field name="deduct_from"/>
+                        <field name="deduct_account_id" domain="[('id', 'in', [from_account_id, to_account_id])]"/>
                     </group>
                 </group>
                 <notebook>
@@ -65,8 +65,8 @@
                               <field name="debit" sum="Total Debit"/>
                               <field name="credit" sum="Total Credit"/>
                               <field name="state"/>
-                              <field name="amount_currency" groups="base.group_multi_currency"/>
-                              <field name="currency_id" groups="base.group_multi_currency"/>
+                              <field name="amount_currency" groups="base.group_multi_currency" invisible="True"/>
+                              <field name="currency_id" groups="base.group_multi_currency" invisible="True"/>
                           </tree>
                       </field>
                   </page>

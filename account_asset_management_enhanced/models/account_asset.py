@@ -20,6 +20,10 @@ class AccountAsset(models.Model):
         string='Purchase Move',
         readonly=True,
     )
+    value_net_book = fields.Float(
+        string='Net Book Value',
+        compute='_compute_value_net_book',
+    )
     operating_unit_id = fields.Many2one(
         'operating.unit',
         string='Operating Unit',
@@ -27,6 +31,11 @@ class AccountAsset(models.Model):
         default=lambda self:
             self.env['res.users'].operating_unit_default_get(self._uid)
     )
+
+    @api.multi
+    def _compute_value_net_book(self):
+        for rec in self:
+            rec.value_net_book = rec.purchase_value - rec.value_depreciated
 
     @api.multi
     def validate(self):

@@ -41,9 +41,9 @@
             <field name="arch" type="xml">
                 <form string="PRQ Sheet">
                     <header>
-                        <button name="action_draft" string="Set to Draft" type="object" states="approve,reject"/>
-                        <button name="action_approve" string="Approve" type="object" states="draft" class="oe_highlight"/>
-                        <button name="action_reject" string="Reject" type="object" states="draft"/>
+                        <button name="action_draft" string="Set to Draft" type="object" states="approve,reject" groups="cmo_prq.group_prq_approver"/>
+                        <button name="action_approve" string="Approve" type="object" states="draft" class="oe_highlight" groups="cmo_prq.group_prq_approver"/>
+                        <button name="action_reject" string="Reject" type="object" states="draft" groups="cmo_prq.group_prq_approver"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,approve,reject"/>
                     </header>
                     <sheet>

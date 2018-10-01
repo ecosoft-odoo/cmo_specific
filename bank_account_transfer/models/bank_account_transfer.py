@@ -31,7 +31,7 @@ class BankAccountTransfer(models.Model):
     from_account_id = fields.Many2one(
         'account.account',
         string='Bank Account',
-        domain="[('type', '!=', 'view')]",
+        domain="[('type', '=', 'liquidity')]",
         required=True,
         readonly=True,
         states={'draft': [('readonly', False)]},
@@ -39,7 +39,7 @@ class BankAccountTransfer(models.Model):
     to_account_id = fields.Many2one(
         'account.account',
         string='Bank Account',
-        domain="[('type', '!=', 'view')]",
+        domain="[('type', '=', 'liquidity')]",
         required=True,
         readonly=True,
         states={'draft': [('readonly', False)]},
@@ -67,7 +67,7 @@ class BankAccountTransfer(models.Model):
     journal_id = fields.Many2one(
         'account.journal',
         string='Journal',
-        domain=[('code', '=', 'BT')],
+        default=lambda self: self._get_journal(),
         required=True,
         readonly=True,
         states={'draft': [('readonly', False)]},
@@ -78,20 +78,16 @@ class BankAccountTransfer(models.Model):
         required=True,
         readonly=True,
         default=lambda self: self.env.user.company_id.currency_id,
-        states={'draft': [('readonly', False)]},
     )
     move_id = fields.Many2one(
         'account.move',
         string='Journal Entry',
-        copy=False,
         readonly=True,
-        states={'draft': [('readonly', False)]},
+        copy=False,
     )
-    deduct_from = fields.Many2one(
+    deduct_account_id = fields.Many2one(
         'account.account',
         string='Deduct From',
-        domain="[('type', '!=', 'view')]",
-        required=True,
         readonly=True,
         states={'draft': [('readonly', False)]},
     )
@@ -100,7 +96,6 @@ class BankAccountTransfer(models.Model):
         related='move_id.line_id',
         string='Journal Items',
         readonly=True,
-        states={'draft': [('readonly', False)]},
     )
     amount_transfer = fields.Float(
         string='Transfer Amount',
@@ -118,21 +113,23 @@ class BankAccountTransfer(models.Model):
         readonly=True,
     )
 
-    @api.depends('transfer_line_ids')
+    @api.model
+    def _get_journal(self):
+        return self.env.ref(
+            'bank_account_transfer.journal_bank_transfer', False)
+
     @api.multi
     def _compute_transfer_amount(self):
         for rec in self:
             rec.amount_transfer = sum(
                 rec.transfer_line_ids.mapped('transfer_amount'))
 
-    @api.depends('transfer_line_ids')
     @api.multi
     def _compute_fee(self):
         for rec in self:
             rec.amount_fee = sum(
                 rec.transfer_line_ids.mapped('fee'))
 
-    @api.depends('amount_transfer', 'amount_fee')
     @api.multi
     def _compute_amount_total(self):
         for rec in self:
@@ -143,21 +140,21 @@ class BankAccountTransfer(models.Model):
         date = transfer.date
         Period = self.env['account.period']
         period_ids = Period.find(dt=date)
+        name = transfer.env['ir.sequence'].next_by_doctype()
         move_vals = {
             'journal_id': transfer.journal_id.id,
             'date': date,
             'period_id': period_ids[0].id,
-            'name': transfer.name,
-            'ref': transfer.name,
+            'name': name,
+            'ref': name,
         }
         return move_vals
 
     @api.model
-    def _prepare_credit_line_vals(self, transfer,
-                                  company_amount, company_currency):
+    def _prepare_credit_line_vals(self, company_amount, company_currency):
         assert (company_amount > 0), 'Credit must have a value'
         return {
-            'name': _('Bank Transfer - Ref. %s') % transfer.name,
+            'name': _('Bank Transfer'),
             'credit': company_amount,
             'debit': 0.0,
             'account_id': self.from_account_id.id,
@@ -167,11 +164,10 @@ class BankAccountTransfer(models.Model):
         }
 
     @api.model
-    def _prepare_dedit_line_vals(self, transfer,
-                                 company_amount, company_currency):
+    def _prepare_dedit_line_vals(self, company_amount, company_currency):
         assert (company_amount > 0), 'Credit must have a value'
         return {
-            'name': _('Bank Transfer - Ref. %s') % transfer.name,
+            'name': _('Bank Transfer'),
             'credit': 0.0,
             'debit': company_amount,
             'account_id': self.to_account_id.id,
@@ -181,23 +177,21 @@ class BankAccountTransfer(models.Model):
         }
 
     @api.model
-    def _prepare_fee_credit_move_lines_vals(
-            self, transfer, total_fee, company_currency):
+    def _prepare_fee_credit_move_lines_vals(self, total_fee, company_currency):
         return {
-            'name': _('Bank Transfer %s') % transfer.name,
+            'name': _('Bank Transfer'),
             'debit': 0.0,
             'credit': total_fee,
-            'account_id': self.deduct_from.id,
+            'account_id': self.deduct_account_id.id,
             'currency_id':
                 self.currency_id.id
                 if company_currency != self.currency_id else False,
         }
 
     @api.model
-    def _prepare_fee_debit_move_lines_vals(
-            self, transfer, total_fee, company_currency):
+    def _prepare_fee_debit_move_lines_vals(self, total_fee, company_currency):
         return {
-            'name': _('Bank Transfer %s') % transfer.name,
+            'name': _('Bank Transfer'),
             'debit': total_fee,
             'credit': 0.0,
             'account_id': self.fee_account_id.id,
@@ -214,8 +208,6 @@ class BankAccountTransfer(models.Model):
         for transfer in self:
             if not transfer.transfer_line_ids:
                 raise ValidationError(_('No lines!'))
-            if not transfer.transfer_line_ids.transfer_amount:
-                raise ValidationError(_('No Transfer Amount!'))
             if transfer.from_account_id == transfer.to_account_id:
                 raise ValidationError(_('From Account and To Account \
                                 can not be the same account. Please Change!!'))
@@ -223,15 +215,11 @@ class BankAccountTransfer(models.Model):
                     not transfer.fee_account_id:
                 raise ValidationError(_('No Fee Account!'))
 
-            refer_type = 'bank_payment'
+            refer_type = 'bank_transfer'
             doctype = transfer.env['res.doctype'].get_doctype(refer_type)
             fiscalyear_id = transfer.env['account.fiscalyear'].find()
             transfer = transfer.with_context(doctype_id=doctype.id,
                                              fiscalyear_id=fiscalyear_id)
-            name = transfer.env['ir.sequence'].next_by_code(
-                'bank.account.transfer')
-            transfer.write({'name': name})
-
             move_vals = self._prepare_account_move_vals(transfer)
             move = Move.create(move_vals)
             trans_currency = transfer.currency_id
@@ -245,25 +233,26 @@ class BankAccountTransfer(models.Model):
                 total_credit += company_amount
                 total_fee += company_fee
                 credit_line_vals = self._prepare_credit_line_vals(
-                    transfer, company_amount, company_currency)
+                    company_amount, company_currency)
                 dedit_line_vals = self._prepare_dedit_line_vals(
-                    transfer, company_amount, company_currency)
+                    company_amount, company_currency)
                 credit_line_vals['move_id'] = move.id
                 dedit_line_vals['move_id'] = move.id
                 MoveLine.create(credit_line_vals)
                 MoveLine.create(dedit_line_vals)
-
-            fee_debit_vals = self._prepare_fee_debit_move_lines_vals(
-                      transfer, total_fee, company_currency)
-            fee_credit_vals = self._prepare_fee_credit_move_lines_vals(
-                      transfer, total_fee, company_currency)
-            fee_debit_vals['move_id'] = move.id
-            fee_credit_vals['move_id'] = move.id
-            MoveLine.create(fee_debit_vals)
-            MoveLine.create(fee_credit_vals)
+            if total_fee > 0.0:
+                fee_debit_vals = self._prepare_fee_debit_move_lines_vals(
+                          total_fee, company_currency)
+                fee_credit_vals = self._prepare_fee_credit_move_lines_vals(
+                          total_fee, company_currency)
+                fee_debit_vals['move_id'] = move.id
+                fee_credit_vals['move_id'] = move.id
+                MoveLine.create(fee_debit_vals)
+                MoveLine.create(fee_credit_vals)
             move.post()
             transfer.write({'state': 'done',
-                           'move_id': move.id,
+                            'move_id': move.id,
+                            'name': move.name,
                             })
         return True
 

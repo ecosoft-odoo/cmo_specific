@@ -6,11 +6,25 @@
           <field name="model">project.search.wizard</field>
           <field name="arch" type="xml">
               <form string="Search Projects">
-                  <group  col="4">
-                      <field name="project_id" string="Project Name" class="oe_inline"/>
-                      <field name="user_id" string="Project Manager" class="oe_inline"/>
-                      <field name="date_start" class="oe_inline"/>
-                      <field name="date_end" class="oe_inline"/>
+                  <group>
+                      <group>
+                          <field name="project_id"/>
+                          <field name="user_id"/>
+                          <field name="project_type_id"/>
+                          <field name="project_from_id"/>
+                          <field name="stage"/>
+                          <field name="project_budget_from"/>
+                          <field name="project_budget_to"/>
+                      </group>
+                      <group>
+                          <field name="operating_unit_id"/>
+                          <field name="function_id"/>
+                          <field name="location_id"/>
+                          <field name="client_type_id"/>
+                          <field name="obligation_id"/>
+                          <field name="date_start"/>
+                          <field name="date_end"/>
+                      </group>
                   </group>
                   <footer>
                       <button string="Search Projects" name="search_project" type="object" class="oe_highlight"/>

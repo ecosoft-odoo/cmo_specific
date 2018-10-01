@@ -10,7 +10,7 @@
         <field name="inherit_id" ref="hr_expense_auto_invoice.wizard_expense_create_supplier_invoice"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='pay_to']" position="before">
-                <field name="require_prq" />
+                <field name="require_prq" invisible="True"/>
             </xpath>
         </field>
     </record>

@@ -441,6 +441,17 @@ class CMOAssetDepreBatch(models.Model):
         string='JE Count',
         compute='_compute_moves',
     )
+    journal_number = fields.Text(
+        string='Journal Number',
+        compute='_compute_je_number',
+    )
+
+    @api.multi
+    def _compute_je_number(self):
+        for rec in self:
+            rec.journal_number = '%s - %s' % (rec.move_ids[-1].name,
+                                              rec.move_ids[0].name)
+        return True
 
     @api.multi
     def _compute_moves(self):
