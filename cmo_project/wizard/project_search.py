@@ -87,7 +87,7 @@ class ProjectSearch(models.TransientModel):
         if self.project_budget_to:
             dom += [('project_budget', '<=', self.project_budget_to)]
         if self.location_id:
-            dom += [('location_id', '=', self.location_id)]
+            dom += [('location_id', '=', self.location_id.id)]
         if self.stage:
             dom += [('state', '=', self.stage)]
         if self.client_type_id:
