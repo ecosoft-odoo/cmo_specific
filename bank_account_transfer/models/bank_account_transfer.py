@@ -206,6 +206,8 @@ class BankAccountTransfer(models.Model):
         MoveLine = self.env['account.move.line']
         company_currency = self.env.user.company_id.currency_id
         for transfer in self:
+            if transfer.fee_account_id and not transfer.deduct_account_id:
+                raise ValidationError(_('Please fill deduct from.'))
             if not transfer.transfer_line_ids:
                 raise ValidationError(_('No lines!'))
             if transfer.from_account_id == transfer.to_account_id:
