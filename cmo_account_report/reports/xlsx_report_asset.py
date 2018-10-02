@@ -2,83 +2,152 @@
 from openerp import models, fields, api, tools
 
 
-# class AssetRepairView(models.Model):
-#     _name = 'asset.repair.view'
-#     _auto = False
-#
-#     id = fields.Integer(
-#         string='ID',
-#         readonly=True,
-#     )
-#     asset_id = fields.Many2one(
-#         'account.asset',
-#         string='Account Asset Id',
-#         readonly=True,
-#     )
-#     asset_repair_id = fields.Many2one(
-#         'asset.repair.note',
-#         string='Asset Repair Id',
-#         readonly=True,
-#     )
-#     purchase_order_id = fields.Many2one(
-#         'purchase.order',
-#         string='Purchase Order Id',
-#         readonly=True,
-#     )
-#     costcenter_id = fields.Many2one(
-#         'res.costcenter',
-#         string='Costcenter Id',
-#         readonly=True,
-#     )
-#     responsible_user_id = fields.Many2one(
-#         'res.users',
-#         string='Responsible User',
-#         readonly=True,
-#     )
-#     section_id = fields.Many2one(
-#         'res.section',
-#         string='Section id',
-#         readonly=True,
-#     )
-#
-#     def _get_sql_view(self):
-#         sql_view = """
-#             SELECT ROW_NUMBER() OVER(ORDER BY acr.id, ac.id) AS id,
-#                 ac.id as asset_id, acr.id as asset_repair_id,
-#                 po.id as purchase_order_id, rc.id as costcenter_id,
-#                 ac.responsible_user_id, ac.section_id,
-#                 CASE WHEN ac.section_id IS NOT NULL THEN
-#                 CONCAT('res.section,', ac.section_id)
-#                 WHEN ac.project_id IS NOT NULL THEN
-#                 CONCAT('res.project,', ac.project_id)
-#                 WHEN ac.invest_asset_id IS NOT NULL THEN
-#                 CONCAT('res.invest.asset,', ac.invest_asset_id)
-#                 WHEN ac.invest_construction_phase_id IS NOT NULL THEN
-#                 CONCAT('res.invest.construction.phase,',
-#                 ac.invest_construction_phase_id)
-#                 ELSE NULL END AS budget
-#                 FROM asset_repair_note acr
-#                 JOIN account_asset ac ON acr.asset_id = ac.id
-#                 JOIN res_costcenter rc ON ac.costcenter_id = rc.id
-#                 LEFT JOIN purchase_order po ON acr.purchase_id = po.id
-#         """
-#         return sql_view
-#
-#     def init(self, cr):
-#         tools.drop_view_if_exists(cr, self._table)
-#         cr.execute("""CREATE OR REPLACE VIEW %s AS (%s)"""
-#                    % (self._table, self._get_sql_view()))
+class AssetView(models.Model):
+    _name = 'asset.view'
+    _auto = False
+
+    id = fields.Integer(
+        string='ID',
+        readonly=True,
+    )
+    line_date = fields.Date(
+        string='Asset Line Date',
+    )
+    asset_id = fields.Many2one(
+        'account.asset',
+        string='Asset ID',
+    )
+    asset_line_id = fields.Many2one(
+        'account.asset.line',
+        string='Asset Line ID',
+    )
+    before_nbv = fields.Float(
+        string='Before NetBookValue'
+    )
+    method_number = fields.Integer(
+        string='Percent',
+    )
+    depreciated_value = fields.Float(
+        string='Depreciated Value',
+    )
+    remaining_value = fields.Float(
+        string='Remaining Value',
+    )
+    move_line_id = fields.Many2one(
+        'account.move.line',
+        compute='_compute_move_line',
+        string='Move Line ID',
+    )
+    name_asset = fields.Char(
+        string='Name Asset Profile',
+    )
+    asset_profile_id = fields.Many2one(
+        'account.asset.profile',
+        string='Asset Profile ID',
+    )
+
+    @api.multi
+    def _compute_move_line(self):
+        MoveLine = self.env['account.move.line']
+        Period = self.env['account.period']
+        for rec in self:
+            try:
+                period = Period.find(rec.line_date)
+            except Exception:
+                period = Period
+            dom = [('asset_id', '=', rec.asset_id.id),
+                   ('account_id.user_type.report_type', '=', 'expense'),
+                   ('journal_id.type', '=', 'general'),
+                   ('period_id', '=', period.id)]
+            rec.move_line_id = MoveLine.search(dom)
+
+    def _get_sql_view(self):
+        sql_view = """
+            SELECT ROW_NUMBER() OVER(ORDER BY asset.number, asset.name) AS id,
+                asset.id AS asset_id,
+                asset_line.id AS asset_line_id,
+                asset_line.line_date AS line_date,
+                asset_line.depreciated_value AS depreciated_value,
+                asset_line.remaining_value AS remaining_value,
+                (100/coalesce(asset.method_number, 0.0)) AS method_number,
+                (coalesce(asset_line.remaining_value, 0.0) -
+                coalesce(asset_line.depreciated_value, 0.0)) AS before_nbv,
+                asset_profile.name AS name_asset,
+                asset_profile.id AS asset_profile_id
+            FROM account_asset asset
+            JOIN account_asset_line asset_line
+            ON asset.id = asset_line.asset_id
+            JOIN account_asset_profile asset_profile
+            ON asset.profile_id = asset_profile.id
+            WHERE asset_line.type = 'depreciate'
+        """
+        return sql_view
+
+    def init(self, cr):
+        tools.drop_view_if_exists(cr, self._table)
+        cr.execute("""CREATE OR REPLACE VIEW %s AS (%s)"""
+                   % (self._table, self._get_sql_view()))
 
 
-class XLSXReportAssetRepair(models.TransientModel):
-    _name = 'xlsx.report.asset.repair'
+class XLSXReportAsset(models.TransientModel):
+    _name = 'xlsx.report.asset'
     _inherit = 'report.account.common'
+
+    filter = fields.Selection(
+        readonly=True,
+        default='filter_period',
+    )
+    calendar_period_id = fields.Many2one(
+        'account.period.calendar',
+        string='Calendar Period',
+        required=True,
+        default=lambda self: self.env['account.period.calendar'].find(),
+    )
+    company_id = fields.Many2one(
+        'res.company',
+    )
+    asset_status = fields.Selection(
+        [('draft', 'Draft'),
+         ('open', 'Running'),
+         ('close', 'Close'),
+         ('removed', 'Removed')],
+        string=' Asset Status'
+    )
+    asset_code = fields.Many2many(
+        'account.asset',
+        string='Asset Code',
+    )
+    asset_profile = fields.Many2many(
+        'account.asset.profile',
+        string='Asset Profile',
+    )
+    results = fields.Many2many(
+        'asset.view',
+        string='Results',
+        compute='_compute_results',
+        help='Use compute fields, so there is nothing store in database',
+    )
 
     @api.multi
     def _compute_results(self):
         self.ensure_one()
-        Result = self.env['account.asset']
+        Result = self.env['asset.view']
         dom = []
-        # if self.as_of_date:
-        #     dom += [('asset_repair_id.date', '<=', self.as_of_date)]
+        if self.calendar_period_id:
+            dom += [('line_date', '>=', self.calendar_period_id.date_start),
+                    ('line_date', '<=', self.calendar_period_id.date_stop)]
+        if self.asset_status:
+            dom += [('asset_id.state', '=', self.asset_status)]
+        if self.asset_code:
+            dom += [('asset_id', 'in', self.asset_code.ids)]
+        if self.asset_profile:
+            dom += [('asset_profile_id', 'in', self.asset_profile.ids)]
         self.results = Result.search(dom)
+
+    @api.onchange('asset_status')
+    def _onchange_asset_status(self):
+        if self.asset_status:
+            return {'domain': {'asset_code': [
+                ('state', '=', self.asset_status)]}}
+        else:
+            return {'domain': {'asset_code': []}}
