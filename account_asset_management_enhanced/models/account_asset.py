@@ -51,6 +51,17 @@ class AccountAsset(models.Model):
                     raise ValidationError(_('Asset Profile must be selected.'))
         return super(AccountAsset, self).validate()
 
+    @api.multi
+    def name_get(self):
+        res = []
+        for record in self:
+            if record.code and record.code != '/':
+                name = "[%s] %s" % (record.code, record.name)
+            else:
+                name = record.name
+            res.append((record.id, name))
+        return res
+
     # @api.model
     # def create(self, vals):
     #     if vals.get('number', '/') == '/':
