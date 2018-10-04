@@ -151,23 +151,70 @@
                     '__EXPORT__': {
                         'Withholding Income Tax': {
                             'results': {
-                                'A1': 'sequence${value or ""}',
-                                'B1': 'supplier_taxid${value or ""}',
-                                'C1': 'supplier_name_th${value or ""}',
-                                'D1': 'cert_id.supplier_partner_id${value and (value.street2 and " ".join([value.street, value.street2]) or value.street) or ""}',
-                                'E1': 'date_value${value and "%s " % (str(value).split()[0]) or ""}',
-                                'F1': 'cert_line_id${value and value.wht_cert_income_desc or ""}',
-                                'G1': '${"3"}',
-                                'H1': 'base_total${value or ""}#{number_format=number}',
-                                'I1': 'tax_total${value or ""}#{number_format=number}',
-                                'J1': 'tax_payer${value and (value == "withholding" and "1" or (value == "paid_one_time" and "3")) or ""}',
-                                'K1': 'cert_id${value and value.number or ""}',
-                                'Y1': '${" "}',
+                                'B1': 'sequence${value or ""}',
+                                'C1': 'supplier_taxid${value or ""}',
+                                'E1': 'supplier_name_th${value or ""}',
+                                'F1': 'cert_id.supplier_partner_id${value and (value.street2 and " ".join([value.street, value.street2]) or value.street) or ""}',
+                                'G1': 'date_value${value and "%s%s%s" % (str(value).split("-")[0], str(value).split("-")[1], str(value)[8:10]) or ""}',
+                                'H1': 'cert_line_id${value and value.wht_cert_income_desc or ""}',
+                                'I1': '${"3.00"}#{number_format=number}',
+                                'J1': 'base_total${value or ""}#{number_format=number}',
+                                'K1': 'tax_total${value or ""}#{number_format=number}',
+                                'L1': 'tax_payer${value and (value == "withholding" and "1" or (value == "paid_one_time" and "3")) or ""}',
+                                'AA1': '${" "}',
                             }
                         }
                     }
                 }
             </field>
         </record>
+
+        # Asset Report
+        <record id="xlsx_report_asset" model="ir.attachment">
+            <field name="res_model">xlsx.report.asset</field>
+            <field name="datas"></field>
+            <field name="datas_fname">xlsx_report_asset.xlsx</field>
+            <field name="name">Asset Report</field>
+            <field name="parent_id" eval="ref('dir_account_reports')"/>
+            <field name="description">
+                {
+                    '__EXPORT__': {
+                        'Asset Report': {
+                            '_HEAD_': {
+                                'A2': '${env.user.company_id.partner_id.name}',
+                                'A4': 'date_filter${value or ""}',
+                            },
+                            'results': {
+                                'A8': "${'=IF(?(S8)=?(S7),\"\",?(S8)'}#{font=bold}",
+                                'B8': 'asset_id.number${value or ""}',
+                                'C8': 'asset_id.name${value or ""}',
+                                'D8': 'asset_id.purchase_date${value or ""}#{number_format=date}',
+                                'E8': 'asset_id.date_start${value or ""}#{number_format=date}',
+                                'F8': 'asset_id.purchase_value${value or 0}#{number_format=number}',
+                                'G8': "${'=?(K8)-?(J8)'}#{number_format=number}",
+                                'H8': 'method_number${value or 0}#{number_format=number}',
+                                'I8': 'asset_id.salvage_value${value or 0}#{number_format=number}',
+                                'J8': 'depreciation${value or 0}#{number_format=number}',
+                                'K8': 'accumulated${value or 0}#{number_format=number}',
+                                'L8': "${'=?(F8)-?(K8)'}#{number_format=number}",
+                                'M8': 'asset_id.operating_unit_id${value and value.name or ""}',
+                                'N8': 'asset_id.code${value or ""}',
+                                'O8': 'asset_id.note${value or ""}',
+                                # Hide Asset name
+                                'S8': 'name_asset${value or ""}',
+                            },
+                            '_GROUPBY_results["name_asset"]': {  # groupby
+                                'F8': '@{sum}#{font=bold;number_format=number}',
+                                'G8': '@{sum}#{font=bold;number_format=number}',
+                                'J8': '@{sum}#{font=bold;number_format=number}',
+                                'K8': '@{sum}#{font=bold;number_format=number}',
+                                'L8': '@{sum}#{font=bold;number_format=number}',
+                            },
+                        },
+                    }
+                }
+            </field>
+        </record>
+
     </data>
 </openerp>

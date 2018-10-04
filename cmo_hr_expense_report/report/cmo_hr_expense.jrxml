@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.1000000000000005"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="122"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -398,7 +398,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[ใบขอให้จ่ายเงิน (Payment Requisition Form = PRQ)]]></text>
+				<text><![CDATA[ใบขอให้จ่ายเงิน (Payment Requisition Form)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="368" y="35" width="73" height="20"/>

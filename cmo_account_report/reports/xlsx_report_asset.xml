@@ -1,33 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-      <record id="view_xlsx_report_asset_repair_form" model="ir.ui.view">
-          <field name="name">view.xlsx.report.asset.repair.form</field>
-          <field name="model">xlsx.report.asset.repair</field>
+      <record id="view_xlsx_report_asset_form" model="ir.ui.view">
+          <field name="name">view.xlsx.report.asset.form</field>
+          <field name="model">xlsx.report.asset</field>
           <field name="inherit_id" ref="cmo_account_report.view_xlsx_report_account_common_form"/>
           <field name="mode">primary</field>
           <field name="arch" type="xml">
-              <field name="period_start_id" position="attributes">
-                  <attribute name="invisible">1</attribute>
+              <field name="fiscalyear_end_id" position="after">
+                  <field name="asset_status"/>
               </field>
-              <field name="period_end_id" position="attributes">
-                  <attribute name="invisible">1</attribute>
-              </field>
+              <xpath expr="//notebook/page[@name='time_filters']" position="after">
+                  <page name="asset_code" string="Asset Code">
+                      <field name="asset_code"/>
+                  </page>
+                  <page name="asset_profile" string="Asset Profile">
+                      <field name="asset_profile"/>
+                  </page>
+              </xpath>
           </field>
       </record>
 
-      <record id="action_xlsx_report_asset_repair_form" model="ir.actions.act_window">
-          <field name="name">Asset Repair</field>
-          <field name="res_model">xlsx.report.asset.repair</field>
+      <record id="action_xlsx_report_asset_form" model="ir.actions.act_window">
+          <field name="name">Asset Report</field>
+          <field name="res_model">xlsx.report.asset</field>
           <field name="view_type">form</field>
           <field name="view_mode">form</field>
           <field name="target">new</field>
       </record>
 
-      <menuitem id="menu_asset_repair_report"
+      <menuitem id="menu_asset_report"
           name="Asset Report"
           parent="menu_cmo_account_report"
-          action="action_xlsx_report_asset_repair_form"
+          action="action_xlsx_report_asset_form"
           sequence="30"/>
 
     </data>
