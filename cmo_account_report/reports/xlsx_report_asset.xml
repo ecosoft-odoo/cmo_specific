@@ -10,16 +10,7 @@
               <field name="fiscalyear_end_id" position="after">
                   <field name="asset_status"/>
               </field>
-              <field name="period_start_id" position="attributes">
-                  <attribute name="invisible">1</attribute>
-              </field>
-              <field name="period_end_id" position="attributes">
-                  <attribute name="invisible">1</attribute>
-              </field>
-              <field name="period_end_id" position="after">
-                  <field name="calendar_period_id" domain="[('company_id', '=', company_id), ('fiscalyear_id.date_start', '&gt;=', fiscalyear_date_start), ('fiscalyear_id.date_stop', '&lt;=', fiscalyear_date_end)]"/>
-              </field>
-              <xpath expr="//notebook/page[@name='time_filters']"  position="after">
+              <xpath expr="//notebook/page[@name='time_filters']" position="after">
                   <page name="asset_code" string="Asset Code">
                       <field name="asset_code"/>
                   </page>

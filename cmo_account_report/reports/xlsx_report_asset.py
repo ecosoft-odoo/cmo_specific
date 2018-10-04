@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api, tools
+from openerp import models, fields, api, tools, _
+import ast
 
 
 class AssetView(models.Model):
@@ -10,33 +11,15 @@ class AssetView(models.Model):
         string='ID',
         readonly=True,
     )
-    line_date = fields.Date(
-        string='Asset Line Date',
+    move_date = fields.Date(
+        string='Account Move Line Date',
     )
     asset_id = fields.Many2one(
         'account.asset',
         string='Asset ID',
     )
-    asset_line_id = fields.Many2one(
-        'account.asset.line',
-        string='Asset Line ID',
-    )
-    before_nbv = fields.Float(
-        string='Before NetBookValue'
-    )
     method_number = fields.Integer(
         string='Percent',
-    )
-    depreciated_value = fields.Float(
-        string='Depreciated Value',
-    )
-    remaining_value = fields.Float(
-        string='Remaining Value',
-    )
-    move_line_id = fields.Many2one(
-        'account.move.line',
-        compute='_compute_move_line',
-        string='Move Line ID',
     )
     name_asset = fields.Char(
         string='Name Asset Profile',
@@ -45,41 +28,104 @@ class AssetView(models.Model):
         'account.asset.profile',
         string='Asset Profile ID',
     )
+    depreciation = fields.Float(
+        compute='_compute_depreciation',
+        string='Depreciation',
+    )
+    accumulated = fields.Float(
+        compute='_compute_accumulated',
+        string='Accumulated Depreciation',
+    )
 
     @api.multi
-    def _compute_move_line(self):
-        MoveLine = self.env['account.move.line']
-        Period = self.env['account.period']
-        for rec in self:
-            try:
-                period = Period.find(rec.line_date)
-            except Exception:
-                period = Period
-            dom = [('asset_id', '=', rec.asset_id.id),
-                   ('account_id.user_type.report_type', '=', 'expense'),
-                   ('journal_id.type', '=', 'general'),
-                   ('period_id', '=', period.id)]
-            rec.move_line_id = MoveLine.search(dom)
+    def _compute_depreciation(self):
+        action_id = self._context.get('params', {}).get('action', False)
+        if action_id:
+            action = self.env['ir.actions.act_window'].browse(action_id)
+            wizard_id = \
+                ast.literal_eval(action.context).get('wizard_id', False)
+            wizard = self.env['xlsx.report.asset'].browse(wizard_id)
+            if wizard.filter == 'filter_date':
+                date_start = wizard.date_start
+                date_end = wizard.date_end
+            elif wizard.filter == 'filter_period':
+                date_start = wizard.period_start_id.date_start
+                date_end = wizard.period_end_id.date_stop
+            else:
+                date_start = wizard.fiscalyear_start_id.date_start
+                date_end = wizard.fiscalyear_end_id.date_stop
+            self._cr.execute("""
+                SELECT asset.id AS id,
+                SUM(move_line.debit - move_line.credit)
+                AS depreciation FROM account_move_line move_line
+                JOIN account_asset asset ON move_line.asset_id = asset.id
+                JOIN account_account account ON
+                move_line.account_id = account.id
+                JOIN account_account_type account_type ON
+                account.user_type = account_type.id
+                WHERE account_type.name = 'Depreciation'
+                AND move_line.date BETWEEN %s AND %s
+                GROUP BY asset.id
+            """, (date_start, date_end))
+            dictall = self._cr.dictfetchall()
+            temp = [(x['id'], {'sum': x['depreciation']}) for x in dictall]
+            dict_depreciation = dict(temp)
+            for rec in self:
+                depre = (dict_depreciation.get(
+                         rec.asset_id.id, {}).get('sum', False))
+                rec.depreciation = depre
+
+    @api.multi
+    def _compute_accumulated(self):
+        action_id = self._context.get('params', {}).get('action', False)
+        if action_id:
+            action = self.env['ir.actions.act_window'].browse(action_id)
+            wizard_id = \
+                ast.literal_eval(action.context).get('wizard_id', False)
+            wizard = self.env['xlsx.report.asset'].browse(wizard_id)
+            if wizard.filter == 'filter_date':
+                date_end = wizard.date_end
+            elif wizard.filter == 'filter_period':
+                date_end = wizard.period_end_id.date_stop
+            else:
+                date_end = wizard.fiscalyear_end_id.date_stop
+            self._cr.execute("""
+                SELECT asset.id AS id,
+                SUM(move_line.credit - move_line.debit)
+                AS accumulated FROM account_move_line move_line
+                JOIN account_asset asset ON move_line.asset_id = asset.id
+                JOIN account_account account ON
+                move_line.account_id = account.id
+                JOIN account_account_type account_type ON
+                account.user_type = account_type.id
+                WHERE account_type.name = 'Accumulated Depreciation'
+                AND move_line.date <= %s
+                GROUP BY asset.id
+            """, (date_end,))
+            dictall = self._cr.dictfetchall()
+            temp = [(x['id'], {'sum': x['accumulated']}) for x in dictall]
+            dict_accumulated = dict(temp)
+            for rec in self:
+                accum = (dict_accumulated.get(
+                         rec.asset_id.id, {}).get('sum', False))
+                rec.accumulated = accum
 
     def _get_sql_view(self):
         sql_view = """
             SELECT ROW_NUMBER() OVER(ORDER BY asset.number, asset.name) AS id,
-                asset.id AS asset_id,
-                asset_line.id AS asset_line_id,
-                asset_line.line_date AS line_date,
-                asset_line.depreciated_value AS depreciated_value,
-                asset_line.remaining_value AS remaining_value,
-                (100/coalesce(asset.method_number, 0.0)) AS method_number,
-                (coalesce(asset_line.remaining_value, 0.0) -
-                coalesce(asset_line.depreciated_value, 0.0)) AS before_nbv,
-                asset_profile.name AS name_asset,
-                asset_profile.id AS asset_profile_id
-            FROM account_asset asset
-            JOIN account_asset_line asset_line
-            ON asset.id = asset_line.asset_id
+            move_line.date AS move_date, asset_profile.id AS asset_profile_id,
+            asset_profile.name AS name_asset, asset.id AS asset_id,
+            (100/coalesce(asset.method_number, 0.0)) AS method_number
+            FROM account_move_line move_line
+            JOIN account_asset asset ON move_line.asset_id = asset.id
+            JOIN account_account account ON move_line.account_id = account.id
+            JOIN account_account_type account_type
+            ON account.user_type = account_type.id
             JOIN account_asset_profile asset_profile
             ON asset.profile_id = asset_profile.id
-            WHERE asset_line.type = 'depreciate'
+            WHERE account_type.name IN
+            ('Depreciation','Accumulated Depreciation')
+            GROUP BY asset.id, asset_profile.id, move_line.date
         """
         return sql_view
 
@@ -93,19 +139,6 @@ class XLSXReportAsset(models.TransientModel):
     _name = 'xlsx.report.asset'
     _inherit = 'report.account.common'
 
-    filter = fields.Selection(
-        readonly=True,
-        default='filter_period',
-    )
-    calendar_period_id = fields.Many2one(
-        'account.period.calendar',
-        string='Calendar Period',
-        required=True,
-        default=lambda self: self.env['account.period.calendar'].find(),
-    )
-    company_id = fields.Many2one(
-        'res.company',
-    )
     asset_status = fields.Selection(
         [('draft', 'Draft'),
          ('open', 'Running'),
@@ -121,6 +154,10 @@ class XLSXReportAsset(models.TransientModel):
         'account.asset.profile',
         string='Asset Profile',
     )
+    date_filter = fields.Char(
+        compute='_compute_date_filter',
+        string='Date Filter',
+    )
     results = fields.Many2many(
         'asset.view',
         string='Results',
@@ -133,16 +170,45 @@ class XLSXReportAsset(models.TransientModel):
         self.ensure_one()
         Result = self.env['asset.view']
         dom = []
-        if self.calendar_period_id:
-            dom += [('line_date', '>=', self.calendar_period_id.date_start),
-                    ('line_date', '<=', self.calendar_period_id.date_stop)]
+        if self.filter == 'filter_date':
+            dom += [('move_date', '>=', self.date_start),
+                    ('move_date', '<=', self.date_end)]
+        if self.filter == 'filter_period':
+            dom += [('move_date', '>=', self.period_start_id.date_start),
+                    ('move_date', '<=', self.period_end_id.date_stop)]
         if self.asset_status:
             dom += [('asset_id.state', '=', self.asset_status)]
         if self.asset_code:
             dom += [('asset_id', 'in', self.asset_code.ids)]
         if self.asset_profile:
             dom += [('asset_profile_id', 'in', self.asset_profile.ids)]
-        self.results = Result.search(dom)
+        result_id = Result.search(dom)
+        self._cr.execute("""
+            SELECT min(id) AS id, asset_id FROM asset_view
+            WHERE id in %s GROUP BY asset_id ORDER BY id
+        """ % (str(tuple(map(int, result_id.ids + [0, 0])))))
+        dict_result = self._cr.dictfetchall()
+        self.results = map(lambda l: l['id'], dict_result)
+
+    @api.multi
+    def _compute_date_filter(self):
+        if self.filter == 'filter_date':
+            date_start = self.date_start
+            date_end = self.date_end
+        elif self.filter == 'filter_period':
+            date_start = self.period_start_id.date_start
+            date_end = self.period_end_id.date_stop
+        else:
+            date_start = self.fiscalyear_start_id.date_start
+            date_end = self.fiscalyear_end_id.date_stop
+        self.date_filter = _(('ตั้งแต่วันที่ %s ถึง %s') % (date_start, date_end))
+
+    @api.multi
+    def action_get_report(self):
+        action = self.env.ref(
+            'cmo_account_report.action_xlsx_report_asset_form')
+        action.write({'context': {'wizard_id': self.id}})
+        return super(XLSXReportAsset, self).action_get_report()
 
     @api.onchange('asset_status')
     def _onchange_asset_status(self):

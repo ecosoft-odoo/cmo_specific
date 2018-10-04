@@ -182,7 +182,7 @@
                         'Asset Report': {
                             '_HEAD_': {
                                 'A2': '${env.user.company_id.partner_id.name}',
-                                'A4': 'calendar_period_id${value and "ตั้งแต่วันที่ %s ถึง %s" % (value.date_start, value.date_stop) or ""}',
+                                'A4': 'date_filter${value or ""}',
                             },
                             'results': {
                                 'A8': "${'=IF(?(S8)=?(S7),\"\",?(S8)'}#{font=bold}",
@@ -191,12 +191,12 @@
                                 'D8': 'asset_id.purchase_date${value or ""}#{number_format=date}',
                                 'E8': 'asset_id.date_start${value or ""}#{number_format=date}',
                                 'F8': 'asset_id.purchase_value${value or 0}#{number_format=number}',
-                                'G8': "${'=?(K8)+?(I8)'}#{number_format=number}",
+                                'G8': "${'=?(K8)-?(J8)'}#{number_format=number}",
                                 'H8': 'method_number${value or 0}#{number_format=number}',
                                 'I8': 'asset_id.salvage_value${value or 0}#{number_format=number}',
-                                'J8': 'move_line_id${value and value.debit or 0}#{number_format=number}',
-                                'K8': 'asset_line_id${value and value.depreciated_value or 0}#{number_format=number}',
-                                'L8': 'remaining_value${value or 0}#{number_format=number}',
+                                'J8': 'depreciation${value or 0}#{number_format=number}',
+                                'K8': 'accumulated${value or 0}#{number_format=number}',
+                                'L8': "${'=?(F8)-?(K8)'}#{number_format=number}",
                                 'M8': 'asset_id.operating_unit_id${value and value.name or ""}',
                                 'N8': 'asset_id.code${value or ""}',
                                 'O8': 'asset_id.note${value or ""}',
