@@ -30,6 +30,7 @@ class PurchaseOrder(models.Model):
                     [('order_id', '=', order.id),
                      ('installment', '=', installment)])[0].ref_invoice_id
                 prepare_prq = self._prepare_prq(installment, invoice)
+                print '-------------------'
                 prq = self.env['purchase.prq'].create(prepare_prq)
                 prq.invoice_id.write({'prq_id': prq.id})
         return res
