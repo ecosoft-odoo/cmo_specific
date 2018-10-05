@@ -160,7 +160,7 @@
                                 'I1': '${"3.00 "}#{number_format=text}',
                                 'J1': 'base_total${value or ""}#{number_format=number}',
                                 'K1': 'tax_total${value or ""}#{number_format=number}',
-                                'L1': 'tax_payer${value and (value == "withholding" and "1" or (value == "paid_one_time" and "3")) or ""}',
+                                'L1': 'tax_payer${value and (value == "withholding" and "1" or (value == "paid_one_time" and "3")) or ""}#{number_format=text}',
                                 'AA1': '${" "}#{number_format=text}',
                             }
                         }
