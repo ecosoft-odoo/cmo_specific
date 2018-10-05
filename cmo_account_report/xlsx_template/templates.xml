@@ -191,7 +191,7 @@
                                 'D8': 'asset_id.purchase_date${value or ""}#{number_format=datestamp}',
                                 'E8': 'asset_id.date_start${value or ""}#{number_format=datestamp}',
                                 'F8': 'asset_id.purchase_value${value or 0}#{number_format=number}',
-                                'G8': "${'=?(L8)-?(J8)'}#{number_format=number}",
+                                'G8': "${'=?(L8)+?(J8)'}#{number_format=number}",
                                 'H8': 'method_number${value or 0}#{number_format=number}',
                                 'I8': 'asset_id.salvage_value${value or 0}#{number_format=number}',
                                 'J8': 'depreciation${value or 0}#{number_format=number}',

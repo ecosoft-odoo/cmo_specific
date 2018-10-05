@@ -9,25 +9,25 @@ class ExpenseCreateSupplierInvoice(models.TransientModel):
         string='Require PRQ',
     )
 
-    @api.multi
-    def _prepare_prq(self, expense):
-        self.ensure_one()
-        return {
-            'type': 'expense',
-            'expense_id': expense.expense_id.id,
-            'invoice_id': expense.expense_id.invoice_id.id,
-        }
-
-    @api.multi
-    def action_create_supplier_invoice(self):
-        res = super(ExpenseCreateSupplierInvoice, self) \
-            .action_create_supplier_invoice()
-        Expense = self.env['hr.expense.line']
-        expense = Expense.search(
-            [('expense_id', '=', self._context.get('active_id', False))])
-        if expense and self.require_prq:
-            prepare_prq = self._prepare_prq(expense)
-            prq = self.env['purchase.prq'].create(prepare_prq)
-            prq.invoice_id.write({'prq_id': prq.id})
-        expense.expense_id.write({'require_prq': self.require_prq})
-        return res
+    # @api.multi
+    # def _prepare_prq(self, expense):
+    #     self.ensure_one()
+    #     return {
+    #         'type': 'expense',
+    #         'expense_id': expense.expense_id.id,
+    #         'invoice_id': expense.expense_id.invoice_id.id,
+    #     }
+    #
+    # @api.multi
+    # def action_create_supplier_invoice(self):
+    #     res = super(ExpenseCreateSupplierInvoice, self) \
+    #         .action_create_supplier_invoice()
+    #     Expense = self.env['hr.expense.line']
+    #     expense = Expense.search(
+    #         [('expense_id', '=', self._context.get('active_id', False))])
+    #     if expense and self.require_prq:
+    #         prepare_prq = self._prepare_prq(expense)
+    #         prq = self.env['purchase.prq'].create(prepare_prq)
+    #         prq.invoice_id.write({'prq_id': prq.id})
+    #     expense.expense_id.write({'require_prq': self.require_prq})
+    #     return res
