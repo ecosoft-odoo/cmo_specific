@@ -131,6 +131,8 @@ def fill_cell_format(field, field_format):
         if key == 'align':
             field.alignment = cell_format
         if key == 'number_format':
+            if value == 'text':
+                field.value = str(field.value)
             field.number_format = cell_format
 
 
@@ -240,14 +242,15 @@ def isdatetime(input):
 
 def str_to_number(input):
     if isinstance(input, basestring):
-        if isdatetime(input):
-            return parse(input)
-        elif isinteger(input):
-            if not (len(input) > 1 and input[:1] == '0'):
-                return int(input)
-        elif isfloat(input):
-            if not (input.find(".") > 2 and input[:1] == '0'):  # i..e, 00.123
-                return float(input)
+        if ' ' not in input:
+            if isdatetime(input):
+                return parse(input)
+            elif isinteger(input):
+                if not (len(input) > 1 and input[:1] == '0'):
+                    return int(input)
+            elif isfloat(input):
+                if not (input.find(".") > 2 and input[:1] == '0'):  # 00.123
+                    return float(input)
     return input
 
 
@@ -272,9 +275,14 @@ def csv_from_excel(excel_content, delimiter, quote):
     wr = csv.writer(content, delimiter=delimiter, quoting=quoting)
     for rownum in xrange(sh.nrows):
         row_vals = map(lambda x: isinstance(x, basestring) and
-                       x.encode('utf-8').strip() or x,
+                       x.encode('utf-8') or x,
                        sh.row_values(rownum))
-        wr.writerow(row_vals)
+        row = []
+        for x in row_vals:
+            if isinstance(x, basestring):
+                x = x.strip()
+            row.append(x)
+        wr.writerow(row)
     # content.close()  # Set index to 0, and start reading
     content.seek(0)  # Set index to 0, and start reading
     out_file = base64.encodestring(content.read())

@@ -15,6 +15,7 @@
         # 'pabi_hr_salary',
         # 'pabi_budget_plan',
         'account_asset_management',
+        'cmo_prq',
     ],
     'data': [
         'cmo_action_asset_compute/security/ir.model.access.csv',

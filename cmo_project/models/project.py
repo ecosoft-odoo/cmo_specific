@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from lxml import etree
+# from lxml import etree
 
 from openerp import fields, models, api
 from openerp.exceptions import ValidationError
@@ -92,14 +92,14 @@ class ProjectProject(models.Model):
         states={'close': [('readonly', True)]},
         compute='_compute_price_and_cost',
         store=True,
-        help="Sum of all amount untaxed quotation.",
+        help="Sum of untaxed amount Quotation.",
     )
     estimate_cost = fields.Float(
         string='Estimate Cost',
         states={'close': [('readonly', True)]},
         compute='_compute_price_and_cost',
         store=True,
-        help="Sum of all amount estimate cost quotation.",
+        help="Sum of untaxed amount estimated unit cost on Quotation.",
     )
     pre_cost = fields.Float(
         string='Pre-Project',
@@ -110,7 +110,7 @@ class ProjectProject(models.Model):
         states={'close': [('readonly', True)]},
         compute='_compute_actual_po',
         store=True,
-        help="Sum of all amount untaxed purchase order.",
+        help="Sum of untaxed amount on Purchase Order.",
     )
     remain_advance = fields.Float(
         string='Advance Balance',
@@ -122,7 +122,7 @@ class ProjectProject(models.Model):
         string='Expense',
         states={'close': [('readonly', True)]},
         compute='_compute_expense',
-        help="Sum of expense related project.",
+        help="Sum of untaxed amount on Expenses and Employee Clearing.",
     )
     date_brief = fields.Date(
         string='Brief Date',
@@ -250,7 +250,7 @@ class ProjectProject(models.Model):
     remaining_cost = fields.Float(
         string='Remaining Cost',
         compute='_compute_remaining_cost',
-        help="(Estimate Cost + Pre Cost) - (Purchase Order + Expense)",
+        help="(estimated cost + pre-project) - (actual PO + expense)",
     )
     out_invoice_ids = fields.One2many(
         'account.invoice',
@@ -546,7 +546,7 @@ class ProjectProject(models.Model):
             expense = sum(expense_lines.filtered(
                 lambda r: (r.expense_id.state in ('done', 'paid')) and
                           (r.expense_id.is_employee_advance is False)
-                          ).mapped('total_amount'))
+                          ).mapped('amount_line_untaxed'))
             project.expense = expense
 
     @api.multi

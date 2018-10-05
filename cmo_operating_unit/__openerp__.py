@@ -9,6 +9,7 @@
     "depends": [
         "operating_unit",
         "stock_account",
+        "account_operating_unit",
     ],
     "license": "AGPL-3",
     "data": [
