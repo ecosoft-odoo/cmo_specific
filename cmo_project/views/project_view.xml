@@ -18,9 +18,6 @@
             <field name="model">project.project</field>
             <field name="inherit_id" ref="project.view_project_project_filter"/>
             <field name="arch" type="xml">
-                  <field name="partner_id" position="after">
-                      <field name="code" string="Project Code"/>
-                  </field>
                   <xpath expr="//field[@name='name']" position="before">
                         <filter string="Latest" name="Latest" domain="[('date_start','&gt;',(context_today()-relativedelta(months=6)).strftime('%%Y-%%m-01'))]"/>
                         <filter string="Draft" name="Draft" domain="[('state','=','draft')]"/>
@@ -35,6 +32,7 @@
                         <filter string="Reject" name="Reject" domain="[('state','=','cancelled'), ('close_reason', '=', 'reject')]"/>
                         <filter string="Terminated" name="Terminated" domain="[('state','=','cancelled'), ('close_reason', '=', 'terminate')]"/>
                         <filter string="Hold" name="Hold" domain="[('state', '=','pending')]"/>
+                        <field string="Project Code" name="code"/>
                   </xpath>
                   <xpath expr="//group/filter[@name='Parent']" position="after">
                         <filter string="Department" name="Department" context="{'group_by':'operating_unit_id'}"/>
