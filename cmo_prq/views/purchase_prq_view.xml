@@ -25,7 +25,7 @@
             <field name="name">view.purchase.prq.tree</field>
             <field name="model">purchase.prq</field>
             <field name="arch" type="xml">
-                <tree>
+                <tree create="false" edit="false">
                     <field name="name"/>
                     <field name="type"/>
                     <field name="prepare_user_id"/>
@@ -39,7 +39,7 @@
             <field name="name">view.purchase.prq.form</field>
             <field name="model">purchase.prq</field>
             <field name="arch" type="xml">
-                <form string="PRQ Sheet">
+                <form string="PRQ Sheet" create="false" edit="false">
                     <header>
                         <button name="action_draft" string="Set to Draft" type="object" states="approve,reject" groups="cmo_prq.group_prq_approver"/>
                         <button name="action_approve" string="Approve" type="object" states="draft" class="oe_highlight" groups="cmo_prq.group_prq_approver"/>
