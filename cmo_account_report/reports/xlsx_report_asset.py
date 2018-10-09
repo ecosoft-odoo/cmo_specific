@@ -32,9 +32,13 @@ class AssetView(models.Model):
         compute='_compute_depreciation',
         string='Depreciation',
     )
-    accumulated = fields.Float(
-        compute='_compute_accumulated',
+    accumulated_cf = fields.Float(
+        compute='_compute_accumulated_cf',
         string='Accumulated Depreciation',
+    )
+    accumulated_bf = fields.Float(
+        compute='_compute_accumulated_bf',
+        string='Accumulated Depreciation Before',
     )
 
     @api.multi
@@ -76,7 +80,7 @@ class AssetView(models.Model):
                 rec.depreciation = depre
 
     @api.multi
-    def _compute_accumulated(self):
+    def _compute_accumulated_cf(self):
         action_id = self._context.get('params', {}).get('action', False)
         if action_id:
             action = self.env['ir.actions.act_window'].browse(action_id)
@@ -92,7 +96,7 @@ class AssetView(models.Model):
             self._cr.execute("""
                 SELECT asset.id AS id,
                 SUM(move_line.credit - move_line.debit)
-                AS accumulated FROM account_move_line move_line
+                AS accumulated_cf FROM account_move_line move_line
                 JOIN account_asset asset ON move_line.asset_id = asset.id
                 JOIN account_account account ON
                 move_line.account_id = account.id
@@ -103,29 +107,93 @@ class AssetView(models.Model):
                 GROUP BY asset.id
             """, (date_end,))
             dictall = self._cr.dictfetchall()
-            temp = [(x['id'], {'sum': x['accumulated']}) for x in dictall]
-            dict_accumulated = dict(temp)
+            temp = [(x['id'], {'sum': x['accumulated_cf']}) for x in dictall]
+            dict_accumulated_cf = dict(temp)
             for rec in self:
-                accum = (dict_accumulated.get(
+                accum = (dict_accumulated_cf.get(
                          rec.asset_id.id, {}).get('sum', False))
-                rec.accumulated = accum
+                rec.accumulated_cf = accum
+
+    @api.multi
+    def _compute_accumulated_bf(self):
+        action_id = self._context.get('params', {}).get('action', False)
+        if action_id:
+            action = self.env['ir.actions.act_window'].browse(action_id)
+            wizard_id = \
+                ast.literal_eval(action.context).get('wizard_id', False)
+            wizard = self.env['xlsx.report.asset'].browse(wizard_id)
+            if wizard.filter == 'filter_date':
+                date_start = wizard.date_start
+            elif wizard.filter == 'filter_period':
+                date_start = wizard.period_start_id.date_start
+            else:
+                date_start = wizard.fiscalyear_start_id.date_start
+            self._cr.execute("""
+                SELECT asset.id AS id,
+                SUM(move_line.credit - move_line.debit)
+                AS accumulated_bf FROM account_move_line move_line
+                JOIN account_asset asset ON move_line.asset_id = asset.id
+                JOIN account_account account ON
+                move_line.account_id = account.id
+                JOIN account_account_type account_type ON
+                account.user_type = account_type.id
+                WHERE account_type.name = 'Accumulated Depreciation'
+                AND move_line.date <= %s
+                GROUP BY asset.id
+            """, (date_start,))
+            dictall = self._cr.dictfetchall()
+            temp = [(x['id'], {'sum': x['accumulated_bf']}) for x in dictall]
+            dict_accumulated_bf = dict(temp)
+            for rec in self:
+                accum = (dict_accumulated_bf.get(
+                         rec.asset_id.id, {}).get('sum', False))
+                rec.accumulated_bf = accum
 
     def _get_sql_view(self):
         sql_view = """
-            SELECT ROW_NUMBER() OVER(ORDER BY asset.number, asset.name) AS id,
-            move_line.date AS move_date, asset_profile.id AS asset_profile_id,
-            asset_profile.name AS name_asset, asset.id AS asset_id,
-            (100/coalesce(asset.method_number, 0.0)) AS method_number
-            FROM account_move_line move_line
-            JOIN account_asset asset ON move_line.asset_id = asset.id
-            JOIN account_account account ON move_line.account_id = account.id
-            JOIN account_account_type account_type
-            ON account.user_type = account_type.id
-            JOIN account_asset_profile asset_profile
-            ON asset.profile_id = asset_profile.id
-            WHERE account_type.name IN
-            ('Depreciation','Accumulated Depreciation')
-            GROUP BY asset.id, asset_profile.id, move_line.date
+            SELECT ROW_NUMBER() OVER() AS id, * FROM (
+                SELECT move_line.date AS move_date,
+                    asset_profile.id AS asset_profile_id,
+                    asset_profile.name AS name_asset, asset.id AS asset_id,
+                    (100/coalesce(asset.method_number, 0.0)) AS method_number
+                FROM account_move_line move_line
+                JOIN account_asset asset ON move_line.asset_id = asset.id
+                JOIN account_account account
+                ON move_line.account_id = account.id
+                JOIN account_account_type account_type
+                ON account.user_type = account_type.id
+                JOIN account_asset_profile asset_profile
+                ON asset.profile_id = asset_profile.id
+                WHERE account_type.name IN
+                    ('Depreciation','Accumulated Depreciation')
+                GROUP BY asset.id, asset_profile.id, move_line.date
+                UNION ALL
+                SELECT move_line.date AS move_date, asset_profile.id
+                    AS asset_profile_id, asset_profile.name AS name_asset,
+                    asset.id AS asset_id, CASE WHEN
+                    coalesce(asset.method_number, 0.0) != 0.0
+                    THEN (100/coalesce(asset.method_number, 0.0))
+                    ELSE asset.method_number END AS method_number
+                FROM account_asset asset
+                LEFT JOIN account_move_line move_line
+                ON move_line.asset_id = asset.id
+                LEFT JOIN account_account account
+                ON move_line.account_id = account.id
+                LEFT JOIN account_account_type account_type
+                ON account.user_type = account_type.id
+                LEFT JOIN account_asset_profile asset_profile
+                ON asset.profile_id = asset_profile.id
+                WHERE asset.id NOT IN (
+                    SELECT move_line.asset_id FROM account_move_line move_line
+                    JOIN account_account account
+                    ON move_line.account_id = account.id
+                    JOIN account_account_type account_type
+                    ON account.user_type = account_type.id
+                    WHERE account_type.name IN ('Depreciation',
+                        'Accumulated Depreciation') AND
+                        move_line.asset_id IS NOT NULL)
+                ) AS aml
+            ORDER BY asset_profile_id
         """
         return sql_view
 
