@@ -31,7 +31,7 @@ logger.info('Start process')
 logger.info('Total asset: %s' % len(assets))
 for asset in assets:
     try:
-        Asset.mork_validate([asset['id']])
+        Asset.mock_validate([asset['id']])
         log_asset_ids[0].append(asset['id'])
         logger.info('Pass ID: %s' % asset['id'])
     except Exception as ex:

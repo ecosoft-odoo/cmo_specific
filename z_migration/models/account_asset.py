@@ -6,11 +6,11 @@ class AccountAsset(models.Model):
     _inherit = 'account.asset'
 
     @api.multi
-    def mork_compute_depreciation_board(self):
+    def mock_compute_depreciation_board(self):
         self.compute_depreciation_board()
         return True
 
     @api.multi
-    def mork_validate(self):
+    def mock_validate(self):
         self.validate()
         return True
