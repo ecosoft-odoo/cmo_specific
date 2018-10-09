@@ -151,7 +151,7 @@ class AssetView(models.Model):
 
     def _get_sql_view(self):
         sql_view = """
-            SELECT ROW_NUMBER() OVER() AS id, * FROM (
+            SELECT ROW_NUMBER() OVER(ORDER BY asset_profile_id) AS id, * FROM (
                 SELECT move_line.date AS move_date,
                     asset_profile.id AS asset_profile_id,
                     asset_profile.name AS name_asset, asset.id AS asset_id,
@@ -193,7 +193,6 @@ class AssetView(models.Model):
                         'Accumulated Depreciation') AND
                         move_line.asset_id IS NOT NULL)
                 ) AS aml
-            ORDER BY asset_profile_id
         """
         return sql_view
 
