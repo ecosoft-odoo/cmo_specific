@@ -28,10 +28,10 @@ class SaleOrderLine(models.Model):
         # filter order line from quotation
         if context.get('order_ref', False):
             order = self.env['sale.order'].browse(context.get('order_ref'))
-            domain = [('id', 'in', order.order_line.ids),
-                      ('active', '=', True)] + domain
+            domain += [('id', 'in', order.order_line.ids),
+                       ('active', '=', True)]
         elif 'order_ref' in context:
-            domain = [('id', 'in', [])]
+            domain += [('id', 'in', [])]
         return domain
 
     @api.model
@@ -83,10 +83,9 @@ class SaleLayoutCategory(models.Model):
         if context.get('sale_order_line_ref_id', False):
             order_line = self.env['sale.order.line'].browse(
                 context.get('sale_order_line_ref_id'))
-            domain = [('id', 'in', [order_line.sale_layout_cat_id.id])] + \
-                domain
+            domain += [('id', 'in', [order_line.sale_layout_cat_id.id])]
         elif 'sale_order_line_ref_id' in context:
-            domain = [('id', 'in', [])]
+            domain += [('id', 'in', [])]
         return domain
 
     @api.model

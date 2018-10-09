@@ -15,17 +15,17 @@ class ProductProduct(models.Model):
             order = self.env['sale.order'].browse(context.get('order_ref'))
             product_ids = order.order_line.filtered(
                 lambda r: r.sale_layout_custom_group == custom_group)
-            domain = [('id', 'in', product_ids.ids)] + domain
+            domain += [('id', 'in', product_ids.ids)]
         elif 'order_ref' in context:
-            domain = [('id', 'in', [])]
+            domain += [('id', 'in', [])]
 
         # search Product Ref from sale order line
         if context.get('sale_order_line_ref_id', False):
             order_line = self.env['sale.order.line'].browse(
                 context.get('sale_order_line_ref_id'))
-            domain = [('id', 'in', [order_line.product_id.id])] + domain
+            domain += [('id', 'in', [order_line.product_id.id])]
         elif 'sale_order_line_ref_id' in context:
-            domain = [('id', 'in', [])]
+            domain += [('id', 'in', [])]
 
         # Search products by category
         if context.get('po_type_id', False):
@@ -34,9 +34,9 @@ class ProductProduct(models.Model):
             po_type_config = PoTypeConfig.browse(po_type_id)
             categ_ids = po_type_config.category_ids.ids
             product = self.search([('categ_id', 'in', categ_ids)])
-            domain = [('id', 'in', product.ids)] + domain
+            domain += [('id', 'in', product.ids)]
         elif 'po_type_id' in context:
-            domain = [('id', 'in', [])]
+            domain += [('id', 'in', [])]
         return domain
 
     @api.model
