@@ -112,7 +112,7 @@
                     <header>
                         <button name="post_entries" string="Post Entries" class="oe_highlight" confirm="Post all entries?" type="object" states="draft"/>
                         <button name="delete_unposted_entries" string="Delete Unposted Entries" confirm="Are you sure to delete unposted entries?" type="object" states="draft"/>
-                        <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,posted,deleted"/>
+                        <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,posted,cancel"/>
                     </header>
                     <sheet>
                         <div class="oe_button_box oe_right">

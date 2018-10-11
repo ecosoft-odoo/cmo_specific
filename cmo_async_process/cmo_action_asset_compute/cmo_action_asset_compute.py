@@ -410,12 +410,12 @@ class CMOAssetDepreBatch(models.Model):
     state = fields.Selection(
         [('draft', 'Draft'),
          ('posted', 'Posted'),
-         ('deleted', 'Deleted')],
+         ('cancel', 'Cancelled')],
         string='State',
         default='draft',
         help="* Draft: first created, user prevew\n"
         "* Posted: all journal entries posted\n"
-        "* Deleted: user choose to delete and will redo again"
+        "* Cancelled: user choose to delete and will redo again"
     )
     move_ids = fields.One2many(
         'account.move',
@@ -449,8 +449,9 @@ class CMOAssetDepreBatch(models.Model):
     @api.multi
     def _compute_je_number(self):
         for rec in self:
-            rec.journal_number = '%s - %s' % (rec.move_ids[-1].name,
-                                              rec.move_ids[0].name)
+            if rec.move_ids:
+                rec.journal_number = '%s - %s' % (rec.move_ids[-1].name,
+                                                  rec.move_ids[0].name)
         return True
 
     @api.multi
@@ -495,13 +496,34 @@ class CMOAssetDepreBatch(models.Model):
 
     @api.multi
     def delete_unposted_entries(self):
-        AccountMove = self.env['account.move']
+        """ For fast removal, we use SQL """
         for rec in self:
-            moves = AccountMove.search([('id', 'in', rec.move_ids.ids),
-                                        ('state', '=', 'draft'),
-                                        ('name', 'in', (False, '/'))])
-            moves.with_context(unlink_from_asset=True).unlink()
-            rec.write({'state': 'deleted'})
+            # disable trigger, for faster execution
+            self._cr.execute("""
+                alter table account_move_line disable trigger all""")
+            self._cr.execute("""
+                alter table account_move disable trigger all""")
+            # reset move_check in depre line
+            self._cr.execute("""
+                update account_asset_line set move_check = false
+                where move_id in (
+                    select id from account_move
+                    where asset_depre_batch_id = %s)
+            """, (rec.id, ))
+            # delete from table
+            self._cr.execute("""
+                delete from account_move_line where asset_depre_batch_id = %s
+            """, (rec.id, ))
+            self._cr.execute("""
+                delete from account_move where asset_depre_batch_id = %s
+                and state = 'draft' and name in (null, '/')
+            """, (rec.id, ))
+            # enable trigger, for faster execution
+            self._cr.execute("""
+                alter table account_move_line enable trigger all""")
+            self._cr.execute("""
+                alter table account_move enable trigger all""")
+        self.write({'state': 'cancel'})
         return True
 
     @api.multi
