@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_customer_payment" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
-	<property name="ireport.zoom" value="1.1"/>
+	<property name="ireport.zoom" value="1.1000000000000005"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="481"/>
+	<property name="ireport.y" value="144"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -64,6 +64,21 @@
 	</field>
 	<field name="preprint_number" class="java.lang.String">
 		<fieldDescription><![CDATA[number_preprint]]></fieldDescription>
+	</field>
+	<field name="journal_id" class="java.lang.String">
+		<fieldDescription><![CDATA[line_ids/move_line_id/journal_id/name]]></fieldDescription>
+	</field>
+	<field name="note" class="java.lang.String">
+		<fieldDescription><![CDATA[note]]></fieldDescription>
+	</field>
+	<field name="paid_amount" class="java.lang.Number">
+		<fieldDescription><![CDATA[amount]]></fieldDescription>
+	</field>
+	<field name="tax" class="java.lang.String">
+		<fieldDescription><![CDATA[tax_line_normal/amount]]></fieldDescription>
+	</field>
+	<field name="voucher_id" class="java.lang.String">
+		<fieldDescription><![CDATA[voucher_id]]></fieldDescription>
 	</field>
 	<sortField name="invoice_type"/>
 	<variable name="amount_untaxed" class="java.lang.Number">
@@ -134,22 +149,56 @@
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="25" splitType="Prevent">
+		<band height="55" splitType="Prevent">
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement x="400" y="0" width="155" height="25" isPrintWhenDetailOverflows="true"/>
+				<reportElement x="400" y="0" width="155" height="25" isPrintWhenDetailOverflows="true">
+					<printWhenExpression><![CDATA[$F{journal_id}!='Opening Entries Journal']]></printWhenExpression>
+				</reportElement>
 				<box rightPadding="2"/>
-				<textElement textAlignment="Right" lineSpacing="Double">
+				<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Double">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$V{amount_untaxed} != null ? ($F{invoice_type} == "out_invoice" ? $V{amount_untaxed} : (-1) * $V{amount_untaxed}) : 0]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement x="18" y="0" width="385" height="25" isPrintWhenDetailOverflows="true"/>
+				<reportElement x="18" y="0" width="385" height="25" isPrintWhenDetailOverflows="true">
+					<printWhenExpression><![CDATA[$F{journal_id}!='Opening Entries Journal']]></printWhenExpression>
+				</reportElement>
 				<box topPadding="3" leftPadding="5" bottomPadding="3" rightPadding="5"/>
 				<textElement lineSpacing="Double">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{others_note}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement x="18" y="0" width="385" height="25" isPrintWhenDetailOverflows="true">
+					<printWhenExpression><![CDATA[$F{journal_id}=='Opening Entries Journal']]></printWhenExpression>
+				</reportElement>
+				<box topPadding="3" leftPadding="5" bottomPadding="3" rightPadding="5"/>
+				<textElement lineSpacing="Double">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{note}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="400" y="1" width="155" height="25" isPrintWhenDetailOverflows="true">
+					<printWhenExpression><![CDATA[$F{journal_id}=='Opening Entries Journal']]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2"/>
+				<textElement textAlignment="Right" lineSpacing="Double">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{paid_amount}-($F{paid_amount}*0.07)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="238" y="35" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tax}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="152" y="35" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{voucher_id}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -159,14 +208,18 @@
 	<lastPageFooter>
 		<band height="350" splitType="Stretch">
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement x="400" y="109" width="155" height="20"/>
+				<reportElement x="400" y="109" width="155" height="20">
+					<printWhenExpression><![CDATA[$F{journal_id}!='Opening Entries Journal']]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$V{total_amount_untaxed} != null ? $V{total_amount_untaxed} : 0]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement x="400" y="149" width="155" height="20"/>
+				<reportElement x="400" y="149" width="155" height="20">
+					<printWhenExpression><![CDATA[$F{journal_id}!='Opening Entries Journal']]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -180,7 +233,9 @@
 				<textFieldExpression class="java.lang.String"><![CDATA["(" + ($P{REPORT_LOCALE}.toString() == "en_US" ? $F{amount_total_text_en} : $F{amount_total_text_th}) + ")"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement x="400" y="129" width="155" height="20"/>
+				<reportElement x="400" y="129" width="155" height="20">
+					<printWhenExpression><![CDATA[$F{journal_id}!='Opening Entries Journal']]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -200,6 +255,36 @@
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{number} != null && $F{number} != "" ? "Ref." + $F{number} : ""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+				<reportElement x="400" y="109" width="155" height="20" isPrintWhenDetailOverflows="true">
+					<printWhenExpression><![CDATA[$F{journal_id}=='Opening Entries Journal']]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2"/>
+				<textElement textAlignment="Right" lineSpacing="Single">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{paid_amount}-($F{paid_amount}*0.07)]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+				<reportElement x="400" y="129" width="155" height="20" isPrintWhenDetailOverflows="true">
+					<printWhenExpression><![CDATA[$F{journal_id}=='Opening Entries Journal']]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2"/>
+				<textElement textAlignment="Right" lineSpacing="Single">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{paid_amount}*0.07]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+				<reportElement x="400" y="149" width="155" height="20" isPrintWhenDetailOverflows="true">
+					<printWhenExpression><![CDATA[$F{journal_id}=='Opening Entries Journal']]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2"/>
+				<textElement textAlignment="Right" lineSpacing="Single">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{paid_amount}]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>
