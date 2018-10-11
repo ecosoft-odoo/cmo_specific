@@ -528,10 +528,48 @@ class CMOAssetDepreBatch(models.Model):
 
     @api.multi
     def post_entries(self):
-        for rec in self:
-            rec.move_ids.post()
-            rec.write({'state': 'posted'})
+        """ For fast post, just by pass all other checks """
+        for batch in self:
+            ctx = {'fiscalyear_id': batch.period_id.fiscalyear_id.id}
+            Sequence = self.with_context(ctx).env['ir.sequence']
+            self._cr.execute("""
+                select m.id, j.sequence_id, m.ref,
+                    (select max(asset_id)
+                     from account_move_line where move_id = m.id) asset_id
+                from account_move m
+                join account_journal j on j.id = m.journal_id
+                where m.asset_depre_batch_id = %s
+                and m.state = 'draft' and m.name in (null, '/')
+            """, (batch.id, ))
+            moves = [(x[0], x[1], x[2], x[3]) for x in self._cr.fetchall()]
+            # Prepare sequence for immediate update
+            for move_id, sequence_id, ref, asset_id in moves:
+                new_name = Sequence.next_by_id(sequence_id)
+                # Update sequence
+                self._cr.execute("""
+                    update account_move
+                    set name = %s, state = 'posted' where id = %s
+                """, (new_name, move_id))
+                # Update depreciation line
+                self._cr.execute("""
+                    update account_asset_line asl
+                    set move_id = %s, move_check = true
+                    where asl.name = %s
+                """, (move_id, ref))  # ref is the depre_line_id
+                # Finally recompute asset residual value
+                asset = self.env['account.asset'].browse(asset_id)
+                asset._compute_depreciation()
+                asset._set_close_asset_zero_value()
+                self._cr.commit()
+        self.write({'state': 'posted'})
         return True
+
+    # @api.multi
+    # def post_entries(self):
+    #     for rec in self:
+    #         rec.move_ids.post()
+    #         rec.write({'state': 'posted'})
+    #     return True
 
     @api.multi
     def _compute_amount(self):

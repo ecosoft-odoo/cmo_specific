@@ -38,6 +38,11 @@ class AccountAsset(models.Model):
         for rec in self:
             rec.value_net_book = rec.purchase_value - rec.value_depreciated
 
+    @api.model
+    def _get_depreciation_entry_name(self, seq):
+        """ change from code to number """
+        return (self.number or str(self.id)) + '/' + str(seq)
+
     @api.multi
     def validate(self):
         for asset in self:
