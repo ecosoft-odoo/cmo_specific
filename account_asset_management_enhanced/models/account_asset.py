@@ -23,6 +23,7 @@ class AccountAsset(models.Model):
     value_net_book = fields.Float(
         string='Net Book Value',
         compute='_compute_value_net_book',
+        help='calculate from (purchase value - depreciated value)',
     )
     operating_unit_id = fields.Many2one(
         'operating.unit',
