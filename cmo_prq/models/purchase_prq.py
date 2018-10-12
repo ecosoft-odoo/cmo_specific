@@ -43,9 +43,33 @@ class PurchasePRQ(models.Model):
         readonly=True,
         track_visibility='onchange',
     )
+    partner_id = fields.Many2one(
+        'res.partner',
+        related='purchase_id.partner_id',
+        string='Supplier',
+        readonly=True,
+    )
+    project_id = fields.Many2one(
+        'project.project',
+        related='purchase_id.project_id',
+        string='Project Name',
+        readonly=True,
+    )
+    order_ref = fields.Many2one(
+        'sale.order',
+        related='purchase_id.order_ref',
+        string='Quotation Number',
+        readonly=True,
+    )
+    date_order = fields.Datetime(
+        related='purchase_id.date_order',
+        string='Order Date',
+        readonly=True,
+    )
     state = fields.Selection(
         [('draft', 'Draft'),
          ('approve', 'Approved'),
+         ('done', 'Done'),
          ('reject', 'Rejected')],
         default='draft',
         string='Status',
