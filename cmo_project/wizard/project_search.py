@@ -5,19 +5,24 @@ from openerp import models, fields, api
 class ProjectSearch(models.TransientModel):
     _name = 'project.search.wizard'
 
-    project_id = fields.Many2one(
-        'project.project',
-        string="Project Name",
+    project_name = fields.Char(
+        string='Project Name',
+    )
+    project_code = fields.Char(
+        string='Project Code',
+    )
+    project_place = fields.Char(
+        string='Project Place',
     )
     user_id = fields.Many2one(
         'res.users',
-        string="Project Manager",
+        string='Create By',
     )
     date_start = fields.Date(
-        string="Start Date",
+        string='Start Date',
     )
     date_end = fields.Date(
-        string="End Date",
+        string='End Date',
     )
     operating_unit_id = fields.Many2one(
         'operating.unit',
@@ -45,6 +50,10 @@ class ProjectSearch(models.TransientModel):
         'project.location',
         string='Location',
     )
+    agency_partner_id = fields.Many2one(
+        'res.partner',
+        string='Agency',
+    )
     stage = fields.Selection(
         [('draft', 'Draft'),
          ('validate', 'Validate'),
@@ -61,13 +70,83 @@ class ProjectSearch(models.TransientModel):
         'project.obligation',
         string='Obligation',
     )
+    project_manager_id = fields.Many2one(
+        'hr.employee',
+        string='Project Manager',
+    )
+    designer_id = fields.Many2one(
+        'hr.employee',
+        string='Designer',
+    )
+    procurement_id = fields.Many2one(
+        'hr.employee',
+        string='Procurement',
+    )
+    production_id = fields.Many2one(
+        'hr.employee',
+        string='Production',
+    )
+    creative_id = fields.Many2one(
+        'hr.employee',
+        string='Creative',
+    )
+    graphic_id = fields.Many2one(
+        'hr.employee',
+        string='Graphic',
+    )
+    producer_id = fields.Many2one(
+        'hr.employee',
+        string='Producer',
+    )
+    asst_production_id = fields.Many2one(
+        'hr.employee',
+        string='Asst. Production',
+    )
 
     @api.multi
     def search_project(self):
         self.ensure_one()
-        dom = []
-        if self.project_id:
-            dom += [('id', '=', self.project_id.id)]
+        dom_team = []
+        pos = []
+        if self.project_manager_id:
+            dom_team += [('employee_id', '=', self.project_manager_id.id)]
+            pos += [self.env.ref('cmo_project.project_position_1', False).id]
+        if self.designer_id:
+            dom_team += [('employee_id', '=', self.designer_id.id)]
+            pos += [self.env.ref('cmo_project.project_position_2', False).id]
+        if self.procurement_id:
+            dom_team += [('employee_id', '=', self.procurement_id.id)]
+            pos += [self.env.ref('cmo_project.project_position_3', False).id]
+        if self.production_id:
+            dom_team += [('employee_id', '=', self.production_id.id)]
+            pos += [self.env.ref('cmo_project.project_position_4', False).id]
+        if self.creative_id:
+            dom_team += [('employee_id', '=', self.creative_id.id)]
+            pos += [self.env.ref('cmo_project.project_position_5', False).id]
+        if self.graphic_id:
+            dom_team += [('employee_id', '=', self.graphic_id.id)]
+            pos += [self.env.ref('cmo_project.project_position_6', False).id]
+        if self.producer_id:
+            dom_team += [('employee_id', '=', self.producer_id.id)]
+            pos += [self.env.ref('cmo_project.project_position_7', False).id]
+        if self.asst_production_id:
+            dom_team += [('employee_id', '=', self.asst_production_id.id)]
+            pos += [self.env.ref('cmo_project.project_position_8', False).id]
+        dom_team += [('position_id', 'in', pos)]
+        Team = self.env['project.team.member']
+        team_ids = Team.search(dom_team)
+        project_id = []
+        for rec in team_ids:
+            project_id += rec.project_id.ids
+        dom = [('id', 'in', project_id)]
+        if not project_id:
+            dom = []
+        if self.project_code:
+            dom += [('code', 'like', self.project_code)]
+        if self.project_name:
+            dom += [('name', 'like', self.project_name)]
+        if self.project_place:
+            dom += [('project_place', 'like', self.project_place)]
         if self.user_id:
             dom += [('user_id', '=', self.user_id.id)]
         if self.date_start:
@@ -101,3 +180,14 @@ class ProjectSearch(models.TransientModel):
         result.update({'domain': [('id', 'in', project_ids)],
                        'context': {}, })
         return result
+
+    @api.model
+    def default_get(self, fields_list):
+        res = super(ProjectSearch, self).default_get(fields_list)
+        Fiscalyear = self.env['account.fiscalyear'].find()
+        fiscalyear = self.env['account.fiscalyear'].browse(Fiscalyear)
+        if 'date_start' in fields_list:
+            res.update({'date_start': fiscalyear.date_start})
+        if 'date_end' in fields_list:
+            res.update({'date_end': fiscalyear.date_stop})
+        return res
