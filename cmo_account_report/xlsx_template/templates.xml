@@ -186,31 +186,31 @@
                             },
                             'results': {
                                 'A8': "${'=IF(?(S8)=?(S7),\"\",?(S8)'}#{font=bold}",
-                                'B8': 'asset_id.number${value or ""}',
-                                'C8': 'asset_id.name${value or ""}',
-                                'D8': 'asset_id.purchase_date${value or ""}#{number_format=datestamp}',
-                                'E8': 'asset_id.date_start${value or ""}#{number_format=datestamp}',
-                                'F8': 'asset_id.purchase_value${value or 0}#{number_format=number}',
+                                'B8': 'number${value or ""}',
+                                'C8': 'name${value or ""}',
+                                'D8': 'purchase_date${value or ""}#{number_format=datestamp}',
+                                'E8': 'date_start${value or ""}#{number_format=datestamp}',
+                                'F8': 'purchase_value${value or 0}#{number_format=number}',
                                 'G8': 'accumulated_bf${value or 0}#{number_format=number}',
-                                'H8': 'method_number${value or 0}#{number_format=number}',
-                                'I8': 'asset_id.salvage_value${value or 0}#{number_format=number}',
+                                'H8': 'method_number${value and (100/value) or 0}#{number_format=number}',
+                                'I8': 'salvage_value${value or 0}#{number_format=number}',
                                 'J8': 'depreciation${value or 0}#{number_format=number}',
                                 'K8': 'accumulated_cf${value or 0}#{number_format=number}',
                                 'L8': "${'=?(F8)-?(K8)'}#{number_format=number}",
-                                'M8': 'asset_id.operating_unit_id${value and value.name or ""}',
-                                'N8': 'asset_id.code${value or ""}',
-                                'O8': 'asset_id.note${value or ""}',
+                                'M8': 'operating_unit_id${value and value.name or ""}',
+                                'N8': 'code${value or ""}',
+                                'O8': 'note${value or ""}',
                                 # Hide Asset name
-                                'S8': 'name_asset${value or ""}',
+                                'S8': 'profile_id${value and value.name or ""}',
                             },
-                            '_GROUPBY_results["name_asset"]': {  # groupby
+                            '_GROUPBY_results["profile_id"]': {  # groupby
                                 'F8': '@{sum}#{font=bold;number_format=number}',
                                 'G8': '@{sum}#{font=bold;number_format=number}',
                                 'J8': '@{sum}#{font=bold;number_format=number}',
                                 'K8': '@{sum}#{font=bold;number_format=number}',
                                 'L8': '@{sum}#{font=bold;number_format=number}',
                             },
-                        },
+                        }
                     }
                 }
             </field>
