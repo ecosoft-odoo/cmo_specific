@@ -34,6 +34,11 @@ class AccountVoucher(models.Model):
         string='Invoices Ref',
         compute='_compute_invoices_ref',
     )
+    note = fields.Text(
+        string='Company Bank Account',
+        readonly=True,
+        states={'draft': [('readonly', False)]},
+    )
 
     @api.multi
     def _compute_invoices_ref(self):

@@ -37,6 +37,10 @@
                 <xpath expr="//form/sheet/group/group[1]" position="inside">
                     <field name="number_preprint"/>
                 </xpath>
+                <field name="narration" position="after">
+                    <field name="note" nolabel="1" colspan="2"
+                           placeholder="Only for migration. This will be shown on line of Receipt/Tax invoice form."/>
+                </field>
             </field>
         </record>
 
