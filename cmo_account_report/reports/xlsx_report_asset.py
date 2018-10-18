@@ -12,19 +12,16 @@ class AssetView(models.AbstractModel):
         string='Asset ID',
     )
     depreciation = fields.Float(
-        # compute='_compute_depreciation',
         string='Depreciation',
     )
     accumulated_cf = fields.Float(
-        # compute='_compute_accumulated_cf',
         string='Accumulated Depreciation',
     )
     accumulated_bf = fields.Float(
-        # compute='_compute_accumulated_bf',
         string='Accumulated Depreciation Before',
     )
 
-
+    
 class XLSXReportAsset(models.TransientModel):
     _name = 'xlsx.report.asset'
     _inherit = 'report.account.common'

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp import fields, models
+from openerp import fields, models, api
 
 
 class AccountInvoice(models.Model):
@@ -11,3 +11,11 @@ class AccountInvoice(models.Model):
         index=True,
         ondelete='set null',
     )
+
+    @api.multi
+    def write(self, vals):
+        for invoice in self:
+            if vals.get('state', False) == 'paid':
+                invoice.prq_id.state = 'done'
+        res = super(AccountInvoice, self).write(vals)
+        return res
