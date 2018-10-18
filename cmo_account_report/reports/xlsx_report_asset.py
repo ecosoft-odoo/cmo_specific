@@ -130,7 +130,7 @@ class AssetView(models.Model):
                 date_start = wizard.fiscalyear_start_id.date_start
             self._cr.execute("""
                 SELECT asset.id AS id,
-                SUM(move_line.credit - move_line.debit)
+                asset.purchase_value - SUM(move_line.credit - move_line.debit)
                 AS accumulated_bf FROM account_move_line move_line
                 JOIN account_asset asset ON move_line.asset_id = asset.id
                 JOIN account_account account ON
@@ -138,7 +138,7 @@ class AssetView(models.Model):
                 JOIN account_account_type account_type ON
                 account.user_type = account_type.id
                 WHERE account_type.name = 'Accumulated Depreciation'
-                AND move_line.date <= %s
+                AND move_line.date < %s
                 GROUP BY asset.id
             """, (date_start,))
             dictall = self._cr.dictfetchall()
