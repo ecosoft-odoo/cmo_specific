@@ -38,6 +38,14 @@ class HrExpenseExpense(models.Model):
     )
 
     @api.multi
+    def expense_confirm(self):
+        res = super(HrExpenseExpense, self).expense_confirm()
+        if self.employee_id.user_id.id != self.env.user.id and not \
+                self.env.user.has_group('base.group_erp_manager'):
+            raise ValidationError(_("Not permission to sent this file."))
+        return res
+
+    @api.multi
     def action_check_approval(self):
         self.ensure_one()
         amount = self.amount
