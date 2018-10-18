@@ -146,7 +146,7 @@ class sale_order(models.Model):
                         'quote_id': self.id,
                         'client_order_ref': self.client_order_ref,
                         'partner_id': plan.customer_id.id,
-                        'discount_rate': 0.0
+                        'discount_rate': 0.0,
                     })
                     new_sale_order.write({'active': True})
                     if self.use_merge:

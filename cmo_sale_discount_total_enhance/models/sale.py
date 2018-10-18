@@ -94,6 +94,9 @@ class sale_order(models.Model):
             for line in order.order_line:
                 amount_untaxed += line.price_subtotal
                 amount_tax += self._amount_line_tax(line)
+                if order.order_type == 'sale_order' and \
+                   order.use_multi_customer is True:
+                    line.discount = 0
                 amount_discount += cur.round(
                     line.product_uom_qty * line.price_unit *
                     line.discount / 100
