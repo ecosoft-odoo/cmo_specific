@@ -16,6 +16,6 @@ class AccountInvoice(models.Model):
     def write(self, vals):
         for invoice in self:
             if vals.get('state', False) == 'paid':
-                invoice.prq_id.state = 'done'
+                invoice.prq_id.write({'state': 'done'})
         res = super(AccountInvoice, self).write(vals)
         return res

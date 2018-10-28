@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        # Some critical models must be readonly, except for Biz Admin
+        <function model="ir.model.access" name="write" >
+            <function model="ir.model.access" name="search"
+                eval="[[('model_id','in', (
+                  ref('account.model_account_fiscalyear'),
+                  ref('account.model_account_period'),
+                  ref('account.model_account_account'),
+                  ref('product.model_product_uom'),
+                )),
+                ('group_id', '!=', ref('base.group_system')), ]]" />
+            <value eval="{'perm_unlink': False,
+                          'perm_write': False,
+                          'perm_create': False,
+                          'perm_read': True}" />
+        </function>
+    </data>
+</openerp>
