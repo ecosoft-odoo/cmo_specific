@@ -21,7 +21,7 @@ class AssetView(models.AbstractModel):
         string='Accumulated Depreciation Before',
     )
 
-    
+
 class XLSXReportAsset(models.TransientModel):
     _name = 'xlsx.report.asset'
     _inherit = 'report.account.common'
@@ -163,7 +163,7 @@ class XLSXReportAsset(models.TransientModel):
     def action_get_report(self):
         action = self.env.ref(
             'cmo_account_report.action_xlsx_report_asset_form')
-        action.write({'context': {'wizard_id': self.id}})
+        action.sudo().write({'context': {'wizard_id': self.id}})
         return super(XLSXReportAsset, self).action_get_report()
 
     @api.onchange('asset_status')
