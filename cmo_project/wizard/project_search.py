@@ -135,50 +135,55 @@ class ProjectSearch(models.TransientModel):
         dom_team += [('position_id', 'in', pos)]
         Team = self.env['project.team.member']
         team_ids = Team.search(dom_team)
-        project_id = []
-        for rec in team_ids:
-            project_id += rec.project_id.ids
-        dom = [('id', 'in', project_id)]
-        if not project_id:
-            dom = []
-        if self.project_code:
-            dom += [('code', 'like', self.project_code)]
-        if self.project_name:
-            dom += [('name', 'like', self.project_name)]
-        if self.project_place:
-            dom += [('project_place', 'like', self.project_place)]
-        if self.user_id:
-            dom += [('user_id', '=', self.user_id.id)]
-        if self.date_start:
-            dom += [('date_start', '>=', self.date_start)]
-        if self.date_end:
-            dom += [('date', '<=', self.date_end)]
-        if self.operating_unit_id:
-            dom += [('operating_unit_id', '=', self.operating_unit_id.id)]
-        if self.project_type_id:
-            dom += [('project_type_id', '=', self.project_type_id.id)]
-        if self.project_from_id:
-            dom += [('project_from_id', '=', self.project_from_id.id)]
-        if self.function_id:
-            dom += [('function_id', '=', self.function_id.id)]
-        if self.project_budget_from:
-            dom += [('project_budget', '>=', self.project_budget_from)]
-        if self.project_budget_to:
-            dom += [('project_budget', '<=', self.project_budget_to)]
-        if self.location_id:
-            dom += [('location_id', '=', self.location_id.id)]
-        if self.stage:
-            dom += [('state', '=', self.stage)]
-        if self.client_type_id:
-            dom += [('client_type_id', '=', self.client_type_id.id)]
-        if self.obligation_id:
-            dom += [('obligation_id', '=', self.obligation_id.id)]
-        Project = self.env['project.project']
-        project_ids = Project.search(dom).ids
-        action = self.env.ref('project.open_view_project_all')
-        result = action.read()[0]
-        result.update({'domain': [('id', 'in', project_ids)],
-                       'context': {}, })
+        project_id = team_ids.mapped('project_id.id')
+        # condition Find not found
+        if not project_id and pos:
+            action = self.env.ref('project.open_view_project_all')
+            result = action.read()[0]
+            result.update({'domain': [('id', 'in', project_id)],
+                           'context': {}, })
+        else:
+            dom = [('id', 'in', project_id)]
+            if not project_id:
+                dom = []
+            if self.project_code:
+                dom += [('code', 'like', self.project_code)]
+            if self.project_name:
+                dom += [('name', 'like', self.project_name)]
+            if self.project_place:
+                dom += [('project_place', 'like', self.project_place)]
+            if self.user_id:
+                dom += [('user_id', '=', self.user_id.id)]
+            if self.date_start:
+                dom += [('date_start', '>=', self.date_start)]
+            if self.date_end:
+                dom += [('date', '<=', self.date_end)]
+            if self.operating_unit_id:
+                dom += [('operating_unit_id', '=', self.operating_unit_id.id)]
+            if self.project_type_id:
+                dom += [('project_type_id', '=', self.project_type_id.id)]
+            if self.project_from_id:
+                dom += [('project_from_id', '=', self.project_from_id.id)]
+            if self.function_id:
+                dom += [('function_id', '=', self.function_id.id)]
+            if self.project_budget_from:
+                dom += [('project_budget', '>=', self.project_budget_from)]
+            if self.project_budget_to:
+                dom += [('project_budget', '<=', self.project_budget_to)]
+            if self.location_id:
+                dom += [('location_id', '=', self.location_id.id)]
+            if self.stage:
+                dom += [('state', '=', self.stage)]
+            if self.client_type_id:
+                dom += [('client_type_id', '=', self.client_type_id.id)]
+            if self.obligation_id:
+                dom += [('obligation_id', '=', self.obligation_id.id)]
+            Project = self.env['project.project']
+            project_ids = Project.search(dom).ids
+            action = self.env.ref('project.open_view_project_all')
+            result = action.read()[0]
+            result.update({'domain': [('id', 'in', project_ids)],
+                           'context': {}, })
         return result
 
     @api.model
