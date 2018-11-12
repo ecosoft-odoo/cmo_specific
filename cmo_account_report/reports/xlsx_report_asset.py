@@ -21,7 +21,7 @@ class AssetView(models.AbstractModel):
         string='Accumulated Depreciation Before',
     )
 
-    
+
 class XLSXReportAsset(models.TransientModel):
     _name = 'xlsx.report.asset'
     _inherit = 'report.account.common'
@@ -159,12 +159,12 @@ class XLSXReportAsset(models.TransientModel):
         self.date_filter = _(
             ('ตั้งแต่วันที่ %s ถึง %s') % (date_start, date_end))
 
-    @api.multi
-    def action_get_report(self):
-        action = self.env.ref(
-            'cmo_account_report.action_xlsx_report_asset_form')
-        action.write({'context': {'wizard_id': self.id}})
-        return super(XLSXReportAsset, self).action_get_report()
+    # @api.multi
+    # def action_get_report(self):
+    #     action = self.env.ref(
+    #         'cmo_account_report.action_xlsx_report_asset_form')
+    #     action.sudo().write({'context': {'wizard_id': self.id}})
+    #     return super(XLSXReportAsset, self).action_get_report()
 
     @api.onchange('asset_status')
     def _onchange_asset_status(self):
