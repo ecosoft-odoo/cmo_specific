@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_supplier_payment_cheque" language="groovy" pageWidth="842" pageHeight="380" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
-	<property name="ireport.zoom" value="0.8264462809917354"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_supplier_payment_cheque" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="4.177248169415666"/>
+	<property name="ireport.x" value="1603"/>
+	<property name="ireport.y" value="102"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;line_dr_ids&quot;]"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
@@ -32,95 +32,80 @@
 	<group name="UniqueID" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{id}]]></groupExpression>
 	</group>
-	<background>
-		<band height="380" splitType="Stretch">
-			<image>
-				<reportElement x="76" y="0" width="842" height="380"/>
-				<imageExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "BBKcheque.png"]]></imageExpression>
-			</image>
-		</band>
-	</background>
-	<detail>
-		<band height="380" splitType="Stretch">
+	<title>
+		<band height="300">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement isPrintRepeatedValues="false" x="185" y="132" width="518" height="20"/>
+				<reportElement x="60" y="72" width="518" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="14" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					<font size="12" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[(new Scriptlet()).getAmtInWords((new BigDecimal($V{string_total}==""?0:$V{string_total})).setScale(2).toString(),"THB")]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement isPrintRepeatedValues="false" x="142" y="94" width="561" height="20"/>
-				<textElement>
-					<font size="16" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{payment_type} == "cheque_cash" ? "เงินสด" : $F{payee}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[(new Scriptlet()).getAmtInWords((new BigDecimal($F{amount}.toString()==""?0:$F{amount}.toString())).setScale(2).toString(),"THB")]]></textFieldExpression>
 			</textField>
 			<textField pattern="** #,##0.00 **;#,##0.00-" isBlankWhenNull="true">
-				<reportElement isPrintRepeatedValues="false" x="545" y="163" width="243" height="25"/>
+				<reportElement x="226" y="94" width="243" height="25"/>
 				<textElement textAlignment="Right">
-					<font size="20" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					<font size="12" isBold="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{amount}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement isPrintRepeatedValues="false" x="733" y="16" width="26" height="31"/>
+				<reportElement x="428" y="1" width="26" height="31"/>
 				<textElement textAlignment="Center">
-					<font size="20" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font size="12" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{date}.substring(1,2)]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement isPrintRepeatedValues="false" x="649" y="16" width="26" height="31"/>
+				<reportElement x="371" y="1" width="26" height="31"/>
 				<textElement textAlignment="Center">
-					<font size="20" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font size="12" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{date}.substring(5,6)]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement isPrintRepeatedValues="false" x="788" y="16" width="26" height="31"/>
+				<reportElement x="466" y="1" width="26" height="31"/>
 				<textElement textAlignment="Center">
-					<font size="20" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font size="12" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{date}.substring(3,4)]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement isPrintRepeatedValues="false" x="761" y="16" width="26" height="31"/>
+				<reportElement x="447" y="1" width="26" height="31"/>
 				<textElement textAlignment="Center">
-					<font size="20" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font size="12" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{date}.substring(2,3)]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement isPrintRepeatedValues="false" x="621" y="16" width="26" height="31"/>
+				<reportElement x="353" y="1" width="26" height="31"/>
 				<textElement textAlignment="Center">
-					<font size="20" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font size="12" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{date}.substring(9,10)]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement isPrintRepeatedValues="false" x="705" y="16" width="26" height="31"/>
+				<reportElement x="410" y="1" width="26" height="31"/>
 				<textElement textAlignment="Center">
-					<font size="20" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font size="12" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{date}.substring(0,1)]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement isPrintRepeatedValues="false" x="593" y="16" width="26" height="31"/>
+				<reportElement x="334" y="1" width="26" height="31"/>
 				<textElement textAlignment="Center">
-					<font size="20" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font size="12" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{date}.substring(8,9)]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement isPrintRepeatedValues="false" x="677" y="16" width="26" height="31"/>
+				<reportElement x="391" y="1" width="26" height="31"/>
 				<textElement textAlignment="Center">
-					<font size="20" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font size="12" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{date}.substring(6,7)]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="109" y="59" width="142" height="30">
+				<reportElement x="21" y="26" width="142" height="18">
 					<printWhenExpression><![CDATA[$F{payment_type} != "cheque_cash"]]></printWhenExpression>
 				</reportElement>
 				<box>
@@ -128,20 +113,30 @@
 					<bottomPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="16" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					<font size="7" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[A/C PAYEE ONLY]]></text>
 			</staticText>
 			<line>
-				<reportElement x="774" y="106" width="43" height="1">
+				<reportElement x="457" y="57" width="31" height="1">
 					<printWhenExpression><![CDATA[$F{payment_type} != "cheque_cash"]]></printWhenExpression>
 				</reportElement>
 			</line>
 			<line>
-				<reportElement x="763" y="119" width="55" height="1">
+				<reportElement x="450" y="66" width="39" height="1">
 					<printWhenExpression><![CDATA[$F{payment_type} != "cheque_cash"]]></printWhenExpression>
 				</reportElement>
 			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="34" y="49" width="561" height="20"/>
+				<textElement>
+					<font size="12" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{payment_type} == "cheque_cash" ? "เงินสด" : $F{payee}]]></textFieldExpression>
+			</textField>
 		</band>
-	</detail>
+	</title>
+	<pageHeader>
+		<band height="60"/>
+	</pageHeader>
 </jasperReport>
