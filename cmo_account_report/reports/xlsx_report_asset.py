@@ -6,6 +6,7 @@ from openerp.exceptions import ValidationError
 class AssetView(models.AbstractModel):
     _name = 'asset.view'
     _inherit = 'account.asset'
+    _order = 'id'
 
     asset_id = fields.Many2one(
         'account.asset',
