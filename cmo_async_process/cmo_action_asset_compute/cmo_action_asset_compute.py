@@ -323,6 +323,7 @@ class CMOActionAssetComputeTestLog(models.TransientModel):
 
 class SummaryJournalView(models.Model):
     _name = 'summary.journal.view'
+    _order = 'operating_unit_id desc'
     _auto = False
 
     id = fields.Integer(
