@@ -78,12 +78,8 @@ class XLSXReportAsset(models.TransientModel):
     @api.model
     def _domain_to_where_str(self, domain):
         """ Helper Function for better performance """
-        if domain:
-            where_dom = ["and %s %s %s " % (x[0], x[1], isinstance(x[2],
-                         basestring) and "'%s'" % x[2] or x[2])
-                         for x in domain]
-        else:
-            where_dom = []
+        where_dom = [" %s %s %s " % (x[0], x[1], isinstance(x[2], basestring)
+                     and "'%s'" % x[2] or x[2]) for x in domain]
         where_str = 'and'.join(where_dom)
         return where_str
 
@@ -115,6 +111,8 @@ class XLSXReportAsset(models.TransientModel):
         depre_account_ids = self.env['account.account'].search(
             [('user_type', '=', self.depre_account_type.id)]).ids
         where_str = self._domain_to_where_str(dom)
+        if where_str:
+            where_str = 'where ' + where_str
         self._cr.execute("""
             select a.*, id asset_id,
                 -- depreciation
@@ -136,7 +134,7 @@ class XLSXReportAsset(models.TransientModel):
                  and ml.date <= %s -- date start
                  and asset_id = a.id) accumulated_bf
             from
-            account_asset a where 1=1
+            account_asset a
         """ + where_str + "order by profile_id",
                          (tuple(depre_account_ids), date_start, date_end,
                           tuple(accum_depre_account_ids), date_end,
