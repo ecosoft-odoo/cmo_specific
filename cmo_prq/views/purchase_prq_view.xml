@@ -6,12 +6,14 @@
             <field name="model">purchase.prq</field>
             <field name="arch" type="xml">
                 <search string="Search PRQ">
-                    <field name="name" position="attributes">
-                        <attribute name="filter_domain">[('name', 'ilike', self)]</attribute>
-                    </field>
+                    <field name="name"/>
+                    <field name="purchase_id"/>
+                    <field name="partner_id"/>
+                    <field name="project_id" filter_domain="['|', ('project_id.code','ilike',self), ('project_id.name','ilike',self)]"/>
                     <filter string="Draft" domain="[('state','=','draft')]" help="Draft PRQ"/>
                     <filter string="Approved" domain="[('state','=','approve')]" help="Approved PRQ"/>
                     <filter string="Rejected" domain="[('state','=','reject')]" help="Rejected PRQ"/>
+                    <filter string="Done" domain="[('state','=','done')]" help="Done PRQ"/>
                     <group expand="0" string="Group By">
                         <filter string="Type" domain="[]" context="{'group_by':'type'}"/>
                         <filter string="Prepare By" domain="[]" context="{'group_by':'prepare_user_id'}"/>
