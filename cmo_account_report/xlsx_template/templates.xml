@@ -185,7 +185,7 @@
                                 'A4': 'date_filter${value or ""}',
                             },
                             'results': {
-                                'A8': "${'=IF(?(S8)=?(S7),\"\",?(S8)'}#{font=bold}",
+                                'A8': "${'=IF(?(T8)=?(T7),\"\",?(T8)'}#{font=bold}",
                                 'B8': 'number${value or ""}',
                                 'C8': 'name${value or ""}',
                                 'D8': 'purchase_date${value or ""}#{number_format=datestamp}',
@@ -199,9 +199,10 @@
                                 'L8': "${'=?(F8)-?(K8)'}#{number_format=number}",
                                 'M8': 'operating_unit_id${value and value.name or ""}',
                                 'N8': 'code${value or ""}',
-                                'O8': 'note${value or ""}',
+                                'O8': 'account_analytic_id${value and value.name or ""}',
+                                'P8': 'note${value or ""}',
                                 # Hide Asset name
-                                'S8': 'profile_id${value and value.name or ""}',
+                                'T8': 'profile_id${value and value.name or ""}',
                             },
                             '_GROUPBY_results["profile_id"]': {  # groupby
                                 'F8': '@{sum}#{font=bold;number_format=number}',
