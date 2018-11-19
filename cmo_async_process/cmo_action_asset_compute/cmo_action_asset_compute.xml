@@ -100,6 +100,7 @@
                     <field name="name"/>
                     <field name="period_id"/>
                     <field name="amount"/>
+                    <field name="state"/>
                 </tree>
             </field>
         </record>

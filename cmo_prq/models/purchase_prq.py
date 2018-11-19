@@ -54,6 +54,7 @@ class PurchasePRQ(models.Model):
         related='purchase_id.project_id',
         string='Project Name',
         readonly=True,
+        store=True,
     )
     order_ref = fields.Many2one(
         'sale.order',
