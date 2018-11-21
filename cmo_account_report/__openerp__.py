@@ -14,6 +14,7 @@
         'l10n_th_account_pnd_form',
     ],
     'data': [
+        'security/ir.model.access.csv',
         'data/menu.xml',
         'reports/report_account_common.xml',
         'reports/xlsx_report_input_tax.xml',
