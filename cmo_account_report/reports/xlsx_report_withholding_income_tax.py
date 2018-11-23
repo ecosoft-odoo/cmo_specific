@@ -70,7 +70,7 @@ class WithholdingIncomeTaxView(models.Model):
             FROM account_wht_cert c
             JOIN res_partner rp ON c.supplier_partner_id = rp.id
             LEFT JOIN wht_cert_tax_line ct ON ct.cert_id = c.id
-            WHERE c.state != 'draft'
+            WHERE c.state not in ('draft', 'cancel')
             GROUP BY c.id, rp.id, ct.id
         """
         return sql_view
