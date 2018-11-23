@@ -18,6 +18,7 @@
                         <filter string="Type" domain="[]" context="{'group_by':'type'}"/>
                         <filter string="Prepare By" domain="[]" context="{'group_by':'prepare_user_id'}"/>
                         <filter string="Status" domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="Operating Unit" domain="[]" context="{'group_by':'operating_unit_id'}"/>
                     </group>
                 </search>
             </field>
@@ -33,6 +34,7 @@
                     <field name="date_order"/>
                     <field name="partner_id"/>
                     <field name="project_id"/>
+                    <field name="operating_unit_id"/>
                     <field name="amount_po_total"/>
                     <field name="prepare_user_id"/>
                     <field name="approve_user_id"/>

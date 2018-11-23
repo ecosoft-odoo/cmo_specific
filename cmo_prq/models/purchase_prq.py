@@ -56,6 +56,13 @@ class PurchasePRQ(models.Model):
         readonly=True,
         store=True,
     )
+    operating_unit_id = fields.Many2one(
+        'operating.unit',
+        related='purchase_id.operating_unit_id',
+        string='Operating Unit',
+        readonly=True,
+        store=True,
+    )
     order_ref = fields.Many2one(
         'sale.order',
         related='purchase_id.order_ref',
