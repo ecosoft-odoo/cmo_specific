@@ -20,7 +20,7 @@
         </record>
 
         <record id="action_xlsx_report_input_tax_form" model="ir.actions.act_window">
-            <field name="name">Input Tax</field>
+            <field name="name">VAT Report</field>
             <field name="res_model">xlsx.report.input.tax</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
@@ -29,7 +29,7 @@
         </record>
 
         <menuitem id="menu_xlsx_report_input_tax"
-            name="Input Tax"
+            name="VAT Report"
             parent="menu_cmo_account_report"
             action="action_xlsx_report_input_tax_form"
             sequence="10"/>

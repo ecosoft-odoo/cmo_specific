@@ -10,17 +10,17 @@
             <field name="group_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
-        # Input Tax Report
+        # Vat Report
         <record id="xlsx_report_input_tax" model="ir.attachment">
             <field name="res_model">xlsx.report.input.tax</field>
             <field name="datas"></field>
             <field name="datas_fname">xlsx_report_input_tax.xlsx</field>
-            <field name="name">Input Tax Report</field>
+            <field name="name">Vat Report</field>
             <field name="parent_id" eval="ref('dir_account_reports')"/>
             <field name="description">
                 {
                     '__EXPORT__': {
-                        'Input Tax Report': {
+                        'Vat Report': {
                             '_HEAD_': {
                                 'A2': 'calendar_period_id.name${value and "รายงานภาษีซื้อ (รวมใบเพิ่มหนี้ลดหนี้) นำยื่นในเดือน %s" % value or ""}',
                                 'B4': '${env.user.company_id.partner_id.name}',
@@ -54,17 +54,17 @@
             </field>
         </record>
 
-        # Output Tax Report
+        # Sell Tax Report
         <record id="xlsx_report_output_tax" model="ir.attachment">
             <field name="res_model">xlsx.report.output.tax</field>
             <field name="datas"></field>
             <field name="datas_fname">xlsx_report_output_tax.xlsx</field>
-            <field name="name">Output Tax Report</field>
+            <field name="name">Sell Tax Report</field>
             <field name="parent_id" eval="ref('dir_account_reports')"/>
             <field name="description">
                 {
                     '__EXPORT__': {
-                        'Output Tax Report': {
+                        'Sell Tax Report': {
                             '_HEAD_': {
                                 'A2': 'calendar_period_id.name${value and "รายงานภาษีขาย (รวมใบเพิ่มหนี้ลดหนี้) นำยื่นในเดือน %s" % value or ""}',
                                 'B6': 'company_id${value and " ".join([value.street, value.street2]) or ""}',
