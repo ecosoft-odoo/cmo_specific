@@ -128,7 +128,7 @@ class XLSXReportWithholdingIncomeTax(models.TransientModel):
             dom += [('income_tax_form', '=', self.income_tax_form)]
         if self.calendar_period_id:
             dom += [('wht_period_id', '=', self.calendar_period_id.id)]
-        self.results = Result.search(dom, order='date_value')
+        self.results = Result.search(dom, order='date_value,number')
 
     # As user choose template, auto selection option you needed for csv output
     @api.onchange('specific_template')
