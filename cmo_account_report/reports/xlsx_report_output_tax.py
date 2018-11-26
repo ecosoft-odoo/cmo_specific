@@ -34,4 +34,4 @@ class XLSXReportOutputTax(models.TransientModel):
         dom = [('doc_type', '=', 'sale')]
         if self.calendar_period_id:
             dom += [('report_period_id', '=', self.calendar_period_id.id)]
-        self.results = Result.search(dom, order='invoice_number')
+        self.results = Result.search(dom, order='invoice_date,invoice_number')
