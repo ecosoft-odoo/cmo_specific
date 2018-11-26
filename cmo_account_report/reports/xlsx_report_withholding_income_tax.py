@@ -56,10 +56,11 @@ class WithholdingIncomeTaxView(models.Model):
 
     def _get_sql_view(self):
         sql_view = """
-            SELECT LPAD(row_number() over
+            SELECT ROW_NUMBER() OVER (ORDER BY c.sequence_display) as id,
+                LPAD(row_number() over
                 (order by c.sequence_display)::char, 5, '0') AS sequence,
-                c.id, c.sequence_display AS wht_sequence_display, c.number,
-                c.date AS date_value, c.income_tax_form, c.tax_payer,
+                c.id as id_wht, c.sequence_display AS wht_sequence_display,
+                c.number, c.date AS date_value, c.income_tax_form, c.tax_payer,
                 c.period_id AS wht_period_id, c.id AS cert_id,
                 rp.id AS supplier_ids, ct.id AS cert_line_ids,
                 round(avg(ct.percent), 0) AS percent,

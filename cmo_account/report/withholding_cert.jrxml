@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="withholding_cert" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
-	<property name="ireport.zoom" value="1.1000000000000143"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="465"/>
+	<property name="ireport.zoom" value="1.9487171000000263"/>
+	<property name="ireport.x" value="265"/>
+	<property name="ireport.y" value="827"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA[System.getProperty("user.dir") + "/../../../pb2_generic/l10n_th_account/report/"]]></defaultValueExpression>
 	</parameter>
@@ -383,6 +383,15 @@
 					<font fontName="Monospaced" size="14" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{type_6_tax}/$F{type_6_base}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0 %" isBlankWhenNull="true">
+				<reportElement x="270" y="457" width="173" height="35">
+					<printWhenExpression><![CDATA[$F{type_5_base} > 0.0]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Bottom" lineSpacing="1_1_2">
+					<font fontName="Monospaced" size="14" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{type_5_tax}/$F{type_5_base}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
