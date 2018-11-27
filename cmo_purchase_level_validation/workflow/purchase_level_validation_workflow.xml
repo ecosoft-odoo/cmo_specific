@@ -40,6 +40,12 @@
             <field name="signal">purchase_cancel</field>
         </record>
 
+        <record id="trans_approved_to_cancel" model="workflow.transition">
+            <field name="act_from" ref="purchase.act_invoice"/>
+            <field name="act_to" ref="purchase.act_cancel"/>
+            <field name="signal">purchase_cancel</field>
+        </record>
+
         <record id="trans_confirmed_level_check" model="workflow.transition">
            <field name="act_from" ref="purchase.act_confirmed"/>
            <field name="act_to" ref="act_level_check"/>

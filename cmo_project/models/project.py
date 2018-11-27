@@ -593,6 +593,16 @@ class ProjectProject(models.Model):
                     raise ValidationError("team member start date must be "
                                           "lower than end date.")
 
+    @api.multi
+    def edit_project_adjustment(self):
+        self.ensure_one()
+        action = self.env.ref('cmo_project.action_project_adjustment')
+        result = action.read()[0]
+        dom = [('project_id', '=', self.id)]
+        result.update({'domain': dom,
+                       'context': {'default_project_id': self.id}})
+        return result
+
 
 class ProjectTeamMember(models.Model):
     _name = 'project.team.member'

@@ -37,5 +37,9 @@
             <field name="name">Account Move Line</field>
             <field name="category_id" ref="base.module_category_readonly"/>
         </record>
+        <record id="group_readonly_project_project" model="res.groups">
+            <field name="name">Project</field>
+            <field name="category_id" ref="base.module_category_readonly"/>
+        </record>
     </data>
 </openerp>

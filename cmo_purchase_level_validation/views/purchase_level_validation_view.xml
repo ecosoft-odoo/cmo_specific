@@ -18,6 +18,10 @@
                             string="Refuse"
                             attrs="{'invisible':['|', ['approve_permission','=',False], ['state', 'not in', ['confirmed']]]}"
                             />
+                    <button name="wkf_action_cancel" type="object" string="Force Cancel" states="approved" groups="cmo_purchase_level_validation.force_cancel_approved_po"
+                        confirm="This action will force cancel this document regardless of other document. This operation can't not be undone, are you sure to continue?"
+                    />
+
                 </xpath>
                 <field name="date_order" position="before">
                     <field name="approver_ids" widget="many2many_tags" readonly="1"/>

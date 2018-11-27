@@ -4,7 +4,7 @@
 
     <record id="group_prq_approver" model="res.groups">
         <field name="name">Approve PRQ</field>
-        <field name="category_id" ref="base.module_category_project_management"/>
+        <field name="category_id" ref="base.module_category_purchase_management"/>
         <field name="users" eval="[(4, ref('base.user_root'))]"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>

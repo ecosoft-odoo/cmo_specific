@@ -1,34 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="1">
-        <record id="group_purchase_manager_readonly" model="res.groups">
-            <field name="name">Manager Readonly</field>
+    <data noupdate="0">
+        # Here we downgrade normal Managger and User OU level
+        # Then, we add new User (All) group, same as user but see all
+        # For readonly, we will be using Force Readonly Model
+
+        <!-- Group -->
+        <record id="purchase.group_purchase_manager" model="res.groups">
+            <field name="name">Manager (OU)</field>
+        </record>
+        <record id="purchase.group_purchase_user" model="res.groups">
+            <field name="name">User (OU)</field>
+        </record>
+
+        <!-- New Grroup to see all -->
+        <record id="purchase.group_purchase_user_all_ou" model="res.groups">
+            <field name="name">User (All)</field>
+            <field name="implied_ids" eval="[(4, ref('purchase.group_purchase_user'))]"/>
             <field name="category_id" ref="base.module_category_purchase_management"/>
-            <field name="implied_ids" eval="[(4, ref('purchase.group_purchase_manager'))]"/>
             <field name="users" eval="[(4, ref('base.user_root'))]"/>
         </record>
-        <record id="ir_rule_all_purchase_order" model="ir.rule">
-            <field name="model_id" ref="purchase.model_purchase_order"/>
+
+        <!-- New Rules -->
+        <record id="purchase_order_see_all" model="ir.rule">
+            <field name="name">All POs</field>
+            <field ref="purchase.model_purchase_order" name="model_id"/>
             <field name="domain_force">[(1,'=',1)]</field>
-            <field name="name">All PO</field>
-            <field name="global" eval="False"/>
-            <field name="groups" eval="[(4, ref('cmo_purchase_group.group_purchase_manager_readonly'))]"/>
-            <field eval="0" name="perm_unlink"/>
-            <field eval="0" name="perm_write"/>
-            <field eval="1" name="perm_read"/>
-            <field eval="0" name="perm_create"/>
+            <field name="groups" eval="[(4, ref('purchase.group_purchase_user_all_ou'))]"/>
         </record>
-        <record id="ir_rule_all_purchase_order_line" model="ir.rule">
-            <field name="model_id" ref="purchase.model_purchase_order_line"/>
+
+        <record id="purchase_order_line_see_all" model="ir.rule">
+            <field name="name">All PO Lines</field>
+            <field ref="purchase.model_purchase_order_line" name="model_id"/>
             <field name="domain_force">[(1,'=',1)]</field>
-            <field name="name">All PO Line</field>
-            <field name="global" eval="False"/>
-            <field name="groups" eval="[(4, ref('cmo_purchase_group.group_purchase_manager_readonly'))]"/>
-            <field eval="0" name="perm_unlink"/>
-            <field eval="0" name="perm_write"/>
-            <field eval="1" name="perm_read"/>
-            <field eval="0" name="perm_create"/>
+            <field name="groups" eval="[(4, ref('purchase.group_purchase_user_all_ou'))]"/>
         </record>
+
         <record id="purchase_operating_unit.ir_rule_purchase_order_allowed_operating_units" model="ir.rule">
             <field name="groups" eval="[(4, ref('purchase.group_purchase_manager')), (4, ref('purchase.group_purchase_user'))]"/>
         </record>

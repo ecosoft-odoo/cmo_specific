@@ -1,7 +1,5 @@
 id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
 access_project_project_all,access_project_project_all,model_project_project,,1,0,0,0
-access_project_project_read,access_project_project_read,model_project_project,project.group_project_readonly,1,0,0,0
-access_project_project_read_own,access_project_project_read_own,model_project_project,project.group_project_readonly_own,1,0,0,0
 access_project_project,access_project_project,model_project_project,project.group_project_user,1,1,1,0
 access_project_team_member,access_project_team_member,model_project_team_member,,1,1,1,0
 access_project_brand_type,access_project_brand_type,model_project_brand_type,,1,0,0,0
