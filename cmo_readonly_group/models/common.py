@@ -7,7 +7,7 @@ class ReadonlyCommon(object):
 
     @api.model
     def set_right_readonly_group(self, res):
-        readonly_group = 'pabi_readonly_group.group_readonly_%s' % self._table
+        readonly_group = 'cmo_readonly_group.group_readonly_%s' % self._table
         if self.env.user.has_group(readonly_group):
             root = etree.fromstring(res['arch'])
             root.set('create', 'false')
