@@ -12,6 +12,14 @@
                   ref('sale.model_sale_order'),
                   ref('stock.model_stock_picking'),
                   ref('hr_expense.model_hr_expense_expense'),
+                  ref('account_billing.model_account_billing'),
+                  ref('account_supplier_billing.model_supplier_billing'),
+                  ref('l10n_th_account.model_account_wht_cert'),
+                  ref('account_bank_receipt.model_account_bank_receipt'),
+                  ref('account_bank_payment.model_account_bank_payment'),
+                  ref('bank_account_transfer.model_bank_account_transfer'),
+                  ref('account.model_account_move'),
+                  ref('account_asset_management.model_account_asset'),      
                 ))]]" />
             <value eval="{'perm_unlink': False}" />
         </function>
