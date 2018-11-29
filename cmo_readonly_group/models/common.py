@@ -13,7 +13,9 @@ class ReadonlyCommon(object):
             root.set('create', 'false')
             root.set('edit', 'false')
             root.set('delete', 'false')
-            nodes = root.xpath("//button")
+            nodes = []
+            nodes += root.xpath("//header/button")
+            nodes += root.xpath("//div[@class='oe_right oe_button_box']")
             # nodes_show = root.xpath(
             #     "//div[@class='oe_right oe_button_box']//button")
             for node in nodes:
