@@ -389,7 +389,8 @@
                                 <field name="remain_advance" readonly="1"/>
                                 <field name="adjustment_amount"/>
                                 <button type="object" name="edit_project_adjustment" string="Adjust Amount"
-                                  icon="terp-check" class="oe_right" colspan="2" groups="account.group_account_invoice"/>
+                                    always_show="1" icon="terp-check" class="oe_right"
+                                    colspan="2" groups="account.group_account_invoice"/>
                                 <div colspan="2">
                                     <field name="adjustment_ids" widget="one2many_list">
                                         <tree string="Adjustment Description" editable="bottom">
