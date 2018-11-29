@@ -13,12 +13,13 @@ class ReadonlyCommon(object):
             root.set('create', 'false')
             root.set('edit', 'false')
             root.set('delete', 'false')
-            nodes = []
-            nodes += root.xpath("//header/button")
-            nodes += root.xpath("//div[@class='oe_right oe_button_box']")
+            nodes = root.xpath("//button")
+            always_show = root.xpath("//button[@always_show=1]")
             # nodes_show = root.xpath(
             #     "//div[@class='oe_right oe_button_box']//button")
             for node in nodes:
                 node.set('modifiers', '{"invisible": true}')
+            for node in always_show:
+                node.set('modifiers', '{"invisible": false}')
             res['arch'] = etree.tostring(root)
         return res
