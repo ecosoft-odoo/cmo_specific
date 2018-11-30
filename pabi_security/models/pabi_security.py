@@ -230,7 +230,13 @@ class AccessAccess(models.Model):
     pabi_security = fields.Selection(
         [('mg1', 'MG1'), ('mg2', 'MG2'), ('mg3', 'MG3'), ('mg4', 'MG4'),
          ('mg5', 'MG5'), ('mg6', 'MG6'), ('mg7', 'MG7'), ('mg8', 'MG8'),
-         ('mg9', 'MG9'), ('mg10', 'MG10'), ],
+         ('mg9', 'MG9'), ('mg10', 'MG10'), ('mg11', 'MG11'), ('mg12', 'MG12'),
+         ('mg13', 'MG13'), ('mg14', 'MG14'), ('mg15', 'MG15'),
+         ('mg16', 'MG16'), ('mg17', 'MG17'), ('mg18', 'MG18'),
+         ('mg19', 'MG19'), ('mg20', 'MG20'), ('mg21', 'MG21'),
+         ('mg22', 'MG22'), ('mg23', 'MG23'), ('mg24', 'MG24'),
+         ('mg25', 'MG25'), ('mg26', 'MG26'), ('mg27', 'MG27'),
+         ('mg28', 'MG28'), ('mg29', 'MG29'), ('mg30', 'MG30')],
         string='PABI Group',
     )
     _sql_constraints = [
