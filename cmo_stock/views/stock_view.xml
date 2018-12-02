@@ -14,18 +14,6 @@
                 <field name="partner_id" position="after">
                     <field name="default_operating_unit_id" invisible="1"/>
                 </field>
-                <header position="attributes">
-                    <attribute name="groups">stock.group_stock_user</attribute>
-                </header>
-                <button name="do_enter_transfer_details" position="attributes">
-                    <attribute name="groups">cmo_stock.group_stock_wh_user</attribute>
-                </button>
-                <button name="action_cancel" position="attributes">
-                    <attribute name="groups">cmo_stock.group_stock_wh_user</attribute>
-                </button>
-                <button name="force_assign" position="attributes">
-                    <attribute name="groups">cmo_stock.group_stock_wh_user</attribute>
-                </button>
             </field>
         </record>
 
@@ -122,30 +110,5 @@
             <field name="key2">client_action_multi</field>
         </record>
 
-        <!-- Show and hide menu from group -->
-        <record id="stock.menu_stock_root" model="ir.ui.menu">
-            <field name="groups_id" eval="[(6, 0, [ref('cmo_stock.group_stock_readonly')])]"/>
-        </record>
-        <record id="stock.menu_action_inventory_form" model="ir.ui.menu">
-            <field name="groups_id" eval="[(6, 0, [ref('cmo_stock.group_stock_wh_user')])]"/>
-        </record>
-        <record id="stock.menu_traceability" model="ir.ui.menu">
-            <field name="groups_id" eval="[(6, 0, [ref('cmo_stock.group_stock_wh_user')])]"/>
-        </record>
-        <record id="stock.menu_stock_sched" model="ir.ui.menu">
-            <field name="groups_id" eval="[(6, 0, [ref('cmo_stock.group_stock_wh_user')])]"/>
-        </record>
-        <record id="stock.menu_stock_proc_schedulers" model="ir.ui.menu">
-            <field name="groups_id" eval="[(6, 0, [ref('cmo_stock.group_stock_wh_user')])]"/>
-        </record>
-        <record id="stock.menu_stock_procurement_action" model="ir.ui.menu">
-            <field name="groups_id" eval="[(6, 0, [ref('cmo_stock.group_stock_wh_user')])]"/>
-        </record>
-        <record id="stock.menu_stock_product" model="ir.ui.menu">
-            <field name="groups_id" eval="[(6, 0, [ref('cmo_stock.group_stock_wh_user')])]"/>
-        </record>
-        <record id="stock.menu_stock_configuration" model="ir.ui.menu">
-            <field name="groups_id" eval="[(6, 0, [ref('cmo_stock.group_stock_wh_user')])]"/>
-        </record>
     </data>
 </openerp>

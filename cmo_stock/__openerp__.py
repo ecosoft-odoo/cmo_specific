@@ -19,8 +19,8 @@
     ],
     "data": [
         # 'data/stock_data.xml',
-        'security/cmo_stock_security.xml',
-        'security/ir.model.access.csv',
+        # 'security/cmo_stock_security.xml',
+        # 'security/ir.model.access.csv',
         'views/stock_view.xml',
         'views/report_stockpicking.xml',
         'views/stock_report.xml',

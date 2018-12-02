@@ -99,26 +99,26 @@ class StockMove(models.Model):
 class StockPickingType(models.Model):
     _inherit = 'stock.picking.type'
 
-    @api.multi
-    def action_picking_type_form(self):
-        user = self.env.user
-        domain = [(1, '=', 1)]
-        if user.has_group('stock.group_stock_manager'):
-            domain = ['|', ('code', '=', 'incoming'),
-                      '|', ('code', '=', 'outgoing'),
-                           ('code', '=', 'internal')]
-        elif user.has_group('cmo_stock.group_stock_wh_user'):
-            domain = ['|', ('code', '=', 'incoming'),
-                           ('code', '=', 'outgoing')]
-        elif user.has_group('stock.group_stock_user'):
-            domain = [('code', '=', 'outgoing')]
-        elif user.has_group('cmo_stock.group_stock_readonly'):
-            domain = [('code', '=', 'outgoing')]
-
-        action = self.env.ref('stock.action_picking_type_form')
-        result = action.read()[0]
-        result.update({'domain': domain})
-        return result
+    # @api.multi
+    # def action_picking_type_form(self):
+    #     user = self.env.user
+    #     domain = [(1, '=', 1)]
+    #     if user.has_group('stock.group_stock_manager'):
+    #         domain = ['|', ('code', '=', 'incoming'),
+    #                   '|', ('code', '=', 'outgoing'),
+    #                        ('code', '=', 'internal')]
+    #     elif user.has_group('cmo_stock.group_stock_wh_user'):
+    #         domain = ['|', ('code', '=', 'incoming'),
+    #                        ('code', '=', 'outgoing')]
+    #     elif user.has_group('stock.group_stock_user'):
+    #         domain = [('code', '=', 'outgoing')]
+    #     elif user.has_group('cmo_stock.group_stock_readonly'):
+    #         domain = [('code', '=', 'outgoing')]
+    #
+    #     action = self.env.ref('stock.action_picking_type_form')
+    #     result = action.read()[0]
+    #     result.update({'domain': domain})
+    #     return result
 
 
 class StockWarehouse(models.Model):
