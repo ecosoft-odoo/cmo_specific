@@ -22,9 +22,17 @@
         <!-- Rule -->
         <record id="sale_operating_unit.ir_rule_sale_order_allowed_operating_units" model="ir.rule">
             <field name="groups" eval="[(4, ref('base.group_sale_salesman_all_leads')), (4, ref('base.group_sale_manager'))]"/>
+            <field eval="1" name="perm_unlink"/>
+            <field eval="1" name="perm_write"/>
+            <field eval="1" name="perm_read"/>
+            <field eval="1" name="perm_create"/>
         </record>
         <record id="sale_operating_unit.ir_rule_sale_order_line_allowed_operating_units" model="ir.rule">
             <field name="groups" eval="[(4, ref('base.group_sale_salesman_all_leads')), (4, ref('base.group_sale_manager'))]"/>
+            <field eval="1" name="perm_unlink"/>
+            <field eval="1" name="perm_write"/>
+            <field eval="1" name="perm_read"/>
+            <field eval="1" name="perm_create"/>
         </record>
         <record id="sale.sale_order_see_all" model="ir.rule">
             <field name="groups" eval="[(6, 0, [ref('base.group_sale_salesman_all_leads_all_ou')])]"/>
