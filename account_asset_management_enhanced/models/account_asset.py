@@ -32,6 +32,21 @@ class AccountAsset(models.Model):
         default=lambda self:
             self.env['res.users'].operating_unit_default_get(self._uid)
     )
+    brand_model = fields.Char(
+        string='Brand Model',
+    )
+    serial_number = fields.Char(
+        string='Serial Number',
+    )
+    warranty_number = fields.Char(
+        string='Warranty Number',
+    )
+    warranty_start_date = fields.Date(
+        string='Warranty Start Date',
+    )
+    warranty_expire_date = fields.Date(
+        string='Warranty Expire Date',
+    )
 
     @api.multi
     def _compute_value_net_book(self):
