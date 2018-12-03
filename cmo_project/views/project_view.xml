@@ -275,7 +275,7 @@
                 <xpath expr="//group" position="after">
                     <group>
                         <group>
-                            <field name="project_budget" required="1"/>
+                            <field name="project_budget" required="1" groups="project.group_project_admin,project.group_project_manager"/>
                             <field name="date_brief" required="1"/>
                             <field name="date_start" required="1"/>
                             <field name="date" string="End Date" required="1"/>

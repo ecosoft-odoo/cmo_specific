@@ -154,15 +154,13 @@
                                 'B1': 'sequence${value or ""}',
                                 'C1': 'supplier_ids.vat${value or ""}#{number_format=text}',
                                 'E1': 'supplier_ids.display_name${value or ""}',
-                                'F1': 'supplier_ids${value and (value.street2 and " ".join([value.street, value.street2]) or value.street) or ""}',
-                                'G1': 'date_value${value and "%s%s%s" % (str(value).split("-")[0], str(value).split("-")[1], str(value)[8:10]) or ""}#{number_format=text}',
-                                'H1': 'cert_line_ids${value and value.wht_cert_income_desc or ""}',
-                                'I6': 'percent${"%s" % value or "0"}#{number_format=text}',
-                                'J1': 'base_total${value or ""}#{number_format=number}',
-                                'K1': 'tax_total${value or ""}#{number_format=number}',
-                                'L1': 'tax_payer${value and (value == "withholding" and "1" or (value == "paid_one_time" and "3")) or ""}#{number_format=text}',
-                                'AA1': '${" "}#{number_format=text}',
-
+                                'F1': 'date_value${value and "%s%s%s" % (str(value).split("-")[0], str(value).split("-")[1], str(value)[8:10]) or ""}#{number_format=text}',
+                                'G1': 'cert_line_ids${value and value.wht_cert_income_desc or ""}',
+                                'H6': 'percent${value or 0}#{number_format=number}',
+                                'I1': 'base_total${value or ""}#{number_format=number}',
+                                'J1': 'tax_total${value or ""}#{number_format=number}',
+                                'K1': 'tax_payer${value and (value == "withholding" and "1" or (value == "paid_one_time" and "3")) or ""}#{number_format=text}',
+                                'Y1': '${" "}#{number_format=text}',
                             }
                         }
                     }
