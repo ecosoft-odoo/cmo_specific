@@ -12,8 +12,25 @@
                       <field name="number" string="Asset" class="oe_inline" readonly="1"/>
                   </h1>
               </xpath>
+              <xpath expr="//field[@name='depreciation_base']" position="before">
+                  <field name="brand_model"/>
+              </xpath>
               <xpath expr="//field[@name='value_residual']" position="after">
                   <field name="value_net_book" widget="monetary" options="{'currency_field': 'company_currency_id'}"/>
+              </xpath>
+              <xpath expr="//page[@string='History']" position="after">
+                  <page string="Other info">
+                      <separator string="Warranty" colspan="4"/>
+                      <group>
+                          <group>
+                              <field name="serial_number"/>
+                              <field name="warranty_number"/>
+                              <field name="warranty_start_date"/>
+                              <field name="warranty_expire_date"/>
+                          </group>
+                          <group/>
+                      </group>
+                  </page>
               </xpath>
               <field name="salvage_value" position="replace">
                   <field name="salvage_value" widget="monetary" options="{'currency_field': 'company_currency_id'}"
