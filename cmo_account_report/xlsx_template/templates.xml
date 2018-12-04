@@ -139,19 +139,48 @@
             </field>
         </record>
 
-        # Withholding Income Tax Text Report
-        <record id="xlsx_report_withholding_income_tax_text" model="ir.attachment">
+        # Withholding Income Tax PND3 Text Report
+        <record id="xlsx_report_withholding_income_tax_txt_pnd3" model="ir.attachment">
             <field name="res_model">xlsx.report.withholding.income.tax</field>
             <field name="datas"></field>
-            <field name="datas_fname">xlsx_report_withholding_income_tax_text.xlsx</field>
-            <field name="name">Withholding Income Tax Text</field>
+            <field name="datas_fname">xlsx_report_withholding_income_tax_txt_pnd3.xlsx</field>
+            <field name="name">Withholding Income Tax PND3 Text</field>
             <field name="parent_id" eval="ref('dir_account_reports')"/>
             <field name="description">
                 {
                     '__EXPORT__': {
                         'Withholding Income Tax': {
                             'results': {
-                                'B1': 'sequence${value or ""}',
+                                'B1': 'sequence${value and (len(value) == 1 and "0000%s" %(value) or (len(value) == 2 and "000%s" %(value) or (len(value) == 3 and "00%s" %(value) or (len(value) == 4 and "0%s" %(value) or (len(value) == 5 and "%s" %(value)))))) or ""}#{number_format=text}',
+                                'C1': 'supplier_ids.vat${value or ""}#{number_format=text}',
+                                'F1': 'supplier_ids.display_name${value or ""}',
+                                'G1': 'date_value${value and "%s%s%s" % (str(value).split("-")[0], str(value).split("-")[1], str(value)[8:10]) or ""}#{number_format=text}',
+                                'H1': 'cert_line_ids${value and value.wht_cert_income_desc or ""}',
+                                'I6': 'percent${value or 0}#{number_format=number}',
+                                'J1': 'base_total${value or ""}#{number_format=number}',
+                                'K1': 'tax_total${value or ""}#{number_format=number}',
+                                'L1': 'tax_payer${value and (value == "withholding" and "1" or (value == "paid_one_time" and "3")) or ""}#{number_format=text}',
+                                'Z1': '${" "}#{number_format=text}',
+                            }
+                        }
+                    }
+                }
+            </field>
+        </record>
+
+        # Withholding Income Tax PND53 Text Report
+        <record id="xlsx_report_withholding_income_tax_txt_pnd53" model="ir.attachment">
+            <field name="res_model">xlsx.report.withholding.income.tax</field>
+            <field name="datas"></field>
+            <field name="datas_fname">xlsx_report_withholding_income_tax_txt_pnd53.xlsx</field>
+            <field name="name">Withholding Income Tax PND53 Text</field>
+            <field name="parent_id" eval="ref('dir_account_reports')"/>
+            <field name="description">
+                {
+                    '__EXPORT__': {
+                        'Withholding Income Tax': {
+                            'results': {
+                                'B1': 'sequence${value and (len(value) == 1 and "0000%s" %(value) or (len(value) == 2 and "000%s" %(value) or (len(value) == 3 and "00%s" %(value) or (len(value) == 4 and "0%s" %(value) or (len(value) == 5 and "%s" %(value)))))) or ""}#{number_format=text}',
                                 'C1': 'supplier_ids.vat${value or ""}#{number_format=text}',
                                 'E1': 'supplier_ids.display_name${value or ""}',
                                 'F1': 'date_value${value and "%s%s%s" % (str(value).split("-")[0], str(value).split("-")[1], str(value)[8:10]) or ""}#{number_format=text}',

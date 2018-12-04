@@ -8,7 +8,8 @@
                 ref('xlsx_report_input_tax'),
                 ref('xlsx_report_output_tax'),
                 ref('xlsx_report_withholding_income_tax'),
-                ref('xlsx_report_withholding_income_tax_text'),
+                ref('xlsx_report_withholding_income_tax_txt_pnd3'),
+                ref('xlsx_report_withholding_income_tax_txt_pnd53'),
                 ref('xlsx_report_asset'),
             ]"/>
             <value>cmo_account_report/xlsx_template</value>
