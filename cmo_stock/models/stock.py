@@ -23,6 +23,8 @@ class StockPicking(models.Model):
 
     @api.multi
     def _compute_allow_do_transfer(self):
+        """ For user with Allow Internal Transfer Only, he/she will only see
+        Transfer button for Internal Transfer, and not IN/OUT """
         for rec in self:
             rec.allow_do_transfer = True
             user = self.env.user
