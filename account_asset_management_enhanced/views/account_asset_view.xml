@@ -12,14 +12,16 @@
                       <field name="number" string="Asset" class="oe_inline" readonly="1"/>
                   </h1>
               </xpath>
-              <xpath expr="//field[@name='depreciation_base']" position="before">
-                  <field name="brand_model"/>
+              <xpath expr="//field[@name='move_line_check']" position="after">
+                  <field name="asset_brand"/>
+                  <newline/>
+                  <field name="asset_model"/>
               </xpath>
               <xpath expr="//field[@name='value_residual']" position="after">
                   <field name="value_net_book" widget="monetary" options="{'currency_field': 'company_currency_id'}"/>
               </xpath>
               <xpath expr="//page[@string='History']" position="after">
-                  <page string="Other info">
+                  <page string="Other Info">
                       <separator string="Warranty" colspan="4"/>
                       <group>
                           <group>

@@ -32,8 +32,11 @@ class AccountAsset(models.Model):
         default=lambda self:
             self.env['res.users'].operating_unit_default_get(self._uid)
     )
-    brand_model = fields.Char(
-        string='Brand Model',
+    asset_brand = fields.Char(
+        string='Brand',
+    )
+    asset_model = fields.Char(
+        string='Model',
     )
     serial_number = fields.Char(
         string='Serial Number',
