@@ -14,6 +14,13 @@
                 <field name="partner_id" position="after">
                     <field name="default_operating_unit_id" invisible="1"/>
                 </field>
+                <field name="name" position="after">
+                  <field name="allow_do_transfer" invisible="1"/>
+                </field>
+                <button name="do_enter_transfer_details" position="attributes">
+                    <attribute name="states"></attribute>
+                    <attribute name="attrs">{'invisible': ['|', ('state', 'not in', ['assigned', 'partially_available']), ('allow_do_transfer', '=', False)]}</attribute>
+                </button>
             </field>
         </record>
 

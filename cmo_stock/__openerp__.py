@@ -21,6 +21,7 @@
         # 'data/stock_data.xml',
         # 'security/cmo_stock_security.xml',
         # 'security/ir.model.access.csv',
+        'security/stock_security.xml',
         'views/stock_view.xml',
         'views/report_stockpicking.xml',
         'views/stock_report.xml',

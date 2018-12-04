@@ -15,6 +15,21 @@ class StockPicking(models.Model):
         string='Default Operating Unit',
         compute='_compute_default_operating_unit_id',
     )
+    allow_do_transfer = fields.Boolean(
+        'Allow Do Transfer',
+        compute='_compute_allow_do_transfer',
+        help="If not true, Transfer button will be invisible",
+    )
+
+    @api.multi
+    def _compute_allow_do_transfer(self):
+        for rec in self:
+            rec.allow_do_transfer = True
+            user = self.env.user
+            if user.has_group('cmo_stock.group_allow_internal_transfer_only'):
+                if rec.picking_type_id.code != 'internal':
+                    rec.allow_do_transfer = False
+        return True
 
     @api.multi
     @api.depends('partner_id')

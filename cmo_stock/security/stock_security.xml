@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+        <!-- User in this group can do transfer only for pick type transfer -->
+        <record id="cmo_stock.group_allow_internal_transfer_only" model="res.groups">
+            <field name="name">Allow Internal Transfer Only</field>
+        </record>
+    </data>
+</openerp>
