@@ -20,6 +20,24 @@ class StockPicking(models.Model):
         compute='_compute_allow_do_transfer',
         help="If not true, Transfer button will be invisible",
     )
+    ref_invoice_ids = fields.Many2many(
+        'account.invoice',
+        'stock_picking_invoice_rel',
+        'picking_id', 'invoice_id',
+        string='Ref Invoices',
+        readonly=True,
+        copy=False,
+        help="Reference invoices created from picking.",
+    )
+    ref_invoice_count = fields.Integer(
+        string='Supplier Invoice',
+        compute='_compute_ref_invoice_count',
+    )
+
+    @api.multi
+    def _compute_ref_invoice_count(self):
+        for rec in self:
+            rec.ref_invoice_count = len(rec.ref_invoice_ids)
 
     @api.multi
     def _compute_allow_do_transfer(self):
@@ -60,6 +78,33 @@ class StockPicking(models.Model):
                 'search_default_group_by_product': True}"
         result.update({'domain': dom, 'context': ctx})
         return result
+
+    @api.multi
+    def action_picking_cancel(self):
+        for rec in self:
+            if rec.state != 'done':
+                raise ValidationError(_('Picking not in done state!'))
+            # Check all invoices cancelled
+            for invoice in rec.ref_invoice_ids:
+                if invoice.state != 'cancel':
+                    raise ValidationError(
+                        _('To cancel this transfer, '
+                          'all invoices must be cancelled'))
+            for stock_move in rec.move_lines:
+                reverse_move = stock_move.copy({
+                    'name': '<~ %s' % stock_move.name,
+                    'location_id': stock_move.location_dest_id.id,
+                    'location_dest_id': stock_move.location_id.id,
+                    'asset_value': False,
+                })
+                reverse_move.with_context(
+                    force_valuation_amount=stock_move.price_unit,
+                    # force_no_asset_profile=True  # Do not create asset
+                ).action_done()
+        self._cr.execute("""
+            update stock_picking set state = 'cancel' where id in %s
+        """, (tuple(self.ids), ))
+        return True
 
 
 class StockMove(models.Model):

@@ -21,6 +21,26 @@
                     <attribute name="states"></attribute>
                     <attribute name="attrs">{'invisible': ['|', ('state', 'not in', ['assigned', 'partially_available']), ('allow_do_transfer', '=', False)]}</attribute>
                 </button>
+                <xpath expr="/form/sheet/div[@class='oe_right oe_button_box']" position="inside">
+                    <button type="object"  name="invoice_open"
+                        class="oe_stat_button"
+                        icon="fa-pencil-square-o"
+                        attrs="{'invisible': [('ref_invoice_count', '=', 0)]}">
+                        <field name="ref_invoice_count" widget="statinfo" string="Invoices"/>
+                    </button>
+                </xpath>
+                <button name="%(stock.act_stock_return_picking)d" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <button name="action_cancel" position="attributes">
+                    <attribute name="states"></attribute>
+                    <attribute name="attrs">{'invisible': ['|', ('state', 'not in', ['assigned','confirmed','partially_available','draft','waiting']), ('allow_do_transfer', '=', False)]}</attribute>
+                </button>
+                <button name="action_cancel" position="before">
+                    <button name="action_picking_cancel" string="Cancel Transfer" groups="base.group_user" type="object"
+                      confirm="Are you sure you want to cancel this transfer?"
+                      attrs="{'invisible': ['|', ('state', 'not in', ['done']), ('allow_do_transfer', '=', False)]}"/>
+                </button>
             </field>
         </record>
 
