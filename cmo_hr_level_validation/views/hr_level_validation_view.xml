@@ -14,7 +14,7 @@
                             type="workflow"
                             string="Validate"
                             states="validate"
-                            groups="base.group_hr_manager,account.group_account_manager"
+                            groups="base.group_hr_manager,base.group_hr_user,account.group_account_manager"
                             />
                 </xpath>
                 <xpath expr="//header/button[@name='validate']" position="replace">
