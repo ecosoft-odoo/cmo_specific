@@ -160,7 +160,7 @@
                                 'J1': 'base_total${value or ""}#{number_format=number}',
                                 'K1': 'tax_total${value or ""}#{number_format=number}',
                                 'L1': 'tax_payer${value and (value == "withholding" and "1" or (value == "paid_one_time" and "3")) or ""}#{number_format=text}',
-                                'Z1': '${" "}#{number_format=text}',
+                                'AA1': '${" "}#{number_format=text}',
                             }
                         }
                     }
@@ -189,7 +189,7 @@
                                 'I1': 'base_total${value or ""}#{number_format=number}',
                                 'J1': 'tax_total${value or ""}#{number_format=number}',
                                 'K1': 'tax_payer${value and (value == "withholding" and "1" or (value == "paid_one_time" and "3")) or ""}#{number_format=text}',
-                                'Y1': '${" "}#{number_format=text}',
+                                'Z1': '${" "}#{number_format=text}',
                             }
                         }
                     }
