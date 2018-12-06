@@ -14,6 +14,7 @@
         'cmo_level_validation',
         'cmo_project',
         'hr_expense_cancel_reason',
+        'hr_expense_auto_invoice',
     ],
     'data': [
         # 'data/level_validation_data.xml',  # Moved to master data

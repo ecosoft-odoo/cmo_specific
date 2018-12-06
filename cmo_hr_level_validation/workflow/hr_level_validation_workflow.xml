@@ -46,7 +46,7 @@
             <field name="act_from" ref="act_wait_approval"/>
             <field name="act_to" ref="hr_expense.act_refused"/>
             <field name="signal">refuse</field>
-           <field name="group_id" ref="base.group_hr_user"/>
+            <field name="group_id" ref="base.group_hr_user"/>
         </record>
 
         <record id="trans_confirmed_level_check" model="workflow.transition">
