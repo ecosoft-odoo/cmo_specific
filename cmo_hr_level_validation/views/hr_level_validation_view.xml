@@ -24,18 +24,6 @@
                             groups="base.group_user"
                             />
                 </xpath>
-                <xpath expr="//header/button[@name='recheck_approve']" position="after">
-                    <button name="%(hr_expense_cancel_reason.action_hr_expense_cancel)d"
-                            type="action"
-                            string="Refuse"
-                            attrs="{'invisible': ['|', ['approve_permission','=',False], ['state', '!=', 'confirm']]}"
-                            groups="base.group_user"/>
-                    <button name="%(hr_expense_cancel_reason.action_hr_expense_cancel)d"
-                            type="action"
-                            string="Refuse"
-                            attrs="{'invisible': [('state', '!=', 'accepted')]}"
-                            groups="base.group_user"/>
-                </xpath>
                 <field name="name" position="before">
                     <field name="approver_ids" widget="many2many_tags" readonly="1"/>
                     <field name="approve_permission" invisible="1"/>
@@ -61,6 +49,18 @@
                     <attribute name="states"></attribute>
                     <attribute name="attrs">{'invisible':[('state', 'not in', ('validate'))]}</attribute>
                     <attribute name="groups">base.group_hr_user,base.group_hr_manager</attribute>
+                </xpath>
+                <xpath expr="//button[@name='%(hr_expense_cancel_reason.action_hr_expense_cancel)d']" position="after">
+                    <button name="%(hr_expense_cancel_reason.action_hr_expense_cancel)d"
+                            type="action"
+                            string="Refuse"
+                            attrs="{'invisible': ['|', ['approve_permission','=',False], ['state', '!=', 'confirm']]}"/>
+                </xpath>
+                <xpath expr="//button[@name='%(hr_expense_cancel_reason.action_hr_expense_cancel)d']" position="after">
+                    <button name="%(hr_expense_cancel_reason.action_hr_expense_cancel)d"
+                            type="action"
+                            string="Refuse"
+                            attrs="{'invisible': [('state', '!=', 'accepted')]}"/>
                 </xpath>
             </field>
         </record>
