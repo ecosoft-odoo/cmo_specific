@@ -141,6 +141,18 @@ class XLSXReportWithholdingIncomeTax(models.TransientModel):
     @api.onchange('specific_template')
     def _onchange_specific_template(self):
         excel_pnd = 'cmo_account_report.xlsx_report_withholding_income_tax'
+        if self.specific_template != excel_pnd:
+            self.to_csv = True
+            # Optional value for CSV file
+            self.csv_delimiter = '|'
+            self.csv_extension = 'txt'
+            self.csv_quote = False
+        else:
+            self.to_csv = False
+
+    @api.multi
+    def action_get_report(self):
+        excel_pnd = 'cmo_account_report.xlsx_report_withholding_income_tax'
         text_pnd3 = \
             'cmo_account_report.xlsx_report_withholding_income_tax_txt_pnd3'
         text_pnd53 = \
@@ -151,11 +163,5 @@ class XLSXReportWithholdingIncomeTax(models.TransientModel):
                (self.specific_template == text_pnd53 and
                self.income_tax_form != 'pnd53'):
                 raise ValidationError(_(
-                    "Income Tax Form and Text File is different"))
-            self.to_csv = True
-            # Optional value for CSV file
-            self.csv_delimiter = '|'
-            self.csv_extension = 'txt'
-            self.csv_quote = False
-        else:
-            self.to_csv = False
+                    "Income Tax Form and Report Format is different"))
+        return super(XLSXReportWithholdingIncomeTax, self).action_get_report()

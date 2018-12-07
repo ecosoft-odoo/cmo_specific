@@ -227,7 +227,7 @@
                                 'L8': "${'=?(F8)-?(K8)'}#{number_format=number}",
                                 'M8': 'operating_unit_id${value and value.name or ""}',
                                 'N8': 'code${value or ""}',
-                                'O8': 'account_analytic_id${value and value.name or ""}',
+                                'O8': 'account_analytic_id${value and value.display_name or ""}',
                                 'P8': 'note${value or ""}',
                                 # Hide Asset name
                                 'T8': 'profile_id${value and value.name or ""}',
