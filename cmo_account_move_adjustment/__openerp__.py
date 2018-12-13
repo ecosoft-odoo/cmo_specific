@@ -15,6 +15,7 @@
     'demo': [],
     'data': [
         'wizards/create_journal_entry_wizard.xml',
+        'wizards/reconcile_unbilled_items.xml',
         'views/account_invoice_view.xml',
     ],
     'test': [

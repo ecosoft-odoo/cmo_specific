@@ -24,11 +24,15 @@
             <field name="arch" type="xml">
                 <xpath expr="/form/sheet/notebook//group//field[@name='move_id']" position="after">
                     <field name="adjust_move_id" invisible="1"/>
+                    <field name="unbilled_move_id" invisible="1"/>
                 </xpath>
                 <xpath expr="//div[@name='buttons']" position="inside">
                     <button class="oe_inline oe_stat_button" name="action_open_adjust_journal" type="object" icon="fa-file-text"
                       attrs="{'invisible': [('adjust_move_id', '=', False)]}"
                       string="Adj. Journal"/>
+                    <button class="oe_inline oe_stat_button" name="action_open_unbilled_journal" type="object" icon="fa-file-text"
+                      attrs="{'invisible': [('unbilled_move_id', '=', False)]}"
+                      string="Clear Unbilled Journal"/>
                 </xpath>
             </field>
         </record>
