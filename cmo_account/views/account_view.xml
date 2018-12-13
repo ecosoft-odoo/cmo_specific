@@ -172,6 +172,7 @@
       <field name="arch" type="xml">
         <field name="name" position="before">
           <field name="voucher_number_cheque" invisible="context.get('type', False) != 'bank_payment'"/>
+          <field name="voucher_payee" invisible="context.get('type', False) != 'bank_payment'"/>
         </field>
       </field>
     </record>

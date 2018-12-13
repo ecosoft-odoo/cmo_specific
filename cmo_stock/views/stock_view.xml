@@ -21,6 +21,9 @@
                     <attribute name="states"></attribute>
                     <attribute name="attrs">{'invisible': ['|', ('state', 'not in', ['assigned', 'partially_available']), ('allow_do_transfer', '=', False)]}</attribute>
                 </button>
+                <button name="do_print_picking" position="attributes">
+                    <attribute name="attrs">{'invisible': 1}</attribute>
+                </button>
                 <xpath expr="/form/sheet/div[@class='oe_right oe_button_box']" position="inside">
                     <button type="object"  name="invoice_open"
                         class="oe_stat_button"
