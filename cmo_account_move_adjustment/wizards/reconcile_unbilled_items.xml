@@ -4,7 +4,7 @@
         <!-- Create Journal Entry to unreoncile unbilled -->
         <act_window
           id="action_reconcile_unbilled_items"
-          name="Reconcile Unbilled Items"
+          name="Clear Unbilled Items"
           src_model="account.invoice"
           res_model="reconcile.unbilled.items"
           view_type="form"
@@ -17,7 +17,7 @@
             <field name="name">wizard.create.asset.adjust</field>
             <field name="model">reconcile.unbilled.items</field>
             <field name="arch" type="xml">
-                <form string="Reconcile Unbilled Items">
+                <form string="Clear Unbilled Items">
                     <p>Create Journal Entry to reconcile unbilled items</p>
                     <group>
                         <group name="type">
