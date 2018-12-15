@@ -4,7 +4,7 @@ from openerp.exceptions import RedirectWarning
 
 from openerp.addons.connector.queue.job import job, related_action
 from openerp.addons.connector.session import ConnectorSession
-from openerp.addons.connector.exception import FailedJobError
+from openerp.addons.connector.exception import RetryableJobError
 
 
 def related_sale_order(session, thejob):
@@ -20,14 +20,17 @@ def related_sale_order(session, thejob):
     return action
 
 
-@job(retry_pattern={1: 10 * 60})  # Set to retry immediatelly
+@job(retry_pattern={1: 1})
 @related_action(action=related_sale_order)
 def action_sale_manual_invoice(session, model_name, res_id):
-    session.pool[model_name].\
-        manual_invoice(session.cr, session.uid, [res_id], session.context)
-    sale = session.pool[model_name].browse(session.cr, session.uid, res_id)
-    invoice_ids = [x.id for x in sale.invoice_ids]
-    return {'invoice_ids': invoice_ids}
+    try:
+        session.pool[model_name].\
+            manual_invoice(session.cr, session.uid, [res_id], session.context)
+        sale = session.pool[model_name].browse(session.cr, session.uid, res_id)
+        invoice_ids = [x.id for x in sale.invoice_ids]
+        return {'invoice_ids': invoice_ids}
+    except Exception, e:
+        raise RetryableJobError(e)
 
 
 class SaleOrder(models.Model):
