@@ -55,6 +55,7 @@ class SaleOrder(models.Model):
             ('state', 'in', ['validate', 'open', 'ready_billing']),
         ],
         required=True,
+        index=True,
     )
     partner_id_readonly = fields.Many2one(
         related='partner_id',
@@ -99,6 +100,7 @@ class SaleOrder(models.Model):
             '&', ('order_type', 'like', 'quotation'),
             ('state', 'not like', 'cancel'),
         ],
+        index=True,
     )
     approval_id = fields.Many2one(
         'res.users',
