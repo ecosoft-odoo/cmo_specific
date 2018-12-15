@@ -20,7 +20,7 @@ def related_sale_order(session, thejob):
     return action
 
 
-@job(retry_pattern={1: 0})  # Set to retry immediatelly
+@job(retry_pattern={1: 10 * 60})  # Set to retry immediatelly
 @related_action(action=related_sale_order)
 def action_sale_manual_invoice(session, model_name, res_id):
     session.pool[model_name].\
