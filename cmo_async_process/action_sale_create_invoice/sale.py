@@ -23,14 +23,11 @@ def related_sale_order(session, thejob):
 @job
 @related_action(action=related_sale_order)
 def action_sale_manual_invoice(session, model_name, res_id):
-    try:
-        session.pool[model_name].\
-            manual_invoice(session.cr, session.uid, [res_id], session.context)
-        sale = session.pool[model_name].browse(session.cr, session.uid, res_id)
-        invoice_ids = [x.id for x in sale.invoice_ids]
-        return {'invoice_ids': invoice_ids}
-    except Exception, e:
-        raise FailedJobError(e)
+    session.pool[model_name].\
+        manual_invoice(session.cr, session.uid, [res_id], session.context)
+    sale = session.pool[model_name].browse(session.cr, session.uid, res_id)
+    invoice_ids = [x.id for x in sale.invoice_ids]
+    return {'invoice_ids': invoice_ids}
 
 
 class SaleOrder(models.Model):
