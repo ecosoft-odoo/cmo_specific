@@ -13,6 +13,8 @@
     "installable": True,
     "depends": [
         "account_asset_management_enhanced",
+        "cmo_hr",
+        "cmo_sale",
     ],
     "data": [],
 }
