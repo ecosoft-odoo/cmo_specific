@@ -14,3 +14,6 @@ class HRExpense(models.Model):
     number = fields.Char(
         readonly=False,
     )
+    state = fields.Selection(
+        readonly=False,
+    )

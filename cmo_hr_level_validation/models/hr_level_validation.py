@@ -26,7 +26,7 @@ class HrExpenseExpense(models.Model):
         compute='_compute_approve_permission',
     )
     state = fields.Selection(
-        selection=[
+        [
             ('draft', 'New'),
             ('cancelled', 'Refused'),
             ('confirm', 'Waiting Approval'),
