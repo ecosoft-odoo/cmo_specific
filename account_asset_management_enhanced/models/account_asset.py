@@ -86,6 +86,21 @@ class AccountAsset(models.Model):
             res.append((record.id, name))
         return res
 
+    @api.multi
+    def create_depre_init_entry_on_migration(self):
+        """ This function is used for migrated data only.
+        It will create depre JE for the second line (type = depre, init = true)
+        only if it is not created before (one time only)
+        """
+        DepreLine = self.env['account.asset.line']
+        for asset in self:
+            depre_line = DepreLine.search([('type', '=', 'depreciate'),
+                                           ('init_entry', '=', True),
+                                           ('move_check', '=', False),
+                                           ('asset_id', '=', asset.id)])
+            depre_line.create_move()
+        return True
+
     # @api.model
     # def create(self, vals):
     #     if vals.get('number', '/') == '/':
