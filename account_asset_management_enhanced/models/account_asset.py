@@ -50,6 +50,48 @@ class AccountAsset(models.Model):
     warranty_expire_date = fields.Date(
         string='Warranty Expire Date',
     )
+    tangible_asset = fields.Boolean(
+        default=False,
+        string='Tangible Asset',
+    )
+    transportation_expense = fields.Float(
+        string='Transportation Expense',
+    )
+    installation_expense = fields.Float(
+        string='Installation Expense',
+    )
+    other_expense = fields.Float(
+        string='Other Expense',
+    )
+    insurance_company = fields.Char(
+        string='Insurance Company',
+    )
+    premium = fields.Float(
+        string='Premium',
+    )
+    sale_value = fields.Float(
+        string='Sale Value',
+    )
+    voucher_number = fields.Char(
+        compute='_compute_voucher_number',
+        string='Voucher Number',
+    )
+    accum_depre_bf = fields.Float(
+        string='Accum. Depre. B/F',
+    )
+    customer_invoice_number = fields.Char(
+        string='Customer Invoice Number',
+    )
+
+    @api.multi
+    def _compute_voucher_number(self):
+        for rec in self:
+            if rec.purchase_move_id:
+                imove_lines = rec.mapped('purchase_move_id').line_id
+                pmove_lines = imove_lines.mapped('reconcile_id').\
+                    line_id.filtered(lambda l: l not in imove_lines)
+                if pmove_lines:
+                    rec.voucher_number = pmove_lines[-1].move_id.name
 
     @api.multi
     def _compute_value_net_book(self):

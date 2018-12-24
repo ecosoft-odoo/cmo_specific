@@ -16,6 +16,12 @@
                   <field name="asset_brand"/>
                   <newline/>
                   <field name="asset_model"/>
+                  <newline/>
+                  <field name="voucher_number"/>
+                  <newline/>
+                  <field name="customer_invoice_number"/>
+                  <newline/>
+                  <field name="sale_value" attrs="{'invisible': [('state', '!=', 'removed')]}"/>
               </xpath>
               <xpath expr="//field[@name='value_residual']" position="after">
                   <field name="value_net_book" widget="monetary" options="{'currency_field': 'company_currency_id'}"/>
@@ -30,10 +36,19 @@
                               <field name="warranty_start_date"/>
                               <field name="warranty_expire_date"/>
                           </group>
-                          <group/>
+                          <group>
+                              <field name="insurance_company"/>
+                              <field name="premium"/>
+                          </group>
                       </group>
                   </page>
               </xpath>
+              <field name="date_remove" position="after">
+                  <field name="accum_depre_bf" widget="monetary" options="{'currency_field': 'company_currency_id'}"/>
+                  <field name="transportation_expense" widget="monetary" options="{'currency_field': 'company_currency_id'}"/>
+                  <field name="installation_expense" widget="monetary" options="{'currency_field': 'company_currency_id'}"/>
+                  <field name="other_expense" widget="monetary" options="{'currency_field': 'company_currency_id'}"/>
+              </field>
               <field name="salvage_value" position="replace">
                   <field name="salvage_value" widget="monetary" options="{'currency_field': 'company_currency_id'}"
                          attrs="{'readonly': [('state', '!=', 'draft')]}"/>
@@ -44,6 +59,7 @@
               </field>
               <field name="account_analytic_id" position="after">
                   <field name="operating_unit_id"/>
+                  <field name="tangible_asset"/>
               </field>
               <field name="parent_id" position="attributes">
                   <attribute name="attrs">{'required': False}</attribute>

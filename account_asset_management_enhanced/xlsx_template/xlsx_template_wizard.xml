@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <act_window id="action_asset_register_export_xlsx_template"
+            name="Asset Register (.xlsx)"
+            res_model="export.xlsx.template"
+            src_model="account.asset"
+            view_mode="form"
+            target="new"
+            context="{'lang': 'th_TH'}"/>
+    </data>
+</openerp>

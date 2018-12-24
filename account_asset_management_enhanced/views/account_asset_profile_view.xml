@@ -33,6 +33,7 @@
                 </field>
                 <field name="active" position="after">
                     <field name="sequence_id" readonly="1"/>
+                    <field name="no_depreciation"/>
                 </field>
                 <field name="parent_id" position="attributes">
                     <attribute name="required">0</attribute>

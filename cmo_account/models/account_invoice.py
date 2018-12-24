@@ -41,6 +41,22 @@ class AccountInvoice(models.Model):
         })
         return res
 
+    @api.multi
+    def write(self, vals):
+        for rec in self:
+            res = super(AccountInvoice, self).write(vals)
+            invoice_lines = self.env['account.invoice.line'].search([
+                ('invoice_id', '=', rec.id)])
+            asset_ids = self.env['account.asset']
+            for line in invoice_lines:
+                if line.asset_id:
+                    asset = asset_ids.search([
+                        ('id', '=', line.asset_id.id)])
+                    asset.write({
+                        'customer_invoice_number': rec.number,
+                    })
+            return res
+
     # @api.model
     # def fields_view_get(self, view_id=None, view_type='form',
     #                     toolbar=False, submenu=False):
