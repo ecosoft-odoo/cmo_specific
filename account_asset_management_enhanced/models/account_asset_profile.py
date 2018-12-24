@@ -19,6 +19,9 @@ class AccountAssetProfile(models.Model):
     account_expense_depreciation_id = fields.Many2one(
         required=False,
     )
+    no_depreciation = fields.Boolean(
+        string='No Depreciation',
+    )
 
     @api.model
     def _create_sequence_asset(self, prefix):

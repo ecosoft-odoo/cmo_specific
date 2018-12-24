@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- Directory Asset Action Import Temlates -->
+        <record model="document.directory" id="dir_asset_action_template">
+            <field name="name">Asset Actions Templates</field>
+            <field name="parent_id" ref="document.dir_root"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="ressource_id">0</field>
+            <field name="group_ids" eval="[(4, ref('base.group_user'))]" />
+        </record>
+
+        # Asset Register
+        <record id="xlsx_report_asset_register" model="ir.attachment">
+            <field name="res_model">account.asset</field>
+            <field name="datas"></field>
+            <field name="datas_fname">asset_register.xlsx</field>
+            <field name="name">Asset Register</field>
+            <field name="parent_id" eval="ref('dir_asset_action_template')"/>
+            <field name="description">
+              {
+                '__EXPORT__': {
+                    'Asset Register': {
+                        '_HEAD_': {
+                            'A5': 'number${value and "รหัส: %s" % value or ""}',
+                            'B5': 'name${value and "ชื่อ: %s" % value or ""}',
+                            'C5': 'purchase_date${value and "วันที่ซื้อ %s" % value.strftime("%d/%m/%Y") or ""}',
+                            'J17': 'method${value or ""}',   #can't use dict because - symbol
+                            'J35': "${'=IF(AND(C37&lt;&gt;\"\",J37&lt;&gt;\"\"),C37-J37,\"\")'}",
+                            'J37': 'warranty_start_date${value or ""}#{number_format=date}',
+                            'C7': 'partner_id${value and value.name or ""}',
+                            'C8': 'voucher_number${value or ""}',
+                            'C9': 'purchase_move_id${value and value.name or ""}',
+                            'C10': 'asset_brand${value or ""}',
+                            'C11': 'asset_model${value or ""}',
+                            'C12': 'serial_number${value or ""}#{number_format=text}',
+                            'C13': 'tangible_asset${value and "มีตัวตน" or "ไม่มีตัวตน"}',
+                            'C14': 'operating_unit_id${value and value.name or ""}',
+                            'C15': 'profile_id${value and value.name or ""}',
+                            'C16': 'method_number${value or ""}#{number_format=text}',
+                            'C17': "${'=IF(J17=\"linear\",\"Linear\",IF(J17=\"linear-limit\",\"Linear up to Salvage Value\",IF(J17=\"degressive\",\"Degressive\",IF(J17=\"degr-linear\",\"Degressive-Linear\",IF(J17=\"degr-limit\",\"Degressive up to Salvage Value\",\"\")))))'}",
+                            'C18': 'date_start${value or ""}#{number_format=date}',
+                            'C19': 'profile_id.no_depreciation${value and "ไม่คำนวณค่าเสื่อม" or "คำนวณค่าเสื่อม"}',
+                            'C20': 'accum_depre_bf${value or 0}#{number_format=number}',
+                            'C21': 'method_number${value and "%s %%" % (100/value) or ""}#{number_format=text}',
+                            'C22': 'salvage_value${value or ""}#{number_format=number}',
+                            'C23': 'note${value or ""}',
+                            'C24': 'profile_id.account_asset_id${value and " ".join([value.code, value.name])}',
+                            'C25': 'profile_id.account_expense_depreciation_id${value and " ".join([value.code, value.name])}',
+                            'C26': 'profile_id.account_depreciation_id${value and " ".join([value.code, value.name])}',
+                            'C27': 'method_period${value and dict(month="Month", quarter="Quarter", year="Year")[value] or ""}',
+                            'C28': 'purchase_value${value or ""}#{number_format=number}',
+                            'C29': 'transportation_expense${value or 0}#{number_format=number}',
+                            'C30': 'installation_expense${value or 0}#{number_format=number}',
+                            'C31': 'other_expense${value or 0}#{number_format=number}',
+                            'C32': 'value_net_book${value or ""}#{number_format=number}',
+                            'C33': 'warranty_number${value or ""}#{number_format=text}',
+                            'C34': 'insurance_company${value or ""}',
+                            'C35': "${'=DATEDIF(0,J35,\"y\")'}#{number_format=text}",
+                            'E35': "${'=DATEDIF(0,J35,\"ym\")'}#{number_format=text}",
+                            'C36': 'premium${value or 0}#{number_format=number}',
+                            'C37': 'warranty_expire_date${value or ""}#{number_format=date}',
+                            'C38': 'date_remove${value or ""}#{number_format=date}',
+                            'C39': 'customer_invoice_number${value or ""}',
+                            'C40': 'sale_value${value or 0}#{number_format=number}',
+                        },
+                    },
+                }
+            }
+          </field>
+        </record>
+
+
+    </data>
+</openerp>
