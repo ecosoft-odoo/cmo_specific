@@ -81,6 +81,7 @@ class AccountAsset(models.Model):
     )
     customer_invoice_number = fields.Char(
         string='Customer Invoice Number',
+        readonly=True,
     )
 
     @api.multi
