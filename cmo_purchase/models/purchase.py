@@ -93,7 +93,7 @@ class PurchaseOrder(models.Model):
             'cancel': [('readonly', True)],
         },
         required=True,
-        domain=lambda self: self._get_domain_approve(),
+        # domain=lambda self: self._get_domain_approve(),
     )
     operating_unit_id = fields.Many2one(
         change_default=True,
