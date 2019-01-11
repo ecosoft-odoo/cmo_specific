@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from lxml import etree
 from openerp import fields, models, api, _
 from openerp.exceptions import ValidationError
 from openerp.tools.float_utils import float_round
@@ -112,6 +113,21 @@ class SaleOrder(models.Model):
         readonly=True,
         compute='_compute_margin_percentage',
     )
+
+    @api.model
+    def fields_view_get(self, view_id=None, view_type=False,
+                        toolbar=False, submenu=False):
+        res = super(SaleOrder, self).\
+            fields_view_get(view_id=view_id, view_type=view_type,
+                            toolbar=toolbar, submenu=submenu)
+        if self._context.get('order_type', False) == 'sale_order':
+            doc = etree.XML(res['arch'])
+            nodes = doc.xpath("/tree")
+            for node in nodes:
+                node.set('create', 'false')
+                node.set('delete', 'false')
+            res['arch'] = etree.tostring(doc)
+        return res
 
     @api.model
     def create(self, vals):
