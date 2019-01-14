@@ -57,6 +57,9 @@
                 <field name="bank_cheque" position="attributes">
                     <attribute name="invisible">True</attribute>
                 </field>
+                <field name="number_cheque" position="attributes">
+                    <attribute name="attrs">{'required': [('payment_type', 'in', ('cheque', 'cheque_cash'))]}</attribute>
+                </field>
                 <field name="bank_branch" position="attributes">
                     <attribute name="invisible">True</attribute>
                 </field>
