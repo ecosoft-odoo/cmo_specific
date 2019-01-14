@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.331000000000003"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="672"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -466,7 +466,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				<imageExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "cmo.png"]]></imageExpression>
 			</image>
 			<line>
-				<reportElement x="331" y="0" width="1" height="93"/>
+				<reportElement x="352" y="0" width="1" height="93"/>
 			</line>
 		</band>
 	</pageHeader>
