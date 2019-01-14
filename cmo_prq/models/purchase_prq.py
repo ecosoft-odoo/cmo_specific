@@ -15,6 +15,7 @@ class PurchasePRQ(models.Model):
         [('purchase', 'Purchase Order'),
          ('expense', 'Expense')],
         string='Type',
+        readonly=True,
     )
     purchase_id = fields.Many2one(
         'purchase.order',
@@ -112,8 +113,10 @@ class PurchasePRQ(models.Model):
         copy=False,
     )
     date = fields.Date(
+        string='Date',
+        default=fields.Date.context_today,
         required=True,
-        default=fields.Date.context_today
+        readonly=True,
     )
     amount_po_untaxed = fields.Float(
         related='invoice_id.amount_untaxed',
