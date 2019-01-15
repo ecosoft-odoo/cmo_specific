@@ -11,10 +11,12 @@
         'l10n_th_doctype_base',
         'purchase_invoice_plan',
         'hr_expense_auto_invoice',
+        'operating_unit',
     ],
     'data': [
         'security/ir.model.access.csv',
         'security/prq_security.xml',
+        'security/prq_security_rule.xml',
         'data/ir_sequence_data.xml',
         'data/doctype_data.xml',
         'views/purchase_view.xml',

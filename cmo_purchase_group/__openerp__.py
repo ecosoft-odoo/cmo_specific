@@ -8,6 +8,7 @@
     'version': '8.0.1.0.0',
     'depends': [
         'cmo_purchase',
+        'cmo_prq',
     ],
     'data': [
         'security/purchase_security.xml',
