@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_hr_expense" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
-	<property name="ireport.zoom" value="1.2100000000000006"/>
+	<property name="ireport.zoom" value="0.9090909090909101"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="192"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -137,7 +137,7 @@
 	<title>
 		<band height="128" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement x="441" y="35" width="114" height="20"/>
+				<reportElement x="457" y="35" width="114" height="20"/>
 				<textElement>
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -151,7 +151,7 @@
 				<text><![CDATA[ใบเบิกเงินทดรองจ่าย (Advance Voucher)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="368" y="35" width="73" height="20"/>
+				<reportElement x="384" y="35" width="73" height="20"/>
 				<box rightPadding="2"/>
 				<textElement textAlignment="Left">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
@@ -159,7 +159,7 @@
 				<text><![CDATA[Voucher No. :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="368" y="55" width="37" height="20"/>
+				<reportElement x="384" y="55" width="37" height="20"/>
 				<box rightPadding="2"/>
 				<textElement textAlignment="Left">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
@@ -167,14 +167,14 @@
 				<text><![CDATA[วันที่ : ]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="405" y="55" width="150" height="20"/>
+				<reportElement x="412" y="55" width="150" height="20"/>
 				<textElement>
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{expense_date}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="100" y="0" width="232" height="20" forecolor="#FFFFFF" backcolor="#3C3C3C"/>
+				<reportElement mode="Opaque" x="100" y="0" width="252" height="20" forecolor="#FFFFFF" backcolor="#3C3C3C"/>
 				<box leftPadding="0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
@@ -182,13 +182,13 @@
 				<text><![CDATA[CMO PUBLIC COMPANY LIMITED]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="100" y="20" width="232" height="75"/>
+				<reportElement x="100" y="20" width="252" height="75"/>
 				<box leftPadding="2">
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[ 4/18-19 Soi Nuanchan 56, Nuanchan, Buengkum,
@@ -210,6 +210,9 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 			</frame>
+			<line>
+				<reportElement x="352" y="0" width="1" height="95"/>
+			</line>
 		</band>
 	</title>
 	<pageHeader>
@@ -393,7 +396,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 	<columnFooter>
 		<band height="102" splitType="Stretch">
 			<staticText>
-				<reportElement x="3" y="60" width="68" height="20" isRemoveLineWhenBlank="true">
+				<reportElement x="3" y="22" width="68" height="20" isRemoveLineWhenBlank="true">
 					<printWhenExpression><![CDATA[$F{paymant_by}.equals("") == false]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -402,7 +405,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				<text><![CDATA[Payment By]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="78" y="60" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement x="78" y="22" width="100" height="20" isRemoveLineWhenBlank="true"/>
 				<textElement>
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -420,7 +423,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$V{sum_amount_untaxed}==null?0:$V{sum_amount_untaxed}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="78" y="80" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement x="78" y="42" width="183" height="60" isRemoveLineWhenBlank="true"/>
 				<textElement>
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
