@@ -40,6 +40,7 @@
     "data": [
         "views/purchase_discount_view.xml",
         "views/purchase_view.xml",
+        "views/account_invoice_view.xml",
     ],
     "license": 'AGPL-3',
     "installable": True
