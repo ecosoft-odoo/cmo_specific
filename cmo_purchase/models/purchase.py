@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-
 from openerp import models, fields, api
-from openerp.exceptions import ValidationError
-from openerp.tools import float_compare
-from openerp.tools.translate import _
 
 
 class PurchaseOrder(models.Model):
@@ -138,24 +134,8 @@ class PurchaseOrder(models.Model):
     @api.multi
     def write(self, vals):
         res = super(PurchaseOrder, self).write(vals)
-        if self.state not in ['draft', 'approved']:
-            self._check_amount_untaxed()
         self._update_analytic_by_project()
         return res
-
-    @api.multi
-    def _check_amount_untaxed(self):
-        for order in self:
-            po_project = order.po_type_id.po_project or False
-            remaining_cost = order.project_id.remaining_cost or 0.0
-            if po_project and remaining_cost is not False:
-                if float_compare(order.amount_untaxed, remaining_cost, 2) > 0:
-                    raise ValidationError(
-                        _("PO value (%s) over remaining cost (%s), "
-                          "please change value." %
-                          ('{:,.2f}'.format(order.amount_untaxed),
-                           '{:,.2f}'.format(remaining_cost)))
-                    )
 
     @api.multi
     def _update_analytic_by_project(self):

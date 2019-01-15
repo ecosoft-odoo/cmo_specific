@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 # from lxml import etree
-
-from openerp import fields, models, api
+from openerp import fields, models, api, _
 from openerp.exceptions import ValidationError
+from openerp.tools import float_compare
+
 # TODO: foreign key use, idex and ondelete
 
 
@@ -290,8 +291,8 @@ class ProjectProject(models.Model):
     #     res = super(ProjectProject, self).fields_view_get(
     #         view_id, view_type, toolbar=toolbar, submenu=submenu)
     #
-    #     readonly_group = self.env.ref('project.group_project_readonly')
-    #     readonly_group_own = self.env.ref('project.group_project_readonly_own')
+    #   readonly_group = self.env.ref('project.group_project_readonly')
+    #   readonly_group_own = self.env.ref('project.group_project_readonly_own')
     #     user = self.env['res.users'].search([
     #         ('id', '=', self._context.get('uid')),
     #     ])
@@ -517,6 +518,19 @@ class ProjectProject(models.Model):
                 lambda r: r.state in ('approved', 'done')
             )
             project.actual_po = sum(purchase_orders.mapped('amount_untaxed'))
+        return True
+
+    @api.multi
+    @api.constrains('actual_po')
+    def _check_actual_po(self):
+        print self._context
+        for project in self:
+            if float_compare(project.remaining_cost, 0.0, 2) < 0:
+                raise ValidationError(
+                    _("Project %s, budget exceeded (%s)") %
+                    (project.code, '{:,.2f}'.format(project.remaining_cost))
+                )
+        return True
 
     @api.multi
     def name_get(self):
