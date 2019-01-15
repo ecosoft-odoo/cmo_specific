@@ -125,7 +125,10 @@ class HrExpenseExpense(models.Model):
     @api.multi
     def action_validated(self):
         self.ensure_one()
-        return self.write({'state': 'validate'})
+        today = fields.Datetime.now()
+        return self.write({'state': 'validate',
+                           'approve_by': self.env.user.id,
+                           'approve_date': today})
 
     @api.multi
     def expense_accept(self):
