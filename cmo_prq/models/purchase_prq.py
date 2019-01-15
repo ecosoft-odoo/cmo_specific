@@ -134,6 +134,47 @@ class PurchasePRQ(models.Model):
         related='expense_id.amount',
         store=False,
     )
+    payment_by = fields.Selection(
+        selection=lambda self: self._get_payment_by_selection(),
+        string='Payment By',
+    )
+    bank_transfer_ref = fields.Text(
+        string='Bank Transfer Ref.',
+        states={
+            'draft': [('readonly', False)],
+            'confirm': [('readonly', False)],
+        },
+    )
+    ac_payee_ref = fields.Text(
+        string='A/C Payee Ref.',
+        states={
+            'draft': [('readonly', False)],
+            'confirm': [('readonly', False)],
+        },
+    )
+    cheque_date = fields.Date(
+        string='Cheque Date',
+        states={
+            'draft': [('readonly', False)],
+            'confirm': [('readonly', False)],
+        },
+    )
+    cheque_received_date = fields.Date(
+        string='Cheque Received Date',
+        states={
+            'draft': [('readonly', False)],
+            'confirm': [('readonly', False)],
+        },
+    )
+
+    @api.model
+    def _get_payment_by_selection(self):
+        context = self._context.copy()
+        res = [('cash', 'Cash'),
+               ('cashier_cheque', 'Cashier Cheque'),
+               ('bank_transfer', 'Bank Transfer'),
+               ('ac_payee', 'A/C Payee'), ]
+        return res
 
     @api.multi
     def action_draft(self):

@@ -90,13 +90,22 @@
                                         <field name="price_subtotal" sum="Total"/>
                                     </tree>
                                 </field>
-                                <group class="oe_subtotal_footer oe_right">
-                                    <field name="amount_po_untaxed" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                                    <div>
-                                        <label for="amount_po_tax"/>
-                                    </div>
-                                    <field name="amount_po_tax" nolabel="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                                    <field name="amount_po_total" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <group>
+                                    <group>
+                                        <field name="payment_by" widget="radio"/>
+                                        <field name="cheque_date" attrs="{'invisible': [('payment_by','!=','cashier_cheque')]}"/>
+                                        <field name="cheque_received_date" attrs="{'invisible': [('payment_by','!=','cashier_cheque')]}"/>
+                                        <field name="bank_transfer_ref" attrs="{'invisible': [('payment_by','!=','bank_transfer')]}"/>
+                                        <field name="ac_payee_ref" attrs="{'invisible': [('payment_by','!=','ac_payee')]}"/>
+                                    </group>
+                                    <group class="oe_subtotal_footer oe_right">
+                                        <field name="amount_po_untaxed" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                        <div>
+                                            <label for="amount_po_tax"/>
+                                        </div>
+                                        <field name="amount_po_tax" nolabel="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                        <field name="amount_po_total" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    </group>
                                 </group>
                             </page>
                             <page string="Expense Details" attrs="{'invisible':[('type','not in',('expense'))]}">
