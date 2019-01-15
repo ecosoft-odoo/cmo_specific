@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_hr_expense" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
-	<property name="ireport.zoom" value="1.331000000000003"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.2100000000000029"/>
+	<property name="ireport.x" value="87"/>
+	<property name="ireport.y" value="576"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -69,7 +69,7 @@
 		<fieldDescription><![CDATA[invoice_id/payment_ids/number_cheque]]></fieldDescription>
 	</field>
 	<field name="approver" class="java.lang.String">
-		<fieldDescription><![CDATA[approver_ids/name]]></fieldDescription>
+		<fieldDescription><![CDATA[approve_by/name]]></fieldDescription>
 	</field>
 	<field name="state" class="java.lang.String">
 		<fieldDescription><![CDATA[state]]></fieldDescription>
@@ -80,7 +80,10 @@
 	<field name="due_date" class="java.util.Date">
 		<fieldDescription><![CDATA[due_date]]></fieldDescription>
 	</field>
-	<variable name="sum_amount_untaxed" class="java.lang.Number" resetType="Column" calculation="Sum">
+	<field name="approve_date" class="java.util.Date">
+		<fieldDescription><![CDATA[approve_date]]></fieldDescription>
+	</field>
+	<variable name="sum_amount_untaxed" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{amount_line_untaxed}]]></variableExpression>
 	</variable>
 	<variable name="cal_amount_tax" class="java.lang.Number">
@@ -338,6 +341,41 @@
 				</textElement>
 				<text><![CDATA[บวกภาษีมูลค่าเพิ่ม]]></text>
 			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="111" y="708" width="111" height="17" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center">
+					<font size="9" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{user}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="222" y="766" width="111" height="17" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center">
+					<font size="9" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{received_date}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="333" y="766" width="111" height="17" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center">
+					<font size="9" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{due_date}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="222" y="703" width="111" height="17" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center">
+					<font size="9" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{approver}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="222" y="720" width="111" height="17" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center">
+					<font size="9" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{approve_date}]]></textFieldExpression>
+			</textField>
 		</band>
 	</background>
 	<pageHeader>
@@ -514,7 +552,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20" splitType="Stretch">
+		<band height="22" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
 				<reportElement x="0" y="0" width="343" height="20"/>
 				<box leftPadding="2"/>
@@ -544,12 +582,12 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="230" splitType="Stretch"/>
+		<band height="256" splitType="Stretch"/>
 	</pageFooter>
 	<lastPageFooter>
-		<band height="230">
+		<band height="257" splitType="Stretch">
 			<staticText>
-				<reportElement x="2" y="43" width="68" height="20" isRemoveLineWhenBlank="true">
+				<reportElement x="2" y="70" width="68" height="20" isRemoveLineWhenBlank="true">
 					<printWhenExpression><![CDATA[$F{paymant_by}.equals("") == false]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -557,16 +595,8 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				</textElement>
 				<text><![CDATA[Payment By]]></text>
 			</staticText>
-			<textField pattern="#,##0.00;#,##0.00-">
-				<reportElement x="455" y="17" width="100" height="20"/>
-				<box rightPadding="2"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.lang.Number"><![CDATA[$F{amount}==null?0:$F{amount}]]></textFieldExpression>
-			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="77" y="43" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement x="77" y="70" width="100" height="20" isRemoveLineWhenBlank="true"/>
 				<textElement>
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -575,8 +605,31 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 ( $F{paymant_by}.equals("bank_transfer") ? "Bank Transfer" :
 ( $F{paymant_by}.equals("ac_payee") ? "A/C Payee" : null ))))]]></textFieldExpression>
 			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="77" y="90" width="258" height="46" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{paymant_by} == "bank_transfer" ? $F{bank_transfer}: $F{ac_payee}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="44" width="342" height="20"/>
+				<box leftPadding="0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["(" + (new Scriptlet()).getAmtInWords((new BigDecimal($V{string_total}==""?0:$V{string_total})).setScale(2).toString(),"THB") + ")"]]></textFieldExpression>
+			</textField>
 			<textField pattern="#,##0.00;#,##0.00-">
-				<reportElement x="455" y="-23" width="100" height="20"/>
+				<reportElement x="455" y="43" width="100" height="20"/>
+				<box rightPadding="2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{amount}==null?0:$F{amount}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;#,##0.00-">
+				<reportElement x="455" y="3" width="100" height="20"/>
 				<box rightPadding="2"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
@@ -584,48 +637,12 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$V{sum_amount_untaxed}==null?0:$V{sum_amount_untaxed}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;#,##0.00-">
-				<reportElement x="455" y="-3" width="100" height="20"/>
+				<reportElement x="455" y="23" width="100" height="20"/>
 				<box rightPadding="2"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$V{cal_amount_tax}==null?0:$V{cal_amount_tax}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="77" y="63" width="258" height="46" isRemoveLineWhenBlank="true"/>
-				<textElement>
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{paymant_by} == "bank_transfer" ? $F{bank_transfer}: $F{ac_payee}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="0" y="17" width="342" height="20"/>
-				<box leftPadding="0"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["(" + (new Scriptlet()).getAmtInWords((new BigDecimal($V{string_total}==""?0:$V{string_total})).setScale(2).toString(),"THB") + ")"]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="124" y="140" width="107" height="17" isRemoveLineWhenBlank="true"/>
-				<textElement>
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{user}]]></textFieldExpression>
-			</textField>
-			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="252" y="195" width="107" height="17" isRemoveLineWhenBlank="true"/>
-				<textElement>
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.util.Date"><![CDATA[$F{received_date}]]></textFieldExpression>
-			</textField>
-			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="365" y="195" width="107" height="17" isRemoveLineWhenBlank="true"/>
-				<textElement>
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.util.Date"><![CDATA[$F{due_date}]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>

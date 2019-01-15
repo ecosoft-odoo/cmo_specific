@@ -63,6 +63,15 @@ class HrExpenseExpense(models.Model):
         readonly=True,
         states={'draft': [('readonly', False)]},
     )
+    approve_by = fields.Many2one(
+        'res.users',
+        string='Approve By',
+        readonly=True,
+    )
+    approve_date = fields.Date(
+        string='Approve Date',
+        readonly=True,
+    )
 
     @api.onchange('payment_by')
     def _onchange_payment_by(self):
