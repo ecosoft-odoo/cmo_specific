@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_hr_expense" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
-	<property name="ireport.zoom" value="0.9090909090909101"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="192"/>
+	<property name="ireport.zoom" value="1.4641000000000022"/>
+	<property name="ireport.x" value="98"/>
+	<property name="ireport.y" value="348"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -79,6 +79,9 @@
 	</field>
 	<field name="state" class="java.lang.String">
 		<fieldDescription><![CDATA[state]]></fieldDescription>
+	</field>
+	<field name="approve_by" class="java.lang.String">
+		<fieldDescription><![CDATA[approve_by/name]]></fieldDescription>
 	</field>
 	<variable name="sum_amount_untaxed" class="java.lang.Number" resetType="Column" calculation="Sum">
 		<variableExpression><![CDATA[$F{amount_line_untaxed}]]></variableExpression>
@@ -448,6 +451,13 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 					<leftPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
+				<textField isStretchWithOverflow="true">
+					<reportElement x="0" y="40" width="110" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{approve_by}]]></textFieldExpression>
+				</textField>
 			</frame>
 			<frame>
 				<reportElement x="0" y="69" width="111" height="60"/>
@@ -596,13 +606,6 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				</textElement>
 				<text><![CDATA[ผู้อนุมัติ]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true">
-				<reportElement x="212" y="19" width="133" height="50"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{state}=="validate" || $F{state}=="accepted" || $F{state}=="done" || $F{state}=="paid"?$F{approver}:""]]></textFieldExpression>
-			</textField>
 		</band>
 	</pageFooter>
 	<summary>
