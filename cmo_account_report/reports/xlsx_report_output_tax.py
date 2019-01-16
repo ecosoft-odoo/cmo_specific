@@ -16,6 +16,11 @@ class XLSXReportOutputTax(models.TransientModel):
         required=True,
         default=lambda self: self.env['account.period.calendar'].find(),
     )
+    tax = fields.Selection(
+        [('S0', 'S0'),
+         ('S7', 'S7')],
+        string='Tax',
+    )
     results = fields.Many2many(
         'account.tax.report',
         string='Results',
@@ -34,4 +39,6 @@ class XLSXReportOutputTax(models.TransientModel):
         dom = [('doc_type', '=', 'sale')]
         if self.calendar_period_id:
             dom += [('report_period_id', '=', self.calendar_period_id.id)]
+        if self.tax:
+            dom += [('tax_id.description', '=', self.tax)]
         self.results = Result.search(dom, order='invoice_date,invoice_number')
