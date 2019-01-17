@@ -15,6 +15,7 @@
                           <field name="project_from_id"/>
                           <field name="user_id"/>
                           <field name="stage"/>
+                          <field name="close_reason" attrs="{'invisible': [('stage', '!=', 'cancelled')]}"/>
                           <field name="project_budget_from"/>
                           <field name="project_budget_to"/>
                       </group>
