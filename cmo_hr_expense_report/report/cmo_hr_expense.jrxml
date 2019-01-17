@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.2100000000000029"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1632"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -30,9 +30,9 @@
 		<fieldDescription><![CDATA[line_ids/unit_quantity]]></fieldDescription>
 	</field>
 	<field name="operating_unit" class="java.lang.String">
-		<fieldDescription><![CDATA[user_id/default_operating_unit_id/name]]></fieldDescription>
+		<fieldDescription><![CDATA[operating_unit_id/name]]></fieldDescription>
 	</field>
-	<field name="user" class="java.lang.String">
+	<field name="employee" class="java.lang.String">
 		<fieldDescription><![CDATA[user_id/name]]></fieldDescription>
 	</field>
 	<field name="amount" class="java.lang.Number">
@@ -82,6 +82,12 @@
 	</field>
 	<field name="approve_date" class="java.util.Date">
 		<fieldDescription><![CDATA[approve_date]]></fieldDescription>
+	</field>
+	<field name="supplier" class="java.lang.String">
+		<fieldDescription><![CDATA[supplier_text]]></fieldDescription>
+	</field>
+	<field name="pay_to" class="java.lang.String">
+		<fieldDescription><![CDATA[pay_to]]></fieldDescription>
 	</field>
 	<variable name="sum_amount_untaxed" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{amount_line_untaxed}]]></variableExpression>
@@ -346,7 +352,7 @@
 				<textElement textAlignment="Center">
 					<font size="8" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{user}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{employee}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="222" y="766" width="111" height="17" isRemoveLineWhenBlank="true"/>
@@ -420,7 +426,9 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{user}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{pay_to} == "supplier" ?
+$F{supplier} :
+$F{employee}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement x="0" y="159" width="255" height="44"/>
