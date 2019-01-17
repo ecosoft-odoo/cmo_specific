@@ -59,9 +59,22 @@ class ProjectSearch(models.TransientModel):
          ('validate', 'Validate'),
          ('open', 'In Progress'),
          ('ready_billing', 'Ready to Billing'),
+         ('invoiced', 'Invoiced'),
+         ('paid', 'Paid'),
+         ('cancelled', 'Incompleted'),
          ('pending', 'Hold'),
          ('close', 'Completed')]
     )
+    close_reason = fields.Selection(
+        [('close', 'Completed'),
+         ('it_close', 'IT Close Project'),
+         ('reject', 'Reject'),
+         ('lost', 'Lost'),
+         ('cancel', 'Cancelled'),
+         ('terminate', 'Terminated'), ],
+        string='Close Reason',
+    )
+
     client_type_id = fields.Many2one(
         'project.client.type',
         string='Client Type',
@@ -174,6 +187,8 @@ class ProjectSearch(models.TransientModel):
                 dom += [('location_id', '=', self.location_id.id)]
             if self.stage:
                 dom += [('state', '=', self.stage)]
+            if self.close_reason:
+                dom += [('close_reason', '=', self.close_reason)]
             if self.client_type_id:
                 dom += [('client_type_id', '=', self.client_type_id.id)]
             if self.obligation_id:
