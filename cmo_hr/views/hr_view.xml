@@ -115,6 +115,18 @@
                 </xpath>
           </field>
         </record>
+
+        <record id="view_hr_expense_filter" model="ir.ui.view">
+            <field name="name">hr.expense.expense.filter</field>
+            <field name="model">hr.expense.expense</field>
+            <field name="inherit_id" ref="hr_expense.view_hr_expense_filter"/>
+            <field name="arch" type="xml">
+                <search string="Expense">
+                    <filter domain="[('approver_ids', '=', uid)]" string="My Approval"/>
+                    <filter domain="[('line_ids.product_id.categ_id.hr_product', '=', True)]" string="HR's Expense"/>
+                </search>
+            </field>
+        </record>
         <!-- <record id="view_expenses_form_sequence" model="ir.ui.view">
             <field name="name">hr.expense.form.sequence</field>
             <field name="model">hr.expense.expense</field>
