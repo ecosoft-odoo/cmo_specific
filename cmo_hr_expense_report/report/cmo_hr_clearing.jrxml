@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_hr_clearing" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
-	<property name="ireport.zoom" value="1.2100000000000006"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="15"/>
+	<property name="ireport.zoom" value="1.948717100000005"/>
+	<property name="ireport.x" value="84"/>
+	<property name="ireport.y" value="960"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -75,10 +75,16 @@
 		<fieldDescription><![CDATA[line_ids/total_amount]]></fieldDescription>
 	</field>
 	<field name="approver" class="java.lang.String">
-		<fieldDescription><![CDATA[approver_ids/name]]></fieldDescription>
+		<fieldDescription><![CDATA[approve_by/name]]></fieldDescription>
 	</field>
 	<field name="state" class="java.lang.String">
 		<fieldDescription><![CDATA[state]]></fieldDescription>
+	</field>
+	<field name="create_date" class="java.lang.String">
+		<fieldDescription><![CDATA[create_date_specific]]></fieldDescription>
+	</field>
+	<field name="approve_date" class="java.lang.String">
+		<fieldDescription><![CDATA[approve_date_specific]]></fieldDescription>
 	</field>
 	<variable name="sum_amount_untaxed" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{amount_line_untaxed}]]></variableExpression>
@@ -604,13 +610,6 @@
 	</pageFooter>
 	<lastPageFooter>
 		<band height="221">
-			<textField>
-				<reportElement x="143" y="100" width="166" height="39"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{state}=="validate" || $F{state}=="accepted" || $F{state}=="done" || $F{state}=="paid"?$F{approver}:""]]></textFieldExpression>
-			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
 				<reportElement x="439" y="0" width="116" height="20"/>
 				<box rightPadding="2"/>
@@ -674,11 +673,32 @@
 				<text><![CDATA[Voucher No.]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="0" y="100" width="146" height="39"/>
+				<reportElement x="0" y="114" width="146" height="18"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					<font size="8" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{employee_request}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="1" y="124" width="145" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{create_date}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="160" y="114" width="136" height="17" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{approver}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="160" y="124" width="136" height="17" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{approve_date}]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>

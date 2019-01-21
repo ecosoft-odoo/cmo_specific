@@ -68,7 +68,7 @@ class HrExpenseExpense(models.Model):
         string='Approve By',
         readonly=True,
     )
-    approve_date = fields.Date(
+    approve_date = fields.Datetime(
         string='Approve Date',
         readonly=True,
     )
