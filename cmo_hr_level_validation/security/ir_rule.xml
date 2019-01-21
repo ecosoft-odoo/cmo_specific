@@ -2,12 +2,12 @@
 <openerp>
     <data>
 
-        <record id="property_rule_expense_approver" model="ir.rule">
+        <!-- <record id="property_rule_expense_approver" model="ir.rule">
             <field name="name">Employee Expense Approver</field>
             <field name="model_id" ref="hr_expense.model_hr_expense_expense"/>
             <field name="domain_force">[('approve_permission', '=', True)]</field>
             <field name="groups" eval="[(4,ref('base.group_user'))]"/>
-        </record>
+        </record> -->
 
         <record model="ir.rule"
           id="hr_expense_operating_unit.ir_rule_hr_expense_allowed_operating_units">
