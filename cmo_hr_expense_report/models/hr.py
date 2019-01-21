@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp import models, api
+from openerp import models, api, fields
 
 
 def filter_print_report(res, reports):
@@ -15,6 +15,35 @@ def filter_print_report(res, reports):
 
 class HrExpenseExpense(models.Model):
     _inherit = 'hr.expense.expense'
+
+    create_date_specific = fields.Char(
+        string='Create Date',
+        compute='_compute_create_date',
+    )
+    approve_date_specific = fields.Char(
+        string='Approved Date',
+        compute='_compute_approve_date',
+    )
+
+    @api.multi
+    def _compute_create_date(self):
+        for rec in self:
+            t_timestamp = rec.create_date.split(" ")
+            date = t_timestamp[0].split("-")
+            t_time = t_timestamp[1].split(":")
+            t_time[0] = int(t_time[0])+7
+            rec.create_date_specific = "%s/%s/%s %s:%s" % (
+                date[2], date[1], date[0], t_time[0], t_time[1])
+
+    @api.multi
+    def _compute_approve_date(self):
+        for rec in self:
+            t_timestamp = rec.approve_date.split(" ")
+            date = t_timestamp[0].split("-")
+            t_time = t_timestamp[1].split(":")
+            t_time[0] = int(t_time[0])+7
+            rec.approve_date_specific = "%s/%s/%s %s:%s" % (
+                date[2], date[1], date[0], t_time[0], t_time[1])
 
     @api.model
     def fields_view_get(self, view_id=None, view_type='form',

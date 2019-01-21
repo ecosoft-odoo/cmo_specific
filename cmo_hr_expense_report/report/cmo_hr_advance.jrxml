@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_hr_expense" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
-	<property name="ireport.zoom" value="1.9487171000000054"/>
-	<property name="ireport.x" value="36"/>
-	<property name="ireport.y" value="330"/>
+	<property name="ireport.zoom" value="1.9487171000000063"/>
+	<property name="ireport.x" value="275"/>
+	<property name="ireport.y" value="640"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -85,6 +85,9 @@
 	</field>
 	<field name="line_ids_date" class="java.util.Date">
 		<fieldDescription><![CDATA[line_ids/date_value]]></fieldDescription>
+	</field>
+	<field name="approve_date" class="java.lang.String">
+		<fieldDescription><![CDATA[approve_date_specific]]></fieldDescription>
 	</field>
 	<variable name="sum_amount_untaxed" class="java.lang.Number" resetType="Column" calculation="Sum">
 		<variableExpression><![CDATA[$F{amount_line_untaxed}]]></variableExpression>
@@ -483,11 +486,18 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textField isStretchWithOverflow="true">
-					<reportElement x="0" y="40" width="110" height="20"/>
+					<reportElement x="0" y="34" width="111" height="17"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{approve_by}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement x="0" y="41" width="111" height="17" isRemoveLineWhenBlank="true"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font size="8" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{approve_date}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
