@@ -130,6 +130,9 @@
                     <filter domain="[('approver_ids', '=', uid)]" string="My Approval"/>
                     <filter domain="[('line_ids.product_id.categ_id.hr_product', '=', True)]" string="HR's Expense"/>
                 </search>
+                <xpath expr="//filter[last()]" position="after">
+                    <filter string="State" context="{'group_by':'state'}"/>
+                </xpath>
             </field>
         </record>
         <!-- <record id="view_expenses_form_sequence" model="ir.ui.view">
