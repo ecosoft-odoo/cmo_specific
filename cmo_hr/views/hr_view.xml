@@ -132,7 +132,11 @@
                 </search>
                 <xpath expr="//filter[last()]" position="after">
                     <filter string="State" context="{'group_by':'state'}"/>
+                    <filter string="Operating Unit" context="{'group_by':'operating_unit_id'}"/>
                 </xpath>
+                <filter string="Department" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </filter>
             </field>
         </record>
         <!-- <record id="view_expenses_form_sequence" model="ir.ui.view">
