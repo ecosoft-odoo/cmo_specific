@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_supplier_payment_cheque" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
-	<property name="ireport.zoom" value="4.177248169415666"/>
-	<property name="ireport.x" value="1603"/>
-	<property name="ireport.y" value="102"/>
+	<property name="ireport.zoom" value="1.1000000000000036"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;line_dr_ids&quot;]"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
@@ -33,9 +33,14 @@
 		<groupExpression><![CDATA[$F{id}]]></groupExpression>
 	</group>
 	<title>
+		<band/>
+	</title>
+	<pageHeader>
 		<band height="300">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="60" y="72" width="518" height="20"/>
+				<reportElement x="60" y="72" width="518" height="20">
+					<printWhenExpression><![CDATA[$F{amount}]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="12" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -135,8 +140,5 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{payment_type} == "cheque_cash" ? "เงินสด" : $F{payee}]]></textFieldExpression>
 			</textField>
 		</band>
-	</title>
-	<pageHeader>
-		<band height="60"/>
 	</pageHeader>
 </jasperReport>

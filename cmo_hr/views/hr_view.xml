@@ -42,6 +42,9 @@
                 <field name="employee_id" position="after">
                     <field name="employee_request_id"/>
                 </field>
+                <field name="currency_id" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
             </field>
         </record>
         <record id="view_expenses_form_advance" model="ir.ui.view">
