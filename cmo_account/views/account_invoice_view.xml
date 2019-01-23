@@ -21,8 +21,9 @@
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='invoice_line']/tree/field[@name='name']" position="after">
-                    <button name="%(action_edit_desc)d" string="Edit" type="action" icon="gtk-justify-fill"
-                        context="{'edit_field': 'name'}" groups="account.group_invoice_edit_desc"/>
+                    <!-- <button name="%(action_edit_desc)d" string="Edit" type="action" icon="gtk-justify-fill"
+                        context="{'edit_field': 'name'}" groups="account.group_invoice_edit_desc"/> -->
+                    <button name="edit_desc" string="Edit" icon="gtk-justify-fill" type="object"/>
                 </xpath>
                 <button name="invoice_print" position="attributes">
                     <attribute name="invisible">True</attribute>
