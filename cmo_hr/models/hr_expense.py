@@ -146,6 +146,12 @@ class HrExpenseExpense(models.Model):
         for rec in self:
             if not rec.line_ids:
                 raise ValidationError(_('Must have at least 1 line!'))
+            if not rec.is_employee_advance:
+                product_line = [x for x in rec.line_ids if not x.product_id]
+
+                # Check produce line is null
+                if product_line:
+                    raise ValidationError(_('In line must be product.'))
 
     @api.model
     def _get_payment_by_selection(self):
