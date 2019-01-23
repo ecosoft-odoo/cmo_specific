@@ -319,7 +319,7 @@ class CostControlSheetReportXls(report_xls):
 
     def _cost_control_sheet_report(self, _p, _xs, data, objects, wb):
         cr = self.cr
-        uid = self.uid
+        uid = 1
         context = self.context
 
         wl_ccs = _p.wanted_list_cost_control_sheet
