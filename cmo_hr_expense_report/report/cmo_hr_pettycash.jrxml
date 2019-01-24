@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_hr_expense" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
-	<property name="ireport.zoom" value="2.1435888100000113"/>
-	<property name="ireport.x" value="272"/>
-	<property name="ireport.y" value="38"/>
+	<property name="ireport.zoom" value="2.3579476910000126"/>
+	<property name="ireport.x" value="36"/>
+	<property name="ireport.y" value="251"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -52,6 +52,12 @@
 	</field>
 	<field name="create_date" class="java.lang.String">
 		<fieldDescription><![CDATA[create_date_specific]]></fieldDescription>
+	</field>
+	<field name="operating_unit" class="java.lang.String">
+		<fieldDescription><![CDATA[operating_unit_id/name]]></fieldDescription>
+	</field>
+	<field name="line_ids_display" class="java.lang.String">
+		<fieldDescription><![CDATA[line_ids/analytic_account/display_name]]></fieldDescription>
 	</field>
 	<variable name="sum_total_amount" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{total_amount}]]></variableExpression>
@@ -278,20 +284,35 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textField pattern="dd/MM/yyyy">
-					<reportElement x="0" y="24" width="100" height="20"/>
-					<textElement textAlignment="Center">
+					<reportElement x="22" y="9" width="73" height="20"/>
+					<textElement textAlignment="Left">
 						<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{expense_number}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="2" y="2" width="37" height="20"/>
+					<reportElement x="2" y="9" width="37" height="20"/>
 					<box leftPadding="2" rightPadding="0"/>
 					<textElement textAlignment="Left">
 						<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 					</textElement>
-					<text><![CDATA[No.]]></text>
+					<text><![CDATA[NO:]]></text>
 				</staticText>
+				<staticText>
+					<reportElement x="2" y="27" width="37" height="20"/>
+					<box leftPadding="2" rightPadding="0"/>
+					<textElement textAlignment="Left">
+						<font size="10" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					</textElement>
+					<text><![CDATA[OU:]]></text>
+				</staticText>
+				<textField pattern="">
+					<reportElement x="23" y="28" width="77" height="32"/>
+					<textElement textAlignment="Left">
+						<font size="9" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{operating_unit}]]></textFieldExpression>
+				</textField>
 			</frame>
 			<staticText>
 				<reportElement x="82" y="60" width="96" height="40"/>
@@ -347,7 +368,7 @@
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="20" splitType="Prevent">
+		<band height="40" splitType="Prevent">
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="0" y="0" width="82" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -356,11 +377,11 @@
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{line_ids_date}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="85" y="0" width="91" height="20"/>
+				<reportElement x="85" y="0" width="91" height="40"/>
 				<textElement verticalAlignment="Middle">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					<font size="10" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{line_ids_code}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{line_ids_display}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement x="186" y="0" width="267" height="20"/>
