@@ -152,6 +152,16 @@ class HrExpenseExpense(models.Model):
                 # Check produce line is null
                 if product_line:
                     raise ValidationError(_('In line must be product.'))
+            if rec.is_advance_clearing:
+                # Employee Advance has 1 line only.
+                project = rec.advance_expense_id.line_ids.analytic_account
+                if project:
+                    project_line = [x for x in rec.line_ids
+                                    if x.analytic_account != project]
+                    if project_line:
+                        raise ValidationError(
+                            _('Project line not match with %s.')
+                            % (rec.advance_expense_id.number))
 
     @api.model
     def _get_payment_by_selection(self):
