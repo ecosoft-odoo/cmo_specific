@@ -165,6 +165,10 @@ class PurchasePRQ(models.Model):
             'confirm': [('readonly', False)],
         },
     )
+    has_wht = fields.Float(
+        string='Has WHT',
+        compute='_compute_cal_wht',
+    )
     create_date_specific = fields.Char(
         string='Create Date',
         compute='_compute_create_date',
@@ -173,6 +177,27 @@ class PurchasePRQ(models.Model):
         string='Approved Date',
         compute='_compute_approve_date',
     )
+
+    @api.multi
+    def _compute_cal_wht(self):
+        self._cr.execute(
+            """
+                select prq.id,
+                    sum(ail.price_unit * ail.quantity * at.amount)
+                    as has_wht
+                from purchase_prq prq
+                join account_invoice_line ail
+                    on prq.invoice_id = ail.invoice_id
+                join account_invoice_line_tax alt
+                    on ail.id = alt.invoice_line_id
+                join account_tax at on alt.tax_id = at.id
+                where at.is_wht is true and prq.id in %s
+                group by prq.id
+            """, (tuple(self.ids), ))
+        result = self._cr.dictfetchall()
+        for rec in self:
+            amount = [x['has_wht'] for x in result if x['id'] == rec.id]
+            rec.has_wht = amount[0]
 
     @api.multi
     def _compute_create_date(self):
