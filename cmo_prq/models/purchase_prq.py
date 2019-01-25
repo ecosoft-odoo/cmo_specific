@@ -173,6 +173,14 @@ class PurchasePRQ(models.Model):
         string='Create Date',
         compute='_compute_create_date',
     )
+    create_payment_date = fields.Char(
+        string='Create Payment Date',
+        compute='_compute_create_payment_date',
+    )
+    create_invoice_date = fields.Char(
+        string='Create Payment Date',
+        compute='_compute_create_invoice_date',
+    )
     approve_date_specific = fields.Char(
         string='Approved Date',
         compute='_compute_approve_date',
@@ -200,6 +208,28 @@ class PurchasePRQ(models.Model):
             rec.has_wht = amount[0]
 
     @api.multi
+    def _compute_create_invoice_date(self):
+        for rec in self:
+            t_timestamp = \
+                rec.invoice_id.create_date.split(" ")
+            date = t_timestamp[0].split("-")
+            t_time = t_timestamp[1].split(":")
+            t_time[0] = int(t_time[0])+7
+            rec.create_invoice_date = "%s/%s/%s %s:%s" % (
+                date[2], date[1], date[0], t_time[0], t_time[1])
+
+    @api.multi
+    def _compute_create_payment_date(self):
+        for rec in self:
+            t_timestamp = \
+                rec.invoice_id.payment_ids.move_id.create_date.split(" ")
+            date = t_timestamp[0].split("-")
+            t_time = t_timestamp[1].split(":")
+            t_time[0] = int(t_time[0])+7
+            rec.create_payment_date = "%s/%s/%s %s:%s" % (
+                date[2], date[1], date[0], t_time[0], t_time[1])
+
+    @api.multi
     def _compute_create_date(self):
         for rec in self:
             t_timestamp = rec.create_date.split(" ")
@@ -221,7 +251,6 @@ class PurchasePRQ(models.Model):
 
     @api.model
     def _get_payment_by_selection(self):
-        context = self._context.copy()
         res = [('cash', 'Cash'),
                ('cashier_cheque', 'Cashier Cheque'),
                ('bank_transfer', 'Bank Transfer'),
