@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_hr_expense" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
-	<property name="ireport.zoom" value="1.2100000000000006"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="2.3579476910000126"/>
+	<property name="ireport.x" value="36"/>
+	<property name="ireport.y" value="251"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -44,6 +44,21 @@
 	<field name="state" class="java.lang.String">
 		<fieldDescription><![CDATA[state]]></fieldDescription>
 	</field>
+	<field name="approve_by" class="java.lang.String">
+		<fieldDescription><![CDATA[approve_by]]></fieldDescription>
+	</field>
+	<field name="approve_date" class="java.lang.String">
+		<fieldDescription><![CDATA[approve_date_specific]]></fieldDescription>
+	</field>
+	<field name="create_date" class="java.lang.String">
+		<fieldDescription><![CDATA[create_date_specific]]></fieldDescription>
+	</field>
+	<field name="operating_unit" class="java.lang.String">
+		<fieldDescription><![CDATA[operating_unit_id/name]]></fieldDescription>
+	</field>
+	<field name="line_ids_display" class="java.lang.String">
+		<fieldDescription><![CDATA[line_ids/analytic_account/display_name]]></fieldDescription>
+	</field>
 	<variable name="sum_total_amount" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{total_amount}]]></variableExpression>
 	</variable>
@@ -53,7 +68,7 @@
 	<background>
 		<band height="802">
 			<frame>
-				<reportElement x="185" y="742" width="184" height="60"/>
+				<reportElement x="185" y="742" width="185" height="60"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -87,9 +102,23 @@
 					</textElement>
 					<text><![CDATA[APPROVED]]></text>
 				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="0" y="37" width="185" height="17" isRemoveLineWhenBlank="true"/>
+					<textElement textAlignment="Center">
+						<font size="8" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{approver}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement x="0" y="40" width="185" height="17" isRemoveLineWhenBlank="true"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font size="8" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{approve_date}]]></textFieldExpression>
+				</textField>
 			</frame>
 			<frame>
-				<reportElement x="369" y="742" width="186" height="60"/>
+				<reportElement x="370" y="742" width="185" height="60"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -107,7 +136,7 @@
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement x="163" y="100" width="292" height="622"/>
+				<reportElement x="178" y="100" width="277" height="622"/>
 				<box>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
@@ -153,7 +182,7 @@
 				<text><![CDATA[BAHT]]></text>
 			</staticText>
 			<frame>
-				<reportElement x="82" y="100" width="81" height="622"/>
+				<reportElement x="82" y="100" width="96" height="622"/>
 				<box>
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -218,7 +247,7 @@
 				<text><![CDATA[DATE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="163" y="60" width="292" height="40"/>
+				<reportElement x="178" y="60" width="277" height="40"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -255,23 +284,38 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textField pattern="dd/MM/yyyy">
-					<reportElement x="0" y="24" width="100" height="20"/>
-					<textElement textAlignment="Center">
+					<reportElement x="22" y="9" width="73" height="20"/>
+					<textElement textAlignment="Left">
 						<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{expense_number}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="2" y="2" width="37" height="20"/>
+					<reportElement x="2" y="9" width="37" height="20"/>
 					<box leftPadding="2" rightPadding="0"/>
 					<textElement textAlignment="Left">
 						<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 					</textElement>
-					<text><![CDATA[No.]]></text>
+					<text><![CDATA[NO:]]></text>
 				</staticText>
+				<staticText>
+					<reportElement x="2" y="27" width="37" height="20"/>
+					<box leftPadding="2" rightPadding="0"/>
+					<textElement textAlignment="Left">
+						<font size="10" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					</textElement>
+					<text><![CDATA[OU:]]></text>
+				</staticText>
+				<textField pattern="">
+					<reportElement x="23" y="28" width="77" height="32"/>
+					<textElement textAlignment="Left">
+						<font size="9" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{operating_unit}]]></textFieldExpression>
+				</textField>
 			</frame>
 			<staticText>
-				<reportElement x="82" y="60" width="81" height="40"/>
+				<reportElement x="82" y="60" width="96" height="40"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -290,11 +334,11 @@
 				<textElement textAlignment="Left">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[NAME]]></text>
+				<text><![CDATA[NAME :]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="216" y="40" width="237" height="20"/>
-				<textElement verticalAlignment="Middle">
+				<reportElement x="225" y="32" width="226" height="18"/>
+				<textElement verticalAlignment="Top">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{employee_request}]]></textFieldExpression>
@@ -309,37 +353,46 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 			</frame>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="225" y="43" width="230" height="17" isRemoveLineWhenBlank="true">
+					<property name="net.sf.jasperreports.jdbc.time.zone" value="Asia/Bangkok"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{create_date}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="20" splitType="Prevent">
+		<band height="40" splitType="Prevent">
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="0" y="0" width="82" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Top">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{line_ids_date}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="85" y="0" width="78" height="20"/>
-				<textElement verticalAlignment="Top">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				<reportElement x="85" y="0" width="91" height="40"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{line_ids_code}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{line_ids_display}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="168" y="0" width="285" height="20"/>
-				<textElement verticalAlignment="Top">
+				<reportElement x="186" y="0" width="267" height="20"/>
+				<textElement verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{line_ids_name}+" "+$F{line_ids_ref}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;(#,##0.00)">
 				<reportElement x="455" y="0" width="96" height="20"/>
-				<textElement textAlignment="Right" verticalAlignment="Top">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{total_amount}==null?0:$F{total_amount}]]></textFieldExpression>
@@ -367,13 +420,6 @@
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["(" + (new Scriptlet()).getAmtInWords((new BigDecimal($V{string_total}==""?0:$V{string_total})).setScale(2).toString(),"THB") + ")"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="0" y="43" width="184" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{state}=="validate" || $F{state}=="accepted" || $F{state}=="done" || $F{state}=="paid"?$F{approver}:""]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>

@@ -7,6 +7,7 @@ from openerp.report import report_sxw
 from openerp.addons.report_xls.report_xls import report_xls
 from openerp.addons.report_xls.utils import _render
 from openerp.tools.translate import _
+from openerp import SUPERUSER_ID
 
 _logger = logging.getLogger(__name__)
 
@@ -319,7 +320,7 @@ class CostControlSheetReportXls(report_xls):
 
     def _cost_control_sheet_report(self, _p, _xs, data, objects, wb):
         cr = self.cr
-        uid = self.uid
+        uid = SUPERUSER_ID
         context = self.context
 
         wl_ccs = _p.wanted_list_cost_control_sheet

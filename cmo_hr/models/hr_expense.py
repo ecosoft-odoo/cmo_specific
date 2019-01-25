@@ -68,7 +68,7 @@ class HrExpenseExpense(models.Model):
         string='Approve By',
         readonly=True,
     )
-    approve_date = fields.Date(
+    approve_date = fields.Datetime(
         string='Approve Date',
         readonly=True,
     )
@@ -146,6 +146,22 @@ class HrExpenseExpense(models.Model):
         for rec in self:
             if not rec.line_ids:
                 raise ValidationError(_('Must have at least 1 line!'))
+            if not rec.is_employee_advance:
+                product_line = [x for x in rec.line_ids if not x.product_id]
+
+                # Check produce line is null
+                if product_line:
+                    raise ValidationError(_('In line must be product.'))
+            if rec.is_advance_clearing:
+                # Employee Advance has 1 line only.
+                project = rec.advance_expense_id.line_ids.analytic_account
+                if project:
+                    project_line = [x for x in rec.line_ids
+                                    if x.analytic_account != project]
+                    if project_line:
+                        raise ValidationError(
+                            _('Project line not match with %s.')
+                            % (rec.advance_expense_id.number))
 
     @api.model
     def _get_payment_by_selection(self):

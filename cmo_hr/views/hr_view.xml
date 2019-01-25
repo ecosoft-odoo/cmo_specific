@@ -42,6 +42,9 @@
                 <field name="employee_id" position="after">
                     <field name="employee_request_id"/>
                 </field>
+                <field name="currency_id" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
             </field>
         </record>
         <record id="view_expenses_form_advance" model="ir.ui.view">
@@ -84,7 +87,7 @@
                     <field name="is_advance_clearing" invisible="1"/>
                 </xpath>
                 <xpath expr="//tree[@string='Expense Lines']/field[@name='analytic_account']" position="attributes">
-                    <attribute name="attrs">{'readonly': [('is_advance_clearing','=',True)]}</attribute>
+                    <!-- <attribute name="attrs">{'readonly': [('is_advance_clearing','=',True)]}</attribute> -->
                     <attribute name="context">{'is_project_expense_line': True}</attribute>
                 </xpath>
                 <xpath expr="//field[@name='line_ids']/form/group/group/field[@name='product_id']" position="attributes">
@@ -132,7 +135,11 @@
                 </search>
                 <xpath expr="//filter[last()]" position="after">
                     <filter string="State" context="{'group_by':'state'}"/>
+                    <filter string="Operating Unit" context="{'group_by':'operating_unit_id'}"/>
                 </xpath>
+                <filter string="Department" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </filter>
             </field>
         </record>
         <!-- <record id="view_expenses_form_sequence" model="ir.ui.view">
