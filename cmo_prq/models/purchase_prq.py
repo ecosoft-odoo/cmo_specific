@@ -106,9 +106,8 @@ class PurchasePRQ(models.Model):
         string='Expense Detailed',
         readonly=True,
     )
-    date_approve = fields.Date(
+    date_approve = fields.Datetime(
         string='Approved Date',
-        index=True,
         readonly=True,
         copy=False,
     )
@@ -166,6 +165,34 @@ class PurchasePRQ(models.Model):
             'confirm': [('readonly', False)],
         },
     )
+    create_date_specific = fields.Char(
+        string='Create Date',
+        compute='_compute_create_date',
+    )
+    approve_date_specific = fields.Char(
+        string='Approved Date',
+        compute='_compute_approve_date',
+    )
+
+    @api.multi
+    def _compute_create_date(self):
+        for rec in self:
+            t_timestamp = rec.create_date.split(" ")
+            date = t_timestamp[0].split("-")
+            t_time = t_timestamp[1].split(":")
+            t_time[0] = int(t_time[0])+7
+            rec.create_date_specific = "%s/%s/%s %s:%s" % (
+                date[2], date[1], date[0], t_time[0], t_time[1])
+
+    @api.multi
+    def _compute_approve_date(self):
+        for rec in self:
+            t_timestamp = rec.date_approve.split(" ")
+            date = t_timestamp[0].split("-")
+            t_time = t_timestamp[1].split(":")
+            t_time[0] = int(t_time[0])+7
+            rec.approve_date_specific = "%s/%s/%s %s:%s" % (
+                date[2], date[1], date[0], t_time[0], t_time[1])
 
     @api.model
     def _get_payment_by_selection(self):
@@ -183,11 +210,10 @@ class PurchasePRQ(models.Model):
 
     @api.multi
     def action_approve(self):
-        for rec in self:
-            if not rec.date_approve:
-                rec.date_approve = fields.Date.context_today(self)
-        self.write({'state': 'approve', 'approve_user_id': self.env.user.id})
-        return True
+        today = fields.Datetime.now()
+        return self.write({'state': 'approve',
+                           'approve_user_id': self.env.user.id,
+                           'date_approve': today})
 
     @api.multi
     def action_reject(self):

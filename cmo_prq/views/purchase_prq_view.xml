@@ -71,7 +71,7 @@
                                 <field name="prepare_user_id"/>
                                 <field name="approve_user_id"/>
                                 <field name="date"/>
-                                <field name="date_approve"/>
+                                <field name="date_approve" widget="date"/>
                             </group>
                         </group>
                         <notebook colspan="4">
