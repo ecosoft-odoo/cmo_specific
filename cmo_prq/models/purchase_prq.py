@@ -106,9 +106,8 @@ class PurchasePRQ(models.Model):
         string='Expense Detailed',
         readonly=True,
     )
-    date_approve = fields.Date(
+    date_approve = fields.Datetime(
         string='Approved Date',
-        index=True,
         readonly=True,
         copy=False,
     )
@@ -166,10 +165,34 @@ class PurchasePRQ(models.Model):
             'confirm': [('readonly', False)],
         },
     )
+    has_wht_amount = fields.Float(
+        string='WHT amount',
+        compute='_compute_cal_wht',
+    )
+
+    @api.multi
+    def _compute_cal_wht(self):
+        self._cr.execute(
+            """
+                select prq.id,
+                    sum(ail.price_unit * ail.quantity * at.amount)
+                    as has_wht_amount
+                from purchase_prq prq
+                join account_invoice_line ail
+                    on prq.invoice_id = ail.invoice_id
+                join account_invoice_line_tax alt
+                    on ail.id = alt.invoice_line_id
+                join account_tax at on alt.tax_id = at.id
+                where at.is_wht is true and prq.id in %s
+                group by prq.id
+            """, (tuple(self.ids), ))
+        result = self._cr.fetchall()
+        for rec in self:
+            amount = dict(result).get(rec.id, False)
+            rec.has_wht_amount = amount
 
     @api.model
     def _get_payment_by_selection(self):
-        context = self._context.copy()
         res = [('cash', 'Cash'),
                ('cashier_cheque', 'Cashier Cheque'),
                ('bank_transfer', 'Bank Transfer'),
@@ -183,11 +206,10 @@ class PurchasePRQ(models.Model):
 
     @api.multi
     def action_approve(self):
-        for rec in self:
-            if not rec.date_approve:
-                rec.date_approve = fields.Date.context_today(self)
-        self.write({'state': 'approve', 'approve_user_id': self.env.user.id})
-        return True
+        today = fields.Datetime.now()
+        return self.write({'state': 'approve',
+                           'approve_user_id': self.env.user.id,
+                           'date_approve': today})
 
     @api.multi
     def action_reject(self):
