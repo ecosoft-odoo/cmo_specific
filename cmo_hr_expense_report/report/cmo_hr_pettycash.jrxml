@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_hr_expense" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
-	<property name="ireport.zoom" value="2.3579476910000126"/>
-	<property name="ireport.x" value="36"/>
-	<property name="ireport.y" value="251"/>
+	<property name="ireport.zoom" value="1.9487171000000143"/>
+	<property name="ireport.x" value="432"/>
+	<property name="ireport.y" value="1998"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -47,8 +47,8 @@
 	<field name="approve_by" class="java.lang.String">
 		<fieldDescription><![CDATA[approve_by]]></fieldDescription>
 	</field>
-	<field name="approve_date" class="java.lang.String">
-		<fieldDescription><![CDATA[approve_date_specific]]></fieldDescription>
+	<field name="approve_date" class="java.util.Date">
+		<fieldDescription><![CDATA[approve_date]]></fieldDescription>
 	</field>
 	<field name="create_date" class="java.lang.String">
 		<fieldDescription><![CDATA[create_date_specific]]></fieldDescription>
@@ -59,82 +59,28 @@
 	<field name="line_ids_display" class="java.lang.String">
 		<fieldDescription><![CDATA[line_ids/analytic_account/display_name]]></fieldDescription>
 	</field>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
 	<variable name="sum_total_amount" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{total_amount}]]></variableExpression>
 	</variable>
 	<variable name="string_total" class="java.lang.String">
 		<variableExpression><![CDATA[(Math.round($V{sum_total_amount}*100)/100).toString()]]></variableExpression>
 	</variable>
+	<variable name="approve_hours" class="java.lang.String">
+		<variableExpression><![CDATA[$F{approve_date}.getHours() + 7]]></variableExpression>
+	</variable>
+	<variable name="approve_minute" class="java.lang.String">
+		<variableExpression><![CDATA[$F{approve_date}.getMinutes() < 10?
+"0" + $F{approve_date}.getMinutes():
+$F{approve_date}.getMinutes()]]></variableExpression>
+	</variable>
+	<group name="UniqID" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{id}]]></groupExpression>
+	</group>
 	<background>
 		<band height="802">
-			<frame>
-				<reportElement x="185" y="742" width="185" height="60"/>
-				<box>
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<staticText>
-					<reportElement x="1" y="1" width="150" height="20"/>
-					<box leftPadding="2"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-					</textElement>
-					<text><![CDATA[CASHIER]]></text>
-				</staticText>
-			</frame>
-			<frame>
-				<reportElement x="0" y="742" width="185" height="60"/>
-				<box>
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<staticText>
-					<reportElement x="0" y="1" width="150" height="20"/>
-					<box leftPadding="2"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-					</textElement>
-					<text><![CDATA[APPROVED]]></text>
-				</staticText>
-				<textField isBlankWhenNull="true">
-					<reportElement x="0" y="37" width="185" height="17" isRemoveLineWhenBlank="true"/>
-					<textElement textAlignment="Center">
-						<font size="8" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{approver}]]></textFieldExpression>
-				</textField>
-				<textField pattern="" isBlankWhenNull="true">
-					<reportElement x="0" y="40" width="185" height="17" isRemoveLineWhenBlank="true"/>
-					<textElement textAlignment="Center" verticalAlignment="Bottom">
-						<font size="8" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{approve_date}]]></textFieldExpression>
-				</textField>
-			</frame>
-			<frame>
-				<reportElement x="370" y="742" width="185" height="60"/>
-				<box>
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<staticText>
-					<reportElement x="1" y="2" width="121" height="20"/>
-					<box leftPadding="2"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-					</textElement>
-					<text><![CDATA[RECEIVED]]></text>
-				</staticText>
-			</frame>
 			<frame>
 				<reportElement x="178" y="100" width="277" height="622"/>
 				<box>
@@ -160,9 +106,9 @@
 			<staticText>
 				<reportElement x="394" y="722" width="61" height="20"/>
 				<box rightPadding="2">
-					<topPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
@@ -172,9 +118,9 @@
 			<staticText>
 				<reportElement x="0" y="722" width="44" height="20"/>
 				<box>
-					<topPen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
@@ -192,10 +138,14 @@
 			<frame>
 				<reportElement x="455" y="722" width="100" height="20"/>
 				<box>
-					<bottomPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
 			</frame>
+			<line>
+				<reportElement x="0" y="741" width="555" height="1"/>
+			</line>
 		</band>
 	</background>
 	<pageHeader>
@@ -406,21 +356,98 @@
 		<band height="80"/>
 	</pageFooter>
 	<lastPageFooter>
-		<band height="80">
+		<band height="85">
 			<textField pattern="#,##0.00;(#,##0.00)">
-				<reportElement x="455" y="0" width="96" height="20"/>
+				<reportElement x="455" y="6" width="96" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$V{sum_total_amount}==null?0:$V{sum_total_amount}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="43" y="0" width="351" height="20"/>
+				<reportElement x="43" y="6" width="351" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["(" + (new Scriptlet()).getAmtInWords((new BigDecimal($V{string_total}==""?0:$V{string_total})).setScale(2).toString(),"THB") + ")"]]></textFieldExpression>
 			</textField>
+			<frame>
+				<reportElement x="185" y="25" width="185" height="60"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<staticText>
+					<reportElement x="1" y="1" width="150" height="20"/>
+					<box leftPadding="2"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					</textElement>
+					<text><![CDATA[CASHIER]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement x="0" y="25" width="185" height="60"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<staticText>
+					<reportElement x="0" y="2" width="150" height="20"/>
+					<box leftPadding="2"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					</textElement>
+					<text><![CDATA[APPROVED]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="0" y="38" width="185" height="17" isRemoveLineWhenBlank="true"/>
+					<textElement textAlignment="Center">
+						<font size="8" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{approver}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+					<reportElement x="43" y="39" width="68" height="20" isRemoveLineWhenBlank="true"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font size="8" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					</textElement>
+					<textFieldExpression class="java.util.Date"><![CDATA[$F{approve_date}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="102" y="39" width="41" height="20" forecolor="#000000" backcolor="#FFFFFF">
+						<printWhenExpression><![CDATA[$F{approve_date}]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
+						<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{approve_hours} + ":" + $V{approve_minute}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="370" y="25" width="185" height="60"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<staticText>
+					<reportElement x="1" y="2" width="121" height="20"/>
+					<box leftPadding="2"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					</textElement>
+					<text><![CDATA[RECEIVED]]></text>
+				</staticText>
+			</frame>
 		</band>
 	</lastPageFooter>
 </jasperReport>

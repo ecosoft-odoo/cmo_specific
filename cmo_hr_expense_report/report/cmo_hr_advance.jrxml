@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_hr_expense" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
-	<property name="ireport.zoom" value="1.9487171000000063"/>
-	<property name="ireport.x" value="275"/>
-	<property name="ireport.y" value="640"/>
+	<property name="ireport.zoom" value="1.6105100000000079"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="564"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -86,8 +86,11 @@
 	<field name="line_ids_date" class="java.util.Date">
 		<fieldDescription><![CDATA[line_ids/date_value]]></fieldDescription>
 	</field>
-	<field name="approve_date" class="java.lang.String">
-		<fieldDescription><![CDATA[approve_date_specific]]></fieldDescription>
+	<field name="approve_date" class="java.util.Date">
+		<fieldDescription><![CDATA[approve_date]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
 	</field>
 	<variable name="sum_amount_untaxed" class="java.lang.Number" resetType="Column" calculation="Sum">
 		<variableExpression><![CDATA[$F{amount_line_untaxed}]]></variableExpression>
@@ -99,6 +102,17 @@
 	<variable name="string_total" class="java.lang.String">
 		<variableExpression><![CDATA[(Math.round($V{sum_amount_untaxed}*100)/100).toString()]]></variableExpression>
 	</variable>
+	<variable name="approve_hours" class="java.lang.String">
+		<variableExpression><![CDATA[$F{approve_date}.getHours()+7]]></variableExpression>
+	</variable>
+	<variable name="approve_minute" class="java.lang.String">
+		<variableExpression><![CDATA[$F{approve_date}.getMinutes() < 10?
+"0" + $F{approve_date}.getMinutes():
+$F{approve_date}.getMinutes()]]></variableExpression>
+	</variable>
+	<group name="UniqID" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{id}]]></groupExpression>
+	</group>
 	<background>
 		<band height="802" splitType="Stretch">
 			<frame>
@@ -150,44 +164,108 @@
 			</frame>
 		</band>
 	</background>
-	<title>
-		<band height="128" splitType="Stretch">
-			<textField isBlankWhenNull="true">
-				<reportElement x="457" y="35" width="114" height="20"/>
-				<textElement>
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{expense_number}]]></textFieldExpression>
-			</textField>
+	<pageHeader>
+		<band height="199" splitType="Stretch">
 			<staticText>
-				<reportElement x="149" y="108" width="256" height="20"/>
+				<reportElement x="0" y="128" width="150" height="20"/>
+				<box leftPadding="2">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[ใบเบิกเงินทดรองจ่าย (Advance Voucher)]]></text>
+				<text><![CDATA[หน่วยงาน]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="384" y="35" width="73" height="20"/>
-				<box rightPadding="2"/>
-				<textElement textAlignment="Left">
+				<reportElement x="149" y="128" width="146" height="20"/>
+				<box leftPadding="2">
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[Voucher No. :]]></text>
+				<text><![CDATA[ชื่อผู้ยืมเงิน]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="150" y="148" width="145" height="44" isPrintWhenDetailOverflows="true"/>
+				<box leftPadding="2">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{employee_request}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="148" width="150" height="44" isPrintWhenDetailOverflows="true"/>
+				<box topPadding="0" leftPadding="2">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{operating_unit}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="295" y="128" width="130" height="20"/>
+				<box leftPadding="2">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[วันที่ขอรับเงิน]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="384" y="55" width="37" height="20"/>
-				<box rightPadding="2"/>
-				<textElement textAlignment="Left">
+				<reportElement x="425" y="128" width="129" height="20"/>
+				<box leftPadding="2">
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[วันที่ : ]]></text>
+				<text><![CDATA[วันครบกำหนดคืน]]></text>
 			</staticText>
-			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="412" y="55" width="150" height="20"/>
-				<textElement>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="295" y="148" width="130" height="44" isPrintWhenDetailOverflows="true"/>
+				<box leftPadding="2">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.util.Date"><![CDATA[$F{expense_date}]]></textFieldExpression>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{request_date}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="425" y="148" width="129" height="44" isPrintWhenDetailOverflows="true"/>
+				<box leftPadding="2">
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{due_date}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement mode="Opaque" x="100" y="0" width="252" height="20" forecolor="#FFFFFF" backcolor="#3C3C3C"/>
@@ -196,6 +274,60 @@
 					<font isBold="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[CMO PUBLIC COMPANY LIMITED]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="149" y="108" width="256" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[ใบเบิกเงินทดรองจ่าย (Advance Voucher)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="457" y="35" width="114" height="20"/>
+				<textElement>
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{expense_number}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="412" y="55" width="150" height="20"/>
+				<textElement>
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{expense_date}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement x="0" y="0" width="100" height="95"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+			</frame>
+			<staticText>
+				<reportElement x="384" y="35" width="73" height="20"/>
+				<box rightPadding="2"/>
+				<textElement textAlignment="Left">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[Voucher No. :]]></text>
+			</staticText>
+			<line>
+				<reportElement x="352" y="0" width="1" height="95"/>
+			</line>
+			<image hAlign="Center" vAlign="Middle" onErrorType="Icon">
+				<reportElement x="14" y="0" width="85" height="95"/>
+				<box leftPadding="0"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "cmo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="384" y="55" width="37" height="20"/>
+				<box rightPadding="2"/>
+				<textElement textAlignment="Left">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[วันที่ : ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="100" y="20" width="252" height="75"/>
@@ -212,128 +344,6 @@ Bangkok 10230 Thailand
 Tel :  66 2088 3888 Fax : 66 2088 3848
 www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 			</staticText>
-			<image hAlign="Center" vAlign="Middle" onErrorType="Icon">
-				<reportElement x="14" y="0" width="85" height="95"/>
-				<box leftPadding="0"/>
-				<imageExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "cmo.png"]]></imageExpression>
-			</image>
-			<frame>
-				<reportElement x="0" y="0" width="100" height="95"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-			</frame>
-			<line>
-				<reportElement x="352" y="0" width="1" height="95"/>
-			</line>
-		</band>
-	</title>
-	<pageHeader>
-		<band height="71" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="0" width="150" height="20"/>
-				<box leftPadding="2">
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[หน่วยงาน]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="149" y="0" width="146" height="20"/>
-				<box leftPadding="2">
-					<topPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[ชื่อผู้ยืมเงิน]]></text>
-			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="150" y="20" width="145" height="44" isPrintWhenDetailOverflows="true"/>
-				<box leftPadding="2">
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{employee_request}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="0" y="20" width="150" height="44" isPrintWhenDetailOverflows="true"/>
-				<box topPadding="0" leftPadding="2">
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{operating_unit}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="295" y="0" width="130" height="20"/>
-				<box leftPadding="2">
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[วันที่ขอรับเงิน]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="425" y="0" width="129" height="20"/>
-				<box leftPadding="2">
-					<topPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[วันครบกำหนดคืน]]></text>
-			</staticText>
-			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="295" y="20" width="130" height="44" isPrintWhenDetailOverflows="true"/>
-				<box leftPadding="2">
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.util.Date"><![CDATA[$F{request_date}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="425" y="20" width="129" height="44" isPrintWhenDetailOverflows="true"/>
-				<box leftPadding="2">
-					<topPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.util.Date"><![CDATA[$F{due_date}]]></textFieldExpression>
-			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -431,77 +441,50 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="102" splitType="Stretch">
-			<staticText>
-				<reportElement x="3" y="22" width="68" height="20" isRemoveLineWhenBlank="true">
-					<printWhenExpression><![CDATA[$F{paymant_by}.equals("") == false]]></printWhenExpression>
-				</reportElement>
-				<textElement textAlignment="Right">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[Payment By]]></text>
-			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="78" y="22" width="100" height="20" isRemoveLineWhenBlank="true"/>
-				<textElement>
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[( $F{paymant_by}.equals("cash") ? "Cash" :
-( $F{paymant_by}.equals("cashier_cheque") ? "Cashier Cheque" :
-( $F{paymant_by}.equals("bank_transfer") ? "Bank Transfer" :
-( $F{paymant_by}.equals("ac_payee") ? "A/C Payee" : null ))))]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" pattern="#,##0.00;#,##0.00-" isBlankWhenNull="false">
-				<reportElement x="455" y="0" width="100" height="20" isPrintWhenDetailOverflows="true"/>
-				<box rightPadding="2"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.lang.Number"><![CDATA[$V{sum_amount_untaxed}==null?0:$V{sum_amount_untaxed}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="78" y="42" width="183" height="60" isRemoveLineWhenBlank="true"/>
-				<textElement>
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{paymant_by} == "bank_transfer" ? $F{bank_transfer}: $F{ac_payee}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="0" y="0" width="454" height="20"/>
-				<box leftPadding="0"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["(" + (new Scriptlet()).getAmtInWords((new BigDecimal($V{string_total}==""?0:$V{string_total})).setScale(2).toString(),"THB") + ")"]]></textFieldExpression>
-			</textField>
-		</band>
+		<band height="117"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="129" splitType="Stretch">
+		<band height="232" splitType="Stretch">
 			<frame>
-				<reportElement x="222" y="9" width="111" height="60"/>
+				<reportElement x="222" y="111" width="111" height="60"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textField isStretchWithOverflow="true">
-					<reportElement x="0" y="34" width="111" height="17"/>
+					<reportElement x="0" y="34" width="110" height="20"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{approve_by}]]></textFieldExpression>
 				</textField>
-				<textField pattern="" isBlankWhenNull="true">
-					<reportElement x="0" y="41" width="111" height="17" isRemoveLineWhenBlank="true"/>
-					<textElement textAlignment="Center" verticalAlignment="Bottom">
+				<staticText>
+					<reportElement x="0" y="0" width="110" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					</textElement>
+					<text><![CDATA[ผู้อนุมัติ]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+					<reportElement x="24" y="39" width="47" height="20" isRemoveLineWhenBlank="true"/>
+					<textElement textAlignment="Left" verticalAlignment="Bottom">
 						<font size="8" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{approve_date}]]></textFieldExpression>
+					<textFieldExpression class="java.util.Date"><![CDATA[$F{approve_date}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="68" y="39" width="41" height="20" forecolor="#000000" backcolor="#FFFFFF">
+						<printWhenExpression><![CDATA[$F{approve_date}]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
+						<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{approve_hours} + ":" + $V{approve_minute}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
-				<reportElement x="0" y="69" width="111" height="60"/>
+				<reportElement x="0" y="171" width="111" height="60"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -517,7 +500,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				</textField>
 			</frame>
 			<frame>
-				<reportElement x="111" y="69" width="111" height="60"/>
+				<reportElement x="111" y="171" width="111" height="60"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -533,7 +516,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement x="333" y="69" width="111" height="60"/>
+				<reportElement x="333" y="171" width="111" height="60"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -549,7 +532,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement x="222" y="69" width="111" height="60"/>
+				<reportElement x="222" y="171" width="111" height="60"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -565,7 +548,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement x="444" y="69" width="111" height="60"/>
+				<reportElement x="444" y="171" width="111" height="60"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -581,7 +564,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement x="111" y="9" width="111" height="60"/>
+				<reportElement x="111" y="111" width="111" height="60"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -596,7 +579,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement x="0" y="9" width="111" height="60"/>
+				<reportElement x="0" y="111" width="111" height="60"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -611,7 +594,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement x="444" y="9" width="111" height="60"/>
+				<reportElement x="444" y="111" width="111" height="60"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -626,7 +609,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement x="333" y="9" width="111" height="60"/>
+				<reportElement x="333" y="111" width="111" height="60"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -641,15 +624,47 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				</staticText>
 			</frame>
 			<staticText>
-				<reportElement x="225" y="9" width="110" height="20"/>
+				<reportElement x="2" y="38" width="68" height="20">
+					<printWhenExpression><![CDATA[$F{paymant_by}.equals("") == false]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[Payment By]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="77" y="38" width="100" height="20"/>
+				<textElement>
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[( $F{paymant_by}.equals("cash") ? "Cash" :
+( $F{paymant_by}.equals("cashier_cheque") ? "Cashier Cheque" :
+( $F{paymant_by}.equals("bank_transfer") ? "Bank Transfer" :
+( $F{paymant_by}.equals("ac_payee") ? "A/C Payee" : null ))))]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="77" y="54" width="183" height="60"/>
+				<textElement>
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{paymant_by} == "bank_transfer" ? $F{bank_transfer}: $F{ac_payee}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;#,##0.00-" isBlankWhenNull="false">
+				<reportElement x="455" y="2" width="100" height="20" isPrintWhenDetailOverflows="true"/>
+				<box rightPadding="2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$V{sum_amount_untaxed}==null?0:$V{sum_amount_untaxed}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="2" width="454" height="20"/>
+				<box leftPadding="0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[ผู้อนุมัติ]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA["(" + (new Scriptlet()).getAmtInWords((new BigDecimal($V{string_total}==""?0:$V{string_total})).setScale(2).toString(),"THB") + ")"]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>
