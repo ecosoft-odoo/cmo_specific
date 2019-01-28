@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="purchase_order_prq" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.9487171000000532"/>
-	<property name="ireport.x" value="460"/>
-	<property name="ireport.y" value="1171"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="1363"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line_ids&quot;]"/>
 	<style name="column_header">
 		<box>
@@ -570,7 +570,9 @@ $F{amount_wht} > 0 ?
 						<textFieldExpression class="java.lang.String"><![CDATA[$F{prepare_user}]]></textFieldExpression>
 					</textField>
 					<textField pattern="" isBlankWhenNull="true">
-						<reportElement mode="Transparent" x="68" y="38" width="41" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+						<reportElement mode="Transparent" x="68" y="38" width="41" height="20" forecolor="#000000" backcolor="#FFFFFF">
+							<printWhenExpression><![CDATA[$F{create_date_specific}]]></printWhenExpression>
+						</reportElement>
 						<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
 							<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 						</textElement>
@@ -606,14 +608,18 @@ $F{amount_wht} > 0 ?
 						<textFieldExpression class="java.lang.String"><![CDATA[$F{approve_name}]]></textFieldExpression>
 					</textField>
 					<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-						<reportElement mode="Transparent" x="24" y="38" width="47" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+						<reportElement mode="Transparent" x="24" y="38" width="47" height="20" forecolor="#000000" backcolor="#FFFFFF">
+							<printWhenExpression><![CDATA[$F{approve_date_specific}]]></printWhenExpression>
+						</reportElement>
 						<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
 							<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 						</textElement>
 						<textFieldExpression class="java.util.Date"><![CDATA[$F{approve_date_specific}]]></textFieldExpression>
 					</textField>
 					<textField pattern="" isBlankWhenNull="true">
-						<reportElement mode="Transparent" x="68" y="38" width="41" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+						<reportElement mode="Transparent" x="68" y="38" width="41" height="20" forecolor="#000000" backcolor="#FFFFFF">
+							<printWhenExpression><![CDATA[$F{approve_date_specific}]]></printWhenExpression>
+						</reportElement>
 						<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
 							<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 						</textElement>
@@ -650,7 +656,9 @@ $F{amount_wht} > 0 ?
 						<textFieldExpression class="java.lang.String"><![CDATA[$F{employee_invoice_create}]]></textFieldExpression>
 					</textField>
 					<textField pattern="" isBlankWhenNull="true">
-						<reportElement mode="Transparent" x="68" y="38" width="41" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+						<reportElement mode="Transparent" x="68" y="38" width="41" height="20" forecolor="#000000" backcolor="#FFFFFF">
+							<printWhenExpression><![CDATA[$F{create_invoice_date}]]></printWhenExpression>
+						</reportElement>
 						<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
 							<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 						</textElement>
