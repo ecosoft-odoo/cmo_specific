@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="purchase_order_prq" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.9487171000000532"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1355"/>
+	<property name="ireport.x" value="460"/>
+	<property name="ireport.y" value="1171"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line_ids&quot;]"/>
 	<style name="column_header">
 		<box>
@@ -93,32 +93,63 @@
 	<field name="id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[id]]></fieldDescription>
 	</field>
-	<field name="create_date_specific" class="java.lang.String">
-		<fieldDescription><![CDATA[create_date_specific]]></fieldDescription>
-	</field>
-	<field name="approve_date_specific" class="java.lang.String">
-		<fieldDescription><![CDATA[approve_date_specific]]></fieldDescription>
-	</field>
 	<field name="amount_wht" class="java.lang.Number">
-		<fieldDescription><![CDATA[has_wht]]></fieldDescription>
-	</field>
-	<field name="employee_invoice" class="java.lang.String"/>
-	<field name="employee_payment_create" class="java.lang.String">
-		<fieldDescription><![CDATA[invoice_id/payment_ids/move_id/create_uid/name]]></fieldDescription>
-	</field>
-	<field name="create_payment" class="java.lang.String">
-		<fieldDescription><![CDATA[create_payment_date]]></fieldDescription>
-	</field>
-	<field name="create_invoice_date" class="java.lang.String">
-		<fieldDescription><![CDATA[create_invoice_date]]></fieldDescription>
+		<fieldDescription><![CDATA[has_wht_amount]]></fieldDescription>
 	</field>
 	<field name="employee_invoice_create" class="java.lang.String">
 		<fieldDescription><![CDATA[invoice_id/create_uid/name]]></fieldDescription>
 	</field>
+	<field name="employee_payment_create" class="java.lang.String">
+		<fieldDescription><![CDATA[invoice_id/payment_ids/move_id/create_uid/name]]></fieldDescription>
+	</field>
+	<field name="create_date_specific" class="java.util.Date">
+		<fieldDescription><![CDATA[create_date]]></fieldDescription>
+	</field>
+	<field name="approve_date_specific" class="java.util.Date">
+		<fieldDescription><![CDATA[date_approve]]></fieldDescription>
+	</field>
+	<field name="create_payment_date" class="java.util.Date">
+		<fieldDescription><![CDATA[invoice_id/payment_ids/move_id/create_date]]></fieldDescription>
+	</field>
+	<field name="create_invoice_date" class="java.util.Date">
+		<fieldDescription><![CDATA[invoice_id/create_date]]></fieldDescription>
+	</field>
 	<variable name="string_amount_total" class="java.lang.String">
 		<variableExpression><![CDATA[(Math.round($F{amount_po_total}*100)/100).toString()]]></variableExpression>
 	</variable>
-	<group name="UniqID" isStartNewPage="true" keepTogether="true">
+	<variable name="create_hours" class="java.lang.Number">
+		<variableExpression><![CDATA[$F{create_date_specific}.getHours()+7]]></variableExpression>
+	</variable>
+	<variable name="create_minute" class="java.lang.String">
+		<variableExpression><![CDATA[$F{create_date_specific}.getMinutes() < 10 ?
+"0"+$F{create_date_specific}.getMinutes():
+$F{create_date_specific}.getMinutes()]]></variableExpression>
+	</variable>
+	<variable name="create_invoice_hours" class="java.lang.String">
+		<variableExpression><![CDATA[$F{create_invoice_date}.getHours()+7]]></variableExpression>
+	</variable>
+	<variable name="create_invoice_minute" class="java.lang.String">
+		<variableExpression><![CDATA[$F{create_invoice_date}.getMinutes() < 10 ?
+"0"+$F{create_invoice_date}.getMinutes():
+$F{create_invoice_date}.getMinutes()]]></variableExpression>
+	</variable>
+	<variable name="approve_hours" class="java.lang.String">
+		<variableExpression><![CDATA[$F{approve_date_specific}.getHours()+7]]></variableExpression>
+	</variable>
+	<variable name="approve_minute" class="java.lang.String">
+		<variableExpression><![CDATA[$F{approve_date_specific}.getMinutes() < 10 ?
+"0"+$F{approve_date_specific}.getMinutes():
+$F{approve_date_specific}.getMinutes()]]></variableExpression>
+	</variable>
+	<variable name="payment_hours" class="java.lang.String">
+		<variableExpression><![CDATA[$F{create_payment_date}.getHours()+7]]></variableExpression>
+	</variable>
+	<variable name="payment_minute" class="java.lang.String">
+		<variableExpression><![CDATA[$F{create_payment_date}.getMinutes() < 10?
+"0" + $F{create_payment_date}.getMinutes():
+$F{create_payment_date}.getMinutes()]]></variableExpression>
+	</variable>
+	<group name="UniqID" isStartNewPage="true" isResetPageNumber="true" keepTogether="true">
 		<groupExpression><![CDATA[$F{id}]]></groupExpression>
 	</group>
 	<background>
@@ -138,7 +169,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="533" y="782" width="40" height="20"/>
+				<reportElement x="533" y="782" width="40" height="20" printWhenGroupChanges="UniqID"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
@@ -473,12 +504,23 @@ $F{amount_wht} > 0 ?
 						</textElement>
 						<text><![CDATA[ผู้จัดทำเช็ค]]></text>
 					</staticText>
-					<textField pattern="" isBlankWhenNull="true">
-						<reportElement mode="Transparent" x="0" y="38" width="110" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
-						<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
+					<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+						<reportElement mode="Transparent" x="24" y="38" width="47" height="20" forecolor="#000000" backcolor="#FFFFFF">
+							<printWhenExpression><![CDATA[$F{create_payment_date}]]></printWhenExpression>
+						</reportElement>
+						<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
 							<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 						</textElement>
-						<textFieldExpression class="java.lang.String"><![CDATA[$F{create_payment}]]></textFieldExpression>
+						<textFieldExpression class="java.util.Date"><![CDATA[$F{create_payment_date}]]></textFieldExpression>
+					</textField>
+					<textField pattern="" isBlankWhenNull="true">
+						<reportElement mode="Transparent" x="68" y="38" width="41" height="20" forecolor="#000000" backcolor="#FFFFFF">
+							<printWhenExpression><![CDATA[$F{create_payment_date}]]></printWhenExpression>
+						</reportElement>
+						<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
+							<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+						</textElement>
+						<textFieldExpression class="java.lang.String"><![CDATA[$V{payment_hours} + ":" + $V{payment_minute}]]></textFieldExpression>
 					</textField>
 				</frame>
 				<frame>
@@ -528,11 +570,18 @@ $F{amount_wht} > 0 ?
 						<textFieldExpression class="java.lang.String"><![CDATA[$F{prepare_user}]]></textFieldExpression>
 					</textField>
 					<textField pattern="" isBlankWhenNull="true">
-						<reportElement mode="Transparent" x="1" y="37" width="110" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
-						<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
+						<reportElement mode="Transparent" x="68" y="38" width="41" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+						<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
 							<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 						</textElement>
-						<textFieldExpression class="java.lang.String"><![CDATA[$F{create_date_specific}]]></textFieldExpression>
+						<textFieldExpression class="java.lang.String"><![CDATA[$V{create_hours} + ":" + $V{create_minute}]]></textFieldExpression>
+					</textField>
+					<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+						<reportElement mode="Transparent" x="24" y="38" width="47" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+						<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
+							<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+						</textElement>
+						<textFieldExpression class="java.util.Date"><![CDATA[$F{create_date_specific}]]></textFieldExpression>
 					</textField>
 				</frame>
 				<frame>
@@ -556,12 +605,19 @@ $F{amount_wht} > 0 ?
 						</textElement>
 						<textFieldExpression class="java.lang.String"><![CDATA[$F{approve_name}]]></textFieldExpression>
 					</textField>
-					<textField pattern="" isBlankWhenNull="true">
-						<reportElement mode="Transparent" x="0" y="37" width="110" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
-						<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
+					<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+						<reportElement mode="Transparent" x="24" y="38" width="47" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+						<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
 							<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 						</textElement>
-						<textFieldExpression class="java.lang.String"><![CDATA[$F{approve_date_specific}]]></textFieldExpression>
+						<textFieldExpression class="java.util.Date"><![CDATA[$F{approve_date_specific}]]></textFieldExpression>
+					</textField>
+					<textField pattern="" isBlankWhenNull="true">
+						<reportElement mode="Transparent" x="68" y="38" width="41" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+						<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
+							<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+						</textElement>
+						<textFieldExpression class="java.lang.String"><![CDATA[$V{approve_hours} + ":" + $V{approve_minute}]]></textFieldExpression>
 					</textField>
 				</frame>
 				<frame>
@@ -579,12 +635,12 @@ $F{amount_wht} > 0 ?
 						</textElement>
 						<text><![CDATA[ผู้บันทึกบัญชี]]></text>
 					</staticText>
-					<textField pattern="" isBlankWhenNull="true">
-						<reportElement mode="Transparent" x="1" y="37" width="110" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
-						<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
+					<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+						<reportElement mode="Transparent" x="24" y="38" width="47" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+						<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
 							<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 						</textElement>
-						<textFieldExpression class="java.lang.String"><![CDATA[$F{create_invoice_date}]]></textFieldExpression>
+						<textFieldExpression class="java.util.Date"><![CDATA[$F{create_invoice_date}]]></textFieldExpression>
 					</textField>
 					<textField pattern="" isBlankWhenNull="true">
 						<reportElement mode="Transparent" x="0" y="33" width="110" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
@@ -592,6 +648,13 @@ $F{amount_wht} > 0 ?
 							<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 						</textElement>
 						<textFieldExpression class="java.lang.String"><![CDATA[$F{employee_invoice_create}]]></textFieldExpression>
+					</textField>
+					<textField pattern="" isBlankWhenNull="true">
+						<reportElement mode="Transparent" x="68" y="38" width="41" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+						<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
+							<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+						</textElement>
+						<textFieldExpression class="java.lang.String"><![CDATA[$V{create_invoice_hours} + ":" + $V{create_invoice_minute}]]></textFieldExpression>
 					</textField>
 				</frame>
 				<frame>

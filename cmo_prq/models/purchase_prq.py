@@ -165,25 +165,9 @@ class PurchasePRQ(models.Model):
             'confirm': [('readonly', False)],
         },
     )
-    has_wht = fields.Float(
-        string='Has WHT',
+    has_wht_amount = fields.Float(
+        string='WHT amount',
         compute='_compute_cal_wht',
-    )
-    create_date_specific = fields.Char(
-        string='Create Date',
-        compute='_compute_create_date',
-    )
-    create_payment_date = fields.Char(
-        string='Create Payment Date',
-        compute='_compute_create_payment_date',
-    )
-    create_invoice_date = fields.Char(
-        string='Create Payment Date',
-        compute='_compute_create_invoice_date',
-    )
-    approve_date_specific = fields.Char(
-        string='Approved Date',
-        compute='_compute_approve_date',
     )
 
     @api.multi
@@ -192,7 +176,7 @@ class PurchasePRQ(models.Model):
             """
                 select prq.id,
                     sum(ail.price_unit * ail.quantity * at.amount)
-                    as has_wht
+                    as has_wht_amount
                 from purchase_prq prq
                 join account_invoice_line ail
                     on prq.invoice_id = ail.invoice_id
@@ -202,52 +186,10 @@ class PurchasePRQ(models.Model):
                 where at.is_wht is true and prq.id in %s
                 group by prq.id
             """, (tuple(self.ids), ))
-        result = self._cr.dictfetchall()
+        result = self._cr.fetchall()
         for rec in self:
-            amount = [x['has_wht'] for x in result if x['id'] == rec.id]
-            rec.has_wht = amount[0]
-
-    @api.multi
-    def _compute_create_invoice_date(self):
-        for rec in self:
-            t_timestamp = \
-                rec.invoice_id.create_date.split(" ")
-            date = t_timestamp[0].split("-")
-            t_time = t_timestamp[1].split(":")
-            t_time[0] = int(t_time[0])+7
-            rec.create_invoice_date = "%s/%s/%s %s:%s" % (
-                date[2], date[1], date[0], t_time[0], t_time[1])
-
-    @api.multi
-    def _compute_create_payment_date(self):
-        for rec in self:
-            t_timestamp = \
-                rec.invoice_id.payment_ids.move_id.create_date.split(" ")
-            date = t_timestamp[0].split("-")
-            t_time = t_timestamp[1].split(":")
-            t_time[0] = int(t_time[0])+7
-            rec.create_payment_date = "%s/%s/%s %s:%s" % (
-                date[2], date[1], date[0], t_time[0], t_time[1])
-
-    @api.multi
-    def _compute_create_date(self):
-        for rec in self:
-            t_timestamp = rec.create_date.split(" ")
-            date = t_timestamp[0].split("-")
-            t_time = t_timestamp[1].split(":")
-            t_time[0] = int(t_time[0])+7
-            rec.create_date_specific = "%s/%s/%s %s:%s" % (
-                date[2], date[1], date[0], t_time[0], t_time[1])
-
-    @api.multi
-    def _compute_approve_date(self):
-        for rec in self:
-            t_timestamp = rec.date_approve.split(" ")
-            date = t_timestamp[0].split("-")
-            t_time = t_timestamp[1].split(":")
-            t_time[0] = int(t_time[0])+7
-            rec.approve_date_specific = "%s/%s/%s %s:%s" % (
-                date[2], date[1], date[0], t_time[0], t_time[1])
+            amount = dict(result).get(rec.id, False)
+            rec.has_wht_amount = amount
 
     @api.model
     def _get_payment_by_selection(self):
