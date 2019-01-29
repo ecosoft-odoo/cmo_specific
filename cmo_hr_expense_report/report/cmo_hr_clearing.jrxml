@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_hr_clearing" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
-	<property name="ireport.zoom" value="1.0000000000000024"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="441"/>
+	<property name="ireport.zoom" value="1.3310000000000035"/>
+	<property name="ireport.x" value="117"/>
+	<property name="ireport.y" value="500"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -88,6 +88,9 @@
 	</field>
 	<field name="id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="supplier_invoice" class="java.lang.String">
+		<fieldDescription><![CDATA[advance_expense_id/invoice_id/number]]></fieldDescription>
 	</field>
 	<variable name="sum_amount_untaxed" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{amount_line_untaxed}]]></variableExpression>
@@ -715,7 +718,9 @@ $F{approve_date}.getMinutes()]]></variableExpression>
 				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Number"><![CDATA[$F{advance_amount}==null?0:$F{advance_amount}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{supplier_invoice}?
+$F{advance_amount}==null?0:$F{advance_amount}:
+$F{amount}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="438" y="40" width="116" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
