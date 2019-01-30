@@ -78,6 +78,7 @@ class AccountVoucher(models.Model):
                 u'cmo.customer.payment.en',
                 u'cmo.customer.payment.th',
                 u'cmo.receipt.voucher',
+                u'cmo.customer.payment.receipt.mig',
             ]
             filter_print_report(res, reports)
         # Customer Receipt
