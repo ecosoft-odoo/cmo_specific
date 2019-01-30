@@ -62,6 +62,9 @@
                             string="Refuse"
                             attrs="{'invisible': [('state', '!=', 'accepted')]}"/>
                 </xpath>
+                <xpath expr='//field[@name="user_valid"]' position="after">
+					<field name="validate_date"/>
+				</xpath>
             </field>
         </record>
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_hr_expense" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
-	<property name="ireport.zoom" value="1.1000000000000096"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="548"/>
+	<property name="ireport.zoom" value="1.9487171000000179"/>
+	<property name="ireport.x" value="299"/>
+	<property name="ireport.y" value="1176"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -107,6 +107,12 @@
 	<field name="has_wht_amount" class="java.lang.Number">
 		<fieldDescription><![CDATA[has_wht_amount]]></fieldDescription>
 	</field>
+	<field name="validate_by" class="java.lang.String">
+		<fieldDescription><![CDATA[user_valid/name]]></fieldDescription>
+	</field>
+	<field name="validate_date" class="java.util.Date">
+		<fieldDescription><![CDATA[validate_date]]></fieldDescription>
+	</field>
 	<variable name="sum_amount_untaxed" class="java.lang.Number" resetType="Group" resetGroup="UniqID" calculation="Sum">
 		<variableExpression><![CDATA[$F{amount_line_untaxed}]]></variableExpression>
 	</variable>
@@ -147,6 +153,14 @@ $F{payment_date}.getMinutes()]]></variableExpression>
 	<variable name="sum_total" class="java.lang.Number">
 		<variableExpression><![CDATA[$V{sum_amount_untaxed} + $V{cal_amount_tax} -
 ($F{has_wht_amount}==null?0:$F{has_wht_amount})]]></variableExpression>
+	</variable>
+	<variable name="validate_date_hours" class="java.lang.String">
+		<variableExpression><![CDATA[$F{validate_date}.getHours()+7]]></variableExpression>
+	</variable>
+	<variable name="validate_date_minute" class="java.lang.String">
+		<variableExpression><![CDATA[$F{validate_date}.getMinutes() < 10?
+"0" + $F{validate_date}.getMinutes():
+$F{validate_date}.getMinutes()]]></variableExpression>
 	</variable>
 	<group name="UniqID" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{id}]]></groupExpression>
@@ -715,6 +729,29 @@ $V{cal_amount_tax}]]></textFieldExpression>
 					</textElement>
 					<text><![CDATA[ผู้ตรวจจ่าย]]></text>
 				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="0" y="34" width="110" height="20" isRemoveLineWhenBlank="true"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{validate_by}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+					<reportElement x="24" y="39" width="47" height="20" isRemoveLineWhenBlank="true"/>
+					<textElement textAlignment="Left" verticalAlignment="Bottom">
+						<font size="8" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					</textElement>
+					<textFieldExpression class="java.util.Date"><![CDATA[$F{validate_date}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="68" y="39" width="41" height="20" forecolor="#000000" backcolor="#FFFFFF">
+						<printWhenExpression><![CDATA[$F{validate_date}]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
+						<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{validate_date_hours} + ":" + $V{validate_date_minute}]]></textFieldExpression>
+				</textField>
 			</frame>
 			<frame>
 				<reportElement x="222" y="137" width="111" height="60"/>
