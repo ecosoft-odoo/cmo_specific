@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_receipt_mig" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0000000000000004"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="6"/>
+	<property name="ireport.y" value="150"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<parameter name="EVENTS_DATA_SOURCE" class="java.lang.Object"/>
@@ -45,8 +45,13 @@
 	<field name="narration" class="java.lang.String">
 		<fieldDescription><![CDATA[narration]]></fieldDescription>
 	</field>
+	<field name="line_type" class="java.lang.String">
+		<fieldDescription><![CDATA[line_ids/type]]></fieldDescription>
+	</field>
 	<variable name="sum_line_amount" class="java.lang.Number" resetType="Group" resetGroup="UniqueID" calculation="Sum">
-		<variableExpression><![CDATA[$F{line_payment}]]></variableExpression>
+		<variableExpression><![CDATA[$F{line_type} == "dr" ?
+(-1) * $F{line_payment} :
+$F{line_payment}]]></variableExpression>
 	</variable>
 	<group name="UniqueID" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{id}]]></groupExpression>
@@ -283,7 +288,9 @@
 				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Number"><![CDATA[$F{line_payment}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{line_type} == "dr"?
+(-1) * $F{line_payment}:
+$F{line_payment}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
