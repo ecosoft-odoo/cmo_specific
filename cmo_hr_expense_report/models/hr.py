@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp import models, api
+from openerp import models, api, fields
 
 
 def filter_print_report(res, reports):
@@ -15,6 +15,32 @@ def filter_print_report(res, reports):
 
 class HrExpenseExpense(models.Model):
     _inherit = 'hr.expense.expense'
+
+    has_wht_amount = fields.Float(
+        string='WHT amount',
+        compute='_compute_cal_wht',
+    )
+
+    @api.multi
+    def _compute_cal_wht(self):
+        self._cr.execute(
+            """
+                select expense.id, sum(
+                    line_exp.unit_amount * line_exp.unit_quantity * at.amount)
+                    as has_wht_amount
+                from hr_expense_expense expense
+                join hr_expense_line line_exp
+                    on expense.id = line_exp.expense_id
+                join expense_line_tax_rel elt
+                    on line_exp.id = elt.expense_line_id
+                join account_tax at on elt.tax_id = at.id
+                where at.is_wht is true and expense.id in %s
+                group by expense.id
+            """, (tuple(self.ids), ))
+        result = self._cr.fetchall()
+        for rec in self:
+            amount = dict(result).get(rec.id, False)
+            rec.has_wht_amount = amount
 
     @api.model
     def fields_view_get(self, view_id=None, view_type='form',

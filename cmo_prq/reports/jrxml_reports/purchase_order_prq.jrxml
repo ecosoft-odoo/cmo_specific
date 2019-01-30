@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="purchase_order_prq" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.9487171000000532"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1363"/>
+	<property name="ireport.x" value="499"/>
+	<property name="ireport.y" value="979"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line_ids&quot;]"/>
 	<style name="column_header">
 		<box>
@@ -115,7 +115,9 @@
 		<fieldDescription><![CDATA[invoice_id/validate_date]]></fieldDescription>
 	</field>
 	<variable name="string_amount_total" class="java.lang.String">
-		<variableExpression><![CDATA[(Math.round($F{amount_po_total}*100)/100).toString()]]></variableExpression>
+		<variableExpression><![CDATA[(Math.round((
+    $F{amount_po_total}-($F{amount_wht}==null?0:
+    $F{amount_wht}))*100)/100).toString()]]></variableExpression>
 	</variable>
 	<variable name="create_hours" class="java.lang.Number">
 		<variableExpression><![CDATA[$F{create_date_specific}.getHours()+7]]></variableExpression>
@@ -433,14 +435,14 @@ $F{payment_by} == "ac_payee" ? $F{ac_payee}:
 ( $F{payment_by}.equals("bank_transfer") ? "Bank Transfer" :
 ( $F{payment_by}.equals("ac_payee") ? "A/C Payee" : null ))))]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
 				<reportElement style="detail" mode="Transparent" x="478" y="65" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{amount_wht} ?
 $F{amount_wht} > 0 ?
--$F{amount_wht}:$F{amount_wht} :
+(-1) * $F{amount_wht}:$F{amount_wht} :
 0]]></textFieldExpression>
 			</textField>
 			<staticText>

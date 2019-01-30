@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_hr_expense" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
-	<property name="ireport.zoom" value="1.2100000000000095"/>
-	<property name="ireport.x" value="66"/>
-	<property name="ireport.y" value="475"/>
+	<property name="ireport.zoom" value="1.9487171000000179"/>
+	<property name="ireport.x" value="299"/>
+	<property name="ireport.y" value="1176"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -104,6 +104,15 @@
 	<field name="id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[id]]></fieldDescription>
 	</field>
+	<field name="has_wht_amount" class="java.lang.Number">
+		<fieldDescription><![CDATA[has_wht_amount]]></fieldDescription>
+	</field>
+	<field name="validate_by" class="java.lang.String">
+		<fieldDescription><![CDATA[user_valid/name]]></fieldDescription>
+	</field>
+	<field name="validate_date" class="java.util.Date">
+		<fieldDescription><![CDATA[validate_date]]></fieldDescription>
+	</field>
 	<variable name="sum_amount_untaxed" class="java.lang.Number" resetType="Group" resetGroup="UniqID" calculation="Sum">
 		<variableExpression><![CDATA[$F{amount_line_untaxed}]]></variableExpression>
 	</variable>
@@ -112,7 +121,10 @@
 	</variable>
 	<variable name="checque_year" class="java.util.Date"/>
 	<variable name="string_total" class="java.lang.String">
-		<variableExpression><![CDATA[(Math.round($F{amount}*100)/100).toString()]]></variableExpression>
+		<variableExpression><![CDATA[(Math.round(
+    ($V{sum_amount_untaxed} + $V{cal_amount_tax} -
+        ($F{has_wht_amount}==null?0:$F{has_wht_amount})
+    )*100)/100).toString()]]></variableExpression>
 	</variable>
 	<variable name="date_hours" class="java.lang.String">
 		<variableExpression><![CDATA[$F{create_date_specific}.getHours() + 7]]></variableExpression>
@@ -137,6 +149,18 @@ $F{approve_date}.getMinutes()]]></variableExpression>
 		<variableExpression><![CDATA[$F{payment_date}.getMinutes() < 10?
 "0" + $F{payment_date}.getMinutes():
 $F{payment_date}.getMinutes()]]></variableExpression>
+	</variable>
+	<variable name="sum_total" class="java.lang.Number">
+		<variableExpression><![CDATA[$V{sum_amount_untaxed} + $V{cal_amount_tax} -
+($F{has_wht_amount}==null?0:$F{has_wht_amount})]]></variableExpression>
+	</variable>
+	<variable name="validate_date_hours" class="java.lang.String">
+		<variableExpression><![CDATA[$F{validate_date}.getHours()+7]]></variableExpression>
+	</variable>
+	<variable name="validate_date_minute" class="java.lang.String">
+		<variableExpression><![CDATA[$F{validate_date}.getMinutes() < 10?
+"0" + $F{validate_date}.getMinutes():
+$F{validate_date}.getMinutes()]]></variableExpression>
 	</variable>
 	<group name="UniqID" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{id}]]></groupExpression>
@@ -166,7 +190,24 @@ $F{payment_date}.getMinutes()]]></variableExpression>
 				</box>
 			</frame>
 			<frame>
-				<reportElement x="0" y="548" width="455" height="40"/>
+				<reportElement x="0" y="548" width="455" height="60"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<staticText>
+					<reportElement x="352" y="40" width="100" height="20"/>
+					<box rightPadding="2"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					</textElement>
+					<text><![CDATA[หักภาษี ณ ที่จ่าย]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement x="455" y="548" width="100" height="60"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -175,7 +216,7 @@ $F{payment_date}.getMinutes()]]></variableExpression>
 				</box>
 			</frame>
 			<frame>
-				<reportElement x="455" y="548" width="100" height="40"/>
+				<reportElement x="343" y="608" width="112" height="20"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -184,7 +225,7 @@ $F{payment_date}.getMinutes()]]></variableExpression>
 				</box>
 			</frame>
 			<frame>
-				<reportElement x="343" y="588" width="112" height="20"/>
+				<reportElement x="455" y="608" width="100" height="20"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -193,16 +234,7 @@ $F{payment_date}.getMinutes()]]></variableExpression>
 				</box>
 			</frame>
 			<frame>
-				<reportElement x="455" y="588" width="100" height="20"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-			</frame>
-			<frame>
-				<reportElement x="0" y="588" width="343" height="20"/>
+				<reportElement x="0" y="608" width="343" height="20"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -211,7 +243,7 @@ $F{payment_date}.getMinutes()]]></variableExpression>
 				</box>
 			</frame>
 			<staticText>
-				<reportElement x="365" y="588" width="87" height="20"/>
+				<reportElement x="365" y="608" width="87" height="20"/>
 				<box rightPadding="2"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
@@ -475,7 +507,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 	<lastPageFooter>
 		<band height="257" splitType="Stretch">
 			<staticText>
-				<reportElement x="2" y="70" width="68" height="20" isRemoveLineWhenBlank="true">
+				<reportElement x="2" y="86" width="68" height="20" isRemoveLineWhenBlank="true">
 					<printWhenExpression><![CDATA[$F{paymant_by}.equals("") == false]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -484,7 +516,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				<text><![CDATA[Payment By]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="77" y="70" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement x="77" y="86" width="100" height="20" isRemoveLineWhenBlank="true"/>
 				<textElement>
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -494,14 +526,14 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 ( $F{paymant_by}.equals("ac_payee") ? "A/C Payee" : null ))))]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="77" y="90" width="258" height="46" isRemoveLineWhenBlank="true"/>
+				<reportElement x="77" y="99" width="258" height="46" isRemoveLineWhenBlank="true"/>
 				<textElement>
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{paymant_by} == "bank_transfer" ? $F{bank_transfer}: $F{ac_payee}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="0" y="44" width="342" height="20"/>
+				<reportElement x="0" y="64" width="342" height="20"/>
 				<box leftPadding="0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
@@ -509,12 +541,12 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				<textFieldExpression class="java.lang.String"><![CDATA["(" + (new Scriptlet()).getAmtInWords((new BigDecimal($V{string_total}==""?0:$V{string_total})).setScale(2).toString(),"THB") + ")"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;#,##0.00-">
-				<reportElement x="455" y="43" width="100" height="20"/>
+				<reportElement x="455" y="63" width="100" height="20"/>
 				<box rightPadding="2"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Number"><![CDATA[$F{amount}==null?0:$F{amount}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$V{sum_total}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;#,##0.00-">
 				<reportElement x="455" y="3" width="100" height="20"/>
@@ -697,6 +729,29 @@ $V{cal_amount_tax}]]></textFieldExpression>
 					</textElement>
 					<text><![CDATA[ผู้ตรวจจ่าย]]></text>
 				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="0" y="34" width="110" height="20" isRemoveLineWhenBlank="true"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{validate_by}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+					<reportElement x="24" y="39" width="47" height="20" isRemoveLineWhenBlank="true"/>
+					<textElement textAlignment="Left" verticalAlignment="Bottom">
+						<font size="8" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					</textElement>
+					<textFieldExpression class="java.util.Date"><![CDATA[$F{validate_date}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="68" y="39" width="41" height="20" forecolor="#000000" backcolor="#FFFFFF">
+						<printWhenExpression><![CDATA[$F{validate_date}]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
+						<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{validate_date_hours} + ":" + $V{validate_date_minute}]]></textFieldExpression>
+				</textField>
 			</frame>
 			<frame>
 				<reportElement x="222" y="137" width="111" height="60"/>
@@ -760,6 +815,17 @@ $V{cal_amount_tax}]]></textFieldExpression>
 					<rightPen lineWidth="1.0"/>
 				</box>
 			</frame>
+			<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+				<reportElement x="455" y="43" width="100" height="20"/>
+				<box rightPadding="2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{has_wht_amount} ?
+$F{has_wht_amount} > 0 ?
+(-1) * $F{has_wht_amount}:$F{has_wht_amount} :
+0]]></textFieldExpression>
+			</textField>
 		</band>
 	</lastPageFooter>
 </jasperReport>
