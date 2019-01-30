@@ -152,6 +152,28 @@
            <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_customer_payment_th)"/>
         </record>
 
+        <!-- Receipt for Migration -->
+        <record id="cmo_customer_payment_receipt_mig" model="ir.actions.report.xml">
+           <field name="string">Receipt (for migration)</field>
+           <field name="auto">True</field>
+           <field name="model">account.voucher</field>
+           <field name="jasper_model_id" ref="account_voucher.model_account_voucher"/>
+           <field name="name">Receipt (for migration)</field>
+           <field name="report_name">cmo.customer.payment.receipt.mig</field>
+           <field name="report_rml">cmo_customer_invoice_report/report/cmo_receipt_migration.jrxml</field>
+           <field name="force_locale">en_US</field>
+           <field name="menu">True</field>
+           <field name="header">False</field>
+           <field name="jasper_report">True</field>
+           <field name="jasper_output">pdf</field>
+        </record>
+        <record id="cmo_customer_payment_receipt_mig_values" model="ir.values">
+           <field name="name">Receipt (for migration)</field>
+           <field name="model">account.voucher</field>
+           <field name="key2" eval="'client_print_multi'"/>
+           <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_customer_payment_receipt_mig)"/>
+        </record>
+
         <delete id="account.account_invoices" model="ir.actions.report.xml"/>
 
         <record id="cmo_supplier_payment_cheque" model="ir.actions.report.xml">
