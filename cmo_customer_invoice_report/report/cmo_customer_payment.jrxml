@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.1000000000000005"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="528"/>
+	<property name="ireport.y" value="524"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -79,6 +79,12 @@
 	</field>
 	<field name="voucher_id" class="java.lang.String">
 		<fieldDescription><![CDATA[voucher_id]]></fieldDescription>
+	</field>
+	<field name="opej_number" class="java.lang.String">
+		<fieldDescription><![CDATA[line_ids/move_line_id/ref]]></fieldDescription>
+	</field>
+	<field name="je_opej" class="java.lang.String">
+		<fieldDescription><![CDATA[line_ids/move_line_id/journal_id/code]]></fieldDescription>
 	</field>
 	<sortField name="invoice_type"/>
 	<variable name="amount_untaxed" class="java.lang.Number">
@@ -257,7 +263,9 @@
 				<textElement lineSpacing="Double">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{narration} + "\n" + "     ตามใบแจ้งหนี้เลขที่ " + $F{preprint_number}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{je_opej}=="OPEJ"?
+$F{narration} + "\n" + "     ตามใบแจ้งหนี้เลขที่ " + $F{opej_number} :
+$F{narration} + "\n" + "     ตามใบแจ้งหนี้เลขที่ " + $F{preprint_number}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="18" y="72" width="226" height="20"/>
