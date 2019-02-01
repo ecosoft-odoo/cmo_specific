@@ -54,6 +54,9 @@
 	<field name="street" class="java.lang.String">
 		<fieldDescription><![CDATA[partner_id/street]]></fieldDescription>
 	</field>
+	<field name="street2" class="java.lang.String">
+		<fieldDescription><![CDATA[partner_id/street2]]></fieldDescription>
+	</field>
 	<field name="project name" class="java.lang.String">
 		<fieldDescription><![CDATA[project_related_id/name]]></fieldDescription>
 	</field>
@@ -265,7 +268,7 @@ $F{quote_id} : $F{name}]]></textFieldExpression>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{street}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{street} + " " + $F{street2}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="79" y="178" width="455" height="20"/>
