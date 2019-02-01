@@ -119,6 +119,7 @@
                   <field name="estimate_cost" groups="project.group_project_admin,project.group_project_manager"/>
                   <field name="pre_cost" groups="project.group_project_admin,project.group_project_manager"/>
                   <field name="actual_po" groups="project.group_project_admin,project.group_project_manager"/>
+                  <field name="expense" string="Expense"/>
                   <field name="state" string="Project Status"/>
                   <field name="close_reason"/>
               </xpath>
