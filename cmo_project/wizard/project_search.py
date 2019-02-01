@@ -167,9 +167,12 @@ class ProjectSearch(models.TransientModel):
                 dom += [('project_place', 'like', self.project_place)]
             if self.user_id:
                 dom += [('user_id', '=', self.user_id.id)]
-            if self.date_start:
+            if self.date_start and self.date_end:
+                dom += ['|', ('date_start', '>=', self.date_start),
+                        ('date', '<=', self.date_end)]
+            elif self.date_start:
                 dom += [('date_start', '>=', self.date_start)]
-            if self.date_end:
+            elif self.date_end:
                 dom += [('date', '<=', self.date_end)]
             if self.operating_unit_id:
                 dom += [('operating_unit_id', '=', self.operating_unit_id.id)]
