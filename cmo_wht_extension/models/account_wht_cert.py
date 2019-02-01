@@ -20,6 +20,21 @@ class AccountWhtCert(models.Model):
          ('pnd53', 'PND53')],
     )
 
+    @api.multi
+    def button_draft(self):
+        self.write({'state': 'draft'})
+        return True
+
+    @api.multi
+    def button_cancel(self):
+        self.write({'state': 'cancel'})
+        return True
+
+    @api.multi
+    def button_validate(self):
+        self.write({'state': 'done'})
+        return True
+
     @api.model
     def default_get(self, fields):
         res = super(AccountWhtCert, self).default_get(fields)
