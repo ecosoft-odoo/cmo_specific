@@ -6,9 +6,11 @@
             <field name="model">account.wht.cert</field>
             <field name="inherit_id" ref="l10n_th_account.view_print_wht_cert"/>
             <field name="arch" type="xml">
-                <field name="state" position="attributes">
-                    <attribute name="statusbar_visible">draft,cancel,done</attribute>
-                </field>
+                <xpath expr="//header/field[@name='state']" position="before">
+                    <button name="button_validate" states="draft" string="Done" type="object" class="oe_highlight"/>
+                    <button name="button_cancel" states="draft" string="Cancel" type="object"/>
+                    <button name="button_draft" states="done,cancel" string="Set to Draft" type="object"/>
+                </xpath>
                 <field name="voucher_id" position="after">
                     <field name="expense_id" invisible="1"/>
                 </field>
