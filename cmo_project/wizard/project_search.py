@@ -149,6 +149,7 @@ class ProjectSearch(models.TransientModel):
         Team = self.env['project.team.member']
         team_ids = Team.search(dom_team)
         project_id = team_ids.mapped('project_id.id')
+        where_date = ''
         # condition Find not found
         if not project_id and pos:
             action = self.env.ref('project.open_view_project_all')
@@ -167,13 +168,6 @@ class ProjectSearch(models.TransientModel):
                 dom += [('project_place', 'like', self.project_place)]
             if self.user_id:
                 dom += [('user_id', '=', self.user_id.id)]
-            if self.date_start and self.date_end:
-                dom += ['|', ('date_start', '>=', self.date_start),
-                        ('date', '<=', self.date_end)]
-            elif self.date_start:
-                dom += [('date_start', '>=', self.date_start)]
-            elif self.date_end:
-                dom += [('date', '<=', self.date_end)]
             if self.operating_unit_id:
                 dom += [('operating_unit_id', '=', self.operating_unit_id.id)]
             if self.project_type_id:
@@ -196,8 +190,30 @@ class ProjectSearch(models.TransientModel):
                 dom += [('client_type_id', '=', self.client_type_id.id)]
             if self.obligation_id:
                 dom += [('obligation_id', '=', self.obligation_id.id)]
+            if self.date_start and self.date_end:
+                where_date = "aaa.date_start between '%s' and '%s' \
+                    or pp.date between '%s' and '%s' \
+                    or aaa.date_start <= '%s' and pp.date >= '%s' \
+                    or aaa.date_start >= '%s' and pp.date <= '%s'" % \
+                    (self.date_start, self.date_end, self.date_start,
+                     self.date_end, self.date_start, self.date_end,
+                     self.date_start, self.date_end)
+            elif self.date_start:
+                where_date = "pp.date >= '%s'" % (self.date_start)
+            elif self.date_end:
+                where_date = "aaa.date_start <= '%s'" % (self.date_end)
             Project = self.env['project.project']
             project_ids = Project.search(dom).ids
+            if project_ids and where_date:
+                where_date = 'and ' + where_date
+                self._cr.execute("""
+                    select pp.id
+                    from project_project pp
+                    join account_analytic_account aaa on aaa.id =
+                        pp.analytic_account_id
+                    where pp.id in %s
+                """ + where_date, (tuple(project_ids), ))
+                project_ids = self._cr.fetchall()
             action = self.env.ref('project.open_view_project_all')
             result = action.read()[0]
             result.update({'domain': [('id', 'in', project_ids)],
