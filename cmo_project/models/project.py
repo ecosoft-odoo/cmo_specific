@@ -451,10 +451,9 @@ class ProjectProject(models.Model):
     @api.constrains('name')
     def _check_name(self):
         self.ensure_one()
-        project_ids = self.env['project.project'].search([])
-        duplicate = [x.id for x in project_ids
-                     if x.name == self.name if x.id != self.id]
-        if duplicate:
+        project_ids = self.env['project.project'].search_count(
+                        [('name', '=', self.name)])
+        if project_ids > 1:
             raise ValidationError(_('Project name is duplicate.'))
 
     @api.multi
