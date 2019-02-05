@@ -448,6 +448,16 @@ class ProjectProject(models.Model):
                                    "than project end-date.")
 
     @api.multi
+    @api.constrains('name')
+    def _check_name(self):
+        self.ensure_one()
+        project_ids = self.env['project.project'].search([])
+        duplicate = [x.id for x in project_ids
+                     if x.name == self.name if x.id != self.id]
+        if duplicate:
+            raise ValidationError(_('Project name is duplicate.'))
+
+    @api.multi
     def purchase_relate_project_tree_view(self):
         self.ensure_one()
         domain = [
