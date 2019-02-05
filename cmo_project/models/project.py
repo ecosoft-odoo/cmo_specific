@@ -131,6 +131,7 @@ class ProjectProject(models.Model):
         states={'close': [('readonly', True)]},
     )
     date = fields.Date(
+        string='End Date',
         default=lambda self: fields.Date.context_today(self),
         states={'close': [('readonly', True)]},
     )
