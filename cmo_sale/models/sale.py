@@ -337,6 +337,8 @@ class SaleOrderLine(models.Model):
     def _onchange_order_lines_group(self):
         res = {}
         if self.order_lines_group == 'before':
+            self.manage_fee_percent = False
+            self.tax_id = False
             res['domain'] = {
                 'sale_layout_cat_id': [
                     ('management_fee', '=', False),
