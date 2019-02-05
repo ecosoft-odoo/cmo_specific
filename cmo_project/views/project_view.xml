@@ -19,8 +19,9 @@
             <field name="inherit_id" ref="project.view_project_project_filter"/>
             <field name="arch" type="xml">
                   <xpath expr="//field[@name='name']" position="before">
-                        <filter string="Latest" name="Latest" domain="[('date_start','&gt;',(context_today()-relativedelta(months=6)).strftime('%%Y-%%m-01'))]"/>
+                        <!-- <filter string="Latest" name="Latest" domain="[('date_start','&gt;',(context_today()-relativedelta(months=6)).strftime('%%Y-%%m-01'))]"/> -->
                         <filter string="Draft" name="Draft" domain="[('state','=','draft')]"/>
+                        <filter string="Validated" name="Validated" domain="[('state','=','validate')]"/>
                         <filter string="In Progress" name="In Progress" domain="[('state', '=','open')]"/>
                         <filter string="Ready to Billing" name="Ready_billing" domain="[('state','=','ready_billing')]"/>
                         <filter string="Invoiced" name="Invoiced" domain="[('is_invoiced', '=', True)]"/>
