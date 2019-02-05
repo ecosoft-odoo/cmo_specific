@@ -98,6 +98,7 @@ class PurchaseOrder(models.Model):
     requesting_operating_unit_id = fields.Many2one(
         readonly=['state', 'in', ['done', 'confirm', 'approved', 'cancel']],
     )
+    state = fields.Selection(track_visibility='onchange')
 
     @api.onchange('po_type_id')
     def _onchange_po_type_id(self):
