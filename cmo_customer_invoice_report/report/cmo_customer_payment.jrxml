@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.2100000000000035"/>
 	<property name="ireport.x" value="45"/>
-	<property name="ireport.y" value="672"/>
+	<property name="ireport.y" value="288"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -31,9 +31,6 @@
 	</field>
 	<field name="others_note" class="java.lang.String">
 		<fieldDescription><![CDATA[line_ids/move_line_id/invoice/others_note]]></fieldDescription>
-	</field>
-	<field name="amount" class="java.lang.Number">
-		<fieldDescription><![CDATA[line_ids/amount]]></fieldDescription>
 	</field>
 	<field name="invoice_amount_total" class="java.lang.Number">
 		<fieldDescription><![CDATA[line_ids/move_line_id/invoice/amount_total]]></fieldDescription>
@@ -86,18 +83,18 @@
 	<field name="je_opej" class="java.lang.String">
 		<fieldDescription><![CDATA[line_ids/move_line_id/journal_id/code]]></fieldDescription>
 	</field>
-	<field name="amount_allow" class="java.lang.Number">
-		<fieldDescription><![CDATA[line_ids/amount]]></fieldDescription>
-	</field>
 	<sortField name="invoice_type"/>
 	<variable name="amount_untaxed" class="java.lang.Number">
-		<variableExpression><![CDATA[$F{amount_allow}*100/107]]></variableExpression>
+		<variableExpression><![CDATA[$F{invoice_amount_tax}?
+$F{allocation_amount} -
+($F{allocation_amount} * $F{invoice_amount_tax} / $F{invoice_amount_total}):
+$F{allocation_amount}]]></variableExpression>
 	</variable>
 	<variable name="total_amount_untaxed" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{invoice_type} == "out_invoice" ? $V{amount_untaxed} : (-1) * $V{amount_untaxed}]]></variableExpression>
 	</variable>
 	<variable name="total_amount" class="java.lang.Number" calculation="Sum">
-		<variableExpression><![CDATA[$F{invoice_type} == "out_invoice" ? $F{amount_allow} : (-1) * $F{amount_allow}]]></variableExpression>
+		<variableExpression><![CDATA[$F{invoice_type} == "out_invoice" ? $F{allocation_amount} : (-1) * $F{allocation_amount}]]></variableExpression>
 	</variable>
 	<variable name="total_amount_tax" class="java.lang.Number">
 		<variableExpression><![CDATA[$V{total_amount} - $V{total_amount_untaxed}]]></variableExpression>
