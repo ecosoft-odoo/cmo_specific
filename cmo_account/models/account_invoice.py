@@ -34,6 +34,9 @@ class AccountInvoice(models.Model):
         readonly=True,
         copy=False,
     )
+    number_preprint = fields.Char(
+        required=True
+    )
     # invoice_line = fields.One2many(
     #     states={'draft': [('readonly', False)], 'open': [('readonly', False)]}
     # )

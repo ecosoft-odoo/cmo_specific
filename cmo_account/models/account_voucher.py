@@ -47,6 +47,9 @@ class AccountVoucher(models.Model):
         'res.partner',
         string='Approved By',
     )
+    number_preprint = fields.Char(
+        required=True
+    )
 
     @api.multi
     def _compute_invoices_ref(self):
