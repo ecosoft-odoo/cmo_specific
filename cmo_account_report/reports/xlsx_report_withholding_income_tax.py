@@ -54,6 +54,9 @@ class WithholdingIncomeTaxView(models.Model):
     sequence = fields.Text(
         string='Sequence',
     )
+    ref = fields.Char(
+        string='Reference',
+    )
 
 
 class XLSXReportWithholdingIncomeTax(models.TransientModel):
@@ -114,7 +117,8 @@ class XLSXReportWithholdingIncomeTax(models.TransientModel):
         where_str = self._domain_to_where_str(dom)
         if where_str:
             where_str = 'and ' + where_str
-        group_by = 'group by c.id, rp.id, ct.id order by date_value,number'
+        group_by = 'group by c.id, rp.id, ct.id, av.number, hr.number \
+            order by date_value,number'
         # self.results = Result.search(dom, order='date_value,number')
         self._cr.execute("""
             select row_number() over (order by c.date, c.number) as sequence,
@@ -126,10 +130,14 @@ class XLSXReportWithholdingIncomeTax(models.TransientModel):
             case when c.state != 'cancel'
                 then sum(ct.base) else 0.0 end as base_total,
             case when c.state != 'cancel'
-                then sum(ct.amount) else 0.0 end as tax_total
+                then sum(ct.amount) else 0.0 end as tax_total,
+            case when c.voucher_id is not null
+                then av.number else hr.number end as ref
             from account_wht_cert c
             join res_partner rp on c.supplier_partner_id = rp.id
             left join wht_cert_tax_line ct on ct.cert_id = c.id
+            left join account_voucher av on av.id = c.voucher_id
+            left join hr_expense_expense hr on hr.id = c.expense_id
             where c.state not in ('draft', 'cancel')
         """ + where_str + group_by)
         withholding_tax = self._cr.dictfetchall()

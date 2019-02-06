@@ -128,6 +128,7 @@
                                 'I6': 'tax_total${value or ""}#{number_format=number}',
                                 'J6': 'tax_payer${value and (value == "withholding" and "1" or (value == "paid_one_time" and "3")) or ""}',
                                 'K6': 'number${value or ""}',
+                                'L6': 'ref${value or ""}',
                             },
                             '_TAIL_0': {
                                 'H6': '@{sum}#{font=bold;number_format=number}',
