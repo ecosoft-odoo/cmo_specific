@@ -106,7 +106,6 @@ class SaleOrder(models.Model):
     approval_id = fields.Many2one(
         'res.users',
         string='Approval',
-        states={'done': [('readonly', True)]},
     )
     margin_percentage = fields.Float(
         string='Margin Percentage (%)',
