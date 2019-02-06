@@ -16,6 +16,9 @@ class AccountMove(models.Model):
         string='Ref Voucher',
         compute='_compute_ref_voucher_id',
     )
+    tax_detail_ids = fields.One2many(
+        states={'posted': [('readonly', True)]}
+    )
 
     @api.multi
     def _compute_ref_invoice_id(self):
