@@ -2,8 +2,8 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_customer_payment" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.2100000000000035"/>
-	<property name="ireport.x" value="16"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="45"/>
+	<property name="ireport.y" value="672"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -42,7 +42,7 @@
 		<fieldDescription><![CDATA[line_ids/move_line_id/invoice/amount_tax]]></fieldDescription>
 	</field>
 	<field name="amount_untaxed" class="java.lang.Float">
-		<fieldDescription><![CDATA[line_cr_ids/move_line_id/invoice/amount_untaxed]]></fieldDescription>
+		<fieldDescription><![CDATA[line_ids/move_line_id/invoice/amount_untaxed]]></fieldDescription>
 	</field>
 	<field name="number" class="java.lang.String">
 		<fieldDescription><![CDATA[number]]></fieldDescription>
@@ -86,19 +86,18 @@
 	<field name="je_opej" class="java.lang.String">
 		<fieldDescription><![CDATA[line_ids/move_line_id/journal_id/code]]></fieldDescription>
 	</field>
-	<field name="test1" class="java.lang.Number">
+	<field name="amount_allow" class="java.lang.Number">
 		<fieldDescription><![CDATA[line_ids/amount]]></fieldDescription>
 	</field>
 	<sortField name="invoice_type"/>
 	<variable name="amount_untaxed" class="java.lang.Number">
-		<variableExpression><![CDATA[$F{amount} -
-($F{amount} * $F{invoice_amount_tax} / $F{invoice_amount_total})]]></variableExpression>
+		<variableExpression><![CDATA[$F{amount_allow}*100/107]]></variableExpression>
 	</variable>
 	<variable name="total_amount_untaxed" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{invoice_type} == "out_invoice" ? $V{amount_untaxed} : (-1) * $V{amount_untaxed}]]></variableExpression>
 	</variable>
 	<variable name="total_amount" class="java.lang.Number" calculation="Sum">
-		<variableExpression><![CDATA[$F{invoice_type} == "out_invoice" ? $F{amount} : (-1) * $F{amount}]]></variableExpression>
+		<variableExpression><![CDATA[$F{invoice_type} == "out_invoice" ? $F{amount_allow} : (-1) * $F{amount_allow}]]></variableExpression>
 	</variable>
 	<variable name="total_amount_tax" class="java.lang.Number">
 		<variableExpression><![CDATA[$V{total_amount} - $V{total_amount_untaxed}]]></variableExpression>
@@ -178,11 +177,8 @@
 				<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Double">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Number"><![CDATA[$V{amount_untaxed} != null ?
-($F{invoice_type} == "out_invoice" ?
-    $V{amount_untaxed} :
-    (-1) * $V{amount_untaxed}) :
-0]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$V{amount_untaxed}==null?
+0 :$V{amount_untaxed}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement x="18" y="15" width="385" height="25" isPrintWhenDetailOverflows="true">
@@ -246,6 +242,15 @@
 				<textFieldExpression class="java.lang.Number"><![CDATA[$V{total_amount_untaxed} != null ? $V{total_amount_untaxed} : 0]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="429" y="159" width="155" height="20">
+					<printWhenExpression><![CDATA[$F{journal_id}!='Opening Entries Journal']]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$V{total_amount_tax} != null ? $V{total_amount_tax} : 0]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
 				<reportElement x="429" y="186" width="155" height="20">
 					<printWhenExpression><![CDATA[$F{journal_id}!='Opening Entries Journal']]></printWhenExpression>
 				</reportElement>
@@ -260,15 +265,6 @@
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["(" + ($P{REPORT_LOCALE}.toString() == "en_US" ? $F{amount_total_text_en} : $F{amount_total_text_th}) + ")"]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement x="429" y="159" width="155" height="20">
-					<printWhenExpression><![CDATA[$F{journal_id}!='Opening Entries Journal']]></printWhenExpression>
-				</reportElement>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression class="java.lang.Number"><![CDATA[$V{total_amount_tax} != null ? $V{total_amount_tax} : 0]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement x="18" y="0" width="386" height="25"/>
