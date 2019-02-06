@@ -138,9 +138,9 @@
                 <xpath expr="//header/button[@name='view_invoice']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
-                <!-- <xpath expr="//header/button[@name='action_cancel_draft']" position="attributes">
+                <xpath expr="//header/button[@name='action_cancel_draft']" position="attributes">
                     <attribute name="invisible">1</attribute>
-                </xpath> -->
+                </xpath>
 
                 <!-- Change attribute button header -->
                 <xpath expr="//header/button[@name='action_cancel']" position="attributes">
