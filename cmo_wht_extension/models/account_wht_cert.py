@@ -14,6 +14,12 @@ class AccountWhtCert(models.Model):
         related='expense_id.number',
         readonly=True,
     )
+    reference = fields.Char(
+        string='Reference',
+        readonly=True,
+        states={'draft': [('readonly', False)]},
+    )
+
     income_tax_form = fields.Selection(
         [('pnd1', 'PND1'),
          ('pnd3', 'PND3'),
