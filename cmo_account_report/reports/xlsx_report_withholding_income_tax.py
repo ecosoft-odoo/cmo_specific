@@ -131,8 +131,9 @@ class XLSXReportWithholdingIncomeTax(models.TransientModel):
                 then sum(ct.base) else 0.0 end as base_total,
             case when c.state != 'cancel'
                 then sum(ct.amount) else 0.0 end as tax_total,
-            case when c.voucher_id is not null
-                then av.number else hr.number end as ref
+            case when c.voucher_id is not null then av.number
+                when hr.number is not null then hr.number
+                else c.reference end as ref
             from account_wht_cert c
             join res_partner rp on c.supplier_partner_id = rp.id
             left join wht_cert_tax_line ct on ct.cert_id = c.id
