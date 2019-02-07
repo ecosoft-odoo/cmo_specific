@@ -32,9 +32,9 @@
                                 'J5': 'company_id.partner_id.taxbranch${value and "สาขาที่ %s" % value or "สาขาที่"}',
                             },
                             'results': {
-                                'A10': 'invoice_date${value or ""}#{number_format=date}',
-                                'B10': 'invoice_number${value or ""}#{number_format=text}',
-                                'C10': 'tax_sequence_display${value or ""}#{number_format=text}',
+                                'A10': "${'=ROW(?(A1))'}#{align=right}",
+                                'B10': 'invoice_date${value or ""}#{number_format=date}',
+                                'C10': 'invoice_number${value or ""}#{number_format=text}',
                                 'D10': 'partner_id${value and " ".join(list(filter(lambda l: l != False, [value.title.name, value.name]))) or ""}',
                                 'E10': 'partner_id.vat${value or ""}',
                                 'F10': 'partner_id.taxbranch${value and (value == "00000" and value) or ""}',
