@@ -98,6 +98,7 @@ class PurchaseOrder(models.Model):
     requesting_operating_unit_id = fields.Many2one(
         readonly=['state', 'in', ['done', 'confirm', 'approved', 'cancel']],
     )
+    state = fields.Selection(track_visibility='onchange')
 
     @api.onchange('po_type_id')
     def _onchange_po_type_id(self):
@@ -147,7 +148,7 @@ class PurchaseOrder(models.Model):
     def _get_domain_project(self):
         operating_unit_ids = self.env.user.operating_unit_ids.ids
         domain = [
-            ('state', 'in', ['validate', 'open', 'ready_billing']),
+            ('state', 'not in', ['draft', 'pending', 'cancelled', 'close']),
             ('operating_unit_id', 'in', operating_unit_ids),
         ]
         return domain

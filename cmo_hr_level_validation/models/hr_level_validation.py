@@ -36,6 +36,11 @@ class HrExpenseExpense(models.Model):
             ('paid', 'Paid'),
         ],
     )
+    validate_date = fields.Datetime(
+        'Validate On',
+        readonly=True,
+        copy=False,
+    )
 
     @api.multi
     def expense_confirm(self):
@@ -134,6 +139,8 @@ class HrExpenseExpense(models.Model):
     def expense_accept(self):
         self.ensure_one()
         res = super(HrExpenseExpense, self).expense_accept()
+        today = fields.Datetime.now()
+        self.write({'validate_date': today})
         product_lines = self.env['hr.expense.line'].search([
             ('expense_id', '=', self.id)
         ]).mapped('product_id')

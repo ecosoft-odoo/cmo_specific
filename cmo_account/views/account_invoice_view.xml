@@ -31,6 +31,22 @@
                 <button name="action_invoice_sent" position="attributes">
                     <attribute name="invisible">True</attribute>
                 </button>
+                <field name="user_id" position="after">
+                    <field name="validate_user_id"/>
+                    <field name="validate_date"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="invoice_supplier_form" model="ir.ui.view">
+            <field name="name">account.invoice.supplier.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="validate_user_id"/>
+                <field name="validate_date"/>
+            </field>
             </field>
         </record>
 

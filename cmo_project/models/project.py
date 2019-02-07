@@ -131,6 +131,7 @@ class ProjectProject(models.Model):
         states={'close': [('readonly', True)]},
     )
     date = fields.Date(
+        string='End Date',
         default=lambda self: fields.Date.context_today(self),
         states={'close': [('readonly', True)]},
     )
@@ -446,6 +447,15 @@ class ProjectProject(models.Model):
         if self.date_brief > self.date:
             return ValidationError("project brief-date must be lower "
                                    "than project end-date.")
+
+    @api.multi
+    @api.constrains('name')
+    def _check_name(self):
+        self.ensure_one()
+        count_project = self.env['project.project'].search_count(
+                        [('name', '=', self.name)])
+        if count_project > 1:
+            raise ValidationError(_('Project name is duplicate.'))
 
     @api.multi
     def purchase_relate_project_tree_view(self):

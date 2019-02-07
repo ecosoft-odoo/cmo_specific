@@ -23,6 +23,20 @@ class AccountInvoice(models.Model):
         string='Description',
         states={'paid': [('readonly', True)]},
     )
+    validate_user_id = fields.Many2one(
+        'res.users',
+        string='Validated By',
+        readonly=True,
+        copy=False,
+    )
+    validate_date = fields.Datetime(
+        'Validate On',
+        readonly=True,
+        copy=False,
+    )
+    number_preprint = fields.Char(
+        required=True
+    )
     # invoice_line = fields.One2many(
     #     states={'draft': [('readonly', False)], 'open': [('readonly', False)]}
     # )
@@ -40,6 +54,15 @@ class AccountInvoice(models.Model):
             'quote_ref_date': invoice.quote_ref_date,
         })
         return res
+
+    @api.multi
+    def invoice_validate(self):
+        # result = super(AccountInvoice, self.sudo()).invoice_validate()
+        result = super(AccountInvoice, self).invoice_validate()
+        for invoice in self:
+            invoice.write({'validate_user_id': self.env.user.id,
+                           'validate_date': fields.Datetime.now()})
+        return result
 
     @api.multi
     def write(self, vals):

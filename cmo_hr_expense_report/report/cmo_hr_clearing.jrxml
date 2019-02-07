@@ -731,7 +731,12 @@ $F{total_amount_advance}]]></textFieldExpression>
 				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Number"><![CDATA[$F{advance_amount} - $V{sum_total_amount} < 0 ? (-1) * ($F{advance_amount} - $V{sum_total_amount}) : null]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{supplier_invoice}?
+$F{advance_amount} - $V{sum_total_amount} < 0 ?
+(-1) * ($F{advance_amount} - $V{sum_total_amount}) : null:
+$F{total_amount_advance} - $V{sum_total_amount} < 0 ?
+(-1) * $F{total_amount_advance} - $V{sum_total_amount}
+:null]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="438" y="60" width="116" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
@@ -739,7 +744,11 @@ $F{total_amount_advance}]]></textFieldExpression>
 				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Number"><![CDATA[$F{advance_amount} - $V{sum_total_amount} > 0 ? ($F{advance_amount} - $V{sum_total_amount}) : null]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{supplier_invoice}?
+$F{advance_amount} - $V{sum_total_amount} > 0 ?
+($F{advance_amount} - $V{sum_total_amount}) : null :
+$F{total_amount_advance} - $V{sum_total_amount} > 0?
+$F{total_amount_advance} - $V{sum_total_amount}:null]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="0" width="44" height="20"/>

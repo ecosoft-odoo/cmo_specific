@@ -39,6 +39,17 @@ class AccountVoucher(models.Model):
         readonly=True,
         states={'draft': [('readonly', False)]},
     )
+    validate_user_id = fields.Many2one(
+        'res.partner',
+        string='Verify By',
+    )
+    approved_user_id = fields.Many2one(
+        'res.partner',
+        string='Approved By',
+    )
+    number_preprint = fields.Char(
+        required=True
+    )
 
     @api.multi
     def _compute_invoices_ref(self):

@@ -132,7 +132,7 @@
                 <search string="Expense">
                     <filter domain="[('approver_ids', '=', uid)]" string="My Approval"/>
                     <filter domain="[('line_ids.product_id.categ_id.hr_product', '=', True)]" string="HR's Expense"/>
-                    <filter domain="[('line_ids.product_id.categ_id.parent_id', '=', 79)]" string="Traveling Expenses"/>
+                    <filter domain="[('line_ids.product_id.categ_id', '=', 80)]" string="Traveling Expenses"/>
                 </search>
                 <xpath expr="//filter[last()]" position="after">
                     <filter string="State" context="{'group_by':'state'}"/>

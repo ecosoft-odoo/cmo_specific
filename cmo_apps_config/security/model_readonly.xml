@@ -5,7 +5,6 @@
         <function model="ir.model.access" name="write" >
             <function model="ir.model.access" name="search"
                 eval="[[('model_id','in', (
-                  ref('account.model_account_account'),
                   ref('account.model_account_fiscalyear'),
                   ref('account.model_account_period'),
                   ref('product.model_product_uom'),

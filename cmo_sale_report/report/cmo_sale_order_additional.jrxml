@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_sale_order_eng" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.1"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="940"/>
+	<property name="ireport.y" value="0"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;order_line&quot;]"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<parameter name="parameter1" class="java.lang.String"/>
@@ -98,6 +98,12 @@
 	</field>
 	<field name="approval_position" class="java.lang.String">
 		<fieldDescription><![CDATA[approval_id/partner_id/employee_id/job_id/name]]></fieldDescription>
+	</field>
+	<field name="quote_id" class="java.lang.String">
+		<fieldDescription><![CDATA[quote_id/name]]></fieldDescription>
+	</field>
+	<field name="street2" class="java.lang.String">
+		<fieldDescription><![CDATA[partner_id/street2]]></fieldDescription>
 	</field>
 	<variable name="sum total section" class="java.lang.Float" resetType="Group" resetGroup="section" calculation="Sum">
 		<variableExpression><![CDATA[(($F{unit price} * $F{qty}) > 0) == true ? $F{unit price} * $F{qty}: 0.0]]></variableExpression>
@@ -240,7 +246,8 @@ $P{REPORT_LOCALE}.toString() == "en_US" ? "Before Management Fee" : "รวม�
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="SansSerif" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{quote_id} ?
+$F{quote_id} : $F{name}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="446" y="67" width="111" height="20"/>
@@ -261,7 +268,7 @@ $P{REPORT_LOCALE}.toString() == "en_US" ? "Before Management Fee" : "รวม�
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{street}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{street} + " " + $F{street2}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="79" y="178" width="455" height="20"/>
