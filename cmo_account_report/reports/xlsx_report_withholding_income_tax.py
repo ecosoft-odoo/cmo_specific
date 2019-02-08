@@ -112,8 +112,8 @@ class XLSXReportWithholdingIncomeTax(models.TransientModel):
         dom = []
         if self.income_tax_form:
             dom += [('c.income_tax_form', '=', self.income_tax_form)]
-        if self.calendar_period_id:
-            dom += [('c.period_id', '=', self.calendar_period_id.id)]
+        if self.calendar_period_id:  # use rpt_period_id
+            dom += [('c.rpt_period_id', '=', self.calendar_period_id.id)]
         where_str = self._domain_to_where_str(dom)
         if where_str:
             where_str = 'and ' + where_str
@@ -124,7 +124,7 @@ class XLSXReportWithholdingIncomeTax(models.TransientModel):
             select row_number() over (order by c.date, c.number) as sequence,
                 c.id as id_wht, c.sequence_display as wht_sequence_display,
                 c.number, c.date as date_value, c.income_tax_form, c.tax_payer,
-                c.period_id as wht_period_id, c.id as cert_id,
+                c.rpt_period_id as wht_period_id, c.id as cert_id,
                 rp.id as supplier_ids, ct.id as cert_line_ids,
                 round(avg(ct.percent), 0) as percent,
             case when c.state != 'cancel'

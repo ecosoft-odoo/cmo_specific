@@ -30,6 +30,13 @@
                 <xpath expr="//field[@name='wht_line']/tree/field[@name='amount']" position="attributes">
                     <attribute name="readonly">0</attribute>
                 </xpath>
+                <field name="date" position="after">
+                    <label for="additional_filing"/>
+                    <div>
+                        <field name="additional_filing" attrs="{'readonly': [('sequence_display', '!=', False)]}"/>
+                        <field name="rpt_period_id" class="oe_inline" attrs="{'required': [('additional_filing', '=', True)], 'invisible': [('additional_filing', '=', False)], 'readonly': [('sequence_display', '!=', False)]}"/>
+                    </div>
+                </field>
             </field>
         </record>
 
