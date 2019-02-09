@@ -146,5 +146,6 @@ class AccountWhtCert(models.Model):
     def init(self, cr):
         cr.execute("""
             update account_wht_cert set rpt_period_id = period_id
-            where rpt_period_id is null and period_id is not null
+            where coalesce(additional_filing, false) is false
+            and rpt_period_id is null
         """)
