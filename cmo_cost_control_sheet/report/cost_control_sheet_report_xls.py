@@ -199,10 +199,10 @@ class CostControlSheetReportXls(report_xls):
                 'row_span': 2,
             },
             {
-                'text': 'Expense+Advance',
+                'text': 'Gross Margin (in%)',
                 'size': 20,
-                'col_span': 4,
-                'row_span': 1,
+                'col_span': 1,
+                'row_span': 2,
             },
         ]
         child_titles = [
@@ -220,26 +220,6 @@ class CostControlSheetReportXls(report_xls):
                 'text': 'Price',
                 'size': 20,
                 'col_pos': 5,
-            },
-            {
-                'text': 'No.',
-                'size': 20,
-                'col_pos': 7,
-            },
-            {
-                'text': 'Description',
-                'size': 20,
-                'col_pos': 8,
-            },
-            {
-                'text': 'Employee',
-                'size': 20,
-                'col_pos': 9,
-            },
-            {
-                'text': 'Price',
-                'size': 20,
-                'col_pos': 10,
             },
         ]
         col_offset = 0
@@ -300,6 +280,11 @@ class CostControlSheetReportXls(report_xls):
                 line_list = [('line', order_line_obj.browse(
                     cr, uid, x, context=context)) for x in order_line_ids]
                 line_get += line_list
+                if order_line_ids:
+                    subtotal_section = {
+                        'name': 'Total %s' % (section_id.name),
+                    }
+                    line_get += [('subtotal_section', subtotal_section)]
             return line_get
 
         quote_data = ('quote', quote_id)
@@ -314,9 +299,48 @@ class CostControlSheetReportXls(report_xls):
             for custom_group in custom_groups:
                 line_and_parent.append(('custom_group', custom_group))
                 line_and_parent += _line_order_get(custom_group)
+                subtotal_custom_group = {
+                    'name': 'Total %s' % (custom_group),
+                }
+                line_and_parent += \
+                    [('subtotal_custom_group', subtotal_custom_group)]
+
         else:
             line_and_parent += _line_order_get()
+        subtotal_quote = {
+            'name': 'Total Quotation %s' % (quote_id.name),
+        }
+        line_and_parent += [('subtotal_quote', subtotal_quote)]
         return line_and_parent
+
+    def _get_purchase_specs(self):
+        """
+        Column specs of purchase
+        """
+        c_specs = [
+            ['purchase_number', 1, 0, 'text', None],
+            ['purchase_price', 1, 0, 'text', None],
+            ['purchase_note', 1, 0, 'text', None],
+            ['gross_margin', 1, 0, 'text', None]
+        ]
+        return c_specs
+
+    def _get_expense_specs(self, name=None, number=None,
+                           price=['number', None, None], employee=None):
+        """
+        Column specs of expense
+        """
+        c_specs = [
+            ['name', 1, 0, 'text', name],
+            ['space_1', 1, 0, 'text', None],
+            ['space_2', 1, 0, 'text', None],
+            ['space_3', 1, 0, 'text', None],
+            ['number', 1, 0, 'text', number],
+            ['price', 1, 0, price[0], price[1], price[2]],
+            ['employee', 1, 0, 'text', employee],
+            ['space_4', 1, 0, 'text', None]
+        ]
+        return c_specs
 
     def _cost_control_sheet_report(self, _p, _xs, data, objects, wb):
         cr = self.cr
@@ -355,7 +379,7 @@ class CostControlSheetReportXls(report_xls):
             'Cost Control Sheet',
         ]
         for title in titles:
-            row_pos = self._report_title(ws, _p, row_pos, _xs, title, merge=11)
+            row_pos = self._report_title(ws, _p, row_pos, _xs, title, merge=8)
 
         project_info = [
             'BU No. ' + project_id.operating_unit_id.name,
@@ -366,12 +390,11 @@ class CostControlSheetReportXls(report_xls):
             'Place: ' + (project_id.project_place or ''),
         ]
         for info in project_info:
-            row_pos = self._report_header(ws, _p, row_pos, _xs, info, merge=11)
+            row_pos = self._report_header(ws, _p, row_pos, _xs, info, merge=8)
 
         row_pos = self._report_column_header(ws, _p, row_pos, _xs)
         ws.set_horz_split_pos(row_pos)
 
-        hr_row_pos = row_pos
         quote_ids = project_id.quote_related_ids
         entries = []
         for quote_id in quote_ids:
@@ -379,6 +402,11 @@ class CostControlSheetReportXls(report_xls):
                 ws, _p, row_pos, quote_id)
             entries += line_and_parent
 
+        total_price, total_estimate, total_po_price = [], [], []
+        quote_price, quote_estimate, quote_po_price = [], [], []
+        quote_price_2, quote_estimate_2, quote_po_price_2 = [], [], []
+        custom_group_price, custom_group_estimate, custom_group_po_price = \
+            [], [], []
         for entry in entries:
             data_obj = entry[1]
             if entry[0] == 'quote':
@@ -386,34 +414,44 @@ class CostControlSheetReportXls(report_xls):
                 c_specs = map(
                     lambda x: self.render(
                         x, template, 'quote'),
-                    wl_ccs)
+                    wl_ccs) + self._get_purchase_specs()
                 row_data = self.xls_row_template(
                     c_specs, [x[0] for x in c_specs])
                 row_pos = self.xls_write_row(
                     ws, row_pos, row_data,
                     row_style=self.av_cell_style_decimal)
+                quote_price = []
+                quote_estimate = []
+                quote_po_price = []
+                quote_price_2 = []
+                quote_estimate_2 = []
+                quote_po_price_2 = []
             elif entry[0] == 'custom_group':
                 custom_group_name = data_obj
                 c_specs = map(
                     lambda x: self.render(
                         x, template, 'custom_group'),
-                    wl_ccs)
+                    wl_ccs) + self._get_purchase_specs()
                 row_data = self.xls_row_template(
                     c_specs, [x[0] for x in c_specs])
                 row_pos = self.xls_write_row(
                     ws, row_pos, row_data,
                     row_style=self.rt_cell_style_decimal)
+                custom_group_price = []
+                custom_group_estimate = []
+                custom_group_po_price = []
             elif entry[0] == 'section':
                 section_name = data_obj.name
                 c_specs = map(
                     lambda x: self.render(
                         x, template, 'section'),
-                    wl_ccs)
+                    wl_ccs) + self._get_purchase_specs()
                 row_data = self.xls_row_template(
                     c_specs, [x[0] for x in c_specs])
                 row_pos = self.xls_write_row(
                     ws, row_pos, row_data,
                     row_style=self.rt_cell_style_decimal)
+                section_pos = row_pos
             elif entry[0] == 'line':
                 order_line_description = data_obj.name
                 price_in_contract = data_obj.price_unit * \
@@ -429,76 +467,165 @@ class CostControlSheetReportXls(report_xls):
                     c_specs, [x[0] for x in c_specs])
                 row_pos = self.xls_write_row(
                     ws, row_pos, row_data, row_style=self.an_cell_style)
+                line_row_pos = row_pos
 
                 # purchase
                 purchase_order_line_ids = purchase_order_line_obj.search(
-                    cr, uid, [
-                        ('sale_order_line_ref_id', '=', data_obj.id),
-                        ('state', 'in', ('confirmed', 'done')),
-                    ])
+                    cr, uid,
+                    [('sale_order_line_ref_id', '=', data_obj.id),
+                     ('state', 'in', ('confirmed', 'done')),
+                     ('order_id.state', '!=', 'confirmed')])
                 purchase_order_line = purchase_order_line_obj.browse(
-                    cr, uid, purchase_order_line_ids)
-                purchase_order_line_ids = purchase_order_line.filtered(
-                    lambda l: l.order_id.state != 'confirmed').ids
-                if purchase_order_line_ids:
-                    purchase_row_pos = row_pos
-                    for row_i, purchase_order_line_id in enumerate(
-                            purchase_order_line_ids):
-                        order_line_id = purchase_order_line_obj.browse(
-                            self.cr, self.uid,
-                            purchase_order_line_id, context=self.context)
-                        ws.write(
-                            purchase_row_pos + row_i - 1, 4,
-                            order_line_id.order_id.name,
-                            style=self.an_cell_style)
-                        ws.write(
-                            purchase_row_pos + row_i - 1, 5,
-                            order_line_id.price_subtotal,
-                            style=self.an_cell_style_decimal)
-                        ws.write(
-                            purchase_row_pos + row_i - 1, 6,
-                            order_line_id.order_id.partner_id.name,
-                            style=self.an_cell_style)
-                        row_pos += row_i
+                    cr, uid, purchase_order_line_ids).mapped(
+                    lambda l: (l.order_id, l.price_subtotal))
+                res = [(k,
+                        sum([y for (x, y) in purchase_order_line if x == k]))
+                       for k in dict(purchase_order_line).keys()]
+                i = 0
+                for purchase_order, price_subtotal in dict(res).iteritems():
+                    if i:
+                        row_pos += 1
+                    ws.write(
+                        row_pos - 1, 4, purchase_order.name,
+                        style=self.an_cell_style)
+                    ws.write(
+                        row_pos - 1, 5, price_subtotal,
+                        style=self.an_cell_style_decimal)
+                    ws.write(
+                        row_pos - 1, 6, purchase_order.partner_id.name,
+                        style=self.an_cell_style)
+                    # Gross margin
+                    gross_margin = '((B%s - F%s) / B%s) * 100' % \
+                        (str(line_row_pos), str(row_pos),
+                         str(line_row_pos))
+                    ws.write(row_pos - 1, 7, xlwt.Formula(gross_margin),
+                             style=self.an_cell_style_decimal)
+                    i += 1
 
-        expense_line_ids = expense_line_obj.search(
-            cr, uid,
-            [('analytic_account', '=', project_id.analytic_account_id.id)])
-        expense_line = expense_line_obj.browse(cr, uid, expense_line_ids)
-        expense_line_ids = expense_line.filtered(
-            lambda l:
-            (l.expense_id.is_employee_advance is False or
-             l.expense_id.is_advance_clearing is True) and
-            l.expense_id.state in ('done', 'paid')).ids
-        if expense_line_ids:
-            for row_i, expense_line_id in enumerate(expense_line_ids):
-                expense_line_id = expense_line_obj.browse(
-                    self.cr, self.uid,
-                    expense_line_id, context=self.context)
-                ws.write(
-                    hr_row_pos + row_i, 7,
-                    expense_line_id.expense_id.number,
-                    style=self.an_cell_style)
-                ws.write(
-                    hr_row_pos + row_i, 8,
-                    expense_line_id.ref or '',
-                    style=self.an_cell_style)
-                ws.write(
-                    hr_row_pos + row_i, 9,
-                    expense_line_id.expense_id.employee_request_id.name or '',
-                    style=self.an_cell_style)
-                ws.write(
-                    hr_row_pos + row_i, 10,
-                    expense_line_id.amount_line_untaxed,
-                    style=self.an_cell_style_decimal)
+                # Gross margin
+                if not i:
+                    gross_margin = '((B%s - F%s) / B%s) * 100' % \
+                        (str(row_pos), str(row_pos), str(row_pos))
+                    ws.write(row_pos - 1, 7, xlwt.Formula(gross_margin),
+                             style=self.an_cell_style_decimal)
+            elif entry[0] == 'subtotal_section':
+                sum_section_price = 'SUM(B%s:B%s)' % \
+                    (str(section_pos + 1), row_pos)
+                sum_section_estimate = 'SUM(C%s:C%s)' % \
+                    (str(section_pos + 1), row_pos)
+                sum_section_margin = '(B%s - C%s) * 100.0 / B%s' % \
+                    (str(row_pos + 1), str(row_pos + 1), str(row_pos + 1))
+                sum_section_po_price = 'SUM(F%s:F%s)' % \
+                    (str(section_pos + 1), row_pos)
+                sum_section_gross_margin = '((B%s - F%s) / B%s) * 100' % \
+                    (str(row_pos + 1), str(row_pos + 1), str(row_pos + 1))
+                c_specs = [
+                    ('name', 1, 0, 'text', data_obj.get('name')),
+                    ('price_in_contract', 1, 0, 'number', None,
+                     sum_section_price),
+                    ('estimate_cost', 1, 0, 'number', None,
+                     sum_section_estimate),
+                    ('percent_margin', 1, 0, 'number', None,
+                     sum_section_margin),
+                    ('purchase_number', 1, 0, 'text', None),
+                    ('purchase_price', 1, 0, 'number', None,
+                     sum_section_po_price),
+                    ('purchase_note', 1, 0, 'text', None),
+                    ('gross_margin', 1, 0, 'number', None,
+                     sum_section_gross_margin),
+                ]
+                row_data = self.xls_row_template(
+                    c_specs, [x[0] for x in c_specs])
+                row_pos = self.xls_write_row(
+                    ws, row_pos, row_data,
+                    row_style=self.rt_cell_style_decimal)
+                custom_group_price.append('B%s' % (str(row_pos)))
+                custom_group_estimate.append('C%s' % (str(row_pos)))
+                custom_group_po_price.append('F%s' % (str(row_pos)))
+                quote_price_2.append('B%s' % (str(row_pos)))
+                quote_estimate_2.append('C%s' % (str(row_pos)))
+                quote_po_price_2.append('F%s' % (str(row_pos)))
+            elif entry[0] == 'subtotal_custom_group':
+                sum_custom_group_price = \
+                    custom_group_price and '+'.join(custom_group_price) or None
+                sum_custom_group_estimate = \
+                    custom_group_estimate and '+'.join(custom_group_estimate) \
+                    or None
+                sum_custom_group_margin = '(B%s - C%s) * 100.0 / B%s' % \
+                    (str(row_pos + 1), str(row_pos + 1), str(row_pos + 1))
+                sum_custom_group_po_price = \
+                    custom_group_po_price and '+'.join(custom_group_po_price) \
+                    or None
+                sum_custom_group_gross_margin = '((B%s - F%s) / B%s) * 100' % \
+                    (str(row_pos + 1), str(row_pos + 1), str(row_pos + 1))
+                c_specs = [
+                    ('name', 1, 0, 'text', data_obj.get('name')),
+                    ('price_in_contract', 1, 0, 'number', None,
+                     sum_custom_group_price),
+                    ('estimate_cost', 1, 0, 'number', None,
+                     sum_custom_group_estimate),
+                    ('percent_margin', 1, 0, 'number', None,
+                     sum_custom_group_margin),
+                    ('purchase_number', 1, 0, 'text', None),
+                    ('purchase_price', 1, 0, 'number', None,
+                     sum_custom_group_po_price),
+                    ('purchase_note', 1, 0, 'text', None),
+                    ('gross_margin', 1, 0, 'number', None,
+                     sum_custom_group_gross_margin),
+                ]
+                row_data = self.xls_row_template(
+                    c_specs, [x[0] for x in c_specs])
+                row_pos = self.xls_write_row(
+                    ws, row_pos, row_data,
+                    row_style=self.rt_cell_style_decimal)
+                quote_price.append('B%s' % (str(row_pos)))
+                quote_estimate.append('C%s' % (str(row_pos)))
+                quote_po_price.append('F%s' % (str(row_pos)))
+            elif entry[0] == 'subtotal_quote':
+                sum_quote_price = \
+                    quote_price and '+'.join(quote_price) or \
+                    '+'.join(quote_price_2) or None
+                sum_quote_estimate = \
+                    quote_estimate and '+'.join(quote_estimate) or \
+                    '+'.join(quote_estimate_2) or None
+                sum_quote_margin = '(B%s - C%s) * 100.0 / B%s' % \
+                    (str(row_pos + 1), str(row_pos + 1), str(row_pos + 1))
+                sum_quote_po_price = \
+                    quote_po_price and '+'.join(quote_po_price) or \
+                    '+'.join(quote_po_price_2) or None
+                sum_quote_gross_margin = '((B%s - F%s) / B%s) * 100' % \
+                    (str(row_pos + 1), str(row_pos + 1), str(row_pos + 1))
+                c_specs = [
+                    ('name', 1, 0, 'text', data_obj.get('name')),
+                    ('price_in_contract', 1, 0, 'number', None,
+                     sum_quote_price),
+                    ('estimate_cost', 1, 0, 'number', None,
+                     sum_quote_estimate),
+                    ('percent_margin', 1, 0, 'number', None, sum_quote_margin),
+                    ('purchase_number', 1, 0, 'text', None),
+                    ('purchase_price', 1, 0, 'number', None,
+                     sum_quote_po_price),
+                    ('purchase_note', 1, 0, 'text', None),
+                    ('gross_margin', 1, 0, 'number', None,
+                     sum_quote_gross_margin),
+                ]
+                row_data = self.xls_row_template(
+                    c_specs, [x[0] for x in c_specs])
+                row_pos = self.xls_write_row(
+                    ws, row_pos, row_data,
+                    row_style=self.av_cell_style_decimal)
+                total_price.append('B%s' % (str(row_pos)))
+                total_estimate.append('C%s' % (str(row_pos)))
+                total_po_price.append('F%s' % (str(row_pos)))
 
         # totals
-        sum_price = 'SUM(B%s:B%s)' % (str(hr_row_pos + 1), str(row_pos))
-        sum_estimate = 'SUM(C%s:C%s)' % (str(hr_row_pos + 1), str(row_pos))
+        sum_price = total_price and '+'.join(total_price) or '0'
+        sum_estimate = total_estimate and '+'.join(total_estimate) or '0'
         sum_margin = '(B%s - C%s) * 100.0 / B%s' % (
             str(row_pos + 1), str(row_pos + 1), str(row_pos + 1))
-        sum_po_price = 'SUM(F%s:F%s)' % (str(hr_row_pos + 1), str(row_pos))
-        sum_hr_price = 'SUM(K%s:K%s)' % (str(hr_row_pos + 1), str(row_pos))
+        sum_po_price = total_po_price and '+'.join(total_po_price) or '0'
+        sum_gross_margin = '((B%s - F%s) / B%s) * 100' % \
+            (str(row_pos + 1), str(row_pos + 1), str(row_pos + 1))
 
         ws.write(row_pos, 0, 'Totals', style=self.av_cell_style_decimal)
         ws.write(row_pos, 1, xlwt.Formula(sum_price),
@@ -511,11 +638,149 @@ class CostControlSheetReportXls(report_xls):
         ws.write(row_pos, 5, xlwt.Formula(sum_po_price),
                  style=self.av_cell_style_decimal)
         ws.write(row_pos, 6, '', style=self.av_cell_style_decimal)
-        ws.write(row_pos, 7, '', style=self.av_cell_style_decimal)
-        ws.write(row_pos, 8, '', style=self.av_cell_style_decimal)
-        ws.write(row_pos, 9, '', style=self.av_cell_style_decimal)
-        ws.write(row_pos, 10, xlwt.Formula(sum_hr_price),
+        ws.write(row_pos, 7, xlwt.Formula(sum_gross_margin),
                  style=self.av_cell_style_decimal)
+
+        # Expense
+        row_pos += 2
+        expense_line_ids = expense_line_obj.search(
+            cr, uid,
+            [('analytic_account', '=', project_id.analytic_account_id.id)])
+        expense_line = expense_line_obj.browse(cr, uid, expense_line_ids) \
+            .filtered(lambda l:
+                      (l.expense_id.is_employee_advance is False or
+                       l.expense_id.is_advance_clearing is True) and
+                      l.expense_id.state in ('done', 'paid'))
+        cell_style = xlwt.easyxf(
+            'pattern: pattern solid, fore_color gray25;' + _xs['bold'] +
+            _xs['borders_all'] + _xs['right'],
+            num_format_str=report_xls.decimal_format)
+        total_price = []
+        # Header
+        c_specs = self._get_expense_specs(
+            name='Expense and Advance Cost', number='Expense No.',
+            price=['text', 'Price', None], employee='Employee')
+        row_data = self.xls_row_template(
+            c_specs, [x[0] for x in c_specs])
+        row_pos = self.xls_write_row(
+            ws, row_pos, row_data,
+            row_style=cell_style)
+        # Traveling expense
+        c_specs = self._get_expense_specs(
+            name='Traveling Expenses', price=['text', None, None])
+        row_data = self.xls_row_template(
+            c_specs, [x[0] for x in c_specs])
+        row_pos = self.xls_write_row(
+            ws, row_pos, row_data,
+            row_style=self.rt_cell_style_decimal)
+        traveling_expense_pos = row_pos
+        traveling_expense_categ_id = \
+            self.pool.get('ir.model.data').get_object_reference(
+                cr, uid, 'base', 'product_category_3')[1]
+        lines = expense_line.filtered(
+            lambda l: l.product_id.categ_id.id == traveling_expense_categ_id)
+        for line in lines:
+            c_specs = self._get_expense_specs(
+                name=line.ref, number=line.expense_id.number,
+                employee=line.expense_id.employee_request_id.name,
+                price=['number', line.amount_line_untaxed, None])
+            row_data = self.xls_row_template(
+                c_specs, [x[0] for x in c_specs])
+            row_pos = self.xls_write_row(
+                ws, row_pos, row_data,
+                row_style=self.an_cell_style)
+        sum_traveling_expense_price = None
+        if lines:
+            sum_traveling_expense_price = 'SUM(F%s:F%s)' % \
+                (str(traveling_expense_pos + 1), str(row_pos))
+        c_specs = self._get_expense_specs(
+            name='Total Traveling Expenses',
+            price=['number', None, sum_traveling_expense_price])
+        row_data = self.xls_row_template(
+            c_specs, [x[0] for x in c_specs])
+        row_pos = self.xls_write_row(
+            ws, row_pos, row_data,
+            row_style=self.rt_cell_style_decimal)
+        total_price.append('F%s' % (str(row_pos)))
+        # petty cash
+        c_specs = self._get_expense_specs(
+            name='Petty Cash', price=['text', None, None])
+        row_data = self.xls_row_template(
+            c_specs, [x[0] for x in c_specs])
+        row_pos = self.xls_write_row(
+            ws, row_pos, row_data,
+            row_style=self.rt_cell_style_decimal)
+        petty_cash_pos = row_pos
+        lines = expense_line.filtered(
+            lambda l: l.expense_id.pay_to == 'pettycash')
+        for line in lines:
+            c_specs = self._get_expense_specs(
+                name=line.ref, number=line.expense_id.number,
+                employee=line.expense_id.employee_request_id.name,
+                price=['number', line.amount_line_untaxed, None])
+            row_data = self.xls_row_template(
+                c_specs, [x[0] for x in c_specs])
+            row_pos = self.xls_write_row(
+                ws, row_pos, row_data,
+                row_style=self.an_cell_style)
+        sum_petty_cash_price = None
+        if lines:
+            sum_petty_cash_price = 'SUM(F%s:F%s)' % \
+                (str(petty_cash_pos + 1), row_pos)
+        c_specs = self._get_expense_specs(
+            name='Total Petty Cash',
+            price=['number', None, sum_petty_cash_price])
+        row_data = self.xls_row_template(
+            c_specs, [x[0] for x in c_specs])
+        row_pos = self.xls_write_row(
+            ws, row_pos, row_data,
+            row_style=self.rt_cell_style_decimal)
+        total_price.append('F%s' % (str(row_pos)))
+        # Other expense
+        c_specs = self._get_expense_specs(
+            name='Other Expense', price=['text', None, None])
+        row_data = self.xls_row_template(
+            c_specs, [x[0] for x in c_specs])
+        row_pos = self.xls_write_row(
+            ws, row_pos, row_data,
+            row_style=self.rt_cell_style_decimal)
+        other_expense_pos = row_pos
+        lines = expense_line.filtered(
+            lambda l: l.product_id.categ_id.id != traveling_expense_categ_id
+            and l.expense_id.pay_to != 'pettycash')
+        for line in lines:
+            c_specs = self._get_expense_specs(
+                name=line.ref, number=line.expense_id.number,
+                employee=line.expense_id.employee_request_id.name,
+                price=['number', line.amount_line_untaxed, None])
+            row_data = self.xls_row_template(
+                c_specs, [x[0] for x in c_specs])
+            row_pos = self.xls_write_row(
+                ws, row_pos, row_data,
+                row_style=self.an_cell_style)
+        sum_other_expense_price = None
+        if lines:
+            sum_other_expense_price = 'SUM(F%s:F%s)' % \
+                (str(other_expense_pos + 1), row_pos)
+        c_specs = self._get_expense_specs(
+            name='Total Other Expense',
+            price=['number', None, sum_other_expense_price])
+        row_data = self.xls_row_template(
+            c_specs, [x[0] for x in c_specs])
+        row_pos = self.xls_write_row(
+            ws, row_pos, row_data,
+            row_style=self.rt_cell_style_decimal)
+        total_price.append('F%s' % (str(row_pos)))
+        # Total
+        sum_expense_price = '+'.join(total_price)
+        c_specs = self._get_expense_specs(
+            name='Total Expense and Advance Cost',
+            price=['number', None, sum_expense_price])
+        row_data = self.xls_row_template(
+            c_specs, [x[0] for x in c_specs])
+        row_pos = self.xls_write_row(
+            ws, row_pos, row_data,
+            row_style=cell_style)
 
         if project_id.adjustment_ids:
             row_pos += 2
