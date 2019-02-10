@@ -688,7 +688,7 @@ class CostControlSheetReportXls(report_xls):
                 c_specs, [x[0] for x in c_specs])
             row_pos = self.xls_write_row(
                 ws, row_pos, row_data,
-                row_style=self.an_cell_style)
+                row_style=self.an_cell_style_decimal)
         sum_traveling_expense_price = None
         if lines:
             sum_traveling_expense_price = 'SUM(F%s:F%s)' % \
@@ -722,7 +722,7 @@ class CostControlSheetReportXls(report_xls):
                 c_specs, [x[0] for x in c_specs])
             row_pos = self.xls_write_row(
                 ws, row_pos, row_data,
-                row_style=self.an_cell_style)
+                row_style=self.an_cell_style_decimal)
         sum_petty_cash_price = None
         if lines:
             sum_petty_cash_price = 'SUM(F%s:F%s)' % \
@@ -757,7 +757,7 @@ class CostControlSheetReportXls(report_xls):
                 c_specs, [x[0] for x in c_specs])
             row_pos = self.xls_write_row(
                 ws, row_pos, row_data,
-                row_style=self.an_cell_style)
+                row_style=self.an_cell_style_decimal)
         sum_other_expense_price = None
         if lines:
             sum_other_expense_price = 'SUM(F%s:F%s)' % \
