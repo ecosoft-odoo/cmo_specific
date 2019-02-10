@@ -32,6 +32,7 @@ class BalanceSheetParser(report_sxw.rml_parse, common_report_header):
             'get_start_date': self._get_start_date,
             'get_end_date': self._get_end_date,
             'get_target_move': self._get_target_move,
+            'get_compute_ou': self.get_compute_ou,
             'additional_args': [
                 ('--header-font-name', 'Helvetica'),
                 ('--footer-font-name', 'Helvetica'),
@@ -59,6 +60,65 @@ class BalanceSheetParser(report_sxw.rml_parse, common_report_header):
         return super(BalanceSheetParser, self).set_context(
             objects, data, new_ids, report_type=report_type)
 
+    def get_compute_ou(self, ou, account_id, sign, level, report_id, data):
+        balance_ou = 0.0
+        sum_ou = 0.0
+        report_obj = self.pool.get('account.financial.report')
+        account_obj = self.pool.get('account.account')
+        data = data['form']
+        ids2 = report_obj._get_children_by_order(
+                self.cr, self.uid, [data['account_report_id'][0]],
+                context=data['used_context'])
+        account_obj = self.pool.get('account.account')
+        filter = " and l.period_id in "
+        if data['filter'] == 'filter_period':
+            filter += '(select id from account_period \
+                where fiscalyear_id in (%s) and id in (%s, %s))' % \
+                (data['fiscalyear_id'], data['period_from'], data['period_to'])
+        elif data['filter'] == 'filter_date':
+            filter += "(select id from account_period where fiscalyear_id in \
+                (%s)) and l.move_id in (select id from account_move \
+                where date >= '%s' AND date <= '%s')" % \
+                (data['fiscalyear_id'], data['date_from'], data['date_to'])
+        else:
+            filter += "(select id from account_period \
+                where fiscalyear_id in (%s))" % data['fiscalyear_id']
+        # sum account
+        if level == 1:
+            for report in report_obj.browse(self.cr, self.uid, ids2,
+                                            context=data['used_context']):
+                report_types = [x.id for x in report.account_type_ids]
+                account_ids = account_obj.search(
+                    self.cr, self.uid, [('user_type', 'in', report_types),
+                                        ('type', '!=', 'view')])
+                if account_ids:
+                    self.cr.execute("""
+                        SELECT COALESCE(SUM(l.debit),0) -
+                            COALESCE(SUM(l.credit), 0) as balance
+                        from account_move_line l
+                        where l.account_id in %s and l.operating_unit_id = %s
+                    """ + filter, (tuple(account_ids, ), ou.id))
+
+                    balance_by_ou = self.cr.dictfetchall()
+                    sum_ou = balance_by_ou[0].get('balance', 0.0)
+                if report.id == report_id:
+                    sum_ou = sum_ou*report.sign
+                    return sum_ou
+
+        # children account
+        if account_id:
+            self.cr.execute("""
+                SELECT COALESCE(SUM(l.debit),0) -
+                    COALESCE(SUM(l.credit), 0) as balance
+                from account_move_line l
+                where l.account_id = %s and l.operating_unit_id = %s
+            """ + filter, (account_id, ou.id))
+            balance_by_ou = self.cr.dictfetchall()
+            balance_ou = balance_by_ou[0].get('balance', 0.0)
+        if balance_ou != 0:
+            balance_ou = balance_ou*sign
+        return balance_ou
+
     def get_lines(self, data):
         lines = []
         account_obj = self.pool.get('account.account')
@@ -75,6 +135,7 @@ class BalanceSheetParser(report_sxw.rml_parse, common_report_header):
                 'name': report.name,
                 'account_code': False,
                 'account_name': False,
+                'report_id': report.id,
                 'balance': report.balance * report.sign or 0.0,
                 'type': 'report',
                 'level': bool(report.style_overwrite) and
@@ -111,6 +172,8 @@ class BalanceSheetParser(report_sxw.rml_parse, common_report_header):
                         'name': account.code + ' ' + account.name,
                         'account_code': account.code,
                         'account_name': account.name,
+                        'account_id': account.id,
+                        'sign': report.sign,
                         'balance': account.balance != 0 and
                         account.balance * report.sign or account.balance,
                         'type': 'account',
@@ -302,8 +365,17 @@ class BalanceSheetXLS(report_xls):
            data['form']['debit_credit']:
             c_specs += [
                 ('label_filter', 1, 0, 'text', _(data['form']['label_filter']),
-                    None, cell_style_right)
+                    None, cell_style_right),
             ]
+        ou_object = self.pool.get('operating.unit').browse(
+            self.cr, self.uid,
+            data['form']['used_context']['operating_unit_ids'])
+        if ou_object:
+            for ou in ou_object:
+                c_specs += [
+                    ('ou_%s' % ou.id, 1, 0, 'text', _('%s') % ou.name,
+                     None, cell_style_right)
+                ]
         row_data = self.xls_row_template(c_specs, [x[0] for x in c_specs])
         row_pos = self.xls_write_row(
             ws, row_pos, row_data, row_style=cell_style)
@@ -348,6 +420,19 @@ class BalanceSheetXLS(report_xls):
                             line.get('balance_cmp', None), None,
                             cell_style_decimal_detail)
                     ]
+                if ou_object:
+                    for ou in ou_object:
+                        account_id = line.get('account_id', None)
+                        sign = line.get('sign', None)
+                        level = line.get('level', None)
+                        report_id = line.get('report_id', None)
+                        balance_ou = _p.get_compute_ou(
+                            ou, account_id, sign, level, report_id, data)
+                        c_specs += [
+                            ('balance_ou_%s' % ou, 1, 0, 'number',
+                                balance_ou, None,
+                                cell_style_decimal_detail)
+                        ]
                 row_data = self.xls_row_template(
                     c_specs, [x[0] for x in c_specs])
                 row_pos = self.xls_write_row(
