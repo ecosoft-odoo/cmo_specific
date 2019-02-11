@@ -27,7 +27,7 @@ class ProjectProject(models.Model):
         'res.partner',
         string='Customer',
         states={'close': [('readonly', True)]},
-        domain=[('customer', '=', True), ],
+        domain=[('customer', '=', True), ('brand_type_id', '!=', 'Employee')],
         required=True,
     )
     agency_partner_id = fields.Many2one(

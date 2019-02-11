@@ -50,6 +50,9 @@ class AccountVoucher(models.Model):
     number_preprint = fields.Char(
         required=True
     )
+    date_value = fields.Date(
+        string='Payment Date',
+    )
 
     @api.multi
     def _compute_invoices_ref(self):
