@@ -67,10 +67,12 @@ class HrExpenseExpense(models.Model):
         'res.users',
         string='Approve By',
         readonly=True,
+        copy=False,
     )
     approve_date = fields.Datetime(
         string='Approve Date',
         readonly=True,
+        copy=False,
     )
 
     @api.onchange('payment_by')
