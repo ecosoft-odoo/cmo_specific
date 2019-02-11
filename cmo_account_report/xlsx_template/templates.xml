@@ -115,6 +115,7 @@
                                 'A3': 'calendar_period_id.name${value and "ประจำเดือน %s" % value or ""}',
                                 'K2': '${env.user.company_id.partner_id.vat}',
                                 'K3': '${env.user.company_id.partner_id.taxbranch}',
+                                'A4': 'additional_filing${value and "ยื่นเพิ่มเติม" or ""}',
                             },
                             'results': {
                                 'A6': "${'=ROW(?(A1))'}",
