@@ -173,10 +173,14 @@
                             groups="project.group_project_admin,project.group_project_manager"/>
                     <button name="action_ready_billing" type="object"
                             string="Ready to Billing"
-                            states="open"
+                            states="open,close"
                             groups="project.group_project_admin,project.group_project_manager"/>
                     <button name="action_back_to_open" type="object"
                             string="Back to In-Progress"
+                            states="ready_billing"
+                            groups="project.group_project_admin,project.group_project_manager"/>
+                    <button name="action_complete" type="object"
+                            string="Complete Project"
                             states="ready_billing"
                             groups="project.group_project_admin,project.group_project_manager"/>
                     <!-- no use state invoiced and paid -->

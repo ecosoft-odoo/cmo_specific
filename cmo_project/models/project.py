@@ -363,7 +363,9 @@ class ProjectProject(models.Model):
                 project.is_paid = False
 
             if project.is_invoiced and project.is_paid:
-                project.state = 'close'
+                # Do nothing for now
+                print 'Project is invoiced and paid, but do not change state.'
+                # project.state = 'close'
             else:
                 if not project.state_before_inactive:
                     project.state = 'draft'
@@ -403,6 +405,11 @@ class ProjectProject(models.Model):
     @api.multi
     def action_back_to_open(self):
         res = self.write({'state': 'open'})
+        return res
+
+    @api.multi
+    def action_complete(self):
+        res = self.write({'state': 'close'})
         return res
 
     @api.multi
