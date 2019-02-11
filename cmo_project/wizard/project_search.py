@@ -191,17 +191,17 @@ class ProjectSearch(models.TransientModel):
             if self.obligation_id:
                 dom += [('obligation_id', '=', self.obligation_id.id)]
             if self.date_start and self.date_end:
-                where_date = "aaa.date_start between '%s' and '%s' \
+                where_date = "(aaa.date_start between '%s' and '%s' \
                     or pp.date between '%s' and '%s' \
                     or aaa.date_start <= '%s' and pp.date >= '%s' \
-                    or aaa.date_start >= '%s' and pp.date <= '%s'" % \
+                    or aaa.date_start >= '%s' and pp.date <= '%s')" % \
                     (self.date_start, self.date_end, self.date_start,
                      self.date_end, self.date_start, self.date_end,
                      self.date_start, self.date_end)
             elif self.date_start:
-                where_date = "pp.date >= '%s'" % (self.date_start)
+                where_date = "(pp.date >= '%s')" % (self.date_start)
             elif self.date_end:
-                where_date = "aaa.date_start <= '%s'" % (self.date_end)
+                where_date = "(aaa.date_start <= '%s')" % (self.date_end)
             Project = self.env['project.project']
             project_ids = Project.search(dom).ids
             if project_ids and where_date:
