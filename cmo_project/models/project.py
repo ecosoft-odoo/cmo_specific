@@ -501,11 +501,12 @@ class ProjectProject(models.Model):
     @api.multi
     def expense_relate_project_tree_view(self):
         self.ensure_one()
-        ctx = self._context.copy()
         ExpenseLine = self.env['hr.expense.line']
-        ex_lines = ExpenseLine.search([('analytic_account', '=',
-                                        self.analytic_account_id.id)])
-        expenses = ex_lines.mapped('expense_id')
+        Expense = self.env['hr.expense.expense']
+        ex_lines = ExpenseLine.sudo().search([('analytic_account', '=',
+                                               self.analytic_account_id.id)])
+        expense_ids = ex_lines.mapped('expense_id').ids
+        expenses = Expense.search([('id', 'in', expense_ids)])
         return {
             'name': _("Adavnces / Expenses"),
             'view_type': 'form',
@@ -513,16 +514,19 @@ class ProjectProject(models.Model):
             'res_model': 'hr.expense.expense',
             'type': 'ir.actions.act_window',
             'domain': [('id', 'in', expenses.ids)],
-            'context': ctx,
+            'context': self._context,
             'nodestroy': True,
         }
 
     @api.multi
     def _compute_expense_related_count(self):
         ExpenseLine = self.env['hr.expense.line']
+        Expense = self.env['hr.expense.expense']
         for project in self:
-            ex_lines = ExpenseLine.search([('analytic_account', '=',
-                                            project.analytic_account_id.id)])
+            ex_lines = ExpenseLine.sudo().search([
+                ('analytic_account', '=', project.analytic_account_id.id)])
+            expense_ids = ex_lines.mapped('expense_id').ids
+            expenses = Expense.search([('id', 'in', expense_ids)])
             expenses = ex_lines.mapped('expense_id')
             project.expense_related_count = len(expenses)
 
