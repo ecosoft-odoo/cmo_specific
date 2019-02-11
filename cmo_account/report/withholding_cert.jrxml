@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="withholding_cert" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
-	<property name="ireport.zoom" value="1.2100000000000188"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="555"/>
+	<property name="ireport.zoom" value="1.7715610000000293"/>
+	<property name="ireport.x" value="57"/>
+	<property name="ireport.y" value="1017"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA[System.getProperty("user.dir") + "/../../../pb2_generic/l10n_th_account/report/"]]></defaultValueExpression>
 	</parameter>
@@ -122,7 +122,7 @@
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{supplier_name}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField evaluationTime="Group" evaluationGroup="UniqueID">
 				<reportElement isPrintRepeatedValues="false" x="277" y="686" width="100" height="25"/>
 				<textElement lineSpacing="Single" markup="none">
 					<font size="12" pdfFontName="THSarabun.ttf"/>
@@ -137,13 +137,13 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{supplier_taxid}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="11" y="169" width="300" height="56"/>
+				<reportElement x="11" y="169" width="325" height="96"/>
 				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font fontName="Monospaced" size="14" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{supplier_address}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField evaluationTime="Group" evaluationGroup="UniqueID">
 				<reportElement isPrintRepeatedValues="false" x="64" y="688" width="100" height="25"/>
 				<textElement lineSpacing="Single" markup="none">
 					<font size="12" pdfFontName="THSarabun.ttf"/>
@@ -256,14 +256,14 @@
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{number}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField evaluationTime="Group" evaluationGroup="UniqueID">
 				<reportElement isPrintRepeatedValues="false" x="0" y="728" width="100" height="25"/>
 				<textElement lineSpacing="Single" markup="none">
 					<font size="12" pdfFontName="THSarabun.ttf"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{withholding}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField evaluationTime="Group" evaluationGroup="UniqueID">
 				<reportElement isPrintRepeatedValues="false" x="0" y="759" width="100" height="25"/>
 				<textElement lineSpacing="Single" markup="none">
 					<font size="12" pdfFontName="THSarabun.ttf"/>
@@ -315,7 +315,7 @@
 				</textElement>
 				<textFieldExpression class="java.util.Date"><![CDATA[(new SimpleDateFormat("yyyy-MM-dd")).parse($F{date_value})]]></textFieldExpression>
 			</textField>
-			<textField pattern="MMMMM" isBlankWhenNull="false">
+			<textField evaluationTime="Group" evaluationGroup="UniqueID" pattern="MMMMM" isBlankWhenNull="false">
 				<reportElement isPrintRepeatedValues="false" x="146" y="749" width="130" height="35"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom" lineSpacing="1_1_2">
 					<font fontName="Monospaced" size="14" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
@@ -347,28 +347,28 @@
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[(new Scriptlet()).getAmtInWords((new BigDecimal($F{total_tax} == null ? "0.00" : $F{total_tax}.toString())).setScale(2).toString(),"THB")]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd" isBlankWhenNull="false">
+			<textField evaluationTime="Group" evaluationGroup="UniqueID" pattern="dd" isBlankWhenNull="false">
 				<reportElement isPrintRepeatedValues="false" x="130" y="749" width="64" height="35"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom" lineSpacing="1_1_2">
 					<font fontName="Monospaced" size="14" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.util.Date"><![CDATA[new SimpleDateFormat("yyyy-MM-dd").parse($F{date_value})]]></textFieldExpression>
 			</textField>
-			<textField pattern="yyyy" isBlankWhenNull="false">
+			<textField evaluationTime="Group" evaluationGroup="UniqueID" pattern="yyyy" isBlankWhenNull="false">
 				<reportElement isPrintRepeatedValues="false" x="227" y="749" width="61" height="35"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom" lineSpacing="1_1_2">
 					<font fontName="Monospaced" size="14" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.util.Date"><![CDATA[new SimpleDateFormat("yyyy-MM-dd").parse($F{date_value})]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField evaluationTime="Group" evaluationGroup="UniqueID">
 				<reportElement isPrintRepeatedValues="false" x="128" y="668" width="100" height="25"/>
 				<textElement lineSpacing="Single" markup="none">
 					<font size="12" pdfFontName="THSarabun.ttf"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{pnd1}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField evaluationTime="Group" evaluationGroup="UniqueID">
 				<reportElement isPrintRepeatedValues="false" x="191" y="688" width="100" height="25"/>
 				<textElement lineSpacing="Single" markup="none">
 					<font size="12" pdfFontName="THSarabun.ttf"/>
