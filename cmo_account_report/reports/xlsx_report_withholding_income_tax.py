@@ -91,6 +91,12 @@ class XLSXReportWithholdingIncomeTax(models.TransientModel):
         default='cmo_account_report.xlsx_report_withholding_income_tax',
         required=True,
     )
+    additional_filing = fields.Boolean(
+        string='Additional Filing',
+        default=False,
+        help="If this cert is marked as additional filing, user will manuall "
+        "key in rpt_period",
+    )
     results = fields.Many2many(
         'withholding.income.tax.view',
         string='Results',
@@ -117,6 +123,9 @@ class XLSXReportWithholdingIncomeTax(models.TransientModel):
         where_str = self._domain_to_where_str(dom)
         if where_str:
             where_str = 'and ' + where_str
+        # Additional filing
+        where_str += ' and coalesce(additional_filing, false) is %s ' % \
+            (self.additional_filing and 'true' or 'false')
         group_by = 'group by c.id, rp.id, ct.id, av.number, hr.number \
             order by date_value,number'
         # self.results = Result.search(dom, order='date_value,number')
