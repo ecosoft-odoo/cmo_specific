@@ -249,6 +249,10 @@ class ProjectProject(models.Model):
         string='# of Purchase',
         compute='_compute_purchase_related_count',
     )
+    expense_related_count = fields.Integer(
+        string='# of Expense',
+        compute='_compute_expense_related_count',
+    )
     remaining_cost = fields.Float(
         string='Remaining Cost',
         compute='_compute_remaining_cost',
@@ -493,6 +497,34 @@ class ProjectProject(models.Model):
                 ('id', 'in', project.out_invoice_ids.ids)
             ])
             project.out_invoice_count = len(invoice_ids)
+
+    @api.multi
+    def expense_relate_project_tree_view(self):
+        self.ensure_one()
+        ctx = self._context.copy()
+        ExpenseLine = self.env['hr.expense.line']
+        ex_lines = ExpenseLine.search([('analytic_account', '=',
+                                        self.analytic_account_id.id)])
+        expenses = ex_lines.mapped('expense_id')
+        return {
+            'name': _("Adavnces / Expenses"),
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'res_model': 'hr.expense.expense',
+            'type': 'ir.actions.act_window',
+            'domain': [('id', 'in', expenses.ids)],
+            'context': ctx,
+            'nodestroy': True,
+        }
+
+    @api.multi
+    def _compute_expense_related_count(self):
+        ExpenseLine = self.env['hr.expense.line']
+        for project in self:
+            ex_lines = ExpenseLine.search([('analytic_account', '=',
+                                            project.analytic_account_id.id)])
+            expenses = ex_lines.mapped('expense_id')
+            project.expense_related_count = len(expenses)
 
     @api.multi
     @api.depends(
