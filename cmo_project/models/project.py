@@ -185,6 +185,7 @@ class ProjectProject(models.Model):
         default='draft',
         compute='_compute_is_invoiced_and_paid',
         store=True,
+        track_visibility='onchange',
     )
     state_before_inactive = fields.Char(
         string='Latest State',
