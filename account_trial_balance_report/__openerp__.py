@@ -14,6 +14,7 @@
     'installable': True,
     'depends': [
         'account',
+        'cmo_account',
     ],
     'data': [
         'security/ir.model.access.csv',

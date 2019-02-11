@@ -19,6 +19,7 @@
                         <group>
                             <field name="target_move"/>
                             <field name="with_movement"/>
+                            <field name="account_ids" widget="many2many_tags" invisible="1"/>
                             <field name="charge_type" invisible="1"/>
                         </group>
                     </group>

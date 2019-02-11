@@ -14,6 +14,16 @@ class AccountMoveLine(models.Model):
         readonly=True,
         help="Note: still preserve related field funciton (can't remove yet)"
     )
+    balance = fields.Float(
+        compute='_compute_balance',
+        store=True,
+    )
+
+    @api.multi
+    @api.depends('debit', 'credit')
+    def _compute_balance(self):
+        for rec in self:
+            rec.balance = rec.debit - rec.credit
 
     @api.multi
     @api.depends('move_id')

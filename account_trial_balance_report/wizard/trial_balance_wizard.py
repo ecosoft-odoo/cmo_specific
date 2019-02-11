@@ -51,6 +51,14 @@ class AccountTrialBalanceWizard(models.TransientModel):
          ('external', 'External')],
         string='Charge Type',
     )
+    account_ids = fields.Many2many(
+        'account.account',
+        string='Accounts',
+    )
+    bank_account_ids = fields.Many2many(
+        'res.partner.bank',
+        string='Bank Accounts',
+    )
 
     @api.onchange('fiscalyear_id', 'filter')
     def _onchange_fiscalyear_id(self):
@@ -71,12 +79,17 @@ class AccountTrialBalanceWizard(models.TransientModel):
     def run_report(self):
         self.ensure_one()
         TB = self.env['account.trial.balance.report']
+        # get accounts from bank accounts and accounts
+        account_ids = self.bank_account_ids.mapped('journal_id').\
+            mapped('default_debit_account_id').ids
+        account_ids += self.account_ids.ids
         report_id = TB.generate_report(self.fiscalyear_id.id,
                                        self.date_start,
                                        self.date_stop,
                                        self.target_move,
                                        self.with_movement,
-                                       self.charge_type)
+                                       self.charge_type,
+                                       account_ids)
         action = self.env.ref('account_trial_balance_report.'
                               'action_account_trial_balance_report')
         result = action.read()[0]
