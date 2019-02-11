@@ -274,7 +274,7 @@ class CostControlSheetReportXls(report_xls):
                     ('sale_layout_cat_id', '=', section_id.id),
                     ('order_id', '=', quote_id.id),
                     ('sale_layout_custom_group', '=', custom_groups),
-                ])
+                ], context=context)
                 if order_line_ids:
                     line_get.append(('section', section_id))
                 line_list = [('line', order_line_obj.browse(
