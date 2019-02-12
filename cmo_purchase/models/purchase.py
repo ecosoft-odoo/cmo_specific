@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api
+from openerp import models, fields, api, _
+from openerp.exceptions import ValidationError
 
 
 class PurchaseOrder(models.Model):
@@ -157,6 +158,16 @@ class PurchaseOrder(models.Model):
     def _get_domain_approve(self):
         operating_unit_id = self.env.user.default_operating_unit_id.id
         return [('user_id.default_operating_unit_id', '=', operating_unit_id)]
+
+    @api.multi
+    def action_cancel(self):
+        self.ensure_one()
+        for inv in self.invoice_ids:
+            if inv and inv.state not in ('cancel', 'draft'):
+                raise ValidationError(
+                    _('You must first cancel all invoices related \
+                        to this purchase order.'))
+        self.write({'state': 'cancel'})
 
 
 class PurchaseOrderLine(models.Model):
