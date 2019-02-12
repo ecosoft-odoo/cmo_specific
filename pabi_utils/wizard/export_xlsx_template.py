@@ -18,7 +18,7 @@ import cStringIO
 import time
 from datetime import date, datetime as dt
 from ast import literal_eval
-from openerp.tools import float_compare
+from openerp.tools.float_utils import float_compare
 from openerp import models, fields, api, _
 from openerp.exceptions import except_orm, ValidationError
 from openerp.tools.safe_eval import safe_eval
@@ -111,8 +111,8 @@ def fill_cell_format(field, field_format):
             'number': '#,##0.00',
             'date': 'dd/mm/yyyy',
             'datestamp': 'yyyy-mm-dd',
-            'percent': '0.00%',
             'text': '@',
+            'percent': '0.00%',
         },
     }
     formats = field_format.split(';')
@@ -132,7 +132,11 @@ def fill_cell_format(field, field_format):
             field.alignment = cell_format
         if key == 'number_format':
             if value == 'text':
-                field.value = str(field.value)
+                try:
+                    # In case value can't be encoded as utf, we do normal str()
+                    field.value = field.value.encode('utf-8')
+                except Exception:
+                    field.value = str(field.value)
             field.number_format = cell_format
 
 
@@ -434,7 +438,8 @@ class ExportXlsxTemplate(models.TransientModel):
                 # prepare worksheet data range, to be used in BI funtions
                 if all_rc:
                     begin_rc = min(all_rc)
-                    col, row = split_row_col(max(all_rc))
+                    col, row = split_row_col(
+                        max(sorted(all_rc, reverse=True), key=len))
                     end_rc = '%s%s' % (col, max_row)
                     worksheet_range[sheet_name] = '%s:%s' % (begin_rc, end_rc)
 
