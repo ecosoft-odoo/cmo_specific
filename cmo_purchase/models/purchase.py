@@ -163,7 +163,7 @@ class PurchaseOrder(models.Model):
     def action_cancel(self):
         self.ensure_one()
         for inv in self.invoice_ids:
-            if inv and inv.state not in ('cancel', 'draft'):
+            if inv and inv.state != 'cancel':
                 raise ValidationError(
                     _('You must first cancel all invoices related \
                         to this purchase order.'))
