@@ -139,14 +139,12 @@
                     <attribute name="invisible">1</attribute>
                 </xpath>
                 <xpath expr="//header/button[@name='action_cancel_draft']" position="attributes">
-                    <attribute name="states">cancel</attribute>
+                    <attribute name="states">cancel,confirmed</attribute>
                 </xpath>
 
                 <!-- Change attribute button header -->
-                <xpath expr="//header/button[@name='action_cancel']" position="replace">
-                    <button name="wkf_action_cancel" type="object"
-                            string="Cancel" states="confirmed,done"
-                    />
+                <xpath expr="//header/button[@name='action_cancel']" position="attributes">
+                    <attribute name="states">done</attribute>
                 </xpath>
                 <xpath expr="//header/field[@name='state']" position="attributes">
                     <attribute name="statusbar_visible">draft, approved</attribute>
