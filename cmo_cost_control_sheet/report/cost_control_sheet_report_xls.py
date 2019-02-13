@@ -105,7 +105,9 @@ class CostControlSheetReportXls(report_xls):
                 'quote': [1, 0, 'text', None],
                 'custom_group': [1, 0, 'text', None],
                 'section': [1, 0, 'text', None],
-                'order_line': [1, 0, 'number', _render("percent_margin")],
+                'order_line': [
+                    1, 0, 'number', _render("percent_margin"),
+                    None, self.an_cell_style_decimal],
             },
         }
 
@@ -181,7 +183,7 @@ class CostControlSheetReportXls(report_xls):
                 'row_span': 2,
             },
             {
-                'text': '% Margin',
+                'text': 'Amount',
                 'size': 20,
                 'col_span': 1,
                 'row_span': 1,
@@ -194,6 +196,12 @@ class CostControlSheetReportXls(report_xls):
             },
             {
                 'text': 'Note/Comments',
+                'size': 20,
+                'col_span': 1,
+                'row_span': 2,
+            },
+            {
+                'text': 'Amount Margin',
                 'size': 20,
                 'col_span': 1,
                 'row_span': 2,
@@ -251,6 +259,7 @@ class CostControlSheetReportXls(report_xls):
         context = self.context
         section_obj = self.pool.get('sale_layout.category')
         order_line_obj = self.pool.get('sale.order.line')
+        order_obj = self.pool.get('sale.order')
         line_and_parent = []
 
         def _line_order_get(custom_groups=None):
@@ -314,6 +323,8 @@ class CostControlSheetReportXls(report_xls):
 
         else:
             line_and_parent += _line_order_get()
+        order = order_obj.browse(cr, uid, quote_id.id)
+        line_and_parent += [('discount', order.amount_discount)]
         subtotal_quote = {
             'name': 'Total Quotation %s' % (quote_id.name),
         }
@@ -328,6 +339,7 @@ class CostControlSheetReportXls(report_xls):
             ['purchase_number', 1, 0, 'text', None],
             ['purchase_price', 1, 0, 'text', None],
             ['purchase_note', 1, 0, 'text', None],
+            ['amount_margin', 1, 0, 'text', None],
             ['gross_margin', 1, 0, 'text', None]
         ]
         return c_specs
@@ -345,7 +357,26 @@ class CostControlSheetReportXls(report_xls):
             ['number', 1, 0, 'text', number],
             ['price', 1, 0, price[0], price[1], price[2]],
             ['employee', 1, 0, 'text', employee],
-            ['space_4', 1, 0, 'text', None]
+            ['space_4', 1, 0, 'text', None],
+            ['space_5', 1, 0, 'text', None]
+        ]
+        return c_specs
+
+    def _get_invoice_specs(self, name=None, number=None,
+                           price=['number', None, None], customer=None):
+        """
+        Column specs of invoices
+        """
+        c_specs = [
+            ['name', 1, 0, 'text', name],
+            ['price', 1, 0, price[0], price[1], price[2]],
+            ['space_1', 1, 0, 'text', None],
+            ['space_2', 1, 0, 'text', None],
+            ['number', 1, 0, 'text', number],
+            ['space_3', 1, 0, 'text', None],
+            ['customer', 1, 0, 'text', customer],
+            ['space_4', 1, 0, 'text', None],
+            ['space_5', 1, 0, 'text', None]
         ]
         return c_specs
 
@@ -359,6 +390,7 @@ class CostControlSheetReportXls(report_xls):
         project_obj = self.pool['project.project']
         purchase_order_line_obj = self.pool.get('purchase.order.line')
         expense_line_obj = self.pool.get('hr.expense.line')
+        invoice_line_obj = self.pool.get('account.invoice.line')
         project_id = project_obj.browse(
             cr, uid, data['project_id'], context=context)
 
@@ -386,7 +418,7 @@ class CostControlSheetReportXls(report_xls):
             'Cost Control Sheet',
         ]
         for title in titles:
-            row_pos = self._report_title(ws, _p, row_pos, _xs, title, merge=8)
+            row_pos = self._report_title(ws, _p, row_pos, _xs, title, merge=9)
 
         project_info = [
             'BU No. ' + project_id.operating_unit_id.name,
@@ -397,7 +429,7 @@ class CostControlSheetReportXls(report_xls):
             'Place: ' + (project_id.project_place or ''),
         ]
         for info in project_info:
-            row_pos = self._report_header(ws, _p, row_pos, _xs, info, merge=8)
+            row_pos = self._report_header(ws, _p, row_pos, _xs, info, merge=9)
 
         row_pos = self._report_column_header(ws, _p, row_pos, _xs)
         ws.set_horz_split_pos(row_pos)
@@ -492,6 +524,11 @@ class CostControlSheetReportXls(report_xls):
                 for purchase_order, price_subtotal in dict(res).iteritems():
                     if i:
                         row_pos += 1
+                    amount_margin = 'B%s - F%s' % \
+                        (str(line_row_pos), str(row_pos))
+                    gross_margin = '((B%s - F%s) / B%s) * 100' % \
+                        (str(line_row_pos), str(row_pos),
+                         str(line_row_pos))
                     ws.write(
                         row_pos - 1, 4, purchase_order.name,
                         style=self.an_cell_style)
@@ -501,29 +538,76 @@ class CostControlSheetReportXls(report_xls):
                     ws.write(
                         row_pos - 1, 6, purchase_order.partner_id.name,
                         style=self.an_cell_style)
-                    # Gross margin
-                    gross_margin = '((B%s - F%s) / B%s) * 100' % \
-                        (str(line_row_pos), str(row_pos),
-                         str(line_row_pos))
-                    ws.write(row_pos - 1, 7, xlwt.Formula(gross_margin),
+                    ws.write(
+                        row_pos - 1, 7, xlwt.Formula(amount_margin),
+                        style=self.an_cell_style_decimal)
+                    ws.write(row_pos - 1, 8, xlwt.Formula(gross_margin),
                              style=self.an_cell_style_decimal)
                     i += 1
 
-                # Gross margin
                 if not i:
+                    amount_margin = 'B%s - F%s' % \
+                        (str(row_pos), str(row_pos))
                     gross_margin = '((B%s - F%s) / B%s) * 100' % \
                         (str(row_pos), str(row_pos), str(row_pos))
-                    ws.write(row_pos - 1, 7, xlwt.Formula(gross_margin),
+                    ws.write(row_pos - 1, 7, xlwt.Formula(amount_margin),
                              style=self.an_cell_style_decimal)
+                    ws.write(row_pos - 1, 8, xlwt.Formula(gross_margin),
+                             style=self.an_cell_style_decimal)
+            elif entry[0] == 'discount':
+                c_specs = [
+                    ('name', 1, 0, 'text', 'Discount Rate')
+                ]
+                c_specs += [('space_%s' % (i + 1), 1, 0, 'text', None)
+                            for i in range(8)]
+                row_data = self.xls_row_template(
+                    c_specs, [x[0] for x in c_specs])
+                row_pos = self.xls_write_row(
+                    ws, row_pos, row_data,
+                    row_style=self.rt_cell_style_decimal)
+                c_specs = [
+                    ('name', 1, 0, 'text', 'Discount'),
+                    ('price_in_contract', 1, 0, 'number', data_obj, None,
+                     self.an_cell_style_decimal),
+                    ('estimate_cost', 1, 0, 'number', None, None,
+                     self.an_cell_style_decimal),
+                    ('percent_margin', 1, 0, 'number', None, None,
+                     self.an_cell_style_decimal),
+                ]
+                c_specs += [('space_%s' % (i + 1), 1, 0, 'text', None)
+                            for i in range(5)]
+                row_data = self.xls_row_template(
+                    c_specs, [x[0] for x in c_specs])
+                row_pos = self.xls_write_row(
+                    ws, row_pos, row_data,
+                    row_style=self.an_cell_style)
+                c_specs = [
+                    ('name', 1, 0, 'text', 'Total Discount Rate'),
+                    ('price_in_contract', 1, 0, 'number', None,
+                     'B%s' % (str(row_pos))),
+                    ('estimate_cost', 1, 0, 'number', None,
+                     'C%s' % (str(row_pos))),
+                    ('percent_margin', 1, 0, 'number', None,
+                     'D%s' % (str(row_pos))),
+                ]
+                c_specs += [('space_%s' % (i + 1), 1, 0, 'text', None)
+                            for i in range(5)]
+                row_data = self.xls_row_template(
+                    c_specs, [x[0] for x in c_specs])
+                row_pos = self.xls_write_row(
+                    ws, row_pos, row_data,
+                    row_style=self.rt_cell_style_decimal)
             elif entry[0] == 'subtotal_section':
                 sum_section_price = 'SUM(B%s:B%s)' % \
                     (str(section_pos + 1), row_pos)
                 sum_section_estimate = 'SUM(C%s:C%s)' % \
                     (str(section_pos + 1), row_pos)
-                sum_section_margin = '(B%s - C%s) * 100.0 / B%s' % \
-                    (str(row_pos + 1), str(row_pos + 1), str(row_pos + 1))
+                sum_section_margin = 'B%s - C%s' % \
+                    (str(row_pos + 1), str(row_pos + 1))
                 sum_section_po_price = 'SUM(F%s:F%s)' % \
                     (str(section_pos + 1), row_pos)
+                sum_section_amount_margin = 'B%s - F%s' % \
+                    (str(row_pos + 1), str(row_pos + 1))
                 sum_section_gross_margin = '((B%s - F%s) / B%s) * 100' % \
                     (str(row_pos + 1), str(row_pos + 1), str(row_pos + 1))
                 c_specs = [
@@ -538,6 +622,8 @@ class CostControlSheetReportXls(report_xls):
                     ('purchase_price', 1, 0, 'number', None,
                      sum_section_po_price),
                     ('purchase_note', 1, 0, 'text', None),
+                    ('amount_margin', 1, 0, 'number', None,
+                     sum_section_amount_margin),
                     ('gross_margin', 1, 0, 'number', None,
                      sum_section_gross_margin),
                 ]
@@ -558,11 +644,13 @@ class CostControlSheetReportXls(report_xls):
                 sum_custom_group_estimate = \
                     custom_group_estimate and '+'.join(custom_group_estimate) \
                     or None
-                sum_custom_group_margin = '(B%s - C%s) * 100.0 / B%s' % \
-                    (str(row_pos + 1), str(row_pos + 1), str(row_pos + 1))
+                sum_custom_group_margin = 'B%s - C%s' % \
+                    (str(row_pos + 1), str(row_pos + 1))
                 sum_custom_group_po_price = \
                     custom_group_po_price and '+'.join(custom_group_po_price) \
                     or None
+                sum_custom_group_amount_margin = 'B%s - F%s' % \
+                    (str(row_pos + 1), str(row_pos + 1))
                 sum_custom_group_gross_margin = '((B%s - F%s) / B%s) * 100' % \
                     (str(row_pos + 1), str(row_pos + 1), str(row_pos + 1))
                 c_specs = [
@@ -577,6 +665,8 @@ class CostControlSheetReportXls(report_xls):
                     ('purchase_price', 1, 0, 'number', None,
                      sum_custom_group_po_price),
                     ('purchase_note', 1, 0, 'text', None),
+                    ('amount_margin', 1, 0, 'number', None,
+                     sum_custom_group_amount_margin),
                     ('gross_margin', 1, 0, 'number', None,
                      sum_custom_group_gross_margin),
                 ]
@@ -590,16 +680,19 @@ class CostControlSheetReportXls(report_xls):
                 quote_po_price.append('F%s' % (str(row_pos)))
             elif entry[0] == 'subtotal_quote':
                 sum_quote_price = \
-                    quote_price and '+'.join(quote_price) or \
-                    '+'.join(quote_price_2) or None
+                    (quote_price and '+'.join(quote_price) or
+                     '+'.join(quote_price_2) or '') + \
+                    '-' + 'B%s' % (str(row_pos))
                 sum_quote_estimate = \
                     quote_estimate and '+'.join(quote_estimate) or \
                     '+'.join(quote_estimate_2) or None
-                sum_quote_margin = '(B%s - C%s) * 100.0 / B%s' % \
-                    (str(row_pos + 1), str(row_pos + 1), str(row_pos + 1))
+                sum_quote_margin = 'B%s - C%s' % \
+                    (str(row_pos + 1), str(row_pos + 1))
                 sum_quote_po_price = \
                     quote_po_price and '+'.join(quote_po_price) or \
                     '+'.join(quote_po_price_2) or None
+                sum_quote_amount_margin = 'B%s - F%s' % \
+                    (str(row_pos + 1), str(row_pos + 1))
                 sum_quote_gross_margin = '((B%s - F%s) / B%s) * 100' % \
                     (str(row_pos + 1), str(row_pos + 1), str(row_pos + 1))
                 c_specs = [
@@ -613,6 +706,8 @@ class CostControlSheetReportXls(report_xls):
                     ('purchase_price', 1, 0, 'number', None,
                      sum_quote_po_price),
                     ('purchase_note', 1, 0, 'text', None),
+                    ('amount_margin', 1, 0, 'number', None,
+                     sum_quote_amount_margin),
                     ('gross_margin', 1, 0, 'number', None,
                      sum_quote_gross_margin),
                 ]
@@ -628,9 +723,9 @@ class CostControlSheetReportXls(report_xls):
         # totals
         sum_price = total_price and '+'.join(total_price) or '0'
         sum_estimate = total_estimate and '+'.join(total_estimate) or '0'
-        sum_margin = '(B%s - C%s) * 100.0 / B%s' % (
-            str(row_pos + 1), str(row_pos + 1), str(row_pos + 1))
+        sum_margin = 'B%s - C%s' % (str(row_pos + 1), str(row_pos + 1))
         sum_po_price = total_po_price and '+'.join(total_po_price) or '0'
+        sum_amount_margin = 'B%s - F%s' % (str(row_pos + 1), str(row_pos + 1))
         sum_gross_margin = '((B%s - F%s) / B%s) * 100' % \
             (str(row_pos + 1), str(row_pos + 1), str(row_pos + 1))
 
@@ -645,7 +740,9 @@ class CostControlSheetReportXls(report_xls):
         ws.write(row_pos, 5, xlwt.Formula(sum_po_price),
                  style=self.av_cell_style_decimal)
         ws.write(row_pos, 6, '', style=self.av_cell_style_decimal)
-        ws.write(row_pos, 7, xlwt.Formula(sum_gross_margin),
+        ws.write(row_pos, 7, xlwt.Formula(sum_amount_margin),
+                 style=self.av_cell_style_decimal)
+        ws.write(row_pos, 8, xlwt.Formula(sum_gross_margin),
                  style=self.av_cell_style_decimal)
 
         # Expense
@@ -733,7 +830,7 @@ class CostControlSheetReportXls(report_xls):
         sum_petty_cash_price = None
         if lines:
             sum_petty_cash_price = 'SUM(F%s:F%s)' % \
-                (str(petty_cash_pos + 1), row_pos)
+                (str(petty_cash_pos + 1), str(row_pos))
         c_specs = self._get_expense_specs(
             name='Total Petty Cash',
             price=['number', None, sum_petty_cash_price])
@@ -768,7 +865,7 @@ class CostControlSheetReportXls(report_xls):
         sum_other_expense_price = None
         if lines:
             sum_other_expense_price = 'SUM(F%s:F%s)' % \
-                (str(other_expense_pos + 1), row_pos)
+                (str(other_expense_pos + 1), str(row_pos))
         c_specs = self._get_expense_specs(
             name='Total Other Expense',
             price=['number', None, sum_other_expense_price])
@@ -783,6 +880,54 @@ class CostControlSheetReportXls(report_xls):
         c_specs = self._get_expense_specs(
             name='Total Expense and Advance Cost',
             price=['number', None, sum_expense_price])
+        row_data = self.xls_row_template(
+            c_specs, [x[0] for x in c_specs])
+        row_pos = self.xls_write_row(
+            ws, row_pos, row_data,
+            row_style=cell_style)
+
+        # Direct invoice
+        row_pos += 1
+        invoice_line_ids = invoice_line_obj.search(
+            cr, uid,
+            [('account_analytic_id', '=', project_id.analytic_account_id.id),
+             ('invoice_id.type', 'in', ('out_invoice', 'out_refund')),
+             ('invoice_id.state', 'in', ('open', 'paid')),
+             ('invoice_id.quote_ref_id', '=', False)])
+        invoice_lines = invoice_line_obj.browse(cr, uid, invoice_line_ids)
+        cell_style = xlwt.easyxf(
+            'pattern: pattern solid, fore_color gray25;' + _xs['bold'] +
+            _xs['borders_all'] + _xs['right'],
+            num_format_str=report_xls.decimal_format)
+        # Header
+        c_specs = self._get_invoice_specs(
+            name='Other Income / Revenue', number='Invoice No.',
+            price=['text', 'Price', None], customer='Customer')
+        row_data = self.xls_row_template(
+            c_specs, [x[0] for x in c_specs])
+        row_pos = self.xls_write_row(
+            ws, row_pos, row_data,
+            row_style=cell_style)
+        invoice_pos = row_pos
+        # Detail
+        for line in invoice_lines:
+            c_specs = self._get_invoice_specs(
+                name=line.name, number=line.invoice_id.number,
+                price=['number', line.quantity * line.price_unit, None],
+                customer=line.invoice_id.partner_id.display_name)
+            row_data = self.xls_row_template(
+                c_specs, [x[0] for x in c_specs])
+            row_pos = self.xls_write_row(
+                ws, row_pos, row_data,
+                row_style=self.an_cell_style_decimal)
+        # Total
+        sum_invoice_price = None
+        if invoice_lines:
+            sum_invoice_price = 'SUM(B%s: B%s)' % \
+                (str(invoice_pos + 1), str(row_pos))
+        c_specs = self._get_invoice_specs(
+            name='Total Other Income / Revenue',
+            price=['number', None, sum_invoice_price])
         row_data = self.xls_row_template(
             c_specs, [x[0] for x in c_specs])
         row_pos = self.xls_write_row(
