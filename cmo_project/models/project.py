@@ -363,7 +363,7 @@ class ProjectProject(models.Model):
                 project.is_paid = False
 
             if project.is_invoiced and project.is_paid:
-                project.state = project.state
+                project.state = 'close'
             else:
                 if not project.state_before_inactive:
                     project.state = 'draft'
