@@ -241,6 +241,10 @@ class CostControlSheetReportXls(report_xls):
             ws.col(data['col_pos']).width = data['size'] * 256
         return row_pos + row_merge + 1
 
+    def _extra_sql_where(self):
+        where = "AND (price_unit != 0 OR purchase_price != 0)"
+        return where
+
     def _ordering_order_line(self, ws, _p, row_pos, quote_id):
         cr = self.cr
         uid = self.uid
@@ -255,26 +259,29 @@ class CostControlSheetReportXls(report_xls):
                 cr.execute(
                     "SELECT sale_layout_cat_id, COUNT(id) "
                     "FROM sale_order_line "
-                    "WHERE order_id = %s AND order_lines_group = 'before' "
+                    "WHERE order_id = %s AND order_lines_group = 'before' %s"
                     "GROUP BY sale_layout_cat_id "
                     "ORDER BY sale_layout_cat_id ASC"
-                    % (quote_id.id))
+                    % (quote_id.id, self._extra_sql_where()))
             else:
                 cr.execute(
                     "SELECT sale_layout_cat_id, COUNT(id) "
                     "FROM sale_order_line "
-                    "WHERE order_id = %s GROUP BY sale_layout_cat_id "
+                    "WHERE order_id = %s %s GROUP BY sale_layout_cat_id "
                     "ORDER BY sale_layout_cat_id ASC"
-                    % (quote_id.id))
+                    % (quote_id.id, self._extra_sql_where()))
             section_ids = [x[0] for x in cr.fetchall()]
             for section_id in section_ids:
                 section_id = section_obj.browse(
                     cr, uid, section_id, context=context)
-                order_line_ids = order_line_obj.search(cr, uid, [
-                    ('sale_layout_cat_id', '=', section_id.id),
-                    ('order_id', '=', quote_id.id),
-                    ('sale_layout_custom_group', '=', custom_groups),
-                ], context=context)
+                order_line_ids = order_line_obj.browse(
+                    cr, uid, order_line_obj.search(cr, uid, [
+                        ('sale_layout_cat_id', '=', section_id.id),
+                        ('order_id', '=', quote_id.id),
+                        ('sale_layout_custom_group', '=', custom_groups),
+                    ], context=context)).filtered(
+                        lambda l: l.price_unit != 0 or
+                        l.purchase_price != 0).ids
                 if order_line_ids:
                     line_get.append(('section', section_id))
                 line_list = [('line', order_line_obj.browse(
@@ -291,9 +298,9 @@ class CostControlSheetReportXls(report_xls):
         line_and_parent.append(quote_data)
         cr.execute(
             "SELECT sale_layout_custom_group, COUNT(id)  FROM sale_order_line "
-            "WHERE order_id = %s GROUP BY sale_layout_custom_group "
+            "WHERE order_id = %s %s GROUP BY sale_layout_custom_group "
             "ORDER BY sale_layout_custom_group ASC"
-            % (quote_id.id))
+            % (quote_id.id, self._extra_sql_where()))
         custom_groups = [x[0] for x in cr.fetchall()]
         if len(custom_groups) > 1:
             for custom_group in custom_groups:
