@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_hr_expense" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
-	<property name="ireport.zoom" value="1.9487171000000143"/>
-	<property name="ireport.x" value="432"/>
-	<property name="ireport.y" value="1998"/>
+	<property name="ireport.zoom" value="2.1435888100000176"/>
+	<property name="ireport.x" value="335"/>
+	<property name="ireport.y" value="51"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -61,6 +61,9 @@
 	</field>
 	<field name="id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[name]]></fieldDescription>
 	</field>
 	<variable name="sum_total_amount" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{total_amount}]]></variableExpression>
@@ -149,7 +152,7 @@ $F{approve_date}.getMinutes()]]></variableExpression>
 		</band>
 	</background>
 	<pageHeader>
-		<band height="104">
+		<band height="124">
 			<staticText>
 				<reportElement mode="Opaque" x="0" y="40" width="176" height="20"/>
 				<box leftPadding="0"/>
@@ -311,6 +314,15 @@ $F{approve_date}.getMinutes()]]></variableExpression>
 					<font size="8" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{create_date}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="186" y="102" width="267" height="20">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
