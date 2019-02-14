@@ -34,11 +34,16 @@ class AccountMove(models.Model):
 
     @api.multi
     def button_validate(self):
+        res = super(AccountMove, self).button_validate()
+        aml_obj = self.env['account.move.line']
         for rec in self:
             if self.env['account.fiscalyear'].find(rec.date) != \
                     rec.period_id.fiscalyear_id.id:
                 raise ValidationError(_('Date and period mismatch!'))
-        return super(AccountMove, self).button_validate()
+            aml_id = aml_obj.search([('move_id', '=', rec.id),
+                                     ('asset_id', '!=', False)])
+            aml_id.asset_id.code = aml_id.move_id.name
+        return res
 
 
 class AccountMoveLine(models.Model):
