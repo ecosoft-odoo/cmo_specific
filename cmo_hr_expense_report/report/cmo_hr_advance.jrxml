@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_hr_expense" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
-	<property name="ireport.zoom" value="1.6105100000000079"/>
+	<property name="ireport.zoom" value="1.948717100000011"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="564"/>
+	<property name="ireport.y" value="260"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -91,6 +91,9 @@
 	</field>
 	<field name="id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[name]]></fieldDescription>
 	</field>
 	<variable name="sum_amount_untaxed" class="java.lang.Number" resetType="Column" calculation="Sum">
 		<variableExpression><![CDATA[$F{amount_line_untaxed}]]></variableExpression>
@@ -347,7 +350,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="23" splitType="Stretch">
+		<band height="45" splitType="Stretch">
 			<staticText>
 				<reportElement x="343" y="0" width="112" height="20"/>
 				<box>
@@ -400,12 +403,20 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				</textElement>
 				<text><![CDATA[วันที่]]></text>
 			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="80" y="24" width="262" height="20" isPrintWhenDetailOverflows="true"/>
+				<box topPadding="4" leftPadding="2"/>
+				<textElement verticalAlignment="Top">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20" splitType="Stretch">
+		<band height="30" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="80" y="0" width="262" height="20" isPrintWhenDetailOverflows="true"/>
+				<reportElement x="80" y="9" width="262" height="20" isPrintWhenDetailOverflows="true"/>
 				<box topPadding="4" leftPadding="2"/>
 				<textElement verticalAlignment="Top">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
@@ -413,7 +424,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{line_ids_name} + " " + $F{line_ids_ref}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;#,##0.00-" isBlankWhenNull="false">
-				<reportElement x="455" y="0" width="100" height="20" isPrintWhenDetailOverflows="true"/>
+				<reportElement x="455" y="9" width="100" height="20" isPrintWhenDetailOverflows="true"/>
 				<box topPadding="4" rightPadding="2"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
@@ -421,7 +432,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{amount_line_untaxed}==null?0:$F{amount_line_untaxed}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="355" y="0" width="99" height="20" isPrintWhenDetailOverflows="true">
+				<reportElement x="355" y="9" width="99" height="20" isPrintWhenDetailOverflows="true">
 					<printWhenExpression><![CDATA[$F{analytic_account_name}]]></printWhenExpression>
 				</reportElement>
 				<box topPadding="4" leftPadding="2"/>
@@ -431,7 +442,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				<textFieldExpression class="java.lang.String"><![CDATA["[" + $F{analytic_account_code} + "] " + $F{analytic_account_name}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="5" y="0" width="70" height="20"/>
+				<reportElement x="5" y="9" width="70" height="20"/>
 				<box leftPadding="2"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
