@@ -42,7 +42,8 @@ class AccountMove(models.Model):
                 raise ValidationError(_('Date and period mismatch!'))
             aml_id = aml_obj.search([('move_id', '=', rec.id),
                                      ('asset_id', '!=', False)])
-            aml_id.asset_id.code = aml_id.move_id.name
+            if aml_id:
+                aml_id.asset_id.code = aml_id.move_id.name
         return res
 
 

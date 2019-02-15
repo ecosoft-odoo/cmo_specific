@@ -36,7 +36,7 @@
                                 'B10': 'invoice_date${value or ""}#{number_format=date}',
                                 'C10': 'invoice_number${value or ""}#{number_format=text}',
                                 'D10': 'partner_id${value and " ".join(list(filter(lambda l: l != False, [value.title.name, value.name]))) or ""}',
-                                'E10': 'partner_id.vat${value or ""}',
+                                'E10': 'partner_id.vat${value or ""}#{number_format=text}',
                                 'F10': 'partner_id.taxbranch${value and (value == "00000" and value) or ""}',
                                 'G10': 'partner_id.taxbranch${value and (value != "00000" and value) or ""}',
                                 'H10': 'base${value or 0}#{number_format=number}',
