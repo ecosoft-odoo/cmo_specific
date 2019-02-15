@@ -166,7 +166,7 @@ class CostControlSheetReportXls(report_xls):
         parent_titles = [
             {
                 'text': 'Description',
-                'size': 40,
+                'size': 60,
                 'col_span': 1,
                 'row_span': 2,
             },
@@ -728,8 +728,12 @@ class CostControlSheetReportXls(report_xls):
         sum_amount_margin = 'B%s - F%s' % (str(row_pos + 1), str(row_pos + 1))
         sum_gross_margin = '((B%s - F%s) / B%s) * 100' % \
             (str(row_pos + 1), str(row_pos + 1), str(row_pos + 1))
+        grand_total_price = 'B%s' % (str(row_pos + 1))
+        grand_total_estimate = 'C%s' % (str(row_pos + 1))
+        grand_total_po_price = 'F%s' % (str(row_pos + 1))
 
-        ws.write(row_pos, 0, 'Totals', style=self.av_cell_style_decimal)
+        ws.write(row_pos, 0, 'Total All Quotation and Total All P/O',
+                 style=self.av_cell_style_decimal)
         ws.write(row_pos, 1, xlwt.Formula(sum_price),
                  style=self.av_cell_style_decimal)
         ws.write(row_pos, 2, xlwt.Formula(sum_estimate),
@@ -746,7 +750,6 @@ class CostControlSheetReportXls(report_xls):
                  style=self.av_cell_style_decimal)
 
         # Expense
-        row_pos += 2
         expense_line_ids = expense_line_obj.search(
             cr, uid,
             [('analytic_account', '=', project_id.analytic_account_id.id)])
@@ -767,7 +770,7 @@ class CostControlSheetReportXls(report_xls):
         row_data = self.xls_row_template(
             c_specs, [x[0] for x in c_specs])
         row_pos = self.xls_write_row(
-            ws, row_pos, row_data,
+            ws, row_pos + 2, row_data,
             row_style=cell_style)
         # Traveling expense
         c_specs = self._get_expense_specs(
@@ -885,9 +888,9 @@ class CostControlSheetReportXls(report_xls):
         row_pos = self.xls_write_row(
             ws, row_pos, row_data,
             row_style=cell_style)
+        grand_total_po_price += ' + F%s' % (str(row_pos))
 
         # Direct invoice
-        row_pos += 1
         invoice_line_ids = invoice_line_obj.search(
             cr, uid,
             [('account_analytic_id', '=', project_id.analytic_account_id.id),
@@ -906,7 +909,7 @@ class CostControlSheetReportXls(report_xls):
         row_data = self.xls_row_template(
             c_specs, [x[0] for x in c_specs])
         row_pos = self.xls_write_row(
-            ws, row_pos, row_data,
+            ws, row_pos + 1, row_data,
             row_style=cell_style)
         invoice_pos = row_pos
         # Detail
@@ -933,7 +936,35 @@ class CostControlSheetReportXls(report_xls):
         row_pos = self.xls_write_row(
             ws, row_pos, row_data,
             row_style=cell_style)
+        grand_total_price += ' + B%s' % (str(row_pos))
 
+        # Grand total
+        grand_total_percent_margin = 'B%s - C%s' % \
+            (str(row_pos + 2), str(row_pos + 2))
+        grand_total_amount_margin = 'B%s - F%s' % \
+            (str(row_pos + 2), str(row_pos + 2))
+        grand_total_gross_margin = '((B%s - F%s) / B%s) * 100' % \
+            (str(row_pos + 2), str(row_pos + 2), str(row_pos + 2))
+        c_specs = [
+            ('name', 1, 0, 'text',
+             'Grand Total (Quotation, Direct Invoice, PO and Expenses)'),
+            ('price_in_contract', 1, 0, 'number', None, grand_total_price),
+            ('estimate_cost', 1, 0, 'number', None, grand_total_estimate),
+            ('percent_margin', 1, 0, 'number', None,
+             grand_total_percent_margin),
+            ('purchase_number', 1, 0, 'text', None),
+            ('purchase_price', 1, 0, 'number', None, grand_total_po_price),
+            ('purchase_note', 1, 0, 'text', None),
+            ('amount_margin', 1, 0, 'number', None, grand_total_amount_margin),
+            ('gross_margin', 1, 0, 'number', None, grand_total_gross_margin),
+        ]
+        row_data = self.xls_row_template(
+            c_specs, [x[0] for x in c_specs])
+        row_pos = self.xls_write_row(
+            ws, row_pos + 1, row_data,
+            row_style=self.av_cell_style_decimal)
+
+        # --
         if project_id.adjustment_ids:
             row_pos += 2
             adjustment_obj = self.pool.get('project.adjustment')
