@@ -164,6 +164,11 @@
                     <field name="sale_layout_cat_id"/>
                     <!-- <field name="section_code"/> -->
                 </xpath>
+                <xpath expr="//field[@name='order_line']/tree[@string='Sales Order Lines']/field[@name='price_unit']" position="after">
+                    <field name="sale_order_line_margin"/>
+                    <field name="so_line_percent_margin"/>
+                </xpath>
+
             </field>
         </record>
         <record id="view_order_form_sale_stock" model="ir.ui.view">
