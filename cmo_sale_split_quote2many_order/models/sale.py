@@ -173,6 +173,15 @@ class sale_order(models.Model):
         return result
 
     @api.multi
+    def action_cancel(self):
+        for rec in self:
+            if rec.order_id and rec.order_id.state != 'cancel':
+                raise Warning(_("Cannot cancel this quotation!"),
+                              _("please cancel sale order number %s.") %
+                              rec.order_id.name)
+        return super(sale_order, self).action_cancel()
+
+    @api.multi
     def action_cancel_draft_sale_orders(self):
         self.ensure_one()
         sale_order_ids = self.env['sale.order'].search([
