@@ -626,7 +626,7 @@ $F{approve_date}.getMinutes()]]></variableExpression>
 				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{line_ids_name}+" "+$F{line_ids_ref}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{line_ids_name}+" : "+$F{line_ids_ref}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
 				<reportElement x="439" y="5" width="116" height="20"/>

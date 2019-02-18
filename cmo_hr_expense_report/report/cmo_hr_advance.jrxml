@@ -421,7 +421,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				<textElement verticalAlignment="Top">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{line_ids_name} + " " + $F{line_ids_ref}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{line_ids_name} + " : " + $F{line_ids_ref}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;#,##0.00-" isBlankWhenNull="false">
 				<reportElement x="455" y="9" width="100" height="20" isPrintWhenDetailOverflows="true"/>
