@@ -86,9 +86,9 @@
                   <field name="journal_id"/>
                   <field name="from_account_id" string="From Account"/>
                   <field name="to_account_id" string="To Account"/>
-                  <field name="state"/>
                   <field name="amount_transfer"/>
                   <field name="amount_fee"/>
+                  <field name="state"/>
               </tree>
           </field>
       </record>
