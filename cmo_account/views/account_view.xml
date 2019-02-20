@@ -139,6 +139,9 @@
         <field name="doc_type" position="after">
           <field name="tax_id" string="Tax Type" required="1"/>
         </field>
+        <xpath expr="//field[@name='tax_detail_ids']/tree/field[@name='addition']" position="after">
+            <field name="cancel"/>
+        </xpath>
       </field>
     </record>
 
