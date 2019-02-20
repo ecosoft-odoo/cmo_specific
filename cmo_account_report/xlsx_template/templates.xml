@@ -132,8 +132,8 @@
                                 'L6': 'ref${value or ""}',
                             },
                             '_TAIL_0': {
-                                'H6': '@{sum}#{font=bold;number_format=number}',
                                 'I6': '@{sum}#{font=bold;number_format=number}',
+                                'J6': '@{sum}#{font=bold;number_format=number}',
                             }
                         }
                     }
