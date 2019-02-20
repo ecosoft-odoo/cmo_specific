@@ -119,7 +119,7 @@
 		<groupHeader>
 			<band height="21">
 				<textField isBlankWhenNull="true">
-					<reportElement isPrintRepeatedValues="false" x="10" y="0" width="543" height="20" isRemoveLineWhenBlank="true"/>
+					<reportElement isPrintRepeatedValues="false" x="10" y="0" width="543" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
 					<textElement verticalAlignment="Middle">
 						<font fontName="SansSerif" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 					</textElement>

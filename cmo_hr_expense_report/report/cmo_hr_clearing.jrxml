@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_hr_clearing" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
-	<property name="ireport.zoom" value="1.3310000000000035"/>
-	<property name="ireport.x" value="119"/>
-	<property name="ireport.y" value="452"/>
+	<property name="ireport.zoom" value="1.3310000000000048"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="32"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -94,6 +94,9 @@
 	</field>
 	<field name="total_amount_advance" class="java.lang.Number">
 		<fieldDescription><![CDATA[advance_expense_id/amount]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[name]]></fieldDescription>
 	</field>
 	<variable name="sum_amount_untaxed" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{amount_line_untaxed}]]></variableExpression>
@@ -378,7 +381,7 @@ $F{approve_date}.getMinutes()]]></variableExpression>
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="173" splitType="Stretch">
+		<band height="193" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
 				<reportElement x="56" y="97" width="145" height="20"/>
 				<box leftPadding="2">
@@ -603,20 +606,30 @@ $F{approve_date}.getMinutes()]]></variableExpression>
 					<textFieldExpression class="java.lang.String"><![CDATA["[" + $F{analytic_account_code} + "] " + $F{analytic_account_name}]]></textFieldExpression>
 				</textField>
 			</frame>
-		</band>
-	</columnHeader>
-	<detail>
-		<band height="20" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement mode="Transparent" x="45" y="0" width="394" height="20"/>
+				<reportElement mode="Transparent" x="45" y="170" width="394" height="20">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{line_ids_name}+" "+$F{line_ids_ref}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement mode="Transparent" x="45" y="5" width="394" height="20"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Top" lineSpacing="Single">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{line_ids_name}+" : "+$F{line_ids_ref}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
-				<reportElement x="439" y="0" width="116" height="20"/>
+				<reportElement x="439" y="5" width="116" height="20"/>
 				<box rightPadding="2"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Single">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
@@ -624,7 +637,7 @@ $F{approve_date}.getMinutes()]]></variableExpression>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{total_amount}==null?0:$F{total_amount}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="0" width="45" height="20"/>
+				<reportElement x="0" y="5" width="45" height="20"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
