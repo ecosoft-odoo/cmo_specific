@@ -10,8 +10,9 @@ class AccountVoucher(models.Model):
         res = super(AccountVoucher, self).proforma_voucher()
         # Update to use same OU
         for rec in self:
-            ou = rec.line_ids.mapped('invoice_id').mapped('operating_unit_id')
-            if len(ou) == 1:
+            invoices = rec.line_ids.mapped('invoice_id')
+            ou = invoices.mapped('operating_unit_id')
+            if len(invoices) == len(ou) == 1:
                 rec.move_id.line_id.write({'operating_unit_id': ou.id})
             else:
                 # Case no 1 OU found, try to get it again from move line
