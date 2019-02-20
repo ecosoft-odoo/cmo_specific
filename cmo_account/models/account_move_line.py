@@ -26,7 +26,7 @@ class AccountMoveLine(models.Model):
             rec.balance = rec.debit - rec.credit
 
     @api.multi
-    @api.depends('move_id')
+    @api.depends('move_id', 'move_id.ref')
     def _compute_ref(self):
         """ If opej_ref exists, use it otherwise fall back """
         for rec in self:
