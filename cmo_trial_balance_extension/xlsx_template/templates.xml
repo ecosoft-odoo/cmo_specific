@@ -29,10 +29,8 @@
                             'D6': 'initial${float_compare(value, 0.0, 2) == -1 and -value or 0.0}@{sum}',
                             'E6': 'debit@{sum}',
                             'F6': 'credit@{sum}',
-                            'G6': 'balance${float_compare(value, 0.0, 2) == 1 and value or 0.0}@{sum}',
-                            'H6': 'balance${float_compare(value, 0.0, 2) == -1 and -value or 0.0}@{sum}',
-                            'I6': 'final_balance${float_compare(value, 0.0, 2) == 1 and value or 0.0}@{sum}',
-                            'J6': 'final_balance${float_compare(value, 0.0, 2) == -1 and -value or 0.0}@{sum}',
+                            'G6': 'final_balance${float_compare(value, 0.0, 2) == 1 and value or 0.0}@{sum}',
+                            'H6': 'final_balance${float_compare(value, 0.0, 2) == -1 and -value or 0.0}@{sum}',
                         },
                     },
                 }
