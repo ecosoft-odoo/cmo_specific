@@ -269,7 +269,7 @@
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="0" y="5" width="412" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 				<box topPadding="3" leftPadding="3" rightPadding="0"/>
-				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="1_1_2" markup="none">
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Double" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{line_invoice_description}]]></textFieldExpression>
