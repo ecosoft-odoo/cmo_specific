@@ -20,7 +20,7 @@ class AccountVoucher(models.Model):
                 for line in rec.move_id.line_id:
                     if line.reconcile_id or line.reconcile_partial_id:
                         ml = line.reconcile_id.line_id or \
-                            line.reconcile_partial_id.partial_line_ids
+                            line.reconcile_partial_id.line_partial_ids
                         ou = ml.filtered(lambda l:
                                          l.operating_unit_id != user_ou).\
                             mapped('operating_unit_id')
