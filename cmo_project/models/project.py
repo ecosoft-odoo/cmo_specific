@@ -180,12 +180,12 @@ class ProjectProject(models.Model):
          ('pending', 'Hold'),
          ('close', 'Completed'), ],
         string='Status',
+        # track_visibility='onchange',
         required=True,
         copy=False,
         default='draft',
         compute='_compute_is_invoiced_and_paid',
         store=True,
-        track_visibility='onchange',
     )
     state_before_inactive = fields.Char(
         string='Latest State',
@@ -372,16 +372,29 @@ class ProjectProject(models.Model):
 
     @api.multi
     def action_validate(self):
+        state_now = dict(self.env["project.project"]._columns
+                         ["state"].selection)[self.state]
+        self.message_post(body="&emsp;&nbsp;&#8226; <b>Status</b> \
+            %s &#8594; Validated" % state_now)
         res = self.write({'state': 'validate'})
         return res
 
     @api.multi
     def action_approve(self):
+        state_now = dict(self.env["project.project"]._columns
+                         ["state"].selection)[self.state]
+        self.message_post(body="&emsp;&nbsp;&#8226; <b>Status</b> \
+            %s &#8594; In Progress" % state_now)
+
         res = self.write({'state': 'open'})
         return res
 
     @api.multi
     def action_back_to_draft(self):
+        state_now = dict(self.env["project.project"]._columns
+                         ["state"].selection)[self.state]
+        self.message_post(body="&emsp;&nbsp;&#8226; <b>Status</b> \
+            %s &#8594; Draft" % state_now)
         res = self.write({'state': 'draft'})
         return res
 
@@ -397,21 +410,54 @@ class ProjectProject(models.Model):
 
     @api.multi
     def action_ready_billing(self):
+        state_now = dict(self.env["project.project"]._columns
+                         ["state"].selection)[self.state]
+        self.message_post(body="&emsp;&nbsp;&#8226; <b>Status</b> \
+            %s &#8594; Ready to Billing" % state_now)
         res = self.write({'state': 'ready_billing'})
         return res
 
     @api.multi
     def action_back_to_open(self):
+        state_now = dict(self.env["project.project"]._columns
+                         ["state"].selection)[self.state]
+        self.message_post(body="&emsp;&nbsp;&#8226; <b>Status</b> \
+            %s &#8594; In Progress" % state_now)
+
         res = self.write({'state': 'open'})
         return res
 
     @api.multi
     def action_complete(self):
+        state_now = dict(self.env["project.project"]._columns
+                         ["state"].selection)[self.state]
+        self.message_post(body="&emsp;&nbsp;&#8226; <b>Status</b> \
+            %s &#8594; Completed" % state_now)
         res = self.write({'state': 'close'})
         return res
 
     @api.multi
+    def set_done(self):
+        state_now = dict(self.env["project.project"]._columns
+                         ["state"].selection)[self.state]
+        self.message_post(body="&emsp;&nbsp;&#8226; <b>Status</b> \
+            %s &#8594; Completed" % state_now)
+        return super(ProjectProject, self).set_done()
+
+    @api.multi
+    def set_pending(self):
+        state_now = dict(self.env["project.project"]._columns
+                         ["state"].selection)[self.state]
+        self.message_post(body="&emsp;&nbsp;&#8226; <b>Status</b> \
+            %s &#8594; Hold" % state_now)
+        return super(ProjectProject, self).set_pending()
+
+    @api.multi
     def set_cancel(self):
+        state_now = dict(self.env["project.project"]._columns
+                         ["state"].selection)[self.state]
+        self.message_post(body="&emsp;&nbsp;&#8226; <b>Status</b> \
+            %s &#8594; Incompleted" % state_now)
         res = super(ProjectProject, self).set_cancel()
         draft_invoices = self.out_invoice_ids.sudo().filtered(
             lambda r: r.state == 'draft'
@@ -423,8 +469,19 @@ class ProjectProject(models.Model):
     @api.multi
     def action_released(self):
         if self.state_before_inactive:  # state_bf_hold
+            state_now = dict(self.env["project.project"]._columns
+                             ["state"].selection)[self.state]
+            state_before = \
+                dict(self.env["project.project"]._columns
+                     ["state"].selection)[self.state_before_inactive]
+            self.message_post(body="&emsp;&nbsp;&#8226; <b>Status</b> \
+                %s &#8594; %s" % (state_now, state_before))
             res = self.write({'state': self.state_before_inactive})
         else:
+            state_now = dict(self.env["project.project"]._columns
+                             ["state"].selection)[self.state]
+            self.message_post(body="&emsp;&nbsp;&#8226; <b>Status</b> \
+                %s &#8594; In Progress" % state_now)
             res = self.write({'state': 'open'})
         self.write({
             'close_reason': False,
