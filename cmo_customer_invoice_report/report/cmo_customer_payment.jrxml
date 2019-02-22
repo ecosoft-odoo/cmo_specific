@@ -2,8 +2,8 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_customer_payment" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.2100000000000035"/>
-	<property name="ireport.x" value="30"/>
-	<property name="ireport.y" value="240"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="528"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -85,6 +85,9 @@
 	</field>
 	<field name="line_type" class="java.lang.String">
 		<fieldDescription><![CDATA[line_ids/type]]></fieldDescription>
+	</field>
+	<field name="line_reference" class="java.lang.String">
+		<fieldDescription><![CDATA[line_ids/reference]]></fieldDescription>
 	</field>
 	<sortField name="invoice_type"/>
 	<variable name="amount_untaxed" class="java.lang.Number">
@@ -277,7 +280,7 @@ $V{allocation_amount}]]></textFieldExpression>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{je_opej}=="OPEJ"?
 $F{narration} + "\n" + "     ตามใบแจ้งหนี้เลขที่ " + $F{opej_number} :
-$F{narration} + "\n" + "     ตามใบแจ้งหนี้เลขที่ " + $F{preprint_number}]]></textFieldExpression>
+$F{narration} + "\n" + "     ตามใบแจ้งหนี้เลขที่ " + $F{line_reference}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="18" y="72" width="226" height="20"/>
