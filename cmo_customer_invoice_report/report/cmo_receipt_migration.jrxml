@@ -277,7 +277,7 @@ $F{line_payment}]]></variableExpression>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="5" y="10" width="407" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 				<box topPadding="3" leftPadding="3" rightPadding="0"/>
-				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Double" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{note}]]></textFieldExpression>
