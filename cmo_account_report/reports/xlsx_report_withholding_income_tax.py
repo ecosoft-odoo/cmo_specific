@@ -3,14 +3,12 @@ from openerp import models, fields, api, _
 from openerp.exceptions import ValidationError
 
 
-class WithholdingIncomeTaxView(models.Model):
+class WithholdingIncomeTaxView(models.TransientModel):
     _name = 'withholding.income.tax.view'
-    _auto = False
 
-    # id = fields.Integer(
-    #     string='ID',
-    #     readonly=True,
-    # )
+    row_number = fields.Integer(
+        string='Row Number',
+    )
     wht_sequence_display = fields.Char(
         string='WHT Sequence Display',
     )
@@ -152,8 +150,22 @@ class XLSXReportWithholdingIncomeTax(models.TransientModel):
         """ + where_str + group_by)
         withholding_tax = self._cr.dictfetchall()
         ReportLine = self.env['withholding.income.tax.view']
+        prev_number = False
+        row_number = 0
         for line in withholding_tax:
+            # Remove duplicate data
+            if prev_number == line.get('number'):
+                line['number'] = False
+                line['row_number'] = False
+                line['supplier_ids'] = False
+                line['date_value'] = False
+                line['ref'] = False
+            else:
+                row_number = row_number + 1
+                line['row_number'] = row_number
+            # Assign row
             self.results += ReportLine.new(line)
+            prev_number = line.get('number')
 
     # As user choose template, auto selection option you needed for csv output
     @api.onchange('specific_template')

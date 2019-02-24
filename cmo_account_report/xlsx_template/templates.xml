@@ -118,7 +118,7 @@
                                 'A4': 'additional_filing${value and "ยื่นเพิ่มเติม" or ""}',
                             },
                             'results': {
-                                'A6': "${'=ROW(?(A1))'}",
+                                'A6': 'row_number${value or ""}',
                                 'B6': 'number${value or ""}',
                                 'C6': 'supplier_ids.vat${value or ""}#{number_format=text}',
                                 'D6': 'supplier_ids.display_name${value or ""}',

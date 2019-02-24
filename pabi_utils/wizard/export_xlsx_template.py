@@ -411,49 +411,49 @@ class ExportXlsxTemplate(models.TransientModel):
         """ Fill data from record with format in data_dict to workbook """
         if not record or not data_dict:
             return
-        try:
-            # variable to store data range of each worksheet
-            worksheet_range = {}
-            for sheet_name in data_dict:
-                ws = data_dict[sheet_name]
-                st = False
-                if isinstance(sheet_name, str):
-                    st = get_sheet_by_name(workbook, sheet_name)
-                elif isinstance(sheet_name, int):
-                    st = workbook.worksheets[sheet_name - 1]
-                if not st:
-                    raise ValidationError(
-                        _('Sheet %s not found!') % sheet_name)
-                # ================ HEAD ================
-                self._fill_head(ws, st, record)
-                # ============= Line Items =============
-                # Check for groupby directive
-                groupbys = {key: ws[key] for key in
-                            filter(lambda l: l[0:9] == '_GROUPBY_', ws.keys())}
-                all_rc, max_row, tail_fields = self._fill_lines(ws, st, record,
-                                                                groupbys)
-                # ================ TAIL ================
-                self._fill_tail(ws, st, record, tail_fields)
+        # try:
+        # variable to store data range of each worksheet
+        worksheet_range = {}
+        for sheet_name in data_dict:
+            ws = data_dict[sheet_name]
+            st = False
+            if isinstance(sheet_name, str):
+                st = get_sheet_by_name(workbook, sheet_name)
+            elif isinstance(sheet_name, int):
+                st = workbook.worksheets[sheet_name - 1]
+            if not st:
+                raise ValidationError(
+                    _('Sheet %s not found!') % sheet_name)
+            # ================ HEAD ================
+            self._fill_head(ws, st, record)
+            # ============= Line Items =============
+            # Check for groupby directive
+            groupbys = {key: ws[key] for key in
+                        filter(lambda l: l[0:9] == '_GROUPBY_', ws.keys())}
+            all_rc, max_row, tail_fields = self._fill_lines(ws, st, record,
+                                                            groupbys)
+            # ================ TAIL ================
+            self._fill_tail(ws, st, record, tail_fields)
 
-                # prepare worksheet data range, to be used in BI funtions
-                if all_rc:
-                    begin_rc = min(all_rc)
-                    col, row = split_row_col(
-                        max(sorted(all_rc, reverse=True), key=len))
-                    end_rc = '%s%s' % (col, max_row)
-                    worksheet_range[sheet_name] = '%s:%s' % (begin_rc, end_rc)
+            # prepare worksheet data range, to be used in BI funtions
+            if all_rc:
+                begin_rc = min(all_rc)
+                col, row = split_row_col(
+                    max(sorted(all_rc, reverse=True), key=len))
+                end_rc = '%s%s' % (col, max_row)
+                worksheet_range[sheet_name] = '%s:%s' % (begin_rc, end_rc)
 
-            # ================ BI Function ================
-            self._fill_bi(workbook, data_dict, worksheet_range)
+        # ================ BI Function ================
+        self._fill_bi(workbook, data_dict, worksheet_range)
 
-        except KeyError, e:
-            raise except_orm(_('Key Error!'), e)
-        except IllegalCharacterError, e:
-            raise except_orm(
-                _('IllegalCharacterError!\n'
-                  'Some exporting data may contain special character'), e)
-        except Exception, e:
-            raise except_orm(_('Error filling data into excel sheets!'), e)
+        # except KeyError, e:
+        #     raise except_orm(_('Key Error!'), e)
+        # except IllegalCharacterError, e:
+        #     raise except_orm(
+        #         _('IllegalCharacterError!\n'
+        #           'Some exporting data may contain special character'), e)
+        # except Exception, e:
+        #     raise except_orm(_('Error filling data into excel sheets!'), e)
 
     @api.model
     def _get_field_data(self, _field, _line):
