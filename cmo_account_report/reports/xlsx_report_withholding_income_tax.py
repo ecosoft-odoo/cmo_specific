@@ -3,7 +3,7 @@ from openerp import models, fields, api, _
 from openerp.exceptions import ValidationError
 
 
-class WithholdingIncomeTaxView(models.TransientModel):
+class WithholdingIncomeTaxView(models.AbstractModel):
     _name = 'withholding.income.tax.view'
 
     row_number = fields.Integer(
