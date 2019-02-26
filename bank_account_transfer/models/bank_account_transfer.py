@@ -146,6 +146,7 @@ class BankAccountTransfer(models.Model):
             'period_id': period_ids[0].id,
             'name': name,
             'ref': name,
+            'date': date,
         }
         return move_vals
 
@@ -277,7 +278,8 @@ class BankAccountTransferLine(models.Model):
     )
     date_transfer = fields.Date(
         string='Date',
-        required=True,
+        related='bank_transfer_id.date',
+        readonly=True,
     )
     transfer_amount = fields.Float(
         string='Transfer Amount',

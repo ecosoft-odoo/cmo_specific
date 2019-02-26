@@ -41,7 +41,7 @@
                     '__IMPORT__': {
                         'Bank Account Transfer': {
                             'transfer_line_ids': {
-                                'A10': 'date_transfer${value or ""}',
+                                # 'A10': 'date_transfer${value or ""}',
                                 'B10': 'transfer_amount${value or ""}',
                                 'C10': 'fee${value or ""}',
                             },
