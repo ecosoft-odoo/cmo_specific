@@ -8,6 +8,8 @@ from openerp.addons.report_xls.report_xls import report_xls
 from openerp.addons.report_xls.utils import _render
 from openerp.tools.translate import _
 from openerp import SUPERUSER_ID
+from datetime import datetime
+from pytz import timezone
 
 _logger = logging.getLogger(__name__)
 
@@ -269,15 +271,16 @@ class CostControlSheetReportXls(report_xls):
                     "SELECT sale_layout_cat_id, COUNT(id) "
                     "FROM sale_order_line "
                     "WHERE order_id = %s AND order_lines_group = 'before' %s"
-                    "GROUP BY sale_layout_cat_id "
-                    "ORDER BY sale_layout_cat_id ASC"
+                    "GROUP BY order_lines_group, sale_layout_cat_id "
+                    "ORDER BY order_lines_group, sale_layout_cat_id"
                     % (quote_id.id, self._extra_sql_where()))
             else:
                 cr.execute(
                     "SELECT sale_layout_cat_id, COUNT(id) "
                     "FROM sale_order_line "
-                    "WHERE order_id = %s %s GROUP BY sale_layout_cat_id "
-                    "ORDER BY sale_layout_cat_id ASC"
+                    "WHERE order_id = %s %s "
+                    "GROUP BY order_lines_group, sale_layout_cat_id "
+                    "ORDER BY order_lines_group, sale_layout_cat_id"
                     % (quote_id.id, self._extra_sql_where()))
             section_ids = [x[0] for x in cr.fetchall()]
             for section_id in section_ids:
@@ -427,6 +430,8 @@ class CostControlSheetReportXls(report_xls):
             ('/'.join(project_id.date_start.split('-')) or '') + ' - ' +
             ('/'.join(project_id.date.split('-')) or ''),
             'Place: ' + (project_id.project_place or ''),
+            'Export Time ' + datetime.now(timezone('Asia/Bangkok')) \
+                .strftime('%d/%m/%Y %H:%M')
         ]
         for info in project_info:
             row_pos = self._report_header(ws, _p, row_pos, _xs, info, merge=9)
@@ -785,7 +790,8 @@ class CostControlSheetReportXls(report_xls):
             self.pool.get('ir.model.data').get_object_reference(
                 cr, uid, 'base', 'product_category_3')[1]
         lines = expense_line.filtered(
-            lambda l: l.product_id.categ_id.id == traveling_expense_categ_id)
+            lambda l: l.product_id.categ_id.id == traveling_expense_categ_id) \
+            .sorted(lambda k: k.expense_id.number)
         for line in lines:
             c_specs = self._get_expense_specs(
                 name=line.ref, number=line.expense_id.number,
@@ -819,7 +825,8 @@ class CostControlSheetReportXls(report_xls):
             row_style=self.rt_cell_style_decimal)
         petty_cash_pos = row_pos
         lines = expense_line.filtered(
-            lambda l: l.expense_id.pay_to == 'pettycash')
+            lambda l: l.expense_id.pay_to == 'pettycash') \
+            .sorted(lambda k: k.expense_id.number)
         for line in lines:
             c_specs = self._get_expense_specs(
                 name=line.ref, number=line.expense_id.number,
@@ -854,7 +861,8 @@ class CostControlSheetReportXls(report_xls):
         other_expense_pos = row_pos
         lines = expense_line.filtered(
             lambda l: l.product_id.categ_id.id != traveling_expense_categ_id
-            and l.expense_id.pay_to != 'pettycash')
+            and l.expense_id.pay_to != 'pettycash') \
+            .sorted(lambda k: k.expense_id.number)
         for line in lines:
             c_specs = self._get_expense_specs(
                 name=line.ref, number=line.expense_id.number,
