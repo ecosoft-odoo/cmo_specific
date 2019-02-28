@@ -179,6 +179,7 @@ class HrExpenseExpense(models.Model):
 
 class HrExpenseLine(models.Model):
     _inherit = 'hr.expense.line'
+    _order = 'ref'
 
     amount_line_untaxed = fields.Float(
         string='Total Untaxed',
