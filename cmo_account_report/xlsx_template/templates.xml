@@ -222,7 +222,7 @@
                                 'E8': 'date_start${value or ""}#{number_format=datestamp}',
                                 'F8': 'purchase_value${value or 0}#{number_format=number}',
                                 'G8': 'accumulated_bf${value or 0}#{number_format=number}',
-                                'H8': 'method_number${value and (100/value) or 0}#{number_format=number}',
+                                'H8': 'method_number${value and "%.2f" % (100/float(value)) or 0}#{number_format=number}',
                                 'I8': 'salvage_value${value or 0}#{number_format=number}',
                                 'J8': 'depreciation${value or 0}#{number_format=number}',
                                 'K8': 'accumulated_cf${value or 0}#{number_format=number}',
