@@ -119,6 +119,15 @@ class AccountAsset(models.Model):
         return super(AccountAsset, self).validate()
 
     @api.multi
+    def close(self):
+        for asset in self:
+            if asset.value_depreciated:
+                raise ValidationError(_(
+                    'Can not close! Depreciated value is not equal 0.'))
+            asset.state = 'close'
+        return True
+
+    @api.multi
     def name_get(self):
         res = []
         for record in self:
