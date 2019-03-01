@@ -430,8 +430,11 @@ class CostControlSheetReportXls(report_xls):
             ('/'.join(project_id.date_start.split('-')) or '') + ' - ' +
             ('/'.join(project_id.date.split('-')) or ''),
             'Place: ' + (project_id.project_place or ''),
-            'Export Time ' + datetime.now(timezone('Asia/Bangkok')) \
-                .strftime('%d/%m/%Y %H:%M')
+            'Export Time: ' + datetime.now(timezone('Asia/Bangkok')) \
+                .strftime('%d/%m/%Y %H:%M'),
+            'Export By: ' + \
+                self.pool['res.users'].browse(cr, self.uid, self.uid) \
+                .display_name,
         ]
         for info in project_info:
             row_pos = self._report_header(ws, _p, row_pos, _xs, info, merge=9)
