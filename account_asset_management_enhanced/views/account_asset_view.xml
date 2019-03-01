@@ -72,7 +72,7 @@
                   <attribute name="groups">account.group_account_manager, account.group_account_user</attribute>
               </button>
               <button name="remove" position="after">
-                  <button name="close" states="draft" string="Close" type="object"/>
+                  <button name="close" states="draft" string="Close (Void)" type="object"/>
               </button>
           </field>
         </record>
