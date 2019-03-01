@@ -112,7 +112,8 @@ class XLSXReportAsset(models.TransientModel):
             [('user_type', '=', self.depre_account_type.id)]).ids
         where_str = self._domain_to_where_str(dom)
         if where_str:
-            where_str = 'where ' + where_str
+            filter_out = 'state != "close" and value_depreciated != 0'
+            where_str = 'where %s ' % (filter_out) + where_str
         self._cr.execute("""
             select a.*, id asset_id,
                 -- depreciation
