@@ -112,8 +112,7 @@ class XLSXReportAsset(models.TransientModel):
             [('user_type', '=', self.depre_account_type.id)]).ids
         where_str = self._domain_to_where_str(dom)
         if where_str:
-            filter_out = 'state != "close" and value_depreciated != 0'
-            where_str = 'where %s ' % (filter_out) + where_str
+            where_str = 'and ' + where_str
         self._cr.execute("""
             select a.*, id asset_id,
                 -- depreciation
@@ -136,6 +135,7 @@ class XLSXReportAsset(models.TransientModel):
                  and asset_id = a.id) accumulated_bf
             from
             account_asset a
+            where (a.state != 'close' or a.value_depreciated != 0)
         """ + where_str + "order by profile_id, number",
                          (tuple(depre_account_ids), date_start, date_end,
                           tuple(accum_depre_account_ids), date_end,
