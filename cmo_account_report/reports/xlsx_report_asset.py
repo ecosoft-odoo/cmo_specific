@@ -34,6 +34,18 @@ class XLSXReportAsset(models.TransientModel):
         required=True,
         default='filter_period',
     )
+    asset_status_draft = fields.Boolean(
+        string='Draft',
+    )
+    asset_status_open = fields.Boolean(
+        string='Running',
+    )
+    asset_status_close = fields.Boolean(
+        string='Close',
+    )
+    asset_status_removed = fields.Boolean(
+        string='Removed',
+    )
     asset_status = fields.Selection(
         [('draft', 'Draft'),
          ('open', 'Running'),
@@ -87,14 +99,23 @@ class XLSXReportAsset(models.TransientModel):
     def _compute_results(self):
         self.ensure_one()
         dom = []
+        status = []
         # Prepare DOM to filter assets
-        if self.asset_status:
-            dom += [('state', '=', self.asset_status)]
+        if self.asset_status_draft:
+            status += ['draft']
+        if self.asset_status_open:
+            status += ['open']
+        if self.asset_status_close:
+            status += ['close']
+        if self.asset_status_removed:
+            status += ['removed']
         if self.asset_ids:
             dom += [('id', 'in', tuple(self.asset_ids.ids + [0]))]
         if self.asset_profile_ids:
             dom += [('profile_id', 'in',
                     tuple(self.asset_profile_ids.ids + [0]))]
+        if status:
+            dom += [('state', 'in', tuple(status + ['']))]
         # Prepare fixed params
         date_start = False
         date_end = False

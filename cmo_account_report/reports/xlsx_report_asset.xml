@@ -14,7 +14,12 @@
                   <attribute name="required">True</attribute>
               </field>
               <field name="fiscalyear_end_id" position="after">
-                  <field name="asset_status"/>
+                  <separator string="Asset Status"/>
+                  <newline/>
+                  <field name="asset_status_draft"/>
+                  <field name="asset_status_open"/>
+                  <field name="asset_status_close"/>
+                  <field name="asset_status_removed"/>
               </field>
               <page name="time_filters" position="after">
                   <page name="asset_ids" string="Asset Code">
