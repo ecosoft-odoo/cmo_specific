@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Tree View -->
+        <record id="view_move_line_tree" model="ir.ui.view">
+            <field name="name">account.move.line.tree</field>
+            <field name="model">account.move.line.view</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree colors="red:state == 'draft';black:state == 'valid'" string="Journal Items" create="0" edit="0" delete="0" on_write="on_create_write" editable="top">
+                    <field name="journal_id" options='{"no_open":True}'/>
+                    <field name="period_id" options='{"no_open":True}'/>
+                    <field name="date"/>
+                    <field name="name"/>
+                    <field name="ref"/>
+                    <field name="statement_id" invisible="1"/>
+                    <field name="partner_id"
+                        domain="['|', ('parent_id', '=', False), ('is_company', '=', True)]"
+                        on_change="onchange_partner_id(move_id, partner_id, account_id, debit, credit, date, journal_id)"/>
+                    <field name="account_id" options='{"no_open":True}' domain="[('journal_id','=',journal_id), ('company_id', '=', company_id)]" on_change="onchange_account_id(account_id, partner_id, context)"/>
+                    <field name="operating_unit_id" groups="operating_unit.group_multi_operating_unit"/>
+                    <field name="account_tax_id" options='{"no_open":True}' invisible="context.get('journal_type', False) not in ['sale','sale_refund','purchase','purchase_refund','general']"/>
+                    <field name="analytic_account_id" groups="analytic.group_analytic_accounting" domain="[('type','not in',['view','template'])]" invisible="not context.get('analytic_journal_id',False)"/>
+                    <field name="move_id" required="0"/>
+                    <field name="debit" sum="Total Debit"/>
+                    <field name="credit" sum="Total Credit"/>
+                    <field name="balance" sum="Total"/>
+                    <field name="date_maturity" invisible="context.get('journal_type', False) not in ['sale','sale_refund','purchase','purchase_refund']"/>
+                    <field name="reconcile_ref"/>
+                    <field name="invoice" invisible="1"/>
+                    <field name="amount_currency" readonly="True" invisible="not context.get('currency',False)"/>
+                    <field name="currency_id" readonly="True" invisible="not context.get('currency',False)"/>
+                    <field name="state" invisible="1"/>
+                    <field name="company_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_move_line_form" model="ir.ui.view">
+            <field name="name">account.move.line.form</field>
+            <field name="model">account.move.line.view</field>
+            <field eval="2" name="priority"/>
+            <field name="arch" type="xml">
+                <form string="Journal Item" create="0" edit="0" delete="0">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="ref"/>
+                                <field name="partner_id"
+                                    domain="['|', ('parent_id', '=', False), ('is_company', '=', True)]"
+                                    on_change="onchange_partner_id(False,partner_id,account_id,debit,credit,date)"/>
+                            </group>
+                            <group>
+                                <field name="journal_id"/>
+                                <field name="period_id"/>
+                                <field name="company_id" required="1" groups="base.group_multi_company"/>
+                            </group>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Information">
+                                <group>
+                                    <group string="Amount">
+                                        <field name="account_id" domain="[('company_id', '=', company_id), ('type','&lt;&gt;','view'), ('type','&lt;&gt;','consolidation')]"/>
+                                        <field name="operating_unit_id" groups="operating_unit.group_multi_operating_unit"/>
+                                        <field name="debit"/>
+                                        <field name="credit"/>
+                                        <field name="quantity"/>
+                                    </group>
+                                    <group string="Accounting Documents">
+                                        <field name="invoice" readonly="True"/>
+                                        <field name="move_id" required="False"/>
+                                        <field name="statement_id" readonly="True"/>
+                                        <field name="bank_receipt_id"/>
+                                        <field name="bank_payment_id"/>
+                                        <field name="asset_profile_id"/>
+                                        <field name="asset_id"/>
+                                    </group>
+                                    <group string="Dates">
+                                        <field name="date"/>
+                                        <field name="date_maturity"/>
+                                        <field name="date_created" readonly="True"/>
+                                    </group>
+                                    <group string="Taxes">
+                                        <field name="tax_code_id"/>
+                                        <field name="tax_amount"/>
+                                        <field name="account_tax_id" domain="[('parent_id','=',False)]"/>
+                                    </group>
+                                    <group attrs="{'readonly':[('state','=','valid')]}" string="Currency" groups="base.group_multi_currency">
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="amount_currency" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    </group>
+                                    <group string="Reconciliation">
+                                        <field name="reconcile_id"/>
+                                        <field name="reconcile_partial_id"/>
+                                    </group>
+                                    <group string="States">
+                                        <field name="state"/>
+                                        <field name="blocked"/>
+                                    </group>
+                                    <group groups="analytic.group_analytic_accounting" string="Analytic">
+                                        <field name="analytic_account_id" domain="[('type','in',('normal','contract'))]"/>
+                                    </group>
+                                </group>
+                                <field name="narration" colspan="4" nolabel="1" placeholder="Add an internal note..."/>
+                            </page>
+                            <page string="Analytic Lines" groups="analytic.group_analytic_accounting">
+                                <field name="analytic_lines" context="{'default_general_account_id':account_id, 'default_name': name, 'default_date':date, 'amount': (debit or 0.0)-(credit or 0.0)}"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="view_account_move_line_filter" model="ir.ui.view">
+            <field name="name">Journal Items</field>
+            <field name="model">account.move.line.view</field>
+            <field name="arch" type="xml">
+                <search string="Search Journal Items">
+                    <field name="name" filter_domain="['|', ('name','ilike',self), ('ref','ilike',self)]" string="Move"/>
+                    <field name="date"/>
+                    <filter icon="terp-document-new" string="Unbalanced" domain="[('state','=','draft')]" help="Unbalanced Journal Items"/>
+                    <separator/>
+                    <filter icon="terp-document-new" string="Unposted" domain="[('move_id.state','=','draft')]" help="Unposted Journal Items"/>
+                    <filter name="posted" icon="terp-camera_test" string="Posted" domain="[('move_id.state','=','posted')]" help="Posted Journal Items"/>
+                    <separator/>
+                    <filter icon="terp-dolar_ok!" string="Unreconciled" domain="[('reconcile_id','=',False), ('account_id.reconcile','=',True)]" help="Unreconciled Journal Items" name="unreconciled"/>
+                    <separator/>
+                    <filter string="Next Partner to Reconcile" help="Next Partner Entries to reconcile" name="next_partner" context="{'next_partner_only': 1}" icon="terp-gtk-jump-to-ltr" domain="[('account_id.reconcile','=',True),('reconcile_id','=',False)]"/>
+                    <field name="move_id" string="Number (Move)"/>
+                    <field name="account_id"/>
+                    <field name="asset_id"/>
+                    <field name="operating_unit_id" groups="operating_unit.group_multi_operating_unit"/>
+                    <filter string="Operating Unit" icon="terp-folder-green" context="{'group_by':'operating_unit_id'}" groups="operating_unit.group_multi_operating_unit"/>
+                    <field name="partner_id"/>
+                    <field name="journal_id" context="{'journal_name':self}" widget="selection"/>
+                    <field name="period_id" context="{'period_id':self}" widget="selection"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Partner" icon="terp-partner" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="Journal" icon="terp-folder-orange" domain="[]" context="{'group_by':'journal_id'}"/>
+                        <filter string="Account"  icon="terp-folder-green" context="{'group_by':'account_id'}"/>
+                        <filter string="Period" icon="terp-go-month" domain="[]" context="{'group_by':'period_id'}"/>
+                        <filter string="Date" context="{'group_by':'date:day'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+    </data>
+</openerp>
