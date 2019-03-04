@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
-from openerp import models, api, fields, _
+from openerp import models, api, fields, tools, _
 
 
 class AccountTrailBalanceReport(models.Model):
@@ -128,6 +128,9 @@ class AccountTrailBalanceReport(models.Model):
                               'charge_type': charge_type,
                               'account_ids': [(6, 0, account_ids)]})
 
+        # Force user to superuser
+        self = self.sudo()
+
         # Compute report lines
         accounts, moves = self._get_moves(fiscalyear_id, date_start, date_stop,
                                           target_move, with_movement,
@@ -232,6 +235,10 @@ class AccountTrailBalanceLine(models.Model):
     @api.multi
     def open_items(self, move_type):
         self.ensure_one()
+
+        # Force user to superuser
+        self = self.sudo()
+
         TB = self.env['account.trial.balance.report']
         MoveLine = self.env['account.move.line']
         rpt = self.report_id
@@ -269,10 +276,21 @@ class AccountTrailBalanceLine(models.Model):
             'name': _("Journal Items"),
             'view_type': 'form',
             'view_mode': 'tree,form',
-            'res_model': 'account.move.line',
+            'res_model': 'account.move.line.view',
             'view_id': False,
             'type': 'ir.actions.act_window',
             'context': self._context,
             'nodestroy': True,
             'domain': [('id', 'in', move_ids)],
         }
+
+
+class AccountMoveLineView(models.Model):
+    _name = 'account.move.line.view'
+    _inherit = 'account.move.line'
+    _auto = False
+
+    def init(self, cr):
+        tools.drop_view_if_exists(cr, self._table)
+        cr.execute("""CREATE or REPLACE VIEW %s as (
+            SELECT * FROM account_move_line)""" % (self._table, ))
