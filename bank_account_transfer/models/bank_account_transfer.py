@@ -7,6 +7,7 @@ from openerp.exceptions import ValidationError
 
 class BankAccountTransfer(models.Model):
     _name = 'bank.account.transfer'
+    _inherit = 'mail.thread'
 
     name = fields.Char(
         string='Name',
@@ -63,6 +64,7 @@ class BankAccountTransfer(models.Model):
         string='Status',
         default='draft',
         readonly=True,
+        track_visibility='onchange',
     )
     journal_id = fields.Many2one(
         'account.journal',
