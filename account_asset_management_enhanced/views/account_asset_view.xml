@@ -74,6 +74,12 @@
               <button name="remove" position="after">
                   <button name="close" states="draft" string="Close (Void)" type="object"/>
               </button>
+              <button name="unlink_move" position="attributes">
+                  <attribute name="groups">base.group_no_one</attribute>
+              </button>
+              <button name="create_move" position="attributes">
+                  <attribute name="groups">base.group_no_one</attribute>
+              </button>
           </field>
         </record>
 
