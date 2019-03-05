@@ -123,6 +123,7 @@ class ProjectProject(models.Model):
         string='Expense',
         states={'close': [('readonly', True)]},
         compute='_compute_expense',
+        store=True,
         help="Sum of untaxed amount on Expenses and Employee Clearing.",
     )
     date_brief = fields.Date(
