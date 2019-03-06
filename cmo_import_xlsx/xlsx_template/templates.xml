@@ -37,17 +37,17 @@
                     },
                 },
                 '__IMPORT__': {
-                    1: {
-                        '_HEAD_': {
-                        },
-                        'line_id': {
-                            'A2': 'account_id',
-                            'B2': 'name',
-                            'C2': 'debit',
-                            'D2': 'credit',
-                            'E2': 'operating_unit_id',
-                            'F2': 'analytic_account_id',
-                        }
+                    'Template': {
+                            '_HEAD_': {
+                            },
+                            'line_id': {
+                                'A2': 'account_id',
+                                'B2': 'name',
+                                'C2': 'debit',
+                                'D2': 'credit',
+                                'E2': 'operating_unit_id',
+                                'F2': 'analytic_account_id',
+                                }
                     }
                 }
             }
