@@ -91,6 +91,22 @@
 
 
         # Asset Depre Batch
+        <record id="asset_depre_batch_view_search" model="ir.ui.view">
+            <field name="name">asset.depre.batch.view.search</field>
+            <field name="model">cmo.asset.depre.batch</field>
+            <field name="arch" type="xml">
+                <search string="Search Asset Depre">
+                    <filter string="Draft" domain="[('state','=','draft')]" help="Draft"/>
+                    <filter string="Posted" domain="[('state','=','posted')]" help="Posted"/>
+                    <filter string="Cancelled" domain="[('state','=','cancel')]" help="Cancelled"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Status" domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="Period" domain="[]" context="{'group_by':'period_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
         <record id="view_cmo_asset_depre_batch_tree" model="ir.ui.view">
             <field name="name">view.cmo.asset.depre.batch.tree</field>
             <field name="model">cmo.asset.depre.batch</field>
