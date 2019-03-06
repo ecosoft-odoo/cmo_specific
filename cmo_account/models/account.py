@@ -40,10 +40,11 @@ class AccountMove(models.Model):
             if self.env['account.fiscalyear'].find(rec.date) != \
                     rec.period_id.fiscalyear_id.id:
                 raise ValidationError(_('Date and period mismatch!'))
-            aml_id = aml_obj.search([('move_id', '=', rec.id),
+            aml_ids = aml_obj.search([('move_id', '=', rec.id),
                                      ('asset_id', '!=', False)])
-            if aml_id:
-                aml_id.asset_id.code = aml_id.move_id.name
+            for aml_id in aml_ids:
+                if aml_id.asset_id.code is False:
+                    aml_id.asset_id.code = aml_id.move_id.name
         return res
 
 
