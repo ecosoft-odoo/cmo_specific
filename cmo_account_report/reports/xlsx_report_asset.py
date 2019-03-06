@@ -149,7 +149,7 @@ class XLSXReportAsset(models.TransientModel):
                  and ml.date <= %s -- date end
                  and asset_id = a.id) accumulated_cf,
                 -- accumulated_bf
-                (select coalesce(sum(credit-debit), 0.0)
+                (select a.purchase_value - coalesce(sum(credit-debit), 0.0)
                  from account_move_line ml
                  where account_id in %s  -- accumulatedp account
                  and ml.date <= %s -- date start
