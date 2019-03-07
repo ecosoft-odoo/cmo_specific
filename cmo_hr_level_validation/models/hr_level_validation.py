@@ -41,6 +41,10 @@ class HrExpenseExpense(models.Model):
         readonly=True,
         copy=False,
     )
+    show_doc = fields.Boolean(
+        'Show Document',
+        copy=False,
+    )
 
     @api.multi
     def expense_confirm(self):
@@ -102,11 +106,13 @@ class HrExpenseExpense(models.Model):
                         'approver_ids': [
                             (6, 0, target_level.user_ids.ids)
                         ],
+                        'show_doc': True,
                     })
                 else:
                     self.write({
                         'level_id': False,
                         'approver_ids': False,
+                        'show_doc': True,
                     })
             else:
                 if not self.level_id and not self.approver_ids:
@@ -118,6 +124,7 @@ class HrExpenseExpense(models.Model):
                         'approver_ids': [
                             (6, 0, target_level.user_ids.ids)
                         ],
+                        'show_doc': True,
                     })
         return True
 
@@ -154,3 +161,15 @@ class HrExpenseExpense(models.Model):
             raise ValidationError(
                 _("You are not allowed to validate document with HR Product."))
         return res
+
+    @api.model
+    def fields_view_get(self, view_id=None, view_type='form', toolbar=False,
+                        submenu=False):
+        # Update show doc is False only
+        self._cr.execute("""
+            update hr_expense_expense
+            set show_doc = False
+            where show_doc = True""")
+        return super(HrExpenseExpense, self).fields_view_get(
+            view_id=view_id, view_type=view_type, toolbar=toolbar,
+            submenu=submenu)
