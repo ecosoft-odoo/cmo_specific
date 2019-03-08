@@ -105,6 +105,7 @@
 	<field name="street2" class="java.lang.String">
 		<fieldDescription><![CDATA[partner_id/street2]]></fieldDescription>
 	</field>
+	<sortField name="section code"/>
 	<variable name="sum total section" class="java.lang.Float" resetType="Group" resetGroup="section" calculation="Sum">
 		<variableExpression><![CDATA[(($F{unit price} * $F{qty}) > 0) == true ? $F{unit price} * $F{qty}: 0.0]]></variableExpression>
 	</variable>
