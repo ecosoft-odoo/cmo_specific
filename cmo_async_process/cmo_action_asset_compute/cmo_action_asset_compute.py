@@ -506,7 +506,8 @@ class CMOAssetDepreBatch(models.Model):
                 alter table account_move disable trigger all""")
             # reset move_check in depre line
             self._cr.execute("""
-                update account_asset_line set move_check = false
+                update account_asset_line
+                set move_check = false, move_id = null
                 where move_id in (
                     select id from account_move
                     where asset_depre_batch_id = %s)
