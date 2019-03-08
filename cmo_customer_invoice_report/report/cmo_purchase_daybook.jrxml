@@ -62,9 +62,6 @@
 	<field name="description" class="java.lang.String">
 		<fieldDescription><![CDATA[move_ids/name]]></fieldDescription>
 	</field>
-	<sortField name="id"/>
-	<sortField name="debit" order="Descending" type="Variable"/>
-	<sortField name="credit" order="Descending" type="Variable"/>
 	<variable name="total_debit" class="java.lang.Number" resetType="Group" resetGroup="UniqueID" calculation="Sum">
 		<variableExpression><![CDATA[$F{debit}]]></variableExpression>
 	</variable>
