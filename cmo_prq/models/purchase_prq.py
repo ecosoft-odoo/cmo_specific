@@ -34,7 +34,6 @@ class PurchasePRQ(models.Model):
     prepare_user_id = fields.Many2one(
         'res.users',
         string='Prepared By',
-        default=lambda self: self.env.user,
         readonly=True,
         track_visibility='onchange',
     )
