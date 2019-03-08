@@ -13,6 +13,7 @@ class PurchaseOrder(models.Model):
             'purchase_id': self.id,
             'invoice_id': invoice.id,
             'installment': installment,
+            'prepare_user_id': self.create_uid.id,
         }
 
     @api.multi
