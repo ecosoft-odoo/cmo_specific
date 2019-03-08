@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;move_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.000000000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="128"/>
+	<property name="ireport.y" value="224"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -60,7 +60,7 @@
 		<variableExpression><![CDATA[$F{credit}]]></variableExpression>
 	</variable>
 	<filterExpression><![CDATA[$F{credit} != null || $F{debit} != null]]></filterExpression>
-	<group name="UniqueID" isStartNewPage="true" isResetPageNumber="true" footerPosition="ForceAtBottom" keepTogether="true">
+	<group name="UniqueID" isStartNewPage="true" isResetPageNumber="true" minHeightToStartNewPage="20" footerPosition="ForceAtBottom" keepTogether="true">
 		<groupExpression><![CDATA[$F{id}]]></groupExpression>
 		<groupFooter>
 			<band height="20">
@@ -463,10 +463,10 @@ Senior Accounting Manager]]></text>
 		</band>
 	</detail>
 	<columnFooter>
-		<band splitType="Stretch"/>
+		<band height="30" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="140" splitType="Stretch"/>
+		<band height="115" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
 		<band splitType="Stretch"/>
