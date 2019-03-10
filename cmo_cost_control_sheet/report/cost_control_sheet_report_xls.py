@@ -251,8 +251,14 @@ class CostControlSheetReportXls(report_xls):
             ws.col(data['col_pos']).width = data['size'] * 256
         return row_pos + row_merge + 1
 
-    def _extra_sql_where(self):
-        where = "AND (price_unit != 0 OR purchase_price != 0)"
+    def _extra_sql_where(self, sale_order_line_ref_ids):
+        where = "AND (active = true"
+        if sale_order_line_ref_ids:
+            if len(sale_order_line_ref_ids) == 1:
+                where += " OR id = %s" % str(sale_order_line_ref_ids[0])
+            else:
+                where += " OR id IN %s" % str(tuple(sale_order_line_ref_ids))
+        where += ")"
         return where
 
     def _ordering_order_line(self, ws, _p, row_pos, quote_id):
@@ -262,9 +268,10 @@ class CostControlSheetReportXls(report_xls):
         section_obj = self.pool.get('sale_layout.category')
         order_line_obj = self.pool.get('sale.order.line')
         order_obj = self.pool.get('sale.order')
+        purchase_order_line_obj = self.pool.get('purchase.order.line')
         line_and_parent = []
 
-        def _line_order_get(custom_groups=None):
+        def _line_order_get(custom_groups=None, sale_order_line_ref_ids=None):
             line_get = []
             if custom_groups:
                 cr.execute(
@@ -273,7 +280,8 @@ class CostControlSheetReportXls(report_xls):
                     "WHERE order_id = %s AND order_lines_group = 'before' %s"
                     "GROUP BY order_lines_group, sale_layout_cat_id "
                     "ORDER BY order_lines_group, sale_layout_cat_id"
-                    % (quote_id.id, self._extra_sql_where()))
+                    % (quote_id.id,
+                       self._extra_sql_where(sale_order_line_ref_ids)))
             else:
                 cr.execute(
                     "SELECT sale_layout_cat_id, COUNT(id) "
@@ -281,7 +289,8 @@ class CostControlSheetReportXls(report_xls):
                     "WHERE order_id = %s %s "
                     "GROUP BY order_lines_group, sale_layout_cat_id "
                     "ORDER BY order_lines_group, sale_layout_cat_id"
-                    % (quote_id.id, self._extra_sql_where()))
+                    % (quote_id.id,
+                       self._extra_sql_where(sale_order_line_ref_ids)))
             section_ids = [x[0] for x in cr.fetchall()]
             for section_id in section_ids:
                 section_id = section_obj.browse(
@@ -292,8 +301,8 @@ class CostControlSheetReportXls(report_xls):
                         ('order_id', '=', quote_id.id),
                         ('sale_layout_custom_group', '=', custom_groups),
                     ], context=context)).filtered(
-                        lambda l: l.price_unit != 0 or
-                        l.purchase_price != 0).ids
+                        lambda l: l.active is True or
+                        l.id in sale_order_line_ref_ids).ids
                 if order_line_ids:
                     line_get.append(('section', section_id))
                 line_list = [('line', order_line_obj.browse(
@@ -308,16 +317,44 @@ class CostControlSheetReportXls(report_xls):
 
         quote_data = ('quote', quote_id)
         line_and_parent.append(quote_data)
+        # Find sale order line as active is False
+        purchase_order_line_ids = purchase_order_line_obj.search(
+            cr, uid,
+            [('order_id.order_ref', '=', quote_id.id),
+             ('sale_order_line_ref_id.active', '=', False),
+             ('state', 'in', ('confirmed', 'done')),
+             ('order_id.state', '!=', 'confirmed')], context=context)
+        sale_order_line_ref_ids = purchase_order_line_obj.browse(
+            cr, uid, purchase_order_line_ids, context=context) \
+            .mapped('sale_order_line_ref_id.id')
+        # Find sale order line is False
+        purchase_order_line_ids = purchase_order_line_obj.search(
+            cr, uid,
+            [('order_id.order_ref', '=', quote_id.id),
+             ('sale_order_line_ref_id', '=', False),
+             ('state', 'in', ('confirmed', 'done')),
+             ('order_id.state', '!=', 'confirmed')])
+        if purchase_order_line_ids:
+            sale_layout_cat_id = self.pool.get('ir.model.data') \
+                .get_object_reference(
+                    cr, uid, 'base', 'sale_layout_category_other')[1]
+            sale_order_line_ref_ids += order_line_obj.search(
+                cr, uid, [('order_id', '=', quote_id.id),
+                          ('active', '=', False),
+                          ('sale_layout_cat_id', '=', sale_layout_cat_id)],
+                context=context)
         cr.execute(
             "SELECT sale_layout_custom_group, COUNT(id)  FROM sale_order_line "
             "WHERE order_id = %s %s GROUP BY sale_layout_custom_group "
             "ORDER BY sale_layout_custom_group ASC"
-            % (quote_id.id, self._extra_sql_where()))
+            % (quote_id.id, self._extra_sql_where(sale_order_line_ref_ids)))
         custom_groups = [x[0] for x in cr.fetchall()]
         if len(custom_groups) > 1:
             for custom_group in custom_groups:
                 line_and_parent.append(('custom_group', custom_group))
-                line_and_parent += _line_order_get(custom_group)
+                line_and_parent += _line_order_get(
+                    custom_group=custom_group,
+                    sale_order_line_ref_ids=sale_order_line_ref_ids)
                 subtotal_custom_group = {
                     'name': 'Total %s' % (custom_group),
                 }
@@ -325,7 +362,8 @@ class CostControlSheetReportXls(report_xls):
                     [('subtotal_custom_group', subtotal_custom_group)]
 
         else:
-            line_and_parent += _line_order_get()
+            line_and_parent += _line_order_get(
+                sale_order_line_ref_ids=sale_order_line_ref_ids)
         order = order_obj.browse(cr, uid, quote_id.id)
         line_and_parent += [('discount', order.amount_discount)]
         subtotal_quote = {
@@ -430,11 +468,11 @@ class CostControlSheetReportXls(report_xls):
             ('/'.join(project_id.date_start.split('-')) or '') + ' - ' +
             ('/'.join(project_id.date.split('-')) or ''),
             'Place: ' + (project_id.project_place or ''),
-            'Export Time: ' + datetime.now(timezone('Asia/Bangkok')) \
-                .strftime('%d/%m/%Y %H:%M'),
-            'Export By: ' + \
-                self.pool['res.users'].browse(cr, self.uid, self.uid) \
-                .display_name,
+            'Export Time: ' + datetime.now(timezone('Asia/Bangkok'))
+            .strftime('%d/%m/%Y %H:%M'),
+            'Export By: ' +
+            self.pool['res.users'].browse(cr, self.uid, self.uid)
+            .display_name,
         ]
         for info in project_info:
             row_pos = self._report_header(ws, _p, row_pos, _xs, info, merge=9)
@@ -522,6 +560,17 @@ class CostControlSheetReportXls(report_xls):
                     [('sale_order_line_ref_id', '=', data_obj.id),
                      ('state', 'in', ('confirmed', 'done')),
                      ('order_id.state', '!=', 'confirmed')])
+                sale_layout_cat_id = self.pool.get('ir.model.data') \
+                    .get_object_reference(
+                        cr, uid, 'base', 'sale_layout_category_other')[1]
+                if not data_obj.active and \
+                   data_obj.sale_layout_cat_id.id == sale_layout_cat_id:
+                    purchase_order_line_ids += purchase_order_line_obj.search(
+                        cr, uid,
+                        [('order_id.order_ref', '=', data_obj.order_id.id),
+                         ('sale_order_line_ref_id', '=', False),
+                         ('state', 'in', ('confirmed', 'done')),
+                         ('order_id.state', '!=', 'confirmed')])
                 purchase_order_line = purchase_order_line_obj.browse(
                     cr, uid, purchase_order_line_ids).mapped(
                     lambda l: (l.order_id, l.price_subtotal))
