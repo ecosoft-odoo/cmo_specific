@@ -19,6 +19,12 @@ class XLSXReportInputTax(models.TransientModel):
     company_id = fields.Many2one(
         'res.company',
     )
+    tax = fields.Many2one(
+        'account.tax',
+        domain=[('type_tax_use', '=', 'purchase'),
+                ('is_wht', '=', False)],
+        string='Tax',
+    )
     results = fields.Many2many(
         'account.tax.report',
         string='Results',
@@ -37,5 +43,7 @@ class XLSXReportInputTax(models.TransientModel):
         dom = [('doc_type', '=', 'purchase'), ('cancel', '=', False)]
         if self.calendar_period_id:
             dom += [('report_period_id', '=', self.calendar_period_id.id)]
+        if self.tax:
+            dom += [('tax_id', '=', self.tax.id)]
         self.results = Result.search(
             dom, order='invoice_date,invoice_number')
