@@ -70,6 +70,7 @@ class BalanceSheetParser(report_sxw.rml_parse, common_report_header):
                 self.cr, self.uid, [data['account_report_id'][0]],
                 context=data['used_context'])
         account_obj = self.pool.get('account.account')
+        # Filter by period and date
         filter = " and l.period_id in "
         if data['filter'] == 'filter_period':
             filter += '(select id from account_period \
@@ -83,6 +84,9 @@ class BalanceSheetParser(report_sxw.rml_parse, common_report_header):
         else:
             filter += "(select id from account_period \
                 where fiscalyear_id in (%s))" % data['fiscalyear_id']
+        # Filter by target_move
+        if data['target_move'] == 'posted':
+            filter += " and l.state = 'posted'"
         # sum account
         if level == 1:
             for report in report_obj.browse(self.cr, self.uid, ids2,
