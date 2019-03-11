@@ -439,6 +439,7 @@ class CostControlSheetReportXls(report_xls):
         ws = wb.add_sheet(sheet_name)
         ws.panes_frozen = True
         ws.remove_splits = True
+        ws.show_zero_values = False
         ws.portrait = 0  # Landscape
         ws.fit_width_to_pages = 1
         row_pos = 0
