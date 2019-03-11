@@ -33,6 +33,8 @@ class AccountMove(models.Model):
     def _validate_period_vs_date(self):
         for rec in self:
             if rec.period_id:
+                print rec.period_id
+                print rec.date
                 if not (rec.date >= rec.period_id.date_start and
                         rec.date <= rec.period_id.date_stop):
                     raise ValidationError(

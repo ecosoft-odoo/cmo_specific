@@ -19,6 +19,7 @@ class XLSXReportOutputTax(models.TransientModel):
     tax = fields.Many2one(
         'account.tax',
         domain=[('type_tax_use', '=', 'sale'),
+                ('is_undue_tax', '=', False),
                 ('is_wht', '=', False)],
         string='Tax',
     )

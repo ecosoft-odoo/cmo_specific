@@ -25,8 +25,7 @@ class AccountVoucher(models.Model):
                                          l.operating_unit_id != user_ou).\
                             mapped('operating_unit_id')
                         if ou:
-                            ou.ensure_one()
-                            line.operating_unit_id = ou
+                            line.operating_unit_id = ou[0]
                         else:
                             line.operating_unit_id = user_ou
                     else:
