@@ -439,6 +439,7 @@ class CostControlSheetReportXls(report_xls):
         ws = wb.add_sheet(sheet_name)
         ws.panes_frozen = True
         ws.remove_splits = True
+        ws.show_zero_values = False
         ws.portrait = 0  # Landscape
         ws.fit_width_to_pages = 1
         row_pos = 0
@@ -775,6 +776,44 @@ class CostControlSheetReportXls(report_xls):
                     row_style=self.av_cell_style_decimal)
                 total_price.append('B%s' % (str(row_pos)))
                 total_estimate.append('C%s' % (str(row_pos)))
+                total_po_price.append('F%s' % (str(row_pos)))
+
+        # Write PO Number as Quotation Number is False
+        purchase_order_line_ids = purchase_order_line_obj.search(
+            cr, uid,
+            [('order_id.order_ref', '=', False),
+             ('order_id.project_id', '=', project_id.id),
+             ('state', 'in', ('confirmed', 'done')),
+             ('order_id.state', '!=', 'confirmed')])
+        if len(purchase_order_line_ids):
+            purchase_order_line = purchase_order_line_obj.browse(
+                cr, uid, purchase_order_line_ids).mapped(
+                lambda l: (l.order_id, l.price_subtotal))
+            res = [(k,
+                    sum([y for (x, y) in purchase_order_line if x == k]))
+                   for k in dict(purchase_order_line).keys()]
+            for purchase_order, price_subtotal in dict(res).iteritems():
+                amount_margin = 'B%s - F%s' % \
+                    (str(row_pos + 1), str(row_pos + 1))
+                gross_margin = '((B%s - F%s) / B%s) * 100' % \
+                    (str(row_pos + 1), str(row_pos + 1),
+                     str(row_pos + 1))
+                ws.write(
+                    row_pos, 4, purchase_order.name,
+                    style=self.an_cell_style)
+                ws.write(
+                    row_pos, 5, price_subtotal,
+                    style=self.an_cell_style_decimal)
+                ws.write(
+                    row_pos, 6, purchase_order.partner_id.name,
+                    style=self.an_cell_style)
+                ws.write(
+                    row_pos, 7, xlwt.Formula(amount_margin),
+                    style=self.an_cell_style_decimal)
+                ws.write(
+                    row_pos, 8, xlwt.Formula(gross_margin),
+                    style=self.an_cell_style_decimal)
+                row_pos += 1
                 total_po_price.append('F%s' % (str(row_pos)))
 
         # totals
