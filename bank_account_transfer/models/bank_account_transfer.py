@@ -16,6 +16,13 @@ class BankAccountTransfer(models.Model):
         default='',
         copy=False,
     )
+    bank_intransit_ids = fields.One2many(
+        'account.move.line',
+        'bank_payment_id',
+        string='Intransit Payments',
+        readonly=True,
+        states={'draft': [('readonly', False)]},
+    )
     transfer_line_ids = fields.One2many(
         'bank.account.transfer.line',
         'bank_transfer_id',
@@ -262,9 +269,21 @@ class BankAccountTransfer(models.Model):
                             })
         return True
 
+    @api.model
+    def _cancel_move(self):
+        # It will raise here if journal_id.update_posted = False
+        self.move_id.button_cancel()
+        for line in self.bank_intransit_ids:
+            if line.reconcile_id:
+                line.reconcile_id.unlink()
+        self.move_id.unlink()
+
     @api.multi
-    def action_cancel(self):
-        self.write({'state': 'cancel'})
+    def cancel_bank_transfer(self):
+        for transfer in self:
+            if transfer.move_id:
+                transfer._cancel_move()
+            transfer.write({'state': 'cancel'})
 
     @api.multi
     def action_draft(self):
