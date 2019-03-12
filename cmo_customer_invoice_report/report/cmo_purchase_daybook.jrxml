@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_supplier_payment_voucher" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="OPENERP_RELATIONS" value="[&quot;move_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.3310000000000006"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="115"/>
 	<property name="ireport.y" value="192"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
@@ -62,10 +62,14 @@
 	<field name="description" class="java.lang.String">
 		<fieldDescription><![CDATA[move_ids/name]]></fieldDescription>
 	</field>
-	<field name="je_sort" class="java.lang.String">
-		<fieldDescription><![CDATA[move_id/line_id]]></fieldDescription>
+	<field name="move_line_date" class="java.util.Date">
+		<fieldDescription><![CDATA[move_ids/date]]></fieldDescription>
 	</field>
-	<sortField name="je_sort"/>
+	<field name="move_line_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[move_ids/id]]></fieldDescription>
+	</field>
+	<sortField name="move_line_date" order="Descending"/>
+	<sortField name="move_line_id"/>
 	<variable name="total_debit" class="java.lang.Number" resetType="Group" resetGroup="UniqueID" calculation="Sum">
 		<variableExpression><![CDATA[$F{debit}]]></variableExpression>
 	</variable>
@@ -302,9 +306,9 @@ Senior Accounting Manager]]></text>
 				<text><![CDATA[Detail : ]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="45" y="147" width="501" height="63"/>
+				<reportElement x="45" y="137" width="464" height="63"/>
 				<box leftPadding="2"/>
-				<textElement textAlignment="Left">
+				<textElement textAlignment="Left" lineSpacing="Double">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{narration}]]></textFieldExpression>
