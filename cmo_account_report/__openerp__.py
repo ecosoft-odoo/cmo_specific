@@ -12,6 +12,7 @@
         'account',
         'report_xls',
         'l10n_th_account_pnd_form',
+        'account_asset_management_enhanced',
     ],
     'data': [
         'security/ir.model.access.csv',
