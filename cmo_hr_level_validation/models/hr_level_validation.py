@@ -96,15 +96,22 @@ class HrExpenseExpense(models.Model):
                                     "approve this document."))
         if target_levels:
             if self.level_id:
-                min_level = min(filter(lambda r: r >= self.level_id.level,
-                                       target_levels.mapped('level')))
+                next_levels = filter(lambda r: r >= self.level_id.level,
+                                     target_levels.mapped('level'))
+                min_level = next_levels and min(next_levels) or 100  # no level
                 target_level = target_levels.filtered(
                     lambda r: r.level == min_level + 1)
                 if target_level:
+                    # Finalize Level
+                    target_level_id, approver_ids = \
+                        self._finalize_target_level(target_level,
+                                                    self.operating_unit_id,
+                                                    doctype)
+                    # --
                     self.write({
-                        'level_id': target_level.id,
+                        'level_id': target_level_id,
                         'approver_ids': [
-                            (6, 0, target_level.user_ids.ids)
+                            (6, 0, approver_ids)
                         ],
                         'show_doc': True,
                     })
@@ -119,14 +126,56 @@ class HrExpenseExpense(models.Model):
                     target_level = target_levels.filtered(
                         lambda r: r.level == min(target_levels.mapped('level'))
                     )
+
+                    target_level_id, approver_ids = \
+                        self._finalize_target_level(target_level,
+                                                    self.operating_unit_id,
+                                                    doctype)
+
                     self.write({
-                        'level_id': target_level.id,
+                        'level_id': target_level_id,
                         'approver_ids': [
-                            (6, 0, target_level.user_ids.ids)
+                            (6, 0, approver_ids)
                         ],
                         'show_doc': True,
                     })
         return True
+
+    @api.multi
+    def _finalize_target_level(self, target_level, ou, doctype):
+        """ If this user same as approver, find the next available level
+            If next level not found, go to CFO
+            If CFO not found show warning
+        """
+        self.ensure_one()
+        approver_ids = target_level.user_ids.ids
+        target_level_id = target_level.id
+        if not target_level:
+            raise ValidationError(_('No target_level in _check_target_level'))
+        requester = self.employee_id.user_id
+        if self.employee_id.user_id in target_level.user_ids:
+            next_target_level = self.env['level.validation'].search([
+                ('operating_unit_id', '=', ou.id),
+                ('doctype', 'like', doctype),
+                ('level', '>', target_level.level),
+                ('user_ids', 'not in', [requester.id]),
+            ], order='level', limit=1)
+            if next_target_level:
+                target_level_id = next_target_level.id
+                approver_ids = next_target_level.user_ids.ids
+            else:  # No next level, find CFO
+                cfo_user = self.env['res.users'].search([('name', '=', 'CFO')])
+                if not cfo_user:
+                    raise ValidationError(
+                        _('No user "CFO" in system, please administrator'))
+                approver_ids = [cfo_user.id]
+                # Use max target level, so it will be the last
+                max_target_level = self.env['level.validation'].search([
+                    ('operating_unit_id', '=', ou.id),
+                    ('doctype', 'like', doctype)
+                ], order='level desc', limit=1)
+                target_level_id = max_target_level.id
+        return (target_level_id, approver_ids)
 
     @api.depends('approver_ids')
     def _compute_approve_permission(self):
