@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_supplier_payment_voucher" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="OPENERP_RELATIONS" value="[&quot;move_ids&quot;]"/>
-	<property name="ireport.zoom" value="1.1000000000000025"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="207"/>
 	<property name="ireport.y" value="288"/>
 	<style name="style1">
 		<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
@@ -97,7 +97,7 @@
 	</field>
 	<sortField name="move_line_date"/>
 	<sortField name="id"/>
-	<sortField name="credit"/>
+	<sortField name="move_line_c" type="Variable"/>
 	<variable name="total_debit" class="java.lang.Number" resetType="Group" resetGroup="UniqueID" calculation="Sum">
 		<variableExpression><![CDATA[$F{debit}]]></variableExpression>
 	</variable>
@@ -111,6 +111,9 @@
 		<variableExpression><![CDATA[$F{debit}]]></variableExpression>
 	</variable>
 	<variable name="credit" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{credit}]]></variableExpression>
+	</variable>
+	<variable name="move_line_c" class="java.lang.Double">
 		<variableExpression><![CDATA[$F{credit}]]></variableExpression>
 	</variable>
 	<filterExpression><![CDATA[$F{credit} != null || $F{debit} != null]]></filterExpression>
