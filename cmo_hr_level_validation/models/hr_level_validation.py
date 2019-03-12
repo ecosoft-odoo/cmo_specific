@@ -153,7 +153,7 @@ class HrExpenseExpense(models.Model):
         if not target_level:
             raise ValidationError(_('No target_level in _check_target_level'))
         requester = self.employee_id.user_id
-        if self.employee_id.user_id in target_level.user_ids:
+        if requester in target_level.user_ids:
             next_target_level = self.env['level.validation'].search([
                 ('operating_unit_id', '=', ou.id),
                 ('doctype', 'like', doctype),
