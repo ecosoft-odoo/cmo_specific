@@ -572,7 +572,7 @@ class ProjectProject(models.Model):
         expense_ids = ex_lines.mapped('expense_id').ids
         expenses = Expense.search([('id', 'in', expense_ids)])
         return {
-            'name': _("Adavnces / Expenses"),
+            'name': _("Adavances / Expenses"),
             'view_type': 'form',
             'view_mode': 'tree,form',
             'res_model': 'hr.expense.expense',
