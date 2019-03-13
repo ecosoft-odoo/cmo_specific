@@ -37,6 +37,7 @@
                 <filter name="my_sale_orders_filter" position="replace"/>
                 <xpath expr="//filter[@string='Order Month']" position="after">
                     <filter string="Project Name" name="Project" context="{'group_by':'project_related_id'}"/>
+                    <filter string="State" name="state" context="{'group_by':'state'}"/>
                 </xpath>
             </field>
         </record>
