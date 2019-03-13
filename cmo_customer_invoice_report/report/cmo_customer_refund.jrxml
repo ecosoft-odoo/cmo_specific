@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line&quot;]"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.y" value="192"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -68,8 +68,8 @@
 	<field name="amount_total" class="java.lang.Float">
 		<fieldDescription><![CDATA[amount_total]]></fieldDescription>
 	</field>
-	<field name="origin" class="java.lang.String">
-		<fieldDescription><![CDATA[origin]]></fieldDescription>
+	<field name="origin_invoice" class="java.lang.String">
+		<fieldDescription><![CDATA[origin_invoice_id/number_preprint]]></fieldDescription>
 	</field>
 	<field name="other_info_name" class="java.lang.String">
 		<fieldDescription><![CDATA[name]]></fieldDescription>
@@ -88,6 +88,9 @@
 	</field>
 	<field name="province_id" class="java.lang.String">
 		<fieldDescription><![CDATA[partner_id/province_id]]></fieldDescription>
+	</field>
+	<field name="origin" class="java.lang.String">
+		<fieldDescription><![CDATA[origon]]></fieldDescription>
 	</field>
 	<variable name="string_total" class="java.lang.String">
 		<variableExpression><![CDATA[(Math.round($F{amount_total}*100)/100).toString()]]></variableExpression>
@@ -394,7 +397,8 @@ null]]></textFieldExpression>
 				<textElement verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{origin}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{origin_invoice}?
+$F{origin_invoice}:$F{origin}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="15" width="190" height="20"/>
