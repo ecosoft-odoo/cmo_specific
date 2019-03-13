@@ -47,6 +47,12 @@ class HrExpenseExpense(models.Model):
                         toolbar=False, submenu=False):
         res = super(HrExpenseExpense, self).fields_view_get(
             view_id, view_type, toolbar=toolbar, submenu=submenu)
+        # print report not show from active model is project.project
+        if self._context.get('active_model') == 'project.project':
+            reports = []
+            filter_print_report(res, reports)
+            return res
+        # --
         # HR Expense
         if not self._context.get('is_advance_clearing', False) and \
                 not self._context.get('is_employee_advance', False) and \
