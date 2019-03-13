@@ -322,8 +322,7 @@ class CostControlSheetReportXls(report_xls):
             cr, uid,
             [('order_id.order_ref', '=', quote_id.id),
              ('sale_order_line_ref_id.active', '=', False),
-             ('state', 'in', ('confirmed', 'done')),
-             ('order_id.state', '!=', 'confirmed')], context=context)
+             ('order_id.state', 'in', ('approved', 'done'))], context=context)
         sale_order_line_ref_ids = purchase_order_line_obj.browse(
             cr, uid, purchase_order_line_ids, context=context) \
             .mapped('sale_order_line_ref_id.id')
@@ -332,8 +331,7 @@ class CostControlSheetReportXls(report_xls):
             cr, uid,
             [('order_id.order_ref', '=', quote_id.id),
              ('sale_order_line_ref_id', '=', False),
-             ('state', 'in', ('confirmed', 'done')),
-             ('order_id.state', '!=', 'confirmed')])
+             ('order_id.state', 'in', ('approved', 'done'))])
         if purchase_order_line_ids:
             sale_layout_cat_id = self.pool.get('ir.model.data') \
                 .get_object_reference(
@@ -559,8 +557,7 @@ class CostControlSheetReportXls(report_xls):
                 purchase_order_line_ids = purchase_order_line_obj.search(
                     cr, uid,
                     [('sale_order_line_ref_id', '=', data_obj.id),
-                     ('state', 'in', ('confirmed', 'done')),
-                     ('order_id.state', '!=', 'confirmed')])
+                     ('order_id.state', 'in', ('approved', 'done'))])
                 sale_layout_cat_id = self.pool.get('ir.model.data') \
                     .get_object_reference(
                         cr, uid, 'base', 'sale_layout_category_other')[1]
@@ -570,8 +567,7 @@ class CostControlSheetReportXls(report_xls):
                         cr, uid,
                         [('order_id.order_ref', '=', data_obj.order_id.id),
                          ('sale_order_line_ref_id', '=', False),
-                         ('state', 'in', ('confirmed', 'done')),
-                         ('order_id.state', '!=', 'confirmed')])
+                         ('order_id.state', 'in', ('approved', 'done'))])
                 purchase_order_line = purchase_order_line_obj.browse(
                     cr, uid, purchase_order_line_ids).mapped(
                     lambda l: (l.order_id, l.price_subtotal))
@@ -783,8 +779,7 @@ class CostControlSheetReportXls(report_xls):
             cr, uid,
             [('order_id.order_ref', '=', False),
              ('order_id.project_id', '=', project_id.id),
-             ('state', 'in', ('confirmed', 'done')),
-             ('order_id.state', '!=', 'confirmed')])
+             ('order_id.state', 'in', ('approved', 'done'))])
         if len(purchase_order_line_ids):
             purchase_order_line = purchase_order_line_obj.browse(
                 cr, uid, purchase_order_line_ids).mapped(
