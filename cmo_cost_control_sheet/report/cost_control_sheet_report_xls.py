@@ -1064,28 +1064,30 @@ class CostControlSheetReportXls(report_xls):
             adjustment_obj = self.pool.get('project.adjustment')
             ws.write(
                 row_pos, 0, 'Adjustment', style=self.av_cell_style_decimal)
-            ws.write(
-                row_pos, 1, 'Description', style=self.av_cell_style_decimal)
-            ws.write(row_pos, 2, 'Amount', style=self.av_cell_style_decimal)
+            ws.write(row_pos, 1, 'Amount', style=self.av_cell_style_decimal)
+            for i in range(2, 9):
+                ws.write(row_pos, i, '', style=self.av_cell_style_decimal)
             row_pos += 1
             for adjustment_id in project_id.adjustment_ids.ids:
                 adjustment_line = adjustment_obj.browse(
                     self.cr, self.uid,
                     adjustment_id, context=self.context)
                 ws.write(
-                    row_pos, 1,
+                    row_pos, 0,
                     adjustment_line.name,
                     style=self.an_cell_style)
                 ws.write(
-                    row_pos, 2,
+                    row_pos, 1,
                     adjustment_line.amount,
                     style=self.an_cell_style_decimal)
                 row_pos += 1
             ws.write(
-                row_pos, 1, 'Adjustment Total',
+                row_pos, 0, 'Total Adjustment',
                 style=self.av_cell_style_decimal)
-            ws.write(row_pos, 2, project_id.adjustment_amount,
+            ws.write(row_pos, 1, project_id.adjustment_amount,
                      style=self.av_cell_style_decimal)
+            for i in range(2, 9):
+                ws.write(row_pos, i, '', style=self.av_cell_style_decimal)
 
     def generate_xls_report(self, _p, _xs, data, objects, wb):
         # wl_ccs = _p.wanted_list_cost_control_sheet
