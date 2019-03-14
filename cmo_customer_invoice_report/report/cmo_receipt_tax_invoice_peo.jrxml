@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_receipt_tax_invoice_peo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
 	<property name="ireport.zoom" value="0.8264462809917359"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="604"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line&quot;]"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
@@ -69,12 +69,16 @@
 		<groupExpression><![CDATA[$F{id}]]></groupExpression>
 	</group>
 	<background>
-		<band height="802" splitType="Stretch">
-			<printWhenExpression><![CDATA[$F{partner_name} == "sadsax22x22xx2xx2"]]></printWhenExpression>
-			<image>
-				<reportElement x="1" y="0" width="594" height="802"/>
-				<imageExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "cmo_receipt_1.jpg"]]></imageExpression>
-			</image>
+		<band height="842" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="134" width="595" height="156" forecolor="#C9C9C9"/>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="130" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{number_payment}?
+null:"DRAFT"]]></textFieldExpression>
+			</textField>
 		</band>
 	</background>
 	<pageHeader>
