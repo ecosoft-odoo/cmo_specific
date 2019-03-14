@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line&quot;]"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="192"/>
+	<property name="ireport.y" value="96"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -435,7 +435,7 @@ $F{origin_invoice}:$F{origin}]]></textFieldExpression>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[บริษัท ซีเอ็มโอกรุ๊ป จำกัด (มหาชน) (สำนักงานใหญ่)]]></text>
+				<text><![CDATA[บริษัท ซีเอ็มโอ จำกัด (มหาชน) (สำนักงานใหญ่)]]></text>
 			</staticText>
 			<line>
 				<reportElement x="327" y="168" width="180" height="1"/>
