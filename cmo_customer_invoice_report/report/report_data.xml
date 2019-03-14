@@ -22,6 +22,27 @@
            <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_customer_refund)"/>
         </record>
 
+        <record id="cmo_customer_refund_cr_tax" model="ir.actions.report.xml">
+           <field name="string">Credit Note/Tax Invoice</field>
+           <field name="auto">True</field>
+           <field name="model">account.invoice</field>
+           <field name="jasper_model_id" ref="account.model_account_invoice"/>
+           <field name="name">Credit Note/Tax Invoice</field>
+           <field name="report_name">cmo.customer.refund.cr.tax</field>
+           <field name="report_rml">cmo_customer_invoice_report/report/cmo_customer_refund_cr_tax.jrxml</field>
+           <field name="force_locale">en_US</field>
+           <field name="menu">True</field>
+           <field name="header">False</field>
+           <field name="jasper_report">True</field>
+           <field name="jasper_output">pdf</field>
+        </record>
+        <record id="cmo_customer_refund_cr_tax_values" model="ir.values">
+           <field name="name">Credit Note/Tax Invoice</field>
+           <field name="model">account.invoice</field>
+           <field name="key2" eval="'client_print_multi'"/>
+           <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_customer_refund_cr_tax)"/>
+        </record>
+
         <record id="cmo_customer_invoice" model="ir.actions.report.xml">
            <field name="string">Invoice (PEO)</field>
            <field name="auto">True</field>

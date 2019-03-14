@@ -42,6 +42,7 @@ class AccountInvoice(models.Model):
                 self._context.get('journal_type', False) == 'sale_refund':
             reports = [
                 u'cmo.customer.refund',
+                u'cmo.customer.refund.cr.tax',
                 u'cmo.sale.daybook',
             ]
             filter_print_report(res, reports)
