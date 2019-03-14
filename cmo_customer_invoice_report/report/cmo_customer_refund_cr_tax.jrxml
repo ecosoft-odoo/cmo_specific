@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_customer_refund_cr_tax" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line&quot;]"/>
-	<property name="ireport.zoom" value="2.3579476910000063"/>
-	<property name="ireport.x" value="438"/>
-	<property name="ireport.y" value="1097"/>
+	<property name="ireport.zoom" value="1.4641000000000035"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -17,7 +17,7 @@
 	<field name="invoice_number" class="java.lang.String">
 		<fieldDescription><![CDATA[number]]></fieldDescription>
 	</field>
-	<field name="date_invoice" class="java.util.Date">
+	<field name="date_refund" class="java.util.Date">
 		<fieldDescription><![CDATA[date_invoice]]></fieldDescription>
 	</field>
 	<field name="partner_street" class="java.lang.String">
@@ -98,6 +98,12 @@
 	<field name="origin_total" class="java.lang.Number">
 		<fieldDescription><![CDATA[origin_invoice_total]]></fieldDescription>
 	</field>
+	<field name="date_invoice" class="java.util.Date">
+		<fieldDescription><![CDATA[origin_invoice_id/date_invoice]]></fieldDescription>
+	</field>
+	<field name="origin_invoice_date" class="java.util.Date">
+		<fieldDescription><![CDATA[origin_invoice_date]]></fieldDescription>
+	</field>
 	<variable name="string_total" class="java.lang.String">
 		<variableExpression><![CDATA[(Math.round($F{amount_total}*100)/100).toString()]]></variableExpression>
 	</variable>
@@ -164,7 +170,7 @@ $F{origin_total} - $F{amount_total}]]></variableExpression>
 	<title>
 		<band height="313" splitType="Stretch">
 			<staticText>
-				<reportElement x="9" y="83" width="232" height="35"/>
+				<reportElement x="9" y="84" width="232" height="35"/>
 				<box leftPadding="2"/>
 				<textElement lineSpacing="1_1_2">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
@@ -174,7 +180,7 @@ $F{origin_total} - $F{amount_total}]]></variableExpression>
 เลขประจำตัวผู้เสียภาษี 1017546000458]]></text>
 			</staticText>
 			<image hAlign="Center" vAlign="Middle" onErrorType="Icon">
-				<reportElement x="11" y="-14" width="86" height="74"/>
+				<reportElement x="11" y="-33" width="140" height="128"/>
 				<box leftPadding="4"/>
 				<imageExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "cmo.png"]]></imageExpression>
 			</image>
@@ -190,7 +196,7 @@ $F{origin_total} - $F{amount_total}]]></variableExpression>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="13" isBold="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[Credit Note/Tax Invoice]]></text>
+				<text><![CDATA[CREDIT NOTE/TAX INVOICE]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement x="401" y="199" width="154" height="20"/>
@@ -204,31 +210,31 @@ $F{origin_total} - $F{amount_total}]]></variableExpression>
 				<textElement verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.util.Date"><![CDATA[$F{date_invoice}]]></textFieldExpression>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{date_refund}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="122" y="120" width="210" height="20"/>
+				<reportElement x="122" y="121" width="210" height="20"/>
 				<textElement>
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{partner_tax_id}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="11" y="120" width="110" height="20"/>
+				<reportElement x="11" y="121" width="110" height="20"/>
 				<textElement>
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[เลขประจำตัวผู้เสียภาษี]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="9" y="63" width="232" height="20"/>
+				<reportElement x="9" y="64" width="323" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[บริษัท ซีเอ็มโอ จำกัด (มหาชน) (สำนักงานใหญ่)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="9" y="199" width="42" height="20"/>
+				<reportElement x="9" y="199" width="54" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -263,14 +269,14 @@ $F{origin_total} - $F{amount_total}]]></variableExpression>
 				<text><![CDATA[อ้างถึง]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="51" y="199" width="308" height="20" isPrintWhenDetailOverflows="true"/>
+				<reportElement x="55" y="199" width="304" height="20" isPrintWhenDetailOverflows="true"/>
 				<textElement lineSpacing="1_1_2">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{partner_name}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="51" y="236" width="304" height="63" isPrintWhenDetailOverflows="true"/>
+				<reportElement x="55" y="236" width="304" height="63" isPrintWhenDetailOverflows="true"/>
 				<textElement lineSpacing="1_1_2">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -283,8 +289,8 @@ $F{partner_zip} + "\n" +
 "เลขประจำตัวผู้เสียภาษีอากร " + $F{partner_tax_id}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="401" y="237" width="155" height="63" isPrintWhenDetailOverflows="true"/>
-				<textElement lineSpacing="1_1_2">
+				<reportElement x="401" y="239" width="155" height="63" isPrintWhenDetailOverflows="true"/>
+				<textElement verticalAlignment="Top" lineSpacing="1_1_2">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{origin_invoice}?
@@ -292,11 +298,12 @@ $F{partner_zip} + "\n" +
 "ใบกำกับภาษี \nเลขที่ " + $F{origin} + "\nลงวันที่ "]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="441" y="269" width="84" height="20" isPrintWhenDetailOverflows="true"/>
-				<textElement lineSpacing="1_1_2">
+				<reportElement x="441" y="270" width="84" height="20" isPrintWhenDetailOverflows="true"/>
+				<textElement verticalAlignment="Middle" lineSpacing="1_1_2">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.util.Date"><![CDATA[$F{date_invoice}]]></textFieldExpression>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{date_invoice}?
+$F{date_invoice}:$F{origin_invoice_date}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
