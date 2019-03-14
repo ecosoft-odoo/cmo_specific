@@ -17,6 +17,7 @@
     'demo': [],
     'data': [
         'xlsx_template/templates.xml',
+        'xlsx_template/load_template.xml',
         'xlsx_template/xlsx_template_wizard.xml',
     ],
     'test': [
