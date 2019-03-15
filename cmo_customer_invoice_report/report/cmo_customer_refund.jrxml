@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line&quot;]"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="384"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -92,6 +92,9 @@
 	<field name="origin" class="java.lang.String">
 		<fieldDescription><![CDATA[origin]]></fieldDescription>
 	</field>
+	<field name="company_vat" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/vat]]></fieldDescription>
+	</field>
 	<variable name="string_total" class="java.lang.String">
 		<variableExpression><![CDATA[(Math.round($F{amount_total}*100)/100).toString()]]></variableExpression>
 	</variable>
@@ -168,21 +171,8 @@
 	</background>
 	<title>
 		<band height="189" splitType="Stretch">
-			<staticText>
-				<reportElement x="100" y="20" width="232" height="86"/>
-				<box leftPadding="2"/>
-				<textElement>
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[4/18-19 ซอยนวลจันทร์ 56
-แขวงนวลจันทร์ เขตบึงกุ่ม กรุงเทพฯ 10230
-4/18-19 Soi Nuanchan 56, Nuancgan, Buengkum,
-Bangkok 10230 Thailand
-Tel :  66 2790 3888 Fax : 66 2790 3848
-เลขประจำตัวผู้เสียภาษี 1017546000458]]></text>
-			</staticText>
 			<image hAlign="Center" vAlign="Middle" onErrorType="Icon">
-				<reportElement x="11" y="-14" width="86" height="74"/>
+				<reportElement x="0" y="-21" width="120" height="108"/>
 				<box leftPadding="4"/>
 				<imageExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "cmo.png"]]></imageExpression>
 			</image>
@@ -256,12 +246,24 @@ $F{province_id} + " "+
 $F{partner_zip}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="100" y="0" width="232" height="20"/>
+				<reportElement x="111" y="0" width="232" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[บริษัท ซีเอ็มโอ จำกัด (มหาชน) (สำนักงานใหญ่)]]></text>
 			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="111" y="20" width="245" height="86"/>
+				<textElement verticalAlignment="Middle" lineSpacing="Single">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["4/18-19 ซอยนวลจันทร์ 56\n" +
+"แขวงนวลจันทร์ เขตบึงกุ่ม กรุงเทพฯ 10230\n" +
+"4/18-19 Soi Nuanchan 56, Nuancgan, Buengkum,\n" +
+"Bangkok 10230 Thailand\n" +
+"Tel :  02-088-3888 Fax : 02-088-3848\n" +
+"เลขประจำตัวผู้เสียภาษี " + $F{company_vat}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
