@@ -600,6 +600,7 @@ class ProjectProject(models.Model):
         'estimate_cost',
         'quote_related_ids',
         'quote_related_ids.order_line',
+        'quote_related_ids.state',
     )
     def _compute_price_and_cost(self):
         for project in self:
