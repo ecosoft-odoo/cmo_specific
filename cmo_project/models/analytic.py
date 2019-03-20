@@ -5,6 +5,12 @@ from openerp import fields, models, api
 class AccountAnalyticAccount(models.Model):
     _inherit = 'account.analytic.account'
 
+    expense_line_related_ids = fields.One2many(
+        'hr.expense.line',
+        'analytic_account',
+        string='Related Expense Line',
+    )
+
     @api.model
     def create(self, vals):
         if self._context.get('alias_parent_model_name') == 'project.project':

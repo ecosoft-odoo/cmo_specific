@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="wizard_update_budget_and_cost" model="ir.ui.view">
+            <field name="name">wizard.update.budget.and.cost</field>
+            <field name="model">update.budget.and.cost.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Update Budget and Cost">
+                    <group>
+                        <group name="update_type">
+                            <field name="update_type"/>
+                        </group>
+                        <group></group>
+                    </group>
+                    <footer>
+                        <button name="update_budget_and_cost" type="object" string="Confirm" class="oe_highlight"/>
+                        or
+                        <button special="cancel" class="oe_link" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window
+            id="action_update_budget_and_cost"
+            name="Update Budget and Cost"
+            src_model="project.project"
+            res_model="update.budget.and.cost.wizard"
+            view_type="form"
+            view_mode="form"
+            key2="client_action_multi"
+            target="new"/>
+    </data>
+</openerp>
