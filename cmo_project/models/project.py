@@ -663,7 +663,7 @@ class ProjectProject(models.Model):
             project.remaining_cost = remaining
 
     @api.multi
-    @api.depends('expense')
+    @api.depends('expense', 'write_date')
     def _compute_expense(self):
         for project in self:
             expense_lines = self.env['hr.expense.line'].sudo().search(
