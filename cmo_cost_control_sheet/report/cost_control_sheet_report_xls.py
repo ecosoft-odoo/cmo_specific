@@ -482,6 +482,13 @@ class CostControlSheetReportXls(report_xls):
         quote_ids = project_id.quote_related_ids
         entries = []
         for quote_id in quote_ids:
+            # No need quotation as state is cancel for no po
+            if quote_id.state2 == 'cancel' and \
+               not quote_id.project_related_id.purchase_related_ids.filtered(
+                    lambda l: l.order_ref == quote_id and
+                    l.state in ('approved', 'done')):
+                continue
+            # --
             line_and_parent = self._ordering_order_line(
                 ws, _p, row_pos, quote_id)
             entries += line_and_parent
@@ -538,11 +545,15 @@ class CostControlSheetReportXls(report_xls):
                 section_pos = row_pos
             elif entry[0] == 'line':
                 order_line_description = data_obj.name
-                price_in_contract = data_obj.price_unit * \
-                    data_obj.product_uom_qty
-                estimate_cost = data_obj.purchase_price * \
-                    data_obj.product_uom_qty
-                percent_margin = data_obj.sale_order_line_margin
+                price_in_contract = 0
+                estimate_cost = 0
+                percent_margin = 0
+                if data_obj.order_id.state2 != 'cancel':
+                    price_in_contract = data_obj.price_unit * \
+                        data_obj.product_uom_qty
+                    estimate_cost = data_obj.purchase_price * \
+                        data_obj.product_uom_qty
+                    percent_margin = data_obj.sale_order_line_margin
                 c_specs = map(
                     lambda x: self.render(
                         x, template, 'order_line'),
