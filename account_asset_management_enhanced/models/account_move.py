@@ -32,3 +32,13 @@ class AccountMoveLine(models.Model):
                 'purchase_date': res.move_id.date,
             })
         return res
+
+    @api.multi
+    def write(self, vals, **kwargs):
+        res = super(AccountMoveLine, self).write(vals, **kwargs)
+        for aml in self:
+            if vals.get('operating_unit_id') and aml.asset_id:
+                aml.asset_id.write({
+                    'operating_unit_id': vals['operating_unit_id'] or False,
+                })
+        return res
