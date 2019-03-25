@@ -671,9 +671,9 @@ class ProjectProject(models.Model):
             expense_lines = self.env['hr.expense.line'].sudo().search(
                 [('analytic_account', '=', project.analytic_account_id.id)])
             expense = sum(expense_lines.filtered(
-                lambda r: (r.expense_id.state in ('done', 'paid')) and
-                          (r.expense_id.is_employee_advance is False)
-                          ).mapped('amount_line_untaxed'))
+                lambda r: (r.expense_id.state in ('validate', 'done', 'paid'))
+                and (r.expense_id.is_employee_advance is False))
+                .mapped('amount_line_untaxed'))
             project.expense = expense
 
     @api.multi

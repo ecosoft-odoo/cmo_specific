@@ -859,7 +859,7 @@ class CostControlSheetReportXls(report_xls):
             .filtered(lambda l:
                       (l.expense_id.is_employee_advance is False or
                        l.expense_id.is_advance_clearing is True) and
-                      l.expense_id.state in ('done', 'paid'))
+                      l.expense_id.state in ('validate', 'done', 'paid'))
         cell_style = xlwt.easyxf(
             'pattern: pattern solid, fore_color gray25;' + _xs['bold'] +
             _xs['borders_all'] + _xs['right'],
