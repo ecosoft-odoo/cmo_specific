@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api
+from openerp import models, fields, api, _
+from openerp.exceptions import ValidationError
 
 
 class PurchasePRQ(models.Model):
@@ -200,6 +201,9 @@ class PurchasePRQ(models.Model):
 
     @api.multi
     def action_draft(self):
+        if self.invoice_id.state == 'paid':
+            raise ValidationError(
+                _("invoice state 'paid' can not set to draft."))
         self.write({'state': 'draft'})
         return True
 
