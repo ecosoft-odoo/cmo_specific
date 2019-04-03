@@ -351,7 +351,7 @@ class CostControlSheetReportXls(report_xls):
             for custom_group in custom_groups:
                 line_and_parent.append(('custom_group', custom_group))
                 line_and_parent += _line_order_get(
-                    custom_group=custom_group,
+                    custom_groups=custom_group,
                     sale_order_line_ref_ids=sale_order_line_ref_ids)
                 subtotal_custom_group = {
                     'name': 'Total %s' % (custom_group),
