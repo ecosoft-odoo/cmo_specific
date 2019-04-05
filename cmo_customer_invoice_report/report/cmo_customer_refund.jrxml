@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line&quot;]"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="112"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -237,7 +237,7 @@
 				<textElement lineSpacing="1_1_2">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{partner_name}+ " " +
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{partner_name}+ "\n" +
 $F{partner_street}+ " " +
 $F{partner_street2}+ " "+
 $F{township_id} +" "+
@@ -397,7 +397,7 @@ $F{amount_untaxed}:0]]></textFieldExpression>
 $F{amount_total}:0]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="190" y="15" width="120" height="20"/>
+				<reportElement x="105" y="15" width="139" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -405,12 +405,12 @@ $F{amount_total}:0]]></textFieldExpression>
 $F{origin_invoice}:$F{origin}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="15" width="190" height="20"/>
+				<reportElement x="0" y="15" width="111" height="20"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[อ้างถึง : ใบเสร็จรับเงิน/ใบกำกับภาษีเลขที่]]></text>
+				<text><![CDATA[อ้างถึง : ใบแจ้งหนี้เลขที่]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="35" width="51" height="20"/>
@@ -421,7 +421,7 @@ $F{origin_invoice}:$F{origin}]]></textFieldExpression>
 				<text><![CDATA[เนื่องจาก : ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="51" y="35" width="204" height="20"/>
+				<reportElement x="51" y="35" width="263" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
