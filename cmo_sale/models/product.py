@@ -22,8 +22,6 @@ class ProductProduct(models.Model):
 
     @api.multi
     def write(self, vals):
-        context = self._context.copy()
-        if context.get('params', {}).get('model', False) == 'sale.order' and \
-           len(vals) == 1 and 'product_tmpl_id' in vals:
+        if len(vals) == 1 and 'product_tmpl_id' in vals:
             self = self.sudo()
         return super(ProductProduct, self).write(vals)
