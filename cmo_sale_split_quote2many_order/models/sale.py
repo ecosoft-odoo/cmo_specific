@@ -122,7 +122,7 @@ class sale_order(models.Model):
         if (self.use_merge is False) and (self.sale_order_mode is False):
             raise Warning(_("Should select sale order mode "
                             "if not use merge sale order line"))
-        if order_plan_amount != self.amount_untaxed:
+        if round(order_plan_amount, 15) != round(self.amount_untaxed, 15):
             raise Warning(_("Order plan have amount not equal with Quotation"))
         if order_plan_amount <= 0.0:
             raise Warning(_("Order plan amount must more than zero"))
