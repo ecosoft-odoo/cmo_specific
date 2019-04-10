@@ -136,7 +136,8 @@ class sale_order(models.Model):
                     last_line = order.order_line[-1]
                     last_line.discount = (cur.round(
                         order.discount_rate - discount_line) /
-                        last_line.price_unit) * 100.0
+                        (last_line.product_uom_qty * last_line.price_unit)) * \
+                        100.0
         self._amount_all()
 
 
