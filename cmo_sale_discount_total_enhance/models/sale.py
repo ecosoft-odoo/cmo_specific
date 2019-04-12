@@ -62,7 +62,8 @@ class sale_order(models.Model):
                     line.price_unit * line.product_uom_qty * discount / 100.0)
             if last_line:
                 last_discount = (cur.round(discount_rate - discount_line) /
-                                 last_line.price_unit * 100.0)
+                                 (last_line.product_uom_qty *
+                                  last_line.price_unit) * 100.0)
                 last_line.write({'discount': last_discount})
 
     @api.model
