@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 import xlwt
+import os
 from xlwt.Style import default_style
 from datetime import datetime
 from openerp.report import report_sxw
@@ -140,11 +141,23 @@ class CostControlSheetReportXls(report_xls):
                 ws.col(col).width = spec[2] * 256
         return row_pos + size
 
-    def _report_title(self, ws, _p, row_pos, _xs, title, offset=0, merge=1):
+    def _report_title(self, ws, _p, row_pos, _xs, title, index, offset=0,
+                      merge=1):
+        border_style = 'borders: left thin, right thin, top thin, bottom thin;'
         cell_style = xlwt.easyxf(
-            _xs['center'] + 'font: color blue, bold false, height 220;')
-        c_specs = [
-            ('report_name', merge, 0, 'text', title),
+            _xs['center'] + border_style + 'font: bold true, height 220;')
+        col_style = None
+        if index == 0:
+            col_style = xlwt.easyxf(
+                'pattern: pattern solid, fore_colour black;')
+        elif index == 3:
+            col_style = xlwt.easyxf(
+                _xs['center'] + border_style + 'font: bold true, height 360;')
+        c_specs = []
+        if index < 3:
+            c_specs += [('logo', 1, 0, 'text', None)]
+        c_specs += [
+            ('report_name', merge, 0, 'text', title, None, col_style),
         ]
         row_data = self.xls_row_template(c_specs, [x[0] for x in c_specs])
         row_pos = self.xls_write_row(
@@ -434,7 +447,7 @@ class CostControlSheetReportXls(report_xls):
             cr, uid, data['project_id'], context=context)
 
         sheet_name = "Cost Control Sheet"
-        ws = wb.add_sheet(sheet_name)
+        ws = wb.add_sheet(sheet_name, cell_overwrite_ok=True)
         ws.panes_frozen = True
         ws.remove_splits = True
         ws.show_zero_values = False
@@ -443,13 +456,25 @@ class CostControlSheetReportXls(report_xls):
         row_pos = 0
         ws.header_str = self.xls_headers['standard']
         ws.footer_str = self.xls_footers['standard']
+        ws.row(3).height = 450
+
+        # Insert logo
+        report_dir = os.path.dirname(
+            os.path.dirname(os.path.realpath(__file__)))
+        ws.insert_bitmap(
+            '%s/static/description/cmo.bmp' % report_dir, 0, 0, x=24,
+            scale_x=0.1, scale_y=0.25)
+
+        # Merge row of logo
+        ws.write_merge(row_pos, 2, 0, 0)
 
         company_id = self.pool['res.users'].browse(
             cr, uid, uid, context=context).company_id
         titles = [
-            company_id.name or '',
-            company_id.street or '',
-            'TEL. %s  FAX %s  WEB %s  E-mail %s ' % (
+            '',
+            ' '.join([company_id.street, company_id.street2, company_id.zip,
+                      company_id.country_id.name]) or '',
+            'Tel: %s  Fax: %s  Website: %s  E-mail: %s ' % (
                 company_id.phone or '-',
                 company_id.fax or '-',
                 company_id.website or '-',
@@ -457,8 +482,12 @@ class CostControlSheetReportXls(report_xls):
             ),
             'Cost Control Sheet',
         ]
-        for title in titles:
-            row_pos = self._report_title(ws, _p, row_pos, _xs, title, merge=9)
+        for index, title in enumerate(titles):
+            merge = index == 3 and 9 or 8
+            row_pos = self._report_title(
+                ws, _p, row_pos, _xs, title, index, merge=merge)
+
+        ws.set_horz_split_pos(row_pos)
 
         project_info = [
             'BU No. ' + project_id.operating_unit_id.name,
@@ -477,7 +506,6 @@ class CostControlSheetReportXls(report_xls):
             row_pos = self._report_header(ws, _p, row_pos, _xs, info, merge=9)
 
         row_pos = self._report_column_header(ws, _p, row_pos, _xs)
-        ws.set_horz_split_pos(row_pos)
 
         quote_ids = project_id.quote_related_ids
         entries = []
@@ -1099,6 +1127,103 @@ class CostControlSheetReportXls(report_xls):
                      style=self.av_cell_style_decimal)
             for i in range(2, 9):
                 ws.write(row_pos, i, '', style=self.av_cell_style_decimal)
+            row_pos += 1
+
+        # Write Footer
+        row_pos += 4
+        department_obj = self.pool.get('hr.department')
+        department_ids = department_obj.search(
+            self.cr, self.uid, [('name', '=',
+                                 project_id.operating_unit_id.name)],
+            context=self.context)
+        if len(department_ids) > 1:
+            department_ids = [department_ids[0]]
+        department = department_obj.browse(
+            self.cr, self.uid, department_ids, context=context)
+        cell_text_style = xlwt.easyxf(_xs['right'])
+        cell_value_style = xlwt.easyxf('borders: bottom thin;')
+        cell_center_style = xlwt.easyxf(_xs['center'])
+        c_specs = [
+            ('client_text', 1, 0, 'text', 'Client', None, cell_text_style),
+            ('client_value', 4, 0, 'text', project_id.partner_id.display_name,
+             None, cell_value_style),
+        ]
+        row_data = self.xls_row_template(
+            c_specs, [x[0] for x in c_specs])
+        row_pos = self.xls_write_row(ws, row_pos, row_data)
+        c_specs = [
+            ('address_text', 1, 0, 'text', 'Address', None, cell_text_style),
+            ('address_value', 4, 0, 'text',
+             ' '.join(list(filter(lambda l: l is not False,
+                                  [project_id.partner_id.street,
+                                   project_id.partner_id.street2]))),
+             None, cell_value_style),
+            ('tel_text', 1, 0, 'text', 'Tel.', None, cell_text_style),
+            ('tel_value', 1, 0, 'text', project_id.partner_id.phone, None,
+             cell_value_style),
+            ('fax_text', 1, 0, 'text', 'Fax', None, cell_text_style),
+            ('fax_value', 1, 0, 'text', project_id.partner_id.fax, None,
+             cell_value_style),
+        ]
+        row_data = self.xls_row_template(
+            c_specs, [x[0] for x in c_specs])
+        row_pos = self.xls_write_row(ws, row_pos, row_data)
+        c_specs = [
+            ('contract_person_text', 1, 0, 'text', 'Contact Person', None,
+             cell_text_style),
+            ('contract_person_value', 4, 0, 'text',
+             ', '.join([l.display_name
+                        for l in project_id.partner_id.child_ids]), None,
+             cell_value_style),
+            ('mobile_text', 1, 0, 'text', 'Mobile.', None, cell_text_style),
+            ('mobile_value', 1, 0, 'text', project_id.partner_id.mobile, None,
+             cell_value_style),
+            ('email_text', 1, 0, 'text', 'E-Mail', None, cell_text_style),
+            ('email_value', 1, 0, 'text', project_id.partner_id.email, None,
+             cell_value_style),
+        ]
+        row_data = self.xls_row_template(
+            c_specs, [x[0] for x in c_specs])
+        row_pos = self.xls_write_row(ws, row_pos, row_data)
+        # Insert checkbox
+        ws.insert_bitmap(
+            '%s/static/description/checkbox.bmp' % report_dir, row_pos + 1, 0,
+            x=400, y=1, scale_x=0.5, scale_y=0.5
+        )
+        ws.insert_bitmap(
+            '%s/static/description/checkbox.bmp' % report_dir, row_pos + 1, 5,
+            x=120, y=1, scale_x=0.5, scale_y=0.5
+        )
+        c_specs = [
+            ('approved_value', 1, 0, 'text', None),
+            ('approved_text', 4, 0, 'text', 'Approved'),
+            ('below_standard_value', 1, 0, 'text', None),
+            ('below_standard_text', 1, 0, 'text', 'Below Standard'),
+        ]
+        row_data = self.xls_row_template(
+            c_specs, [x[0] for x in c_specs])
+        row_pos = self.xls_write_row(ws, row_pos + 1, row_data)
+        c_specs = [
+            ('space_1', 1, 0, 'text', None),
+            ('signature_value_1', 4, 0, 'text', None, None, cell_value_style),
+            ('space_2', 1, 0, 'text', None),
+            ('signature_value_2', 2, 0, 'text', None, None, cell_value_style),
+        ]
+        row_data = self.xls_row_template(
+            c_specs, [x[0] for x in c_specs])
+        row_pos = self.xls_write_row(ws, row_pos + 1, row_data)
+        c_specs = [
+            ('space_1', 1, 0, 'text', None),
+            ('signature_text_1', 4, 0, 'text',
+             '(%s)' % department.manager_id.display_name, None,
+             cell_center_style),
+            ('space_2', 1, 0, 'text', None),
+            ('signature_text_2', 2, 0, 'text', '(Sermkhun Kunawong)', None,
+             cell_center_style),
+        ]
+        row_data = self.xls_row_template(
+            c_specs, [x[0] for x in c_specs])
+        row_pos = self.xls_write_row(ws, row_pos, row_data)
 
     def generate_xls_report(self, _p, _xs, data, objects, wb):
         # wl_ccs = _p.wanted_list_cost_control_sheet
