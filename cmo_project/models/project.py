@@ -291,6 +291,20 @@ class ProjectProject(models.Model):
         string='Adjustment',
         compute='_compute_adjustment_amount',
     )
+    invoice_open = fields.Float(
+        string='Invoice Open',
+        states={'close': [('readonly', True)]},
+        compute='_compute_invoice',
+        # store=True,
+        help="Sum of untaxed amount on IV / CN as state = open",
+    )
+    invoice_paid = fields.Float(
+        string='Invoice Paid',
+        states={'close': [('readonly', True)]},
+        compute='_compute_invoice',
+        # store=True,
+        help="Sum of untaxed amount on IV / CN as state = paid",
+    )
 
     # @api.model
     # def fields_view_get(self, view_id=None, view_type='form',
@@ -311,6 +325,28 @@ class ProjectProject(models.Model):
     #         root.set('edit', 'false')
     #         res['arch'] = etree.tostring(root)
     #     return res
+
+    @api.multi
+    def _compute_invoice_amount(self, invoice_lines, state):
+        self.ensure_one()
+        return sum(invoice_lines.filtered(
+            lambda l: l.invoice_id.type == 'out_invoice' and
+            l.invoice_id.state == state).mapped('price_subtotal')) - \
+            sum(invoice_lines.filtered(
+                lambda l: l.invoice_id.type == 'out_refund' and
+                l.invoice_id.state == state).mapped('price_subtotal'))
+
+    @api.multi
+    def _compute_invoice(self):
+        for project in self:
+            dom = [('invoice_id.type', 'in', ('out_invoice', 'out_refund')),
+                   ('account_analytic_id', '=',
+                    project.analytic_account_id.id)]
+            invoice_lines = self.env["account.invoice.line"].search(dom)
+            self.invoice_open = self._compute_invoice_amount(
+                invoice_lines, 'open')
+            self.invoice_paid = self._compute_invoice_amount(
+                invoice_lines, 'paid')
 
     @api.multi
     @api.depends('adjustment_ids')

@@ -393,6 +393,8 @@
                                 <field name="actual_po" readonly="1"/>
                                 <field name="expense" readonly="1"/>
                                 <field name="remaining_cost" readonly="1"/>
+                                <field name="invoice_open" readonly="1"/>
+                                <field name="invoice_paid" readonly="1"/>
                             </group>
                             <group>
                                 <field name="remain_advance" readonly="1"/>
