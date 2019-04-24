@@ -305,9 +305,6 @@ class ProjectProject(models.Model):
         # store=True,
         help="Sum of untaxed amount on IV / CN as state = paid",
     )
-    is_billing = fields.Boolean(
-        string='Billing',
-    )
 
     # @api.model
     # def fields_view_get(self, view_id=None, view_type='form',
