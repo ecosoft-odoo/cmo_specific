@@ -305,6 +305,9 @@ class ProjectProject(models.Model):
         # store=True,
         help="Sum of untaxed amount on IV / CN as state = paid",
     )
+    is_billing = fields.Boolean(
+        string='Billing',
+    )
 
     # @api.model
     # def fields_view_get(self, view_id=None, view_type='form',
@@ -343,9 +346,9 @@ class ProjectProject(models.Model):
                    ('account_analytic_id', '=',
                     project.analytic_account_id.id)]
             invoice_lines = self.env["account.invoice.line"].search(dom)
-            self.invoice_open = self._compute_invoice_amount(
+            project.invoice_open = project._compute_invoice_amount(
                 invoice_lines, 'open')
-            self.invoice_paid = self._compute_invoice_amount(
+            project.invoice_paid = project._compute_invoice_amount(
                 invoice_lines, 'paid')
 
     @api.multi
