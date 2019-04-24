@@ -343,9 +343,9 @@ class ProjectProject(models.Model):
                    ('account_analytic_id', '=',
                     project.analytic_account_id.id)]
             invoice_lines = self.env["account.invoice.line"].search(dom)
-            self.invoice_open = self._compute_invoice_amount(
+            project.invoice_open = project._compute_invoice_amount(
                 invoice_lines, 'open')
-            self.invoice_paid = self._compute_invoice_amount(
+            project.invoice_paid = project._compute_invoice_amount(
                 invoice_lines, 'paid')
 
     @api.multi
