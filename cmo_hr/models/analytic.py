@@ -11,8 +11,7 @@ class AccountAnalyticAccount(models.Model):
         if context.get('is_project_expense_line', False):
             operating_unit_ids = self.env.user.operating_unit_ids.ids
             project = self.env['project.project'].search([
-                ('state', 'not in',
-                    ['draft', 'pending', 'cancelled', 'close']),
+                ('close_project_by_accounting', '=', True),
                 ('operating_unit_id', 'in', operating_unit_ids)
             ])
             domain += [('id', 'in', project.mapped('analytic_account_id').ids)]

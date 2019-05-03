@@ -298,6 +298,7 @@
                         <group>
                             <field name="is_invoiced"/>
                             <field name="is_paid"/>
+                            <field name="close_project_by_accounting" groups="account.group_account_invoice"/>
                             <field name="hold_reason" attrs="{'invisible':[('state','not in','pending')]}"/>
                             <field name="close_reason" string="Close Reason" readonly="1" attrs="{'invisible': [('close_reason','=',False)]}"/>
                             <field name="lost_reason_id" readonly="1" attrs="{'invisible': [('close_reason','not in','lost')]}"/>

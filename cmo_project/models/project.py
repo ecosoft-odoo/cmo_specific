@@ -305,6 +305,9 @@ class ProjectProject(models.Model):
         # store=True,
         help="Sum of untaxed amount on IV / CN as state = paid",
     )
+    close_project_by_accounting = fields.Boolean(
+        string='Close Project by Accounting',
+    )
 
     # @api.model
     # def fields_view_get(self, view_id=None, view_type='form',
