@@ -177,7 +177,8 @@ class CostControlSheetReportXls(report_xls):
 
     def _report_column_header(self, ws, _p, row_pos, _xs, row_merge=1):
         cell_style = xlwt.easyxf(
-            'align: vertical center, horizontal center;' + _xs['bold'])
+            'align: vertical center, horizontal center;' + _xs['bold'] +
+            _xs['borders_all'])
         parent_titles = [
             {
                 'text': 'Description',
@@ -462,8 +463,8 @@ class CostControlSheetReportXls(report_xls):
         report_dir = os.path.dirname(
             os.path.dirname(os.path.realpath(__file__)))
         ws.insert_bitmap(
-            '%s/static/description/cmo.bmp' % report_dir, 0, 0, x=24,
-            scale_x=0.1, scale_y=0.25)
+            '%s/static/description/cmo.bmp' % report_dir, 0, 0, x=26.4, y=5,
+            scale_x=0.08, scale_y=0.5)
 
         # Merge row of logo
         ws.write_merge(row_pos, 2, 0, 0)
@@ -832,6 +833,10 @@ class CostControlSheetReportXls(report_xls):
                 gross_margin = '((B%s - F%s) / B%s) * 100' % \
                     (str(row_pos + 1), str(row_pos + 1),
                      str(row_pos + 1))
+                ws.write(row_pos, 0, '', style=self.an_cell_style)
+                ws.write(row_pos, 1, '', style=self.an_cell_style)
+                ws.write(row_pos, 2, '', style=self.an_cell_style)
+                ws.write(row_pos, 3, '', style=self.an_cell_style)
                 ws.write(
                     row_pos, 4, purchase_order.name,
                     style=self.an_cell_style)
@@ -878,6 +883,16 @@ class CostControlSheetReportXls(report_xls):
                  style=self.av_cell_style_decimal)
         ws.write(row_pos, 8, xlwt.Formula(sum_gross_margin),
                  style=self.av_cell_style_decimal)
+        row_pos += 1
+
+        # Space before expense section
+        c_specs = [
+            ('space', 9, 0, 'text', ''),
+        ]
+        row_data = self.xls_row_template(
+            c_specs, [x[0] for x in c_specs])
+        row_pos = self.xls_write_row(
+            ws, row_pos, row_data, row_style=self.an_cell_style)
 
         # Expense
         expense_line_ids = expense_line_obj.search(
@@ -900,8 +915,7 @@ class CostControlSheetReportXls(report_xls):
         row_data = self.xls_row_template(
             c_specs, [x[0] for x in c_specs])
         row_pos = self.xls_write_row(
-            ws, row_pos + 2, row_data,
-            row_style=cell_style)
+            ws, row_pos, row_data, row_style=cell_style)
         # Traveling expense
         c_specs = self._get_expense_specs(
             name='Traveling Expenses', price=['text', None, None])
@@ -1023,6 +1037,15 @@ class CostControlSheetReportXls(report_xls):
             row_style=cell_style)
         grand_total_po_price += ' + F%s' % (str(row_pos))
 
+        # Space before direct invoice section
+        c_specs = [
+            ('space', 9, 0, 'text', ''),
+        ]
+        row_data = self.xls_row_template(
+            c_specs, [x[0] for x in c_specs])
+        row_pos = self.xls_write_row(
+            ws, row_pos, row_data, row_style=self.an_cell_style)
+
         # Direct invoice
         invoice_line_ids = invoice_line_obj.search(
             cr, uid,
@@ -1042,8 +1065,7 @@ class CostControlSheetReportXls(report_xls):
         row_data = self.xls_row_template(
             c_specs, [x[0] for x in c_specs])
         row_pos = self.xls_write_row(
-            ws, row_pos + 1, row_data,
-            row_style=cell_style)
+            ws, row_pos, row_data, row_style=cell_style)
         invoice_pos = row_pos
         # Detail
         for line in invoice_lines:
@@ -1067,17 +1089,25 @@ class CostControlSheetReportXls(report_xls):
         row_data = self.xls_row_template(
             c_specs, [x[0] for x in c_specs])
         row_pos = self.xls_write_row(
-            ws, row_pos, row_data,
-            row_style=cell_style)
+            ws, row_pos, row_data, row_style=cell_style)
         grand_total_price += ' + B%s' % (str(row_pos))
+
+        # Space before grand total section
+        c_specs = [
+            ('space', 9, 0, 'text', ''),
+        ]
+        row_data = self.xls_row_template(
+            c_specs, [x[0] for x in c_specs])
+        row_pos = self.xls_write_row(
+            ws, row_pos, row_data, row_style=self.an_cell_style)
 
         # Grand total
         grand_total_percent_margin = 'B%s - C%s' % \
-            (str(row_pos + 2), str(row_pos + 2))
+            (str(row_pos + 1), str(row_pos + 1))
         grand_total_amount_margin = 'B%s - F%s' % \
-            (str(row_pos + 2), str(row_pos + 2))
+            (str(row_pos + 1), str(row_pos + 1))
         grand_total_gross_margin = '((B%s - F%s) / B%s) * 100' % \
-            (str(row_pos + 2), str(row_pos + 2), str(row_pos + 2))
+            (str(row_pos + 1), str(row_pos + 1), str(row_pos + 1))
         c_specs = [
             ('name', 1, 0, 'text',
              'Grand Total (Quotation, Direct Invoice, PO and Expenses)'),
@@ -1094,12 +1124,18 @@ class CostControlSheetReportXls(report_xls):
         row_data = self.xls_row_template(
             c_specs, [x[0] for x in c_specs])
         row_pos = self.xls_write_row(
-            ws, row_pos + 1, row_data,
-            row_style=self.av_cell_style_decimal)
+            ws, row_pos, row_data, row_style=self.av_cell_style_decimal)
 
         # --
         if project_id.adjustment_ids:
-            row_pos += 2
+            # Space before adjustment section
+            c_specs = [
+                ('space', 9, 0, 'text', ''),
+            ]
+            row_data = self.xls_row_template(
+                c_specs, [x[0] for x in c_specs])
+            row_pos = self.xls_write_row(
+                ws, row_pos, row_data, row_style=self.an_cell_style)
             adjustment_obj = self.pool.get('project.adjustment')
             ws.write(
                 row_pos, 0, 'Adjustment', style=self.av_cell_style_decimal)
@@ -1119,6 +1155,8 @@ class CostControlSheetReportXls(report_xls):
                     row_pos, 1,
                     adjustment_line.amount,
                     style=self.an_cell_style_decimal)
+                for i in range(2, 9):
+                    ws.write(row_pos, i, '', style=self.an_cell_style)
                 row_pos += 1
             ws.write(
                 row_pos, 0, 'Total Adjustment',
