@@ -305,7 +305,7 @@ class ProjectProject(models.Model):
         # store=True,
         help="Sum of untaxed amount on IV / CN as state = paid",
     )
-    close_project_by_accounting = fields.Boolean(
+    close_project = fields.Boolean(
         string='Close Project by Accounting',
     )
 
