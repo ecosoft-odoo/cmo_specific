@@ -149,7 +149,7 @@ class PurchaseOrder(models.Model):
     def _get_domain_project(self):
         operating_unit_ids = self.env.user.operating_unit_ids.ids
         domain = [
-            ('close_project', '=', True),
+            ('close_project', '=', False),
             ('operating_unit_id', 'in', operating_unit_ids),
         ]
         return domain

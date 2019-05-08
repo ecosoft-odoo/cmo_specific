@@ -52,7 +52,7 @@ class SaleOrder(models.Model):
         'project.project',
         string='Project',
         states={'done': [('readonly', True)]},
-        domain=[('close_project', '=', True)],
+        domain=[('close_project', '=', False)],
         required=True,
         index=True,
     )
