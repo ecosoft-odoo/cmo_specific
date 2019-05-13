@@ -9,13 +9,13 @@
                 <xpath expr="//header/button[@name='confirm']" position="attributes">
                     <attribute name="string">Submit To Approval</attribute>
                     <attribute name="states"></attribute>
-                    <attribute name="attrs">{'invisible': ['|', ('state', 'not in', ['draft']), ('hide_confirm_button', '=', True)]}</attribute>
+                    <attribute name="attrs">{'invisible': ['|', ('state', 'not in', ['draft']), ('hide_button', '=', True)]}</attribute>
                 </xpath>
                 <xpath expr="//header/button[@name='confirm']" position="after">
                     <button name="accepted"
                             type="workflow"
                             string="Validate"
-                            states="validate"
+                            attrs="{'invisible': ['|', ('state', 'not in', ['validate']), ('hide_button', '=', True)]}"
                             groups="base.group_hr_manager,base.group_hr_user,account.group_account_manager"
                             />
                 </xpath>
@@ -29,7 +29,7 @@
                 <field name="name" position="before">
                     <field name="approver_ids" widget="many2many_tags" readonly="1"/>
                     <field name="approve_permission" invisible="1"/>
-                    <field name="hide_confirm_button" invisible="1"/>
+                    <field name="hide_button" invisible="1"/>
                 </field>
                 <xpath expr="//field[@name='line_ids']/tree/field[@name='unit_amount']" position="after">
                     <field name="expense_state" invisible="1"/>
@@ -50,7 +50,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//button[@name='%(hr_expense_cancel_reason.action_hr_expense_cancel)d']" position="attributes">
                     <attribute name="states"></attribute>
-                    <attribute name="attrs">{'invisible':[('state', 'not in', ('validate'))]}</attribute>
+                    <attribute name="attrs">{'invisible':['|', ('state', 'not in', ('validate')), ('hide_button', '=', True)]}</attribute>
                     <attribute name="groups">base.group_hr_user,base.group_hr_manager</attribute>
                 </xpath>
                 <xpath expr="//button[@name='%(hr_expense_cancel_reason.action_hr_expense_cancel)d']" position="after">
