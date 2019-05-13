@@ -308,6 +308,9 @@ class ProjectProject(models.Model):
     close_project = fields.Boolean(
         string='Close Project by Accounting',
     )
+    is_group_afreport = fields.Boolean(
+        compute='_compute_is_group_afreport',
+    )
 
     # @api.model
     # def fields_view_get(self, view_id=None, view_type='form',
@@ -328,6 +331,12 @@ class ProjectProject(models.Model):
     #         root.set('edit', 'false')
     #         res['arch'] = etree.tostring(root)
     #     return res
+
+    @api.multi
+    def _compute_is_group_afreport(self):
+        if self.env.user.has_group('account_financial_report.group_afreport'):
+            for rec in self:
+                rec.is_group_afreport = True
 
     @api.multi
     def _compute_invoice_amount(self, invoice_lines, state):
