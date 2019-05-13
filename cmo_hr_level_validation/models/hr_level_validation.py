@@ -45,6 +45,10 @@ class HrExpenseExpense(models.Model):
         'Show Document',
         copy=False,
     )
+    hide_confirm_button = fields.Boolean(
+        string='Hide Confirm Button',
+        compute='_compute_hide_confirm_button',
+    )
 
     @api.multi
     def expense_confirm(self):
@@ -222,3 +226,19 @@ class HrExpenseExpense(models.Model):
         return super(HrExpenseExpense, self).fields_view_get(
             view_id=view_id, view_type=view_type, toolbar=toolbar,
             submenu=submenu)
+
+    @api.multi
+    def _compute_hide_confirm_button(self):
+        """
+        Condition for hide submit to approval
+        1. User's OU = Internal Audit and User's OU != Doc's OU
+        """
+        OperatingUnit = self.env['operating.unit']
+        operating_units = OperatingUnit.search(
+            [('name', 'in', ['Internal Audit'])])
+        default_operating_unit = self.env.user.default_operating_unit_id
+        if default_operating_unit.id not in operating_units.ids:
+            return
+        for rec in self:
+            if rec.operating_unit_id != default_operating_unit:
+                rec.hide_confirm_button = True
