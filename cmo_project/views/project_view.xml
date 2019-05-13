@@ -298,8 +298,9 @@
                         <group>
                             <field name="is_invoiced"/>
                             <field name="is_paid"/>
-                            <label for="close_project" groups="account.group_account_invoice"/>
-                            <div groups="account.group_account_invoice">
+                            <field name="is_group_afreport" invisible="1"/>
+                            <label for="close_project" attrs="{'invisible': [('is_group_afreport', '=', False)]}" groups="account.group_account_user"/>
+                            <div attrs="{'invisible': [('is_group_afreport', '=', False)]}" groups="account.group_account_user">
                                 <field name="close_project" class="oe_inline"/>
                                 <button name="%(action_change_close_project)d" type="action" always_show="1"
                                     class="oe_inline oe_link"
