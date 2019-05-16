@@ -107,7 +107,7 @@ class sale_order(models.Model):
             order.amount_untaxed = cur.round(amount_untaxed)
             order.amount_tax = cur.round(amount_tax)
             order.amount_discount = cur.round(amount_discount)
-            order.amount_total = amount_untaxed + amount_tax
+            order.amount_total = order.amount_untaxed + order.amount_tax
             order.amount_before_discount = amount_before_discount
 
     @api.multi
