@@ -28,7 +28,8 @@ class AccountInvoice(models.Model):
                 self._context.get('type', False) == 'out_invoice' and\
                 self._context.get('journal_type', False) == 'sale':
             reports = [
-                u'cmo.customer.invoice',
+                u'cmo.customer.invoice.en',
+                u'cmo.customer.invoice.th',
                 u'cmo.customer.invoice2.en',
                 u'cmo.customer.invoice2.th',
                 u'cmo.sale.daybook',
