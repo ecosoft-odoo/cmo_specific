@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_sale_order_eng" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0000000000000004"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="950"/>
+	<property name="ireport.y" value="834"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;order_line&quot;]"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<parameter name="parameter1" class="java.lang.String"/>
@@ -486,7 +486,7 @@ $F{quote_id} : $F{name}]]></textFieldExpression>
 		<band splitType="Prevent"/>
 	</lastPageFooter>
 	<summary>
-		<band height="802" splitType="Immediate">
+		<band height="920" splitType="Immediate">
 			<textField>
 				<reportElement x="16" y="172" width="537" height="308"/>
 				<box topPadding="3"/>
@@ -495,8 +495,8 @@ $F{quote_id} : $F{name}]]></textFieldExpression>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Term of Payment}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement x="16" y="500" width="537" height="64"/>
+			<textField>
+				<reportElement x="16" y="500" width="537" height="180"/>
 				<box topPadding="3"/>
 				<textElement verticalAlignment="Top">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
@@ -520,28 +520,28 @@ $F{quote_id} : $F{name}]]></textFieldExpression>
 " 3) หมายเหตุ ในกรณีมีการยกเลิกการจัดงาน"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="337" y="630" width="160" height="20"/>
+				<reportElement positionType="Float" x="337" y="750" width="160" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["("+ $F{approval} +")"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" x="121" y="703" width="300" height="20"/>
+				<reportElement positionType="Float" x="121" y="823" width="300" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{customer}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="49" y="630" width="160" height="20"/>
+				<reportElement positionType="Float" x="49" y="750" width="160" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["("+ $F{sale person}+ ")"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" x="103" y="675" width="336" height="20"/>
+				<reportElement positionType="Float" x="103" y="795" width="336" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -549,7 +549,7 @@ $F{quote_id} : $F{name}]]></textFieldExpression>
 "ข้าพเจ้าตกลงและยอมรับตามรายละเอียดและเงื่อนไขที่ปรากฎในใบเสนอราคานี้"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="188" y="739" width="177" height="20"/>
+				<reportElement positionType="Float" x="188" y="859" width="177" height="20"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -559,7 +559,7 @@ $F{quote_id} : $F{name}]]></textFieldExpression>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<textField>
-				<reportElement positionType="Float" x="145" y="568" width="256" height="20"/>
+				<reportElement positionType="Float" x="145" y="688" width="256" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -567,7 +567,7 @@ $F{quote_id} : $F{name}]]></textFieldExpression>
 "ในนาม บริษัท ซีเอ็มโอ จำกัด (มหาชน)"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="FixRelativeToBottom" x="141" y="780" width="45" height="20"/>
+				<reportElement positionType="FixRelativeToBottom" x="141" y="900" width="45" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -575,7 +575,7 @@ $F{quote_id} : $F{name}]]></textFieldExpression>
 "วันที่"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="42" y="610" width="177" height="20"/>
+				<reportElement positionType="Float" x="42" y="730" width="177" height="20"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -585,7 +585,7 @@ $F{quote_id} : $F{name}]]></textFieldExpression>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="FixRelativeToBottom" x="188" y="779" width="177" height="20"/>
+				<reportElement positionType="FixRelativeToBottom" x="188" y="899" width="177" height="20"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -595,14 +595,14 @@ $F{quote_id} : $F{name}]]></textFieldExpression>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="218" y="759" width="110" height="20"/>
+				<reportElement positionType="Float" x="218" y="879" width="110" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[ Authorized Signatory]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="332" y="609" width="177" height="20"/>
+				<reportElement positionType="Float" x="332" y="729" width="177" height="20"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -704,14 +704,14 @@ $F{quote_id} : $F{name}]]></textFieldExpression>
 				<reportElement isPrintRepeatedValues="false" x="0" y="141" width="100" height="1"/>
 			</break>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="49" y="646" width="160" height="20"/>
+				<reportElement positionType="Float" x="49" y="766" width="160" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{sale_position}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="337" y="646" width="160" height="20"/>
+				<reportElement positionType="Float" x="337" y="766" width="160" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
