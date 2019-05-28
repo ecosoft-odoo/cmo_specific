@@ -307,6 +307,7 @@ class ProjectProject(models.Model):
     )
     close_project = fields.Boolean(
         string='Close Project by Accounting',
+        copy=False,
     )
     is_group_afreport = fields.Boolean(
         compute='_compute_is_group_afreport',
