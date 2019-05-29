@@ -10,6 +10,7 @@
     'depends': [
         'purchase',
         'purchase_operating_unit',
+        'purchase_invoice_plan',
         'cmo_level_validation',
         'cmo_project',
     ],

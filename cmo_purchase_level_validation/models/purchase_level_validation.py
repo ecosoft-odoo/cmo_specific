@@ -137,3 +137,38 @@ class PurchaseOrder(models.Model):
     def _compute_approve_permission(self):
         for order in self:
             order.approve_permission = self.env.user in order.approver_ids
+
+    @api.multi
+    def action_cancel_draft(self):
+        res = super(PurchaseOrder, self).action_cancel_draft()
+        self._check_extra_permission(type="set to draft")
+        return res
+
+    @api.multi
+    def wkf_action_cancel(self):
+        super(PurchaseOrder, self).wkf_action_cancel()
+        self._check_extra_permission(type="force cancel")
+
+    @api.multi
+    def action_cancel(self):
+        res = super(PurchaseOrder, self).action_cancel()
+        self._check_extra_permission(type="cancel")
+        return res
+
+    @api.multi
+    def _check_extra_permission(self, type=""):
+        """
+        This method check for user's permission in managing document.
+        """
+        self.ensure_one()
+        OperatingUnit = self.env['operating.unit']
+        operating_units = OperatingUnit.search(
+            [('name', '=', 'Internal Audit')])
+        default_operating_unit = self.env.user.default_operating_unit_id
+        # Check that user is internal audit
+        if default_operating_unit.id in operating_units.ids:
+            # The user has not permission in all doc except their doc
+            if self.operating_unit_id != default_operating_unit:
+                raise ValidationError(
+                    _("You are not allowed %s this document "
+                      "with difference OU." % (type)))
