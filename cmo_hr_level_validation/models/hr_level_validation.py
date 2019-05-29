@@ -52,6 +52,7 @@ class HrExpenseExpense(models.Model):
         if self.employee_id.user_id.id != self.env.user.id and not \
                 self.env.user.has_group('base.group_erp_manager'):
             raise ValidationError(_("Not permission to sent this file."))
+        self._check_extra_permission(type="submit to approval")
         return res
 
     @api.multi
@@ -209,6 +210,7 @@ class HrExpenseExpense(models.Model):
         if hr_products and self.env.user not in group_hr.users:
             raise ValidationError(
                 _("You are not allowed to validate document with HR Product."))
+        self._check_extra_permission(type="validate")
         return res
 
     @api.model
@@ -222,3 +224,22 @@ class HrExpenseExpense(models.Model):
         return super(HrExpenseExpense, self).fields_view_get(
             view_id=view_id, view_type=view_type, toolbar=toolbar,
             submenu=submenu)
+
+    @api.multi
+    def _check_extra_permission(self, type=""):
+        """
+        This method check for user's permission in managing document.
+        """
+        self.ensure_one()
+        OperatingUnit = self.env['operating.unit']
+        operating_units = OperatingUnit.search(
+            [('name', '=', 'Internal Audit')])
+        default_operating_unit = self.env.user.default_operating_unit_id
+        # Check that user is internal audit
+        if default_operating_unit.id in operating_units.ids:
+            # The user has not permission in all doc except their doc
+            if self.operating_unit_id != default_operating_unit:
+                raise ValidationError(
+                    _("You are not allowed %s this document "
+                      "with difference OU." % (type)))
+        return True
