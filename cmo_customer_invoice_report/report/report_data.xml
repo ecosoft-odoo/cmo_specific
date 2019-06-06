@@ -131,13 +131,14 @@
            <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_customer_invoice2_th)"/>
         </record>
 
-        <record id="cmo_receipt_tax_invoice_peo" model="ir.actions.report.xml">
-           <field name="string">Receipt/Tax Invoice (PEO)</field>
+        <!-- Receipt/Tax Invoice (PEO EN) -->
+        <record id="cmo_receipt_tax_invoice_peo_en" model="ir.actions.report.xml">
+           <field name="string">Receipt/Tax Invoice (PEO EN)</field>
            <field name="auto">True</field>
            <field name="model">account.invoice</field>
            <field name="jasper_model_id" ref="account.model_account_invoice"/>
-           <field name="name">Receipt/Tax Invoice (PEO)</field>
-           <field name="report_name">cmo.receipt.tax.invoice.peo</field>
+           <field name="name">Receipt/Tax Invoice (PEO EN)</field>
+           <field name="report_name">cmo.receipt.tax.invoice.peo.en</field>
            <field name="report_rml">cmo_customer_invoice_report/report/cmo_receipt_tax_invoice_peo.jrxml</field>
            <field name="force_locale">en_US</field>
            <field name="menu">True</field>
@@ -145,11 +146,33 @@
            <field name="jasper_report">True</field>
            <field name="jasper_output">pdf</field>
         </record>
-        <record id="cmo_receipt_tax_invoice_peo_values" model="ir.values">
-           <field name="name">Receipt/Tax Invoice (PEO)</field>
+        <record id="cmo_receipt_tax_invoice_peo_en_values" model="ir.values">
+           <field name="name">Receipt/Tax Invoice (PEO EN)</field>
            <field name="model">account.invoice</field>
            <field name="key2" eval="'client_print_multi'"/>
-           <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_receipt_tax_invoice_peo)"/>
+           <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_receipt_tax_invoice_peo_en)"/>
+        </record>
+
+        <!-- Receipt/Tax Invoice (PEO TH) -->
+        <record id="cmo_receipt_tax_invoice_peo_th" model="ir.actions.report.xml">
+           <field name="string">Receipt/Tax Invoice (PEO TH)</field>
+           <field name="auto">True</field>
+           <field name="model">account.invoice</field>
+           <field name="jasper_model_id" ref="account.model_account_invoice"/>
+           <field name="name">Receipt/Tax Invoice (PEO TH)</field>
+           <field name="report_name">cmo.receipt.tax.invoice.peo.th</field>
+           <field name="report_rml">cmo_customer_invoice_report/report/cmo_receipt_tax_invoice_peo.jrxml</field>
+           <field name="force_locale">th_TH</field>
+           <field name="menu">True</field>
+           <field name="header">False</field>
+           <field name="jasper_report">True</field>
+           <field name="jasper_output">pdf</field>
+        </record>
+        <record id="cmo_receipt_tax_invoice_peo_th_values" model="ir.values">
+           <field name="name">Receipt/Tax Invoice (PEO TH)</field>
+           <field name="model">account.invoice</field>
+           <field name="key2" eval="'client_print_multi'"/>
+           <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_receipt_tax_invoice_peo_th)"/>
         </record>
 
         <!-- Receipt/Tax Invoice (EN) -->

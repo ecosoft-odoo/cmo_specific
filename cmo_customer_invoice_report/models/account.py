@@ -33,7 +33,8 @@ class AccountInvoice(models.Model):
                 u'cmo.customer.invoice2.en',
                 u'cmo.customer.invoice2.th',
                 u'cmo.sale.daybook',
-                u'cmo.receipt.tax.invoice.peo',
+                u'cmo.receipt.tax.invoice.peo.en',
+                u'cmo.receipt.tax.invoice.peo.th',
                 u'cmo.receipt',
             ]
             filter_print_report(res, reports)
