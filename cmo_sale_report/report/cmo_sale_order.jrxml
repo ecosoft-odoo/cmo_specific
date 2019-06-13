@@ -654,14 +654,14 @@ $F{quote_id} : $F{name}]]></textFieldExpression>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{REPORT_LOCALE}.toString() == "en_US" ? "Amount Before Discount :" : "ราคารวมก่อนหักส่วนลด :"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[($F{discount rate} > 0.0) == true ? $P{REPORT_LOCALE}.toString() == "en_US" ? "Amount Before Discount :" : "ราคารวมก่อนหักส่วนลด :" : null]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement isPrintRepeatedValues="false" x="309" y="40" width="110" height="20" isRemoveLineWhenBlank="true" printWhenGroupChanges="Custom"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{REPORT_LOCALE}.toString() == "en_US" ? "Special Discount :" : "ส่วนลดทั้งหมด :"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[($F{discount rate} > 0.0) == true ? $P{REPORT_LOCALE}.toString() == "en_US" ? "Special Discount :" : "ส่วนลดทั้งหมด :" : null]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement isPrintRepeatedValues="false" x="309" y="60" width="110" height="20" printWhenGroupChanges="Custom"/>
