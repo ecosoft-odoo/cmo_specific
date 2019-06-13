@@ -635,7 +635,9 @@ class CostControlSheetReportXls(report_xls):
                     ws.write(
                         row_pos - 1, 7, xlwt.Formula(amount_margin),
                         style=self.an_cell_style_decimal)
-                    ws.write(row_pos - 1, 8, xlwt.Formula(gross_margin),
+                    ws.write(row_pos - 1, 8,
+                             xlwt.Formula('IF(ISERROR(%s), 0, %s)' %
+                                          (gross_margin, gross_margin)),
                              style=self.an_cell_style_decimal)
                     i += 1
 
@@ -646,7 +648,9 @@ class CostControlSheetReportXls(report_xls):
                         (str(row_pos), str(row_pos), str(row_pos))
                     ws.write(row_pos - 1, 7, xlwt.Formula(amount_margin),
                              style=self.an_cell_style_decimal)
-                    ws.write(row_pos - 1, 8, xlwt.Formula(gross_margin),
+                    ws.write(row_pos - 1, 8,
+                             xlwt.Formula('IF(ISERROR(%s), 0, %s)' %
+                                          (gross_margin, gross_margin)),
                              style=self.an_cell_style_decimal)
             elif entry[0] == 'discount':
                 c_specs = [
@@ -719,7 +723,8 @@ class CostControlSheetReportXls(report_xls):
                     ('amount_margin', 1, 0, 'number', None,
                      sum_section_amount_margin),
                     ('gross_margin', 1, 0, 'number', None,
-                     sum_section_gross_margin),
+                     'IF(ISERROR(%s), 0, %s)' %
+                     (sum_section_gross_margin, sum_section_gross_margin)),
                 ]
                 row_data = self.xls_row_template(
                     c_specs, [x[0] for x in c_specs])
@@ -762,7 +767,9 @@ class CostControlSheetReportXls(report_xls):
                     ('amount_margin', 1, 0, 'number', None,
                      sum_custom_group_amount_margin),
                     ('gross_margin', 1, 0, 'number', None,
-                     sum_custom_group_gross_margin),
+                     'IF(ISERROR(%s), 0, %s)' %
+                     (sum_custom_group_gross_margin,
+                      sum_custom_group_gross_margin)),
                 ]
                 row_data = self.xls_row_template(
                     c_specs, [x[0] for x in c_specs])
@@ -803,7 +810,8 @@ class CostControlSheetReportXls(report_xls):
                     ('amount_margin', 1, 0, 'number', None,
                      sum_quote_amount_margin),
                     ('gross_margin', 1, 0, 'number', None,
-                     sum_quote_gross_margin),
+                     'IF(ISERROR(%s), 0, %s)' %
+                     (sum_quote_gross_margin, sum_quote_gross_margin)),
                 ]
                 row_data = self.xls_row_template(
                     c_specs, [x[0] for x in c_specs])
@@ -850,7 +858,9 @@ class CostControlSheetReportXls(report_xls):
                     row_pos, 7, xlwt.Formula(amount_margin),
                     style=self.an_cell_style_decimal)
                 ws.write(
-                    row_pos, 8, xlwt.Formula(gross_margin),
+                    row_pos, 8,
+                    xlwt.Formula('IF(ISERROR(%s), 0, %s)' %
+                                 (gross_margin, gross_margin)),
                     style=self.an_cell_style_decimal)
                 row_pos += 1
                 total_po_price.append('F%s' % (str(row_pos)))
@@ -881,7 +891,9 @@ class CostControlSheetReportXls(report_xls):
         ws.write(row_pos, 6, '', style=self.av_cell_style_decimal)
         ws.write(row_pos, 7, xlwt.Formula(sum_amount_margin),
                  style=self.av_cell_style_decimal)
-        ws.write(row_pos, 8, xlwt.Formula(sum_gross_margin),
+        ws.write(row_pos, 8,
+                 xlwt.Formula('IF(ISERROR(%s), 0, %s)' %
+                              (sum_gross_margin, sum_gross_margin)),
                  style=self.av_cell_style_decimal)
         row_pos += 1
 
@@ -1119,7 +1131,9 @@ class CostControlSheetReportXls(report_xls):
             ('purchase_price', 1, 0, 'number', None, grand_total_po_price),
             ('purchase_note', 1, 0, 'text', None),
             ('amount_margin', 1, 0, 'number', None, grand_total_amount_margin),
-            ('gross_margin', 1, 0, 'number', None, grand_total_gross_margin),
+            ('gross_margin', 1, 0, 'number', None,
+             'IF(ISERROR(%s), 0, %s)' %
+             (grand_total_gross_margin, grand_total_gross_margin)),
         ]
         row_data = self.xls_row_template(
             c_specs, [x[0] for x in c_specs])
