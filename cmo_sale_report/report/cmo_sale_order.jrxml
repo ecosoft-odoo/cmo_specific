@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_sale_order_eng" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0000000000000004"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="258"/>
+	<property name="ireport.y" value="305"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;order_line&quot;]"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<parameter name="parameter1" class="java.lang.String"/>
@@ -87,7 +87,7 @@
 	<field name="amount discount" class="java.lang.Number">
 		<fieldDescription><![CDATA[amount_discount]]></fieldDescription>
 	</field>
-	<field name="discount rate" class="java.lang.Float">
+	<field name="discount rate" class="java.lang.Number">
 		<fieldDescription><![CDATA[discount_rate]]></fieldDescription>
 	</field>
 	<field name="custom_group" class="java.lang.String">
@@ -654,16 +654,14 @@ $F{quote_id} : $F{name}]]></textFieldExpression>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[($F{discount rate} <= 0.0) == true ? $P{REPORT_LOCALE}.toString() == "en_US" ? "Amount Before Discount :" :
-"ราคารวมก่อนหักส่วนลด :" : null]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[($F{discount rate} > 0.0) == true ? $P{REPORT_LOCALE}.toString() == "en_US" ? "Amount Before Discount :" : "ราคารวมก่อนหักส่วนลด :" : null]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement isPrintRepeatedValues="false" x="309" y="40" width="110" height="20" isRemoveLineWhenBlank="true" printWhenGroupChanges="Custom"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[($F{discount rate} <= 0.0) == true ? $P{REPORT_LOCALE}.toString() == "en_US" ? "Special Discount :" :
-"ส่วนลดทั้งหมด :" : null]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[($F{discount rate} > 0.0) == true ? $P{REPORT_LOCALE}.toString() == "en_US" ? "Special Discount :" : "ส่วนลดทั้งหมด :" : null]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement isPrintRepeatedValues="false" x="309" y="60" width="110" height="20" printWhenGroupChanges="Custom"/>
