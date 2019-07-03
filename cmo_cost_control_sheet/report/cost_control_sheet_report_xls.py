@@ -508,7 +508,7 @@ class CostControlSheetReportXls(report_xls):
 
         row_pos = self._report_column_header(ws, _p, row_pos, _xs)
 
-        quote_ids = project_id.quote_related_ids
+        quote_ids = project_id.quote_related_ids.sorted(lambda l: l.name)
         entries = []
         for quote_id in quote_ids:
             # No need quotation as state is cancel for no po
