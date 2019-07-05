@@ -292,8 +292,8 @@ class CostControlSheetReportXls(report_xls):
                     "SELECT sale_layout_cat_id, COUNT(id) "
                     "FROM sale_order_line "
                     "WHERE order_id = %s AND order_lines_group = 'before' %s"
-                    "GROUP BY order_lines_group, sale_layout_cat_id "
-                    "ORDER BY order_lines_group, sale_layout_cat_id"
+                    "GROUP BY sale_layout_cat_id "
+                    "ORDER BY sale_layout_cat_id"
                     % (quote_id.id,
                        self._extra_sql_where(sale_order_line_ref_ids)))
             else:
@@ -301,11 +301,14 @@ class CostControlSheetReportXls(report_xls):
                     "SELECT sale_layout_cat_id, COUNT(id) "
                     "FROM sale_order_line "
                     "WHERE order_id = %s %s "
-                    "GROUP BY order_lines_group, sale_layout_cat_id "
-                    "ORDER BY order_lines_group, sale_layout_cat_id"
+                    "GROUP BY sale_layout_cat_id "
+                    "ORDER BY sale_layout_cat_id"
                     % (quote_id.id,
                        self._extra_sql_where(sale_order_line_ref_ids)))
-            section_ids = [x[0] for x in cr.fetchall()]
+            # order by before, management respectively
+            section_ids = section_obj.browse(
+                cr, uid, [x[0] for x in cr.fetchall()], context=context) \
+                .sorted(lambda l: (l.management_fee, l.name)).ids
             for section_id in section_ids:
                 section_id = section_obj.browse(
                     cr, uid, section_id, context=context)
