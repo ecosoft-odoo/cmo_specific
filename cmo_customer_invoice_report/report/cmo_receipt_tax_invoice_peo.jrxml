@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_receipt_tax_invoice_peo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
 	<property name="ireport.zoom" value="0.8264462809917359"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="352"/>
+	<property name="ireport.y" value="365"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line&quot;]"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
@@ -149,9 +149,9 @@ null:"DRAFT"]]></textFieldExpression>
 		<band height="176"/>
 	</pageFooter>
 	<lastPageFooter>
-		<band height="347">
+		<band height="325">
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="441" y="131" width="162" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement mode="Transparent" x="441" y="108" width="162" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 				<box leftPadding="5" rightPadding="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="11" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
@@ -159,7 +159,7 @@ null:"DRAFT"]]></textFieldExpression>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{amount_untaxed} != null ? $F{amount_untaxed} : 0]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="441" y="157" width="162" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement mode="Transparent" x="441" y="134" width="162" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 				<box leftPadding="5" rightPadding="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="11" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
@@ -167,7 +167,7 @@ null:"DRAFT"]]></textFieldExpression>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{amount_tax} != null ? $F{amount_tax} : 0]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="441" y="185" width="162" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement mode="Transparent" x="441" y="162" width="162" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 				<box leftPadding="5" rightPadding="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="11" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
@@ -175,7 +175,7 @@ null:"DRAFT"]]></textFieldExpression>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{amount_total} != null ? $F{amount_total} : 0]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="29" y="173" width="362" height="38"/>
+				<reportElement x="29" y="150" width="362" height="38"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="11" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
