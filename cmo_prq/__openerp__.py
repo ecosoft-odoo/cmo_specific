@@ -12,6 +12,7 @@
         'purchase_invoice_plan',
         'hr_expense_auto_invoice',
         'operating_unit',
+        'cmo_purchase_level_validation',
     ],
     'data': [
         'security/ir.model.access.csv',

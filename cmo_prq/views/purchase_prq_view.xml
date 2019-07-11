@@ -50,8 +50,8 @@
                 <form string="PRQ Sheet" create="0" edit="1">
                     <header>
                         <button name="action_draft" string="Set to Draft" type="object" states="approve,done,reject" groups="cmo_prq.group_prq_approver"/>
-                        <button name="action_approve" string="Approve" type="object" states="draft" class="oe_highlight" groups="cmo_prq.group_prq_approver"/>
-                        <button name="action_reject" string="Reject" type="object" states="draft" groups="cmo_prq.group_prq_approver"/>
+                        <button name="action_approve" string="Approve" type="object" attrs="{'invisible': ['|', ('approve_permission', '=', False), ('state', 'not in', ['draft'])]}" class="oe_highlight" groups="cmo_prq.group_prq_approver"/>
+                        <button name="action_reject" string="Reject" type="object" attrs="{'invisible': ['|', ('approve_permission', '=', False), ('state', 'not in', ['draft'])]}" groups="cmo_prq.group_prq_approver"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,approve,done,reject"/>
                     </header>
                     <sheet>
@@ -72,6 +72,7 @@
                                 <field name="approve_user_id"/>
                                 <field name="date"/>
                                 <field name="date_approve" widget="date"/>
+                                <field name="approve_permission" invisible="1"/>
                             </group>
                         </group>
                         <notebook colspan="4">

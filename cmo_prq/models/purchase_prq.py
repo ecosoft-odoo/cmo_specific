@@ -169,6 +169,10 @@ class PurchasePRQ(models.Model):
         string='WHT amount',
         compute='_compute_cal_wht',
     )
+    approve_permission = fields.Boolean(
+        string='Approve Permission',
+        compute='_compute_approve_permission',
+    )
 
     @api.multi
     def _compute_cal_wht(self):
@@ -229,3 +233,8 @@ class PurchasePRQ(models.Model):
                                  fiscalyear_id=fiscalyear_id)
         vals['name'] = self.env['ir.sequence'].next_by_doctype()
         return super(PurchasePRQ, self).create(vals)
+
+    def _compute_approve_permission(self):
+        for rec in self:
+            rec.approve_permission = \
+                self.env.user in rec.purchase_id.approver_ids
