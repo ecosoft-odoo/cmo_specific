@@ -66,7 +66,7 @@ class ProjectCloseReason(models.TransientModel):
                  (project.state == "invoices"):
                 vals = [
                     ('cancel', 'Cancelled'),
-                    ('it_close', 'IT Close Project'),
+                    # ('it_close', 'IT Close Project'),
                     ('terminate', 'Terminated'),
                 ]
             elif (project.state == "received"):
