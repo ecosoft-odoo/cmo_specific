@@ -150,7 +150,7 @@ class ProjectProject(models.Model):
     )
     close_reason = fields.Selection(
         [('close', 'Completed'),
-         ('it_close', 'IT Close Project'),
+         # ('it_close', 'IT Close Project'),
          ('reject', 'Reject'),
          ('lost', 'Lost'),
          ('cancel', 'Cancelled'),
@@ -387,6 +387,10 @@ class ProjectProject(models.Model):
                  'state')
     def _compute_is_invoiced_and_paid(self):
         for project in self:
+            print "yyyyyyyyyyyyyyyyyyyyyyyyyyy"
+            print project
+            print project.state
+            # x = 1/0
             invoice_states = project.out_invoice_ids.mapped('state')
             sale_order_states = []
 
@@ -413,11 +417,36 @@ class ProjectProject(models.Model):
                 project.is_paid = False
 
             if project.is_invoiced and project.is_paid:
+                # Write mail.message
+                state_now = dict(self.env["project.project"]._columns
+                                 ["state"].selection)[project.state]
+                self.message_post(body="&emsp;&nbsp;&#8226; <b>Status</b> \
+                    %s &#8594; Completed" % state_now)
+                # Write state
                 project.state = 'close'
             else:
                 if not project.state_before_inactive:
+                    # Write mail.message
+                    state_now = dict(self.env["project.project"]._columns
+                                     ["state"].selection)[project.state]
+                    # self.message_post(body="&emsp;&nbsp;&#8226; <b>Status</b> \
+                    #     %s &#8594; Draft" % state_now)
+                    # Write state
                     project.state = 'draft'
                 else:
+                    print project.state
+                    # x = 1/0
+                    # Write mail.message
+                    state_dict = dict(self.env["project.project"]._columns
+                                      ["state"].selection)
+                    self._cr.execute("select state from project_project \
+                                      where id = %s", (project.id, ))
+                    state_now = state_dict[self._cr.dictfetchone()['state']]
+                    state_before_inactive = \
+                        state_dict[project.state_before_inactive]
+                    self.message_post(body="&emsp;&nbsp;&#8226; <b>Status</b> \
+                        %s &#8594; %s" % (state_now, state_before_inactive))
+                    # Write state
                     project.state = project.state_before_inactive
 
     @api.multi
@@ -683,7 +712,6 @@ class ProjectProject(models.Model):
     @api.multi
     @api.constrains('actual_po')
     def _check_actual_po(self):
-        print self._context
         for project in self:
             if float_compare(project.remaining_cost, 0.0, 2) < 0:
                 raise ValidationError(

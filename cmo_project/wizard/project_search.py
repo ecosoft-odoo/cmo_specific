@@ -67,7 +67,7 @@ class ProjectSearch(models.TransientModel):
     )
     close_reason = fields.Selection(
         [('close', 'Completed'),
-         ('it_close', 'IT Close Project'),
+         # ('it_close', 'IT Close Project'),
          ('reject', 'Reject'),
          ('lost', 'Lost'),
          ('cancel', 'Cancelled'),
