@@ -15,6 +15,7 @@
         'account_operating_unit',
         'account_cancel_reversal',
         'account_debitnote',
+        'purchase',
     ],
     "data": [
         'views/product_category_view.xml',
