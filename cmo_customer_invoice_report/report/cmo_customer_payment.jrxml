@@ -253,7 +253,7 @@ $V{allocation_amount}]]></textFieldExpression>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$V{total_amount} != null ? $V{total_amount} : 0]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="11" y="191" width="275" height="20"/>
+				<reportElement x="11" y="200" width="275" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
