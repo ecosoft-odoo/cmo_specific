@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.2100000000000035"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="719"/>
+	<property name="ireport.y" value="716"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -253,8 +253,8 @@ $V{allocation_amount}]]></textFieldExpression>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$V{total_amount} != null ? $V{total_amount} : 0]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="11" y="207" width="275" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Top">
+				<reportElement x="11" y="187" width="275" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["(" + ($P{REPORT_LOCALE}.toString() == "en_US" ? $F{amount_total_text_en} : $F{amount_total_text_th}) + ")"]]></textFieldExpression>
