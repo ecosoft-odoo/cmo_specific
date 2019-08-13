@@ -87,6 +87,9 @@
                 <field name="client_order_ref" position="after">
                     <field name="quote_ref_id" options="{'no_create':1,'no_create_edit':1}" attrs="{'readonly': ['|',('order_type','=','sale_order'),('state','in',['cancel','done'])]}"/>
                 </field>
+                <xpath expr="//page[@string='Other Information']/group/group/field[@name='user_id']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
                 <xpath expr="//page[@string='Other Information']/group/group/field[@name='user_id']" position="before">
                     <field name="approval_id"/>
                 </xpath>
