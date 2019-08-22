@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 from openerp import fields, models, api, _
+from openerp.tools.amount_to_text_en import amount_to_text
+from openerp.addons.l10n_th_amount_text.amount_to_text_th \
+    import amount_to_text_th
 
 
 class AccountInvoice(models.Model):
@@ -37,9 +40,61 @@ class AccountInvoice(models.Model):
     number_preprint = fields.Char(
         required=True
     )
+    amount_untaxed_text_en = fields.Char(
+        compute='_compute_amount_untaxed_text_en',
+        string='Subtotal (EN)',
+    )
+    amount_untaxed_text_th = fields.Char(
+        compute='_compute_amount_untaxed_text_th',
+        string='Subtotal (TH)',
+    )
     # invoice_line = fields.One2many(
     #     states={'draft': [('readonly', False)], 'open': [('readonly', False)]}
     # )
+
+    @api.multi
+    def _compute_amount_untaxed_text_en(self):
+        for invoice in self:
+            minus = False
+            a = 'Baht'
+            b = 'Satang'
+            if invoice.currency_id.name == 'JYP':
+                a = 'Yen'
+                b = 'Sen'
+            if invoice.currency_id.name == 'GBP':
+                a = 'Pound'
+                b = 'Penny'
+            if invoice.currency_id.name == 'USD':
+                a = 'Dollar'
+                b = 'Cent'
+            if invoice.currency_id.name == 'EUR':
+                a = 'Euro'
+                b = 'Cent'
+            amount_untaxed = invoice.amount_untaxed
+            if amount_untaxed < 0:
+                minus = True
+                amount_untaxed = -amount_untaxed
+            amount_text = amount_to_text(
+                amount_untaxed, 'en', a).replace(
+                    'and Zero Cent', 'Only').replace(
+                        'Cent', b).replace('Cents', b)
+            final_amount_text = (minus and 'Minus ' +
+                                 amount_text or amount_text).lower()
+            invoice.amount_untaxed_text_en = \
+                final_amount_text[:1].upper() + final_amount_text[1:]
+
+    @api.multi
+    def _compute_amount_untaxed_text_th(self):
+        for invoice in self:
+            minus = False
+            amount_untaxed = invoice.amount_untaxed
+            if amount_untaxed < 0:
+                minus = True
+                amount_untaxed = -amount_untaxed
+            amount_text = amount_to_text_th(
+                amount_untaxed, invoice.currency_id.name)
+            invoice.amount_untaxed_text_th = \
+                minus and 'ลบ' + amount_text or amount_text
 
     @api.model
     def _prepare_refund(self, invoice, date=None, period_id=None,

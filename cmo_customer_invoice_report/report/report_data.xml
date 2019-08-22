@@ -390,13 +390,14 @@
            <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_receipt_voucher)"/>
         </record>
 
-        <record id="cmo_receipt" model="ir.actions.report.xml">
-           <field name="string">Receipt</field>
+        <!-- Receipt (EN) -->
+        <record id="cmo_receipt_en" model="ir.actions.report.xml">
+           <field name="string">Receipt (EN)</field>
            <field name="auto">True</field>
            <field name="model">account.invoice</field>
            <field name="jasper_model_id" ref="account.model_account_invoice"/>
-           <field name="name">Receipt</field>
-           <field name="report_name">cmo.receipt</field>
+           <field name="name">Receipt (EN)</field>
+           <field name="report_name">cmo.receipt.en</field>
            <field name="report_rml">cmo_customer_invoice_report/report/cmo_receipt.jrxml</field>
            <field name="force_locale">en_US</field>
            <field name="menu">True</field>
@@ -404,11 +405,33 @@
            <field name="jasper_report">True</field>
            <field name="jasper_output">pdf</field>
         </record>
-        <record id="cmo_receipt_values" model="ir.values">
-           <field name="name">Receipt</field>
+        <record id="cmo_receipt_en_values" model="ir.values">
+           <field name="name">Receipt (EN)</field>
            <field name="model">account.invoice</field>
            <field name="key2" eval="'client_print_multi'"/>
-           <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_receipt)"/>
+           <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_receipt_en)"/>
+        </record>
+
+        <!-- Receipt (TH) -->
+        <record id="cmo_receipt_th" model="ir.actions.report.xml">
+           <field name="string">Receipt (TH)</field>
+           <field name="auto">True</field>
+           <field name="model">account.invoice</field>
+           <field name="jasper_model_id" ref="account.model_account_invoice"/>
+           <field name="name">Receipt (TH)</field>
+           <field name="report_name">cmo.receipt.th</field>
+           <field name="report_rml">cmo_customer_invoice_report/report/cmo_receipt.jrxml</field>
+           <field name="force_locale">th_TH</field>
+           <field name="menu">True</field>
+           <field name="header">False</field>
+           <field name="jasper_report">True</field>
+           <field name="jasper_output">pdf</field>
+        </record>
+        <record id="cmo_receipt_th_values" model="ir.values">
+           <field name="name">Receipt (TH)</field>
+           <field name="model">account.invoice</field>
+           <field name="key2" eval="'client_print_multi'"/>
+           <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_receipt_th)"/>
         </record>
 
         <delete id="account_bank_receipt.report_bank_receipt" model="ir.actions.report.xml"/>
