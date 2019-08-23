@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_receipt" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.3310000000000004"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="474"/>
+	<property name="ireport.y" value="1544"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line&quot;]"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<parameter name="EVENTS_DATA_SOURCE" class="java.lang.Object"/>
@@ -60,13 +60,13 @@
 				<reportElement x="0" y="221" width="412" height="330"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="0" y="602" width="321" height="20"/>
+				<reportElement x="0" y="602" width="321" height="24"/>
 			</rectangle>
 			<rectangle>
 				<reportElement x="412" y="221" width="160" height="381"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="412" y="602" width="160" height="20"/>
+				<reportElement x="412" y="602" width="160" height="24"/>
 			</rectangle>
 			<line>
 				<reportElement x="68" y="691" width="150" height="1"/>
@@ -89,15 +89,15 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{REPORT_LOCALE}.toString() == "en_US" ? "Note" : "หมายเหตุ"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Transparent" x="321" y="602" width="91" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
-				<box leftPadding="3">
+				<reportElement mode="Transparent" x="321" y="602" width="91" height="24" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box topPadding="1" leftPadding="3">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{REPORT_LOCALE}.toString() == "en_US" ? "Amount" : "จำนวนเงิน"]]></textFieldExpression>
@@ -300,16 +300,17 @@
 		<band height="171">
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="412" y="21" width="160" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
-				<box topPadding="0" leftPadding="3" rightPadding="3"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+				<box topPadding="1" leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{amount_untaxed} != null ? $F{amount_untaxed} : 0]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="0" y="21" width="321" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				<box topPadding="1"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="10" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["(" + ($P{REPORT_LOCALE}.toString() == "en_US" ? $F{amount_untaxed_text_en} : $F{amount_untaxed_text_th}) + ")"]]></textFieldExpression>
 			</textField>
