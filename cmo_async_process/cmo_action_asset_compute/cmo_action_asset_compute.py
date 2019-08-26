@@ -450,9 +450,10 @@ class CMOAssetDepreBatch(models.Model):
     @api.multi
     def _compute_je_number(self):
         for rec in self:
-            if rec.move_ids:
-                rec.journal_number = '%s - %s' % (rec.move_ids[-1].name,
-                                                  rec.move_ids[0].name)
+            account_moves = rec.move_ids.sorted(lambda l: l.name)
+            if account_moves:
+                rec.journal_number = '%s - %s' % (account_moves[0].name,
+                                                  account_moves[-1].name)
         return True
 
     @api.multi
