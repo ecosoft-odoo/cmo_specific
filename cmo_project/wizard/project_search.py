@@ -115,6 +115,12 @@ class ProjectSearch(models.TransientModel):
         'hr.employee',
         string='Asst. Production',
     )
+    is_invoiced = fields.Boolean(
+        string='Invoiced',
+    )
+    is_paid = fields.Boolean(
+        string='Paid',
+    )
 
     @api.multi
     def search_project(self):
@@ -190,6 +196,10 @@ class ProjectSearch(models.TransientModel):
                 dom += [('client_type_id', '=', self.client_type_id.id)]
             if self.obligation_id:
                 dom += [('obligation_id', '=', self.obligation_id.id)]
+            if self.is_invoiced:
+                dom += [('is_invoiced', '=', self.is_invoiced)]
+            if self.is_paid:
+                dom += [('is_paid', '=', self.is_paid)]
             if self.date_start and self.date_end:
                 where_date = "(aaa.date_start between '%s' and '%s' \
                     or pp.date between '%s' and '%s' \
