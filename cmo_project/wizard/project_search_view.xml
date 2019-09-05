@@ -18,6 +18,8 @@
                           <field name="close_reason" attrs="{'invisible': [('stage', '!=', 'cancelled')]}"/>
                           <field name="project_budget_from"/>
                           <field name="project_budget_to"/>
+                          <field name="is_invoiced"/>
+                          <field name="is_paid"/>
                       </group>
                       <group>
                           <field name="operating_unit_id"/>
