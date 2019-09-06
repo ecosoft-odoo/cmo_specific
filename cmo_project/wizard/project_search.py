@@ -59,8 +59,8 @@ class ProjectSearch(models.TransientModel):
          ('validate', 'Validate'),
          ('open', 'In Progress'),
          ('ready_billing', 'Ready to Billing'),
-         ('invoiced', 'Invoiced'),
-         ('paid', 'Paid'),
+         # ('invoiced', 'Invoiced'),
+         # ('paid', 'Paid'),
          ('cancelled', 'Incompleted'),
          ('pending', 'Hold'),
          ('close', 'Completed')]
