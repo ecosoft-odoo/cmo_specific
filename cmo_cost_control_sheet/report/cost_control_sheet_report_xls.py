@@ -1065,7 +1065,8 @@ class CostControlSheetReportXls(report_xls):
         invoice_line_ids = invoice_line_obj.search(
             cr, uid,
             [('account_analytic_id', '=', project_id.analytic_account_id.id),
-             ('account_id.code', 'not in', ['1113']),  # Issue T0104
+             ('account_id.user_type.code', 'in',
+              ['Cost of Good Sold', 'Income']),  # Issue T0104
              ('invoice_id.type', 'in', ('out_invoice', 'out_refund')),
              ('invoice_id.state', 'in', ('open', 'paid')),
              ('invoice_id.quote_ref_id', '=', False)])
