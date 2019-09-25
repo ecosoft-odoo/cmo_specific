@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_project" model="ir.ui.view">
+            <field name="name">project.project.tree</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="cmo_project.view_project"/>
+            <field name="arch" type="xml">
+                <xpath expr="/tree/field[@name='project_budget']" position="after">
+                    <field name="actual_budget" groups="project.group_project_admin,project.group_project_manager"
+                        invisible="not context.get('show_actual_budget')"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="edit_project" model="ir.ui.view">
+            <field name="name">edit.project</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="cmo_project.edit_project"/>
+            <field name="arch" type="xml">
+                <field name="invoice_paid" position="after">
+                    <hr colspan="2"/>
+                    <field name="has_actual_budget"/>
+                    <field name="actual_budget"/>
+                    <field name="actual_budget_ids" nolabel="1" colspan="2"
+                        attrs="{'invisible': [('has_actual_budget', '=', False)]}">
+                        <tree editable="bottom">
+                            <field name="to_date"/>
+                            <field name="amount"/>
+                        </tree>
+                    </field>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>
