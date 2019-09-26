@@ -13,6 +13,7 @@
         'cmo_project',
     ],
     "data": [
+        'security/ir.model.access.csv',
         'views/project_view.xml',
         'wizard/project_search_view.xml',
     ],
