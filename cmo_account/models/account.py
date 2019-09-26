@@ -74,6 +74,38 @@ class AccountMoveLine(models.Model):
         compute='_compute_voucher_ref',
         search='_search_voucher_payee',
     )
+    is_cancel_cheque = fields.Boolean(
+        compute='_compute_is_cancel_cheque',
+        search='_search_is_cancel_cheque',
+        string='Cancel Cheque ?',
+    )
+
+    @api.multi
+    def _compute_is_cancel_cheque(self):
+        for rec in self:
+            rec.is_cancel_cheque = rec.move_id.ref_voucher_id.is_cancel_cheque
+
+    @api.model
+    def _search_is_cancel_cheque(self, operator, value):
+        context = self._context.copy()
+        currency_id = context.get('currency_none_same_company_id', False)
+        journal_id = context.get('journal_id', False)
+        account_id = context.get('journal_default_account_id', False)
+        domain = [
+            ('reconcile_id', '=', False),
+            ('credit', '>', 0),
+            ('currency_id', '=', currency_id),
+            ('journal_id', '=', journal_id),
+            ('account_id', '=', account_id),
+        ]
+        lines = self.search(domain)
+        if operator == '=':
+            lines = lines.filtered(
+                lambda l: l.move_id.ref_voucher_id.is_cancel_cheque == value)
+        if operator == '!=':
+            lines = lines.filtered(
+                lambda l: l.move_id.ref_voucher_id.is_cancel_cheque != value)
+        return [('id', 'in', lines.ids)]
 
     @api.multi
     def _compute_voucher_ref(self):

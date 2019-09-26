@@ -53,6 +53,9 @@ class AccountVoucher(models.Model):
     date_value = fields.Date(
         string='Payment Date',
     )
+    is_cancel_cheque = fields.Boolean(
+        string='Cancel Cheque ?',
+    )
 
     @api.multi
     def _compute_invoices_ref(self):
