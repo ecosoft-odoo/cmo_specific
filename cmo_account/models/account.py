@@ -74,19 +74,21 @@ class AccountMoveLine(models.Model):
         compute='_compute_voucher_ref',
         search='_search_voucher_payee',
     )
-    is_cancel_cheque = fields.Boolean(
-        compute='_compute_is_cancel_cheque',
-        search='_search_is_cancel_cheque',
-        string='Cancel Cheque ?',
+    cheque_status = fields.Selection(
+        selection=[('canceled', 'Canceled'), ],
+        compute='_compute_cheque_status',
+        search='_search_cheque_status',
+        string='Cheque Status',
+        help='This is for show cheque status on bank intransit',
     )
 
     @api.multi
-    def _compute_is_cancel_cheque(self):
+    def _compute_cheque_status(self):
         for rec in self:
-            rec.is_cancel_cheque = rec.move_id.ref_voucher_id.is_cancel_cheque
+            rec.cheque_status = rec.move_id.ref_voucher_id.cheque_status
 
     @api.model
-    def _search_is_cancel_cheque(self, operator, value):
+    def _search_cheque_status(self, operator, value):
         context = self._context.copy()
         currency_id = context.get('currency_none_same_company_id', False)
         journal_id = context.get('journal_id', False)
@@ -101,10 +103,10 @@ class AccountMoveLine(models.Model):
         lines = self.search(domain)
         if operator == '=':
             lines = lines.filtered(
-                lambda l: l.move_id.ref_voucher_id.is_cancel_cheque == value)
+                lambda l: l.move_id.ref_voucher_id.cheque_status == value)
         if operator == '!=':
             lines = lines.filtered(
-                lambda l: l.move_id.ref_voucher_id.is_cancel_cheque != value)
+                lambda l: l.move_id.ref_voucher_id.cheque_status != value)
         return [('id', 'in', lines.ids)]
 
     @api.multi
