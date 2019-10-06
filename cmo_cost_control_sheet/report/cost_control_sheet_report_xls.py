@@ -1052,63 +1052,63 @@ class CostControlSheetReportXls(report_xls):
         grand_total_po_price += ' + F%s' % (str(row_pos))
 
         # Space before direct invoice section
-        c_specs = [
-            ('space', 9, 0, 'text', ''),
-        ]
-        row_data = self.xls_row_template(
-            c_specs, [x[0] for x in c_specs])
-        row_pos = self.xls_write_row(
-            ws, row_pos, row_data, row_style=self.an_cell_style)
+        # c_specs = [
+        #     ('space', 9, 0, 'text', ''),
+        # ]
+        # row_data = self.xls_row_template(
+        #     c_specs, [x[0] for x in c_specs])
+        # row_pos = self.xls_write_row(
+        #     ws, row_pos, row_data, row_style=self.an_cell_style)
 
         # Direct invoice
-        invoice_line_ids = invoice_line_obj.search(
-            cr, uid,
-            [('account_analytic_id', '=', project_id.analytic_account_id.id),
-             ('account_id.user_type.code', 'in',
-              ['Cost of Good Sold', 'Income']),  # Issue T0104
-             # ('invoice_id.type', 'in', ('out_invoice', 'out_refund')),
-             ('invoice_id.state', 'in', ('open', 'paid')),
-             ('invoice_id.quote_ref_id', '=', False)])
-        invoice_lines = invoice_line_obj.browse(cr, uid, invoice_line_ids)
-        cell_style = xlwt.easyxf(
-            'pattern: pattern solid, fore_color gray25;' + _xs['bold'] +
-            _xs['borders_all'] + _xs['right'],
-            num_format_str=report_xls.decimal_format)
+        # invoice_line_ids = invoice_line_obj.search(
+        #     cr, uid,
+        #     [('account_analytic_id', '=', project_id.analytic_account_id.id),
+        #      ('account_id.user_type.code', 'in',
+        #       ['Cost of Good Sold', 'Income']),  # Issue T0104
+        #      # ('invoice_id.type', 'in', ('out_invoice', 'out_refund')),
+        #      ('invoice_id.state', 'in', ('open', 'paid')),
+        #      ('invoice_id.quote_ref_id', '=', False)])
+        # invoice_lines = invoice_line_obj.browse(cr, uid, invoice_line_ids)
+        # cell_style = xlwt.easyxf(
+        #     'pattern: pattern solid, fore_color gray25;' + _xs['bold'] +
+        #     _xs['borders_all'] + _xs['right'],
+        #     num_format_str=report_xls.decimal_format)
         # Header
-        c_specs = self._get_invoice_specs(
-            name='Other Income / Revenue', number='Invoice No.',
-            price=['text', 'Price', None], customer='Customer')
-        row_data = self.xls_row_template(
-            c_specs, [x[0] for x in c_specs])
-        row_pos = self.xls_write_row(
-            ws, row_pos, row_data, row_style=cell_style)
-        invoice_pos = row_pos
+        # c_specs = self._get_invoice_specs(
+        #     name='Other Income / Revenue', number='Invoice No.',
+        #     price=['text', 'Price', None], customer='Customer')
+        # row_data = self.xls_row_template(
+        #     c_specs, [x[0] for x in c_specs])
+        # row_pos = self.xls_write_row(
+        #     ws, row_pos, row_data, row_style=cell_style)
+        # invoice_pos = row_pos
         # Detail
-        for line in invoice_lines:
-            sign = line.invoice_id.type in ['out_refund', 'in_invoice'] \
-                and -1 or 1
-            c_specs = self._get_invoice_specs(
-                name=line.name, number=line.invoice_id.number,
-                price=['number', sign * line.quantity * line.price_unit, None],
-                customer=line.invoice_id.partner_id.display_name)
-            row_data = self.xls_row_template(
-                c_specs, [x[0] for x in c_specs])
-            row_pos = self.xls_write_row(
-                ws, row_pos, row_data,
-                row_style=self.an_cell_style_decimal)
+        # for line in invoice_lines:
+        #     sign = line.invoice_id.type in ['out_refund', 'in_invoice'] \
+        #         and -1 or 1
+        #     c_specs = self._get_invoice_specs(
+        #         name=line.name, number=line.invoice_id.number,
+        #         price=['number', sign * line.quantity * line.price_unit, None],
+        #         customer=line.invoice_id.partner_id.display_name)
+        #     row_data = self.xls_row_template(
+        #         c_specs, [x[0] for x in c_specs])
+        #     row_pos = self.xls_write_row(
+        #         ws, row_pos, row_data,
+        #         row_style=self.an_cell_style_decimal)
         # Total
-        sum_invoice_price = None
-        if invoice_lines:
-            sum_invoice_price = 'SUM(B%s: B%s)' % \
-                (str(invoice_pos + 1), str(row_pos))
-        c_specs = self._get_invoice_specs(
-            name='Total Other Income / Revenue',
-            price=['number', None, sum_invoice_price])
-        row_data = self.xls_row_template(
-            c_specs, [x[0] for x in c_specs])
-        row_pos = self.xls_write_row(
-            ws, row_pos, row_data, row_style=cell_style)
-        grand_total_price += ' + B%s' % (str(row_pos))
+        # sum_invoice_price = None
+        # if invoice_lines:
+        #     sum_invoice_price = 'SUM(B%s: B%s)' % \
+        #         (str(invoice_pos + 1), str(row_pos))
+        # c_specs = self._get_invoice_specs(
+        #     name='Total Other Income / Revenue',
+        #     price=['number', None, sum_invoice_price])
+        # row_data = self.xls_row_template(
+        #     c_specs, [x[0] for x in c_specs])
+        # row_pos = self.xls_write_row(
+        #     ws, row_pos, row_data, row_style=cell_style)
+        # grand_total_price += ' + B%s' % (str(row_pos))
 
         # Space before grand total section
         c_specs = [
@@ -1127,8 +1127,10 @@ class CostControlSheetReportXls(report_xls):
         grand_total_gross_margin = '((B%s - F%s) / B%s) * 100' % \
             (str(row_pos + 1), str(row_pos + 1), str(row_pos + 1))
         c_specs = [
+            # ('name', 1, 0, 'text',
+            #  'Grand Total (Quotation, Direct Invoice, PO and Expenses)'),
             ('name', 1, 0, 'text',
-             'Grand Total (Quotation, Direct Invoice, PO and Expenses)'),
+             'Grand Total (Quotation, PO and Expenses)'),
             ('price_in_contract', 1, 0, 'number', None, grand_total_price),
             ('estimate_cost', 1, 0, 'number', None, grand_total_estimate),
             ('percent_margin', 1, 0, 'number', None,
