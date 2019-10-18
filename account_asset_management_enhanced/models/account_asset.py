@@ -90,7 +90,7 @@ class AccountAsset(models.Model):
             if rec.purchase_move_id:
                 imove_lines = rec.mapped('purchase_move_id').line_id
                 pmove_lines = imove_lines.mapped('reconcile_id').\
-                    line_id.filtered(lambda l: l not in imove_lines)
+                    mapped('line_id').filtered(lambda l: l not in imove_lines)
                 if pmove_lines:
                     rec.voucher_number = pmove_lines[-1].move_id.name
 
