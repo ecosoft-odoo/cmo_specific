@@ -1,0 +1,54 @@
+.crv_header, .crv_detail, .crv_footer {
+    font-size: 24px;
+    line-height: 1;
+}
+.crv_header img {
+    max-height: 150px;
+    margin-top: -45px;
+}
+.crv_header .title {
+    font-size: 40px;
+}
+.crv_header .number div {
+    display: inline-block;
+}
+.crv_header .number .number-box {
+    border: 1px solid;
+    width: 170px;
+    height: 30px;
+    margin-bottom: 3px;
+}
+.crv_header .payment_type div {
+    margin-top: -50px;
+}
+.crv_header .payment_type .text {
+    margin-right: 52px;
+}
+.crv_header .payment_type .cash {
+    margin-right: 10px;
+}
+.crv_header .payment_type input {
+    margin-top: -3px;
+}
+.crv_header .payment_type .input {
+    margin-right: 20px;
+}
+.crv_header .margin-top, .crv_footer .margin-top {
+    margin-top: 10px;
+}
+.crv_detail table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.crv_detail table th, .crv_detail table td {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.crv_detail table th {
+    border-top: 1px solid;
+    border-left: 1px solid;
+}
+.crv_detail table td {
+    border-left: 1px solid;
+    border-bottom: 1px solid;
+}

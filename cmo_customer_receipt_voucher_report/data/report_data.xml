@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+            string="Customer Receipt Voucher"
+            id="report_customer_receipt_voucher"
+            model="report.customer.receipt.voucher"
+            name="cmo_customer_receipt_voucher_report.customer_receipt_voucher_pdf"
+            file="cmo_customer_receipt_voucher_report.customer_receipt_voucher_pdf"
+            report_type="qweb-pdf"/>
+
+        <record id="report_customer_receipt_voucher" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="cmo_customer_receipt_voucher_report.report_paperformat_customer_receipt_voucher"/>
+        </record>
+    </data>
+</openerp>

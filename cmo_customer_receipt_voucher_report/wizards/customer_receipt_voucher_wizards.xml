@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Form View -->
+        <record id="customer_receipt_voucher_view_form" model="ir.ui.view">
+            <field name="name">customer.receipt.voucher.view.form</field>
+			<field name="model">customer.receipt.voucher</field>
+			<field name="arch" type="xml">
+				<form>
+                    <group>
+                        <group>
+                            <field name="partner_id" domain="[('customer', '=', True)]"/>
+                            <field name="is_cheque"/>
+                            <field name="number_cheque" attrs="{'invisible': [('is_cheque', '=', False)], 'required': [('is_cheque', '=', True)]}"/>
+                        </group>
+                        <group></group>
+                    </group>
+					<footer>
+						<button name="action_get_report" type="object" string="Execute Report" class="oe_highlight"/>
+						or
+						<button special="cancel" class="oe_link" string="Cancel"/>
+					</footer>
+				</form>
+			</field>
+        </record>
+
+        <!-- Action -->
+        <record id="customer_receipt_voucher_action" model="ir.actions.act_window">
+            <field name="name">Customer Receipt Voucher</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">customer.receipt.voucher</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="customer_receipt_voucher_view_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <!-- Menu -->
+        <menuitem
+            action="customer_receipt_voucher_action"
+            id="customer_receipt_voucher_menu"
+            parent="account.menu_finance_reports"
+            sequence="200"/>
+    </data>
+</openerp>
