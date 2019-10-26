@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api
+from openerp import models, fields, api, _
+from openerp.exceptions import Warning as UserError
 
 
 class CustomerReceiptVoucher(models.TransientModel):
@@ -26,6 +27,8 @@ class CustomerReceiptVoucher(models.TransientModel):
         if self.partner_id:
             dom += [('voucher_id.partner_id', '=', self.partner_id.id)]
         result = Result.search(dom)
+        if not result:
+            raise UserError(_('Error!'), _('No Data.'))
         # Get PDF Report
         report_name = \
             'cmo_customer_receipt_voucher_report.customer_receipt_voucher_pdf'
