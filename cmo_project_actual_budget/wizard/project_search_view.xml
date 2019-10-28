@@ -7,6 +7,7 @@
         <field name="inherit_id" ref="cmo_project.view_project_search_wizard"/>
             <field name="arch" type="xml">
                 <field name="date_end" position="after">
+                    <field name="actual_from_date"/>
                     <field name="actual_to_date"/>
                 </field>
             </field>

@@ -28,15 +28,32 @@ class ProjectProject(models.Model):
     @api.multi
     def _compute_actual_budget(self):
         for rec in self:
+            actual_from_date = rec._context.get('actual_from_date')
+            actual_to_date = rec._context.get('actual_to_date')
             if not rec.has_actual_budget or \
-                    not self.env.user.search_project_to_date:
+                    not (actual_from_date or actual_to_date):
                 rec.actual_budget = rec.project_budget
             else:
-                actual = self.env['project.actual.budget'].search(
-                    [('project_id', '=', rec.id),
-                     ('to_date', '<=', self.env.user.search_project_to_date)],
-                    order='to_date desc', limit=1)
-                rec.actual_budget = actual and actual.amount or 0.0
+                domain = [('project_id', '=', rec.id)]
+                if actual_from_date:
+                    domain += [('to_date', '>=', actual_from_date)]
+                if actual_to_date:
+                    domain += [('to_date', '<=', actual_to_date)]
+                actual = self.env['project.actual.budget'].search(domain)
+                actual_budget = 0.0
+                if actual:
+                    actual_budget = sum(actual.mapped('amount'))
+                else:
+                    actual = self.env['project.actual.budget'].search(
+                        [('project_id', '=', rec.id)], order='to_date')
+                    if actual:
+                        if actual_to_date and \
+                           actual_to_date < actual[0].to_date:
+                            actual_budget = rec.project_budget
+                        if actual_from_date and \
+                           actual_from_date > actual[-1].to_date:
+                            actual_budget = actual[-1].amount
+                rec.actual_budget = actual_budget
 
 
 class ProjectActualBudget(models.Model):
