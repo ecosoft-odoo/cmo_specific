@@ -13,6 +13,7 @@
     'data': [
         'data/report_paperformat_data.xml',
         'data/report_data.xml',
+        'security/ir.model.access.csv',
         'report/report_templates.xml',
         'report/report_customer_receipt_voucher.xml',
         'wizards/customer_receipt_voucher_wizards.xml',
