@@ -89,7 +89,7 @@ class ProjectProject(models.Model):
         states={'close': [('readonly', True)]},
     )
     actual_price = fields.Float(
-        string='Actual Price',
+        string='Actual Price (Quotation)',
         states={'close': [('readonly', True)]},
         compute='_compute_price_and_cost',
         store=True,
