@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="withholding_cert" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
 	<property name="ireport.zoom" value="1.3310000000000222"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="164"/>
+	<property name="ireport.y" value="665"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA[System.getProperty("user.dir") + "/../../../pb2_generic/l10n_th_account/report/"]]></defaultValueExpression>
 	</parameter>
@@ -126,7 +126,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{supplier_name}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Group" evaluationGroup="UniqueID">
-				<reportElement isPrintRepeatedValues="false" x="277" y="680" width="100" height="25"/>
+				<reportElement isPrintRepeatedValues="false" x="275" y="682" width="100" height="25"/>
 				<textElement lineSpacing="Single" markup="none">
 					<font size="12" pdfFontName="THSarabun.ttf"/>
 				</textElement>
@@ -147,7 +147,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{supplier_address}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Group" evaluationGroup="UniqueID">
-				<reportElement isPrintRepeatedValues="false" x="64" y="682" width="100" height="25"/>
+				<reportElement isPrintRepeatedValues="false" x="62" y="684" width="100" height="25"/>
 				<textElement lineSpacing="Single" markup="none">
 					<font size="12" pdfFontName="THSarabun.ttf"/>
 				</textElement>
@@ -303,14 +303,14 @@ $F{type_6_base}:null]]></textFieldExpression>
 				<textFieldExpression class="java.util.Date"><![CDATA[(new SimpleDateFormat("yyyy-MM-dd")).parse($F{date_value})]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Group" evaluationGroup="UniqueID">
-				<reportElement isPrintRepeatedValues="false" x="0" y="722" width="100" height="25"/>
+				<reportElement isPrintRepeatedValues="false" x="0" y="724" width="100" height="25"/>
 				<textElement lineSpacing="Single" markup="none">
 					<font size="12" pdfFontName="THSarabun.ttf"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{withholding}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Group" evaluationGroup="UniqueID">
-				<reportElement isPrintRepeatedValues="false" x="0" y="753" width="100" height="25"/>
+				<reportElement isPrintRepeatedValues="false" x="0" y="755" width="100" height="25"/>
 				<textElement lineSpacing="Single" markup="none">
 					<font size="12" pdfFontName="THSarabun.ttf"/>
 				</textElement>
@@ -399,14 +399,14 @@ $F{type_6_base}:null]]></textFieldExpression>
 				<textFieldExpression class="java.util.Date"><![CDATA[new SimpleDateFormat("yyyy-MM-dd").parse($F{date_value})]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Group" evaluationGroup="UniqueID">
-				<reportElement isPrintRepeatedValues="false" x="128" y="662" width="100" height="25"/>
+				<reportElement isPrintRepeatedValues="false" x="126" y="664" width="100" height="25"/>
 				<textElement lineSpacing="Single" markup="none">
 					<font size="12" pdfFontName="THSarabun.ttf"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{pnd1}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Group" evaluationGroup="UniqueID">
-				<reportElement isPrintRepeatedValues="false" x="191" y="682" width="100" height="25"/>
+				<reportElement isPrintRepeatedValues="false" x="189" y="684" width="100" height="25"/>
 				<textElement lineSpacing="Single" markup="none">
 					<font size="12" pdfFontName="THSarabun.ttf"/>
 				</textElement>
