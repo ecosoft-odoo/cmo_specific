@@ -11,19 +11,28 @@ class ProjectProject(models.Model):
     _inherit = 'project.project'
 
     has_actual_budget = fields.Boolean(
-        string='Actual Budget',
+        string='Budget Per Year',
         default=False,
     )
     actual_budget_ids = fields.One2many(
         'project.actual.budget',
         'project_id',
-        string='Actual Budgets',
+        string='Budget Per Years',
         copy=False,
     )
     actual_budget = fields.Float(
-        string='Actual Budget',
+        string='Budget Per Year',
         compute='_compute_actual_budget',
     )
+
+    @api.constrains('actual_budget_ids')
+    def _check_actual_budget_ids(self):
+        for rec in self:
+            to_dates = self.actual_budget_ids.mapped('to_date')
+            not_valid_dates = [
+                x for x in to_dates if not (rec.date_start <= x <= rec.date)]
+            if not_valid_dates:
+                raise ValidationError(_('Budget per year is not valid.'))
 
     @api.multi
     def _compute_actual_budget(self):
@@ -54,6 +63,20 @@ class ProjectProject(models.Model):
                            actual_from_date > actual[-1].to_date:
                             actual_budget = actual[-1].amount
                 rec.actual_budget = actual_budget
+
+    @api.model
+    def read_group(self, domain, fields, groupby, offset=0, limit=None,
+                   orderby=False, lazy=True):
+        res = super(ProjectProject, self).read_group(
+            domain, fields, groupby, offset=offset, limit=limit,
+            orderby=orderby, lazy=lazy)
+        if 'actual_budget' in fields:
+            for line in res:
+                if '__domain' in line:
+                    line['actual_budget'] = \
+                        sum(self.search(line['__domain'])
+                            .mapped('actual_budget'))
+        return res
 
 
 class ProjectActualBudget(models.Model):
