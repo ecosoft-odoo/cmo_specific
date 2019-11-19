@@ -227,7 +227,7 @@ class ProjectSearch(models.TransientModel):
             action = self.env.ref('project.open_view_project_all')
             result = action.read()[0]
             result.update({'domain': [('id', 'in', project_ids)],
-                           'context': {}, })
+                           'context': {'search_default_Project Status': 1}, })
         return result
 
     @api.model
