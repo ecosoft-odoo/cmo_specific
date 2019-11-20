@@ -11,6 +11,7 @@
     "license": "AGPL-3",
     "depends": [
         'cmo_project',
+        'web_tree_dynamic_colored_field',
     ],
     "data": [
         'security/ir.model.access.csv',

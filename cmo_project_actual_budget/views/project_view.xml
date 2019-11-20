@@ -8,6 +8,7 @@
             <field name="inherit_id" ref="cmo_project.view_project"/>
             <field name="arch" type="xml">
                 <xpath expr="/tree/field[@name='project_budget']" position="after">
+                    <field name="has_actual_budget" invisible="1"/>
                     <field name="actual_budget" groups="project.group_project_admin,project.group_project_manager"/>
                 </xpath>
             </field>
