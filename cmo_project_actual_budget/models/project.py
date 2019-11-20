@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# from lxml import etree
+from lxml import etree
 from openerp import fields, models, api, _
 from openerp.exceptions import ValidationError
 from openerp.tools import float_compare
@@ -76,6 +76,20 @@ class ProjectProject(models.Model):
                     line['actual_budget'] = \
                         sum(self.search(line['__domain'])
                             .mapped('actual_budget'))
+        return res
+
+    @api.model
+    def fields_view_get(self, view_id=None, view_type=False,
+                        toolbar=False, submenu=False):
+        res = super(ProjectProject, self).fields_view_get(
+            view_id=view_id, view_type=view_type, toolbar=toolbar,
+            submenu=submenu)
+        if view_type == 'tree':
+            doc = etree.XML(res['arch'])
+            nodes = doc.xpath("//field")
+            for node in nodes:
+                node.set("bg_color", "yellow:has_actual_budget is True")
+            res['arch'] = etree.tostring(doc)
         return res
 
 
