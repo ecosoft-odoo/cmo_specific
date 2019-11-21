@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.2100000000000035"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="716"/>
+	<property name="ireport.y" value="672"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -264,9 +264,15 @@ $V{allocation_amount}]]></textFieldExpression>
 				<textElement lineSpacing="Double">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{je_opej}=="OPEJ"?
+				<textFieldExpression class="java.lang.String"><![CDATA[($P{REPORT_LOCALE}.toString() == "en_US" ?
+$F{je_opej}=="OPEJ"?
+$F{narration} + "\n" + "     Invoice No." + $F{opej_number} :
+$F{narration} + "\n" + "     Invoice No." + $F{line_reference}
+:
+$F{je_opej}=="OPEJ"?
 $F{narration} + "\n" + "     ตามใบแจ้งหนี้เลขที่ " + $F{opej_number} :
-$F{narration} + "\n" + "     ตามใบแจ้งหนี้เลขที่ " + $F{line_reference}]]></textFieldExpression>
+$F{narration} + "\n" + "     ตามใบแจ้งหนี้เลขที่ " + $F{line_reference}
+)]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="18" y="72" width="226" height="20"/>
