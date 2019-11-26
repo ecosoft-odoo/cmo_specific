@@ -78,19 +78,21 @@ class ProjectProject(models.Model):
                             .mapped('actual_budget'))
         return res
 
-    # @api.model
-    # def fields_view_get(self, view_id=None, view_type=False,
-    #                     toolbar=False, submenu=False):
-    #     res = super(ProjectProject, self).fields_view_get(
-    #         view_id=view_id, view_type=view_type, toolbar=toolbar,
-    #         submenu=submenu)
-    #     if view_type == 'tree':
-    #         doc = etree.XML(res['arch'])
-    #         nodes = doc.xpath("//field")
-    #         for node in nodes:
-    #             node.set("bg_color", "yellow:has_actual_budget is True")
-    #         res['arch'] = etree.tostring(doc)
-    #     return res
+    @api.model
+    def fields_view_get(self, view_id=None, view_type=False,
+                        toolbar=False, submenu=False):
+        res = super(ProjectProject, self).fields_view_get(
+            view_id=view_id, view_type=view_type, toolbar=toolbar,
+            submenu=submenu)
+        if view_type == 'tree':
+            doc = etree.XML(res['arch'])
+            nodes = doc.xpath("//field")
+            budget_nodes = doc.xpath("//field[@name='has_actual_budget']")
+            if list(set(budget_nodes) & set(nodes)):
+                for node in nodes:
+                    node.set("bg_color", "yellow:has_actual_budget is True")
+                res['arch'] = etree.tostring(doc)
+        return res
 
 
 class ProjectActualBudget(models.Model):
