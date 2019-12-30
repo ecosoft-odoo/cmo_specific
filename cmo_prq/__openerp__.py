@@ -6,7 +6,7 @@
     'author': "Saran Lim.",
     'website': "http://ecosoft.co.th",
     'category': 'Purchase Management',
-    "version": "1.0",
+    "version": "2.0",
     'depends': [
         'l10n_th_doctype_base',
         'purchase_invoice_plan',
