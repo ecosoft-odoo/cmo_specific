@@ -39,6 +39,9 @@
 	<field name="price_subtotal" class="java.lang.Number">
 		<fieldDescription><![CDATA[invoice_line_ids/price_subtotal]]></fieldDescription>
 	</field>
+	<field name="invoice_amount" class="java.lang.Number">
+		<fieldDescription><![CDATA[invoice_plan_amount]]></fieldDescription>
+	</field>
 	<field name="amount_po_untaxed" class="java.lang.Number">
 		<fieldDescription><![CDATA[amount_po_untaxed]]></fieldDescription>
 	</field>
@@ -90,6 +93,9 @@
 	<field name="invoice_description" class="java.lang.String">
 		<fieldDescription><![CDATA[invoice_line_ids/name]]></fieldDescription>
 	</field>
+	<field name="invoice_plan_description" class="java.lang.String">
+		<fieldDescription><![CDATA[invoice_plan_description]]></fieldDescription>
+	</field>
 	<field name="id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[id]]></fieldDescription>
 	</field>
@@ -115,9 +121,10 @@
 		<fieldDescription><![CDATA[invoice_id/validate_date]]></fieldDescription>
 	</field>
 	<variable name="string_amount_total" class="java.lang.String">
-		<variableExpression><![CDATA[(Math.round((
-    $F{amount_po_total}-($F{amount_wht}==null?0:
-    $F{amount_wht}))*100)/100).toString()]]></variableExpression>
+		<variableExpression><![CDATA[(
+			Math.round(($F{amount_po_total}==null?
+			$F{invoice_amount}:$F{amount_po_total}-($F{amount_wht}==null?0:$F{amount_wht})
+			)*100)/100).toString()]]></variableExpression>
 	</variable>
 	<variable name="create_hours" class="java.lang.Number">
 		<variableExpression><![CDATA[$F{create_date_specific}.getHours()+7]]></variableExpression>
@@ -340,7 +347,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				<textElement verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{invoice_account_name} + "\n" + $F{invoice_description}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{invoice_description}==""?$F{invoice_plan_description}:$F{invoice_account_name} + "\n" + $F{invoice_description}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="false">
 				<reportElement style="detail" mode="Transparent" x="455" y="1" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
@@ -348,7 +355,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Number"><![CDATA[$F{price_subtotal}==null?0:$F{price_subtotal}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{price_subtotal}==null?($F{invoice_amount}==null?0:$F{invoice_amount}):$F{price_subtotal}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement style="detail" mode="Transparent" x="320" y="1" width="135" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
@@ -382,7 +389,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Number"><![CDATA[$F{amount_po_untaxed}==null?0:$F{amount_po_untaxed}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{amount_po_untaxed}==null?($F{invoice_amount}==null?0:$F{invoice_amount}):$F{amount_po_untaxed}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="false">
 				<reportElement style="detail" mode="Transparent" x="478" y="6" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
@@ -397,7 +404,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{amount_po_total}==null?
-0:$F{amount_wht}==null?
+($F{invoice_amount}==null?0:$F{invoice_amount}):$F{amount_wht}==null?
 $F{amount_po_total}:
 $F{amount_po_total}-$F{amount_wht}]]></textFieldExpression>
 			</textField>

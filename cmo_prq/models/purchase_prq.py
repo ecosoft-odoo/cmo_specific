@@ -95,6 +95,27 @@ class PurchasePRQ(models.Model):
         string='Invoice Detailed',
         readonly=True,
     )
+    invoice_plan_description = fields.Text(
+        compute='_compute_invoice_plan',
+        string='Description',
+        readonly=True,
+    )
+    invoice_plan_date = fields.Date(
+        compute='_compute_invoice_plan',
+        string='Invoice Date',
+        readonly=True,
+    )
+    invoice_plan_amount = fields.Float(
+        compute='_compute_invoice_plan',
+        string='Amount',
+        readonly=True,
+    )
+    invoice_plan_percent = fields.Float(
+        compute='_compute_invoice_plan',
+        string='%',
+        digits=(16, 10),
+        readonly=True,
+    )
     expense_id = fields.Many2one(
         'hr.expense.expense',
         string='Expense Ref',
@@ -173,6 +194,17 @@ class PurchasePRQ(models.Model):
         string='Approve Permission',
         compute='_compute_approve_permission',
     )
+
+    @api.multi
+    def _compute_invoice_plan(self):
+        self.ensure_one()
+        invoice_plan = self.purchase_id.invoice_plan_ids.filtered(
+            lambda l: l.installment == self.installment)
+        self.invoice_plan_description = invoice_plan.order_line_id.name
+        self.invoice_plan_date = invoice_plan.date_invoice
+        self.invoice_plan_amount = invoice_plan.invoice_amount
+        self.invoice_plan_percent = invoice_plan.invoice_percent
+        return True
 
     @api.multi
     def _compute_cal_wht(self):
