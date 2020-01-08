@@ -109,7 +109,7 @@
                                     </group>
                                 </group>
                             </page>
-                            <page string="Invoice Plan">
+                            <!-- <page string="Invoice Plan">
                                 <group>
                                     <group>
                                         <field name="invoice_plan_description"/>
@@ -120,7 +120,7 @@
                                         <field name="invoice_plan_date"/>
                                     </group>
                                 </group>
-                            </page>
+                            </page> -->
                             <page string="Expense Details" attrs="{'invisible':[('type','not in',('expense'))]}">
                                 <field name="expense_line_ids">
                                     <tree editable="bottom">
