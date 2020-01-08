@@ -16,6 +16,14 @@ class PurchaseOrder(models.Model):
         }
 
     @api.multi
+    def action_cancel_draft(self):
+        self.ensure_one()
+        res = super(PurchaseOrder, self).action_cancel_draft()
+        for rec in self.invoice_ids:
+            rec.update({'state': 'cancel'})
+        return res
+
+    @api.multi
     def wkf_confirm_order(self):
         res = super(PurchaseOrder, self).wkf_confirm_order()
         Plan = self.env['purchase.invoice.plan']
@@ -25,10 +33,17 @@ class PurchaseOrder(models.Model):
             installments = Plan.search([('order_id', '=', order.id)]) \
                 .filtered(lambda l: l.require_prq is True) \
                 .mapped('installment')
-            for installment in list(set(installments)):
-                ctx = {'installment': installment}
-                prepare_prq = self._prepare_prq(installment)
-                self.env['purchase.prq'].with_context(ctx).create(prepare_prq)
+            prq = self.env['purchase.prq'].search([
+                ('purchase_id', '=', order.id),
+            ])
+            if not prq:
+                for installment in list(set(installments)):
+                    ctx = {'installment': installment}
+                    prepare_prq = self._prepare_prq(installment)
+                    self.env['purchase.prq'].with_context(ctx).create(
+                        prepare_prq
+                    )
+            order.action_invoice_create()
         return res
 
     @api.multi
@@ -47,7 +62,7 @@ class PurchaseOrder(models.Model):
                      ('installment', '=', plan.installment)])[0].ref_invoice_id
                 prq = self.env['purchase.prq'].search([
                     ('purchase_id', '=', order.id),
-                    ('installment', '=', plan.installment)
+                    ('installment', '=', plan.installment),
                 ])
                 prq.write({'invoice_id': invoice.id})
                 prq.invoice_id.write({'prq_id': prq.id})
