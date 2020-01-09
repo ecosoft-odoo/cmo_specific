@@ -34,8 +34,8 @@ class PurchaseOrder(models.Model):
         res = super(PurchaseOrder, self).wkf_confirm_order()
         Plan = self.env['purchase.invoice.plan']
         for order in self:
-            order.action_invoice_create()
             if order.invoice_method != 'invoice_plan':
+                order.action_invoice_create()
                 continue
             installments = Plan.search([('order_id', '=', order.id)]) \
                 .filtered(lambda l: l.require_prq is True) \
@@ -51,6 +51,7 @@ class PurchaseOrder(models.Model):
                     self.env['purchase.prq'].with_context(ctx).create(
                         prepare_prq
                     )
+            order.action_invoice_create()
         return res
 
     @api.multi
