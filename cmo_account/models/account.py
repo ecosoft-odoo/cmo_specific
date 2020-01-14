@@ -4,7 +4,8 @@ from openerp.exceptions import ValidationError
 
 
 class AccountMove(models.Model):
-    _inherit = 'account.move'
+    _name = 'account.move'
+    _inherit = ['account.move', 'mail.thread']
 
     ref_invoice_id = fields.Many2one(
         'account.invoice',
@@ -33,10 +34,22 @@ class AccountMove(models.Model):
             rec.ref_voucher_id = Voucher.search([('move_id', '=', rec.id)])
 
     @api.multi
+    def button_cancel(self):
+        res = super(AccountMove, self).button_cancel()
+        message = '<div> &nbsp; &nbsp; &bull; <b>Status</b>: '\
+            'Posted &rarr; Unposted</div>'
+        for rec in self:
+            rec.message_post(body=message)
+        return res
+
+    @api.multi
     def button_validate(self):
         res = super(AccountMove, self).button_validate()
+        message = '<div> &nbsp; &nbsp; &bull; <b>Status</b>: '\
+            'Unposted &rarr; Posted</div>'
         aml_obj = self.env['account.move.line']
         for rec in self:
+            rec.message_post(body=message)
             if self.env['account.fiscalyear'].find(rec.date) != \
                     rec.period_id.fiscalyear_id.id:
                 raise ValidationError(_('Date and period mismatch!'))
