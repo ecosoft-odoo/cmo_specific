@@ -68,6 +68,9 @@ class PurchaseOrder(models.Model):
     @api.multi
     def action_invoice_create(self):
         self.ensure_one()
+        # No Need to create invoice after approve
+        if self.invoice_ids and self.invoice_method == 'order':
+            return
         if self._context.get('job_uuid', False):  # Called from @job
             return super(PurchaseOrder, self).action_invoice_create()
         # Enqueue
