@@ -132,6 +132,12 @@
         <xpath expr="//field[@name='line_id']/tree" position="attributes">
             <attribute name="default_order">id</attribute>
         </xpath>
+        <xpath expr="//notebook" position="after">
+            <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers"/>
+                <field name="message_ids" widget="mail_thread"/>
+            </div>
+        </xpath>
       </field>
     </record>
     <record id="view_move_form2" model="ir.ui.view">
