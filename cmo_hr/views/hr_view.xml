@@ -177,5 +177,22 @@
                 </field>
             </field>
         </record>
+
+        <record id="view_employee_form" model="ir.ui.view">
+            <field name="name">hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[2]//group/group[4]" position="attributes">
+                        <attribute name="string">Date</attribute>
+                </xpath>
+                <field name="birthday" position="after">
+                    <field name="start_date"/>
+                    <field name="probation_date"/>
+                    <field name="end_date"/>
+                </field>
+            </field>
+        </record>
+
     </data>
 </openerp>
