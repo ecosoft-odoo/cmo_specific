@@ -177,7 +177,7 @@
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[นันทิยา    โสวะภาสน์
-Senior Accounting Manager]]></text>
+Accounting Director]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="2" y="686" width="185" height="20"/>
