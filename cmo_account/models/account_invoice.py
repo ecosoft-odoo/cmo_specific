@@ -51,6 +51,16 @@ class AccountInvoice(models.Model):
     # invoice_line = fields.One2many(
     #     states={'draft': [('readonly', False)], 'open': [('readonly', False)]}
     # )
+    account_report_approver_id = fields.Many2one(
+        comodel_name='hr.employee',
+        string='Accounting Report Approver',
+        default=lambda self: self.env.user.company_id.account_report_approver_id,
+    )
+    account_report_approver_job_id = fields.Many2one(
+        comodel_name='hr.job',
+        string='Accounting Report Approver Position',
+        default=lambda self: self.env.user.company_id.account_report_approver_id.job_id,
+    )
 
     @api.multi
     def _compute_amount_untaxed_text_en(self):

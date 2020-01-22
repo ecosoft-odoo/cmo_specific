@@ -14,6 +14,12 @@
 	<field name="name" class="java.lang.String">
 		<fieldDescription><![CDATA[summary_ids/account_id/name]]></fieldDescription>
 	</field>
+	<field name="approve_name" class="java.lang.String">
+		<fieldDescription><![CDATA[account_report_approver_id/name]]></fieldDescription>
+	</field>
+	<field name="approve_job" class="java.lang.String">
+		<fieldDescription><![CDATA[account_report_approver_job_id/name]]></fieldDescription>
+	</field>
 	<field name="account_name" class="java.lang.String">
 		<fieldDescription><![CDATA[summary_ids/account_id/code]]></fieldDescription>
 	</field>
@@ -171,14 +177,21 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Verify By]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="371" y="746" width="186" height="30"/>
+			<!-- Change from static text to this -->
+			<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="UniqueID" isBlankWhenNull="true">
+				<reportElement x="369" y="720" width="186" height="30"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[นันทิยา    โสวะภาสน์
-Accounting Director]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{approve_name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="UniqueID" isBlankWhenNull="true">
+				<reportElement x="369" y="735" width="186" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{approve_job}]]></textFieldExpression>
+			</textField>
 			<staticText>
 				<reportElement x="2" y="686" width="185" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>

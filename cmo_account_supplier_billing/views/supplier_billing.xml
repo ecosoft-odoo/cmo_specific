@@ -12,5 +12,17 @@
                 </xpath>
             </field>
         </record>
+
+        <record id="view_supplier_billing_form" model="ir.ui.view">
+            <field name="name">Supplier Billing Form</field>
+            <field name="model">supplier.billing</field>
+            <field name="inherit_id" ref="account_supplier_billing.view_supplier_billing_form"/>
+            <field name="arch" type="xml">
+                <field name="due_date" position="after">
+                    <field name="account_report_approver_id" invisible="1"/>
+                    <field name="account_report_approver_job_id" invisible="1"/>
+                </field>
+            </field>
+        </record>
     </data>
 </openerp>

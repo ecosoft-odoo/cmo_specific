@@ -12,6 +12,10 @@
                 <field name="validate_date" position="attributes">
                     <attribute name="readonly">1</attribute>
                 </field>
+                <field name="validate_date" position="after">
+                    <field name="account_report_approver_id" invisible="1"/>
+                    <field name="account_report_approver_job_id" invisible="1"/>
+                </field>
             </field>
         </record>
     </data>

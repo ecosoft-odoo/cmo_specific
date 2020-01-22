@@ -132,6 +132,10 @@
         <xpath expr="//field[@name='line_id']/tree" position="attributes">
             <attribute name="default_order">id</attribute>
         </xpath>
+        <field name="to_check" position="after">
+            <field name="account_report_approver_id" invisible="1"/>
+            <field name="account_report_approver_job_id" invisible="1"/>
+        </field>
         <xpath expr="//notebook" position="after">
             <div class="oe_chatter">
                 <field name="message_follower_ids" widget="mail_followers"/>

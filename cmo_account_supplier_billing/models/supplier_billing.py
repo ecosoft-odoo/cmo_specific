@@ -12,6 +12,23 @@ class SupplierBilling(models.Model):
         help='Bill active in supplier payment when state invoice equal '
              'open or cancel (do not appear other state)',
     )
+    company_id = fields.Many2one(
+        'res.company',
+        string='Company',
+        required=True,
+        readonly=True,
+        default=lambda self: self._context.get('company_id', self.env.user.company_id)
+    )
+    account_report_approver_id = fields.Many2one(
+        comodel_name='hr.employee',
+        string='Accounting Report Approver',
+        default=lambda self: self.env.user.company_id.account_report_approver_id,
+    )
+    account_report_approver_job_id = fields.Many2one(
+        comodel_name='hr.job',
+        string='Accounting Report Approver Position',
+        default=lambda self: self.env.user.company_id.account_report_approver_id.job_id,
+    )
 
     @api.multi
     @api.depends('invoice_ids', 'invoice_ids.state')
