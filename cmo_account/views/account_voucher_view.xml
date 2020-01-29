@@ -42,8 +42,8 @@
                            placeholder="Only for migration. This will be shown on line of Receipt/Tax invoice form."/>
                 </field>
                 <field name="type" position="after">
-                    <field name="account_report_approver_id" invisible="1"/>
-                    <field name="account_report_approver_job_id" invisible="1"/>
+                    <field name="approver_id"/>
+                    <field name="approver_job_id"/>
                 </field>
             </field>
         </record>
@@ -139,12 +139,11 @@
             <field name="inherit_id" ref="account_voucher.view_voucher_form"/>
             <field name="arch" type="xml">
                 <field name="number" position="after">
-                    <field name="account_report_approver_id" invisible="1"/>
-                    <field name="account_report_approver_job_id" invisible="1"/>
+                    <field name="approver_id"/>
+                    <field name="approver_job_id"/>
                 </field>
             </field>
         </record>
-
 
     </data>
 </openerp>

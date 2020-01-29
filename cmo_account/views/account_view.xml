@@ -133,8 +133,8 @@
             <attribute name="default_order">id</attribute>
         </xpath>
         <field name="to_check" position="after">
-            <field name="account_report_approver_id" invisible="1"/>
-            <field name="account_report_approver_job_id" invisible="1"/>
+            <field name="approver_id"/>
+            <field name="approver_job_id"/>
         </field>
         <xpath expr="//notebook" position="after">
             <div class="oe_chatter">

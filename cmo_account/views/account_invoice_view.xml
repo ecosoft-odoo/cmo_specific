@@ -35,8 +35,8 @@
                     <field name="validate_date"/>
                 </field>
                 <field name="cancel_move_id" position="after">
-                    <field name="account_report_approver_id" invisible="1"/>
-                    <field name="account_report_approver_job_id" invisible="1"/>
+                    <field name="approver_id"/>
+                    <field name="approver_job_id"/>
                 </field>
             </field>
         </record>
@@ -51,8 +51,8 @@
                     <field name="validate_date"/>
                 </field>
                 <field name="period_id" position="before">
-                    <field name="account_report_approver_id" invisible="1"/>
-                    <field name="account_report_approver_job_id" invisible="1"/>
+                    <field name="approver_id"/>
+                    <field name="approver_job_id"/>
                 </field>
             </field>
         </record>

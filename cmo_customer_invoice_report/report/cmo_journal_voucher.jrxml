@@ -12,10 +12,10 @@
 		<fieldDescription><![CDATA[name]]></fieldDescription>
 	</field>
 	<field name="approve_name" class="java.lang.String">
-		<fieldDescription><![CDATA[account_report_approver_id/name]]></fieldDescription>
+		<fieldDescription><![CDATA[approver_id/name]]></fieldDescription>
 	</field>
 	<field name="approve_job" class="java.lang.String">
-		<fieldDescription><![CDATA[account_report_approver_job_id/name]]></fieldDescription>
+		<fieldDescription><![CDATA[approver_job_id/name]]></fieldDescription>
 	</field>
 	<field name="date" class="java.util.Date">
 		<fieldDescription><![CDATA[date]]></fieldDescription>

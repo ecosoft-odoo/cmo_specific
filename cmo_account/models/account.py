@@ -20,16 +20,28 @@ class AccountMove(models.Model):
     tax_detail_ids = fields.One2many(
         states={'posted': [('readonly', True)]}
     )
-    account_report_approver_id = fields.Many2one(
+    approver_id = fields.Many2one(
         comodel_name='hr.employee',
         string='Accounting Report Approver',
-        default=lambda self: self.env.user.company_id.account_report_approver_id,
+        copy=False,
+        track_visibility='onchange',
     )
-    account_report_approver_job_id = fields.Many2one(
+    approver_job_id = fields.Many2one(
         comodel_name='hr.job',
         string='Accounting Report Approver Position',
-        default=lambda self: self.env.user.company_id.account_report_approver_id.job_id,
+        copy=False,
+        track_visibility='onchange',
     )
+
+    @api.model
+    def default_get(self, fields):
+        res = super(AccountMove, self).default_get(fields)
+        approver = self.env.user.company_id.approver_id
+        res.update({
+            'approver_id': approver.id,
+            'approver_job_id': approver.job_id.id
+        })
+        return res
 
     @api.multi
     def _compute_ref_invoice_id(self):
