@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp import fields, models, api, _
+from openerp import fields, models, api
 from openerp.tools.amount_to_text_en import amount_to_text
 from openerp.addons.l10n_th_amount_text.amount_to_text_th \
     import amount_to_text_th
@@ -165,17 +165,3 @@ class AccountInvoiceLine(models.Model):
         string='Status',
         related='invoice_id.state',
     )
-
-    @api.multi
-    def edit_desc(self):
-        self.ensure_one()
-        return {
-            'name': _("Edit Desc."),
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_model': 'edit.desc',
-            'view_id': False,
-            'type': 'ir.actions.act_window',
-            'context': {'edit_field': 'name'},
-            'target': 'new',
-        }
