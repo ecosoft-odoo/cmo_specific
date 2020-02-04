@@ -47,9 +47,6 @@ class AccountVoucher(models.Model):
         'res.partner',
         string='Approved By',
     )
-    number_preprint = fields.Char(
-        required=True
-    )
     date_value = fields.Date(
         string='Payment Date',
     )
