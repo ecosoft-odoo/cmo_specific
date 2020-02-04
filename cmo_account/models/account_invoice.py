@@ -37,9 +37,6 @@ class AccountInvoice(models.Model):
         readonly=True,
         copy=False,
     )
-    number_preprint = fields.Char(
-        required=True
-    )
     amount_untaxed_text_en = fields.Char(
         compute='_compute_amount_untaxed_text_en',
         string='Subtotal (EN)',

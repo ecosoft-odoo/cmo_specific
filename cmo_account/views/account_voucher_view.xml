@@ -35,7 +35,7 @@
                     <field name="move_id" readonly="1"/>
                 </field>
                 <xpath expr="//form/sheet/group/group[1]" position="inside">
-                    <field name="number_preprint"/>
+                    <field name="number_preprint" required="True"/>
                 </xpath>
                 <field name="narration" position="after">
                     <field name="note" nolabel="1" colspan="2"

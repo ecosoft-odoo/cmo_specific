@@ -50,7 +50,7 @@
           <attribute name="attrs">{'readonly':[('state_related_invoice','in',['open','paid','cancel'])]}</attribute>
         </xpath>
         <xpath expr="//form/sheet/group/group[1]" position="inside">
-          <field name="number_preprint"/>
+          <field name="number_preprint" required="True"/>
         </xpath>
       </field>
     </record>
