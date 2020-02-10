@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# from openerp import models, api
+from openerp import models, fields, api
 
 
 # def filter_print_report(res, reports):
@@ -12,22 +12,23 @@
 #         res['toolbar']['print'] = action
 #     return res
 #
-# class SaleOrder(models.Model):
-#     _inherit = 'sale.order'
 #
-#     @api.model
-#     def fields_view_get(self, view_id=None, view_type='form',
-#                         toolbar=False, submenu=False):
-#         res = super(SaleOrder, self).fields_view_get(
-#             view_id=view_id, view_type=view_type, toolbar=toolbar,
-#             submenu=submenu)
-#         context = self._context.copy()
-#         if context.get('order_type') in ['sale_order','quotation']:
-#             reports = [
-#                 u'cmo.sale.order',
-#                 u'cmo.sale.order.th',
-#                 u'cmo.sale.order.est',
-#                 u'cmo.sale.order.add',
-#             ]
-#             filter_print_report(res, reports)
-#         return res
+class SaleOrder(models.Model):
+    _inherit = 'sale.order'
+
+    sale_position_name = fields.Char(
+        compute='_compute_related_job_name',
+    )
+    approval_position_name = fields.Char(
+        compute='_compute_related_job_name',
+    )
+
+    @api.multi
+    def _compute_related_job_name(self):
+        for rec in self.sudo():
+            sale_job_id = rec.user_id.partner_id.employee_id.job_id
+            approval_job_id = rec.approval_id.partner_id.employee_id.job_id
+            rec.update({
+                'sale_position_name': sale_job_id.name,
+                'approval_position_name': approval_job_id.name,
+            })

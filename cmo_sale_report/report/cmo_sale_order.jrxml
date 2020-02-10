@@ -97,10 +97,10 @@
 		<fieldDescription><![CDATA[order_line/sale_layout_cat_id/name]]></fieldDescription>
 	</field>
 	<field name="sale_position" class="java.lang.String">
-		<fieldDescription><![CDATA[user_id/partner_id/employee_id/job_id/name]]></fieldDescription>
+		<fieldDescription><![CDATA[sale_position_name]]></fieldDescription>
 	</field>
 	<field name="approval_position" class="java.lang.String">
-		<fieldDescription><![CDATA[approval_id/partner_id/employee_id/job_id/name]]></fieldDescription>
+		<fieldDescription><![CDATA[approval_position_name]]></fieldDescription>
 	</field>
 	<field name="quote_id" class="java.lang.String">
 		<fieldDescription><![CDATA[quote_id/name]]></fieldDescription>
