@@ -25,9 +25,9 @@ class SaleOrder(models.Model):
 
     @api.multi
     def _compute_related_job_name(self):
-        for rec in self:
-            sale_job_id = rec.sudo().user_id.partner_id.employee_id.job_id
-            approval_job_id = rec.sudo().approval_id.partner_id.employee_id.job_id
+        for rec in self.sudo():
+            sale_job_id = rec.user_id.partner_id.employee_id.job_id
+            approval_job_id = rec.approval_id.partner_id.employee_id.job_id
             rec.update({
                 'sale_position_name': sale_job_id.name,
                 'approval_position_name': approval_job_id.name,
