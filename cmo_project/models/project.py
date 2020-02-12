@@ -405,9 +405,7 @@ class ProjectProject(models.Model):
             else:
                 project.is_invoiced = False
 
-            if ['done'] == sale_order_states or \
-                    ['cancel'] in sale_order_states or \
-                    ['done', 'cancel'] in sale_order_states:
+            if 'done' in sale_order_states or 'cancel' in sale_order_states:
                 project.is_paid = True
             else:
                 project.is_paid = False
