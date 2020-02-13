@@ -22,7 +22,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='invoice_line']/tree/field[@name='name']" position="after">
                     <button name="%(action_edit_desc)d" string="Edit" type="action" icon="gtk-justify-fill"
-                        context="{'edit_field': 'name'}" groups="account.group_invoice_edit_desc"/>
+                        context='{"edit_field": "name"}' groups="account.group_invoice_edit_desc"/>
                 </xpath>
                 <button name="invoice_print" position="attributes">
                     <attribute name="invisible">True</attribute>
