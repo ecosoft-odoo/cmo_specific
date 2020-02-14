@@ -7,13 +7,13 @@ class AccountBankPayment(models.Model):
 
     approver_id = fields.Many2one(
         comodel_name='hr.employee',
-        string='Accounting Report Approver',
+        string='Approver',
         copy=False,
         track_visibility='onchange',
     )
     approver_job_id = fields.Many2one(
         comodel_name='hr.job',
-        string='Accounting Report Approver Position',
+        string='Approver Position',
         copy=False,
         track_visibility='onchange',
     )
