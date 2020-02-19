@@ -6,6 +6,14 @@ from openerp.exceptions import Warning as UserError
 class CustomerReceiptVoucher(models.TransientModel):
     _name = 'customer.receipt.voucher'
 
+    number_document = fields.Char(
+        string='No.',
+        required=True,
+    )
+    date_due = fields.Date(
+        string='Due Date',
+        required=True,
+    )
     partner_id = fields.Many2one(
         'res.partner',
         string='Partner',

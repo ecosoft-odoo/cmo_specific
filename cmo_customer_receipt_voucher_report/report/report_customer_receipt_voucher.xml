@@ -16,7 +16,7 @@
                             <b>เลขที่</b><br/>
                             <b>No.</b>
                         </div>
-                        <div class="number-box"></div>
+                        <div class="number-box"><span t-esc="docs.get_value_wizard().number_document"/></div>
                     </div>
                 </div>
                 <div class="row payment_type">
@@ -88,7 +88,7 @@
                         <div><b>Due Date</b></div>
                     </div>
                     <div class="col-xs-2">
-                        <span t-esc="docs and docs[0].voucher_id.date_cheque and datetime.datetime.strptime(docs[0].voucher_id.date_cheque, '%Y-%m-%d').strftime('%d/%m/%Y')"/>
+                        <span t-esc="datetime.datetime.strptime(docs.get_value_wizard().date_due, '%Y-%m-%d').strftime('%d/%m/%Y')"/>
                     </div>
                 </div>
             </div>
@@ -156,9 +156,18 @@
                                             <div>นำเงินเข้า</div>
                                             <div>Pay in at</div>
                                         </div>
-                                        <div style="display: inline-block;width: 400px;">
+                                        <div style="display: inline-block;width: 100px;">
                                             <div>ธนาคาร</div>
                                             <div>Bank</div>
+                                        </div>
+                                        <div style="display: inline-block; width: 400px;">
+                                            <t t-if="docs[0].bank_receipt_id">
+                                                <div t-esc="docs and docs[0].bank_receipt_id.bank_account_id.name"/>
+                                                <div>
+                                                    <t t-esc="docs and docs[0].bank_receipt_id.partner_bank_id.bank_name"/>
+                                                    <t t-esc="'(%s)' % docs[0].bank_receipt_id.partner_bank_id.acc_number"/>
+                                                </div>
+                                            </t>
                                         </div>
                                         <div style="display: inline-block;">
                                             <div>วันที่</div>
@@ -187,7 +196,10 @@
                                 <tr t-foreach="docs" t-as="doc">
                                     <t t-set="total_amount_untaxed" t-value="total_amount_untaxed + doc.amount_untaxed"/>
                                     <td></td>
-                                    <td><span t-field="doc.analytic_account_id.name"/></td>
+                                    <td>
+                                        <span t-field="doc.move_line_id.name"/> /
+                                        <span t-field="doc.analytic_account_id.name"/>
+                                    </td>
                                     <td class="text-right" style="border-right: 1px solid;"><span t-esc="'{0:,.2f}'.format(doc.amount_untaxed)"/></td>
                                 </tr>
                                 <tr>

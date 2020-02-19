@@ -9,7 +9,9 @@
 				<form>
                     <group>
                         <group>
+                            <field name="number_document"/>
                             <field name="partner_id" domain="[('customer', '=', True)]"/>
+                            <field name="date_due"/>
                             <field name="is_cheque"/>
                             <field name="number_cheque" attrs="{'invisible': [('is_cheque', '=', False)], 'required': [('is_cheque', '=', True)]}"/>
                         </group>
