@@ -155,6 +155,8 @@
                                 <field name="amount"/>
                                 <field name="create_uid" readonly="1"/>
                                 <field name="write_uid" readonly="1"/>
+                                <field name="approver_id"/>
+                                <field name="approver_job_id"/>
                             </group>
                         </group>
                         <notebook>

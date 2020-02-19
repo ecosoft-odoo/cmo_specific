@@ -14,6 +14,12 @@
 	<field name="number" class="java.lang.String">
 		<fieldDescription><![CDATA[number]]></fieldDescription>
 	</field>
+	<field name="approve_name" class="java.lang.String">
+		<fieldDescription><![CDATA[approver_id/name]]></fieldDescription>
+	</field>
+	<field name="approve_job" class="java.lang.String">
+		<fieldDescription><![CDATA[approver_job_id/name]]></fieldDescription>
+	</field>
 	<field name="date" class="java.util.Date">
 		<fieldDescription><![CDATA[date]]></fieldDescription>
 	</field>
@@ -202,14 +208,21 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 			</frame>
-			<staticText>
-				<reportElement x="370" y="721" width="186" height="30"/>
+			<!-- Change from static text to this -->
+			<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="UniqueID" isBlankWhenNull="true">
+				<reportElement x="369" y="705" width="186" height="30"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[นันทิยา    โสวะภาสน์
-Accounting Director]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{approve_name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="UniqueID" isBlankWhenNull="true">
+				<reportElement x="369" y="720" width="186" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{approve_job}]]></textFieldExpression>
+			</textField>
 			<staticText>
 				<reportElement x="0" y="661" width="185" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>

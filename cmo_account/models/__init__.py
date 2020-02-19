@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from . import res_company
 from . import change_analytic_label
 from . import account_invoice
 from . import sale_order

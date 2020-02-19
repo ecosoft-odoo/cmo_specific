@@ -30,6 +30,7 @@
         'views/account_voucher_view.xml',
         'views/account_bank_receipt_view.xml',
         'views/account_wht_cert.xml',
+        'views/res_company.xml',
     ],
     "application": False,
     "installable": True,

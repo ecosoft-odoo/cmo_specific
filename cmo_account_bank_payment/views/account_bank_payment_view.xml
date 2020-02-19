@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+    <record id="account_bank_payment_view_form" model="ir.ui.view">
+      <field name="name">account.bank.payment.form</field>
+      <field name="model">account.bank.payment</field>
+      <field name="inherit_id" ref="account_bank_payment.account_bank_payment_view_form"/>
+      <field name="arch" type="xml">
+          <field name="validate_date" position="after">
+              <field name="approver_id"/>
+              <field name="approver_job_id"/>
+          </field>
+      </field>
+    </record>
+
+  </data>
+</openerp>
