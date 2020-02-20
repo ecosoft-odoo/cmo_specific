@@ -33,8 +33,6 @@
                 <field name="user_id" position="after">
                     <field name="validate_user_id"/>
                     <field name="validate_date"/>
-                </field>
-                <field name="cancel_move_id" position="after">
                     <field name="approver_id"/>
                     <field name="approver_job_id"/>
                 </field>
@@ -49,8 +47,6 @@
                 <field name="user_id" position="after">
                     <field name="validate_user_id"/>
                     <field name="validate_date"/>
-                </field>
-                <field name="period_id" position="before">
                     <field name="approver_id"/>
                     <field name="approver_job_id"/>
                 </field>
