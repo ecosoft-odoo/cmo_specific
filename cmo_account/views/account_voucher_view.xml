@@ -41,7 +41,7 @@
                     <field name="note" nolabel="1" colspan="2"
                            placeholder="Only for migration. This will be shown on line of Receipt/Tax invoice form."/>
                 </field>
-                <field name="type" position="after">
+                <field name="name" position="after">
                     <field name="approver_id"/>
                     <field name="approver_job_id"/>
                 </field>
