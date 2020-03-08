@@ -33,10 +33,9 @@ class CustomerReceiptVoucher(models.TransientModel):
         Result = self.env['report.customer.receipt.voucher']
         dom = [('voucher_id.number_cheque', '=', self.number_cheque)]
         if self.partner_id:
-            dom += [
-                ('voucher_id.partner_id', '=', self.partner_id.id),
-                ('voucher_id.date', '=', self.date_due),
-            ]
+            dom += [('voucher_id.partner_id', '=', self.partner_id.id)]
+        if self.date_due:
+            dom += [('voucher_id.date', '=', self.date_due)]
         result = Result.search(dom)
         if not result:
             raise UserError(_('Error!'), _('No Data.'))
