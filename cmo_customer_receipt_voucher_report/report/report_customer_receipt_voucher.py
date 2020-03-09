@@ -18,6 +18,14 @@ class ReportCustomerReceiptVoucher(models.Model):
     amount_untaxed = fields.Float(
         string='Amount Untaxed',
     )
+    bank_receipt_id = fields.Many2one(
+        'account.bank.receipt',
+        string='Bank Reciept',
+    )
+    move_line_id = fields.Many2one(
+        'account.move.line',
+        string='Move Line',
+    )
 
     def _get_sql_view(self):
         sql_view = """
@@ -25,9 +33,12 @@ class ReportCustomerReceiptVoucher(models.Model):
                     OVER(ORDER BY av.id, aml2.analytic_account_id) AS id,
                    av.id AS voucher_id,
                    aml2.analytic_account_id,
-                   SUM(aml2.credit-aml2.debit) AS amount_untaxed
+                   SUM(aml2.credit-aml2.debit) AS amount_untaxed,
+                   abr.id AS bank_receipt_id,
+                   aml.id AS move_line_id
             FROM account_voucher_line avl
             INNER JOIN account_voucher av ON avl.voucher_id = av.id
+            LEFT JOIN account_bank_receipt abr ON av.bank_receipt_id = abr.id
             LEFT JOIN account_move_line aml ON avl.move_line_id = aml.id
             LEFT JOIN (
                 SELECT aml.move_id, aml.analytic_account_id, aml.debit,
@@ -43,7 +54,7 @@ class ReportCustomerReceiptVoucher(models.Model):
                 )
             ) aml2 ON aml.move_id = aml2.move_id
             WHERE av.type = 'receipt' AND av.state = 'posted'
-            GROUP BY av.id, aml2.analytic_account_id
+            GROUP BY av.id, aml2.analytic_account_id, abr.id, aml.id
         """
         return sql_view
 
@@ -73,3 +84,9 @@ class ReportCustomerReceiptVoucher(models.Model):
         total_credit_vat = sum(vat_move_line_ids.mapped('credit'))
         total_debit_vat = sum(vat_move_line_ids.mapped('debit'))
         return total_credit_vat - total_debit_vat
+
+    @api.multi
+    def get_value_wizard(self):
+        Wizard = self.env['customer.receipt.voucher']
+        wizard = Wizard.browse(self.env.context.get('active_id'))
+        return wizard

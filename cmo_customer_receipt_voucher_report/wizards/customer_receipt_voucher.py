@@ -6,6 +6,14 @@ from openerp.exceptions import Warning as UserError
 class CustomerReceiptVoucher(models.TransientModel):
     _name = 'customer.receipt.voucher'
 
+    number_document = fields.Char(
+        string='No.',
+        required=True,
+    )
+    date_due = fields.Date(
+        string='Due Date',
+        required=True,
+    )
     partner_id = fields.Many2one(
         'res.partner',
         string='Partner',
@@ -26,6 +34,8 @@ class CustomerReceiptVoucher(models.TransientModel):
         dom = [('voucher_id.number_cheque', '=', self.number_cheque)]
         if self.partner_id:
             dom += [('voucher_id.partner_id', '=', self.partner_id.id)]
+        if self.date_due:
+            dom += [('voucher_id.date', '=', self.date_due)]
         result = Result.search(dom)
         if not result:
             raise UserError(_('Error!'), _('No Data.'))
