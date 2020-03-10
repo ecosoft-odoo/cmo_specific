@@ -8,7 +8,7 @@
                         <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo"/>
                     </div>
                     <div class="col-xs-4 text-center title">
-                        <b>ใบเสร็จรับเงิน</b><br/>
+                        <b>ใบสำคัญรับเงิน</b><br/>
                         <b>RECEIPT VOUCHER</b>
                     </div>
                     <div class="col-xs-4 text-right number">
