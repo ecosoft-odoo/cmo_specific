@@ -76,3 +76,22 @@ class PurchaseOrder(models.Model):
                 prq.write({'invoice_id': invoice.id})
                 prq.invoice_id.write({'prq_id': prq.id})
         return res
+
+    @api.multi
+    def wkf_action_cancel(self):
+        super(PurchaseOrder, self).wkf_action_cancel()
+        self._cancel_prq()
+
+    @api.multi
+    def action_cancel(self):
+        res = super(PurchaseOrder, self).action_cancel()
+        self._cancel_prq()
+        return res
+
+    @api.multi
+    def _cancel_prq(self):
+        PRQ = self.env['purchase.prq']
+        for po in self:
+            prq = PRQ.search([('purchase_id', '=', po.id)])
+            for rec in prq:
+                rec.action_reject()
