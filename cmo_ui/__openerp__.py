@@ -13,6 +13,7 @@
     'data': [
         'data/system_params.xml',
         'views/login_view.xml',
+        'views/website_template.xml',
     ],
     'demo': [
     ],
