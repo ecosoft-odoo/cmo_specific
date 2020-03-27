@@ -6,7 +6,7 @@
     'author': "Ecosoft",
     'website': "http://ecosoft.co.th",
     'category': 'Tools',
-    "version": "1.0",
+    "version": "1.1",
     'depends': [
         'sale',
         'report',
@@ -20,7 +20,7 @@
     'data': [
         'security/ir.model.access.csv',
         'data/sale_data.xml',
-        # 'data/product_data.xml',
+        'data/product_data.xml',
         'wizard/cal_manage_fee_view.xml',
         'views/sale_view.xml',
         'views/master_data_view.xml',
