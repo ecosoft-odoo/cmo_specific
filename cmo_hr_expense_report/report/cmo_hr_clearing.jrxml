@@ -8,6 +8,9 @@
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
 	</queryString>
+	<field name="company_name" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/name]]></fieldDescription>
+	</field>
 	<field name="expense_number" class="java.lang.String">
 		<fieldDescription><![CDATA[number]]></fieldDescription>
 	</field>
@@ -481,14 +484,14 @@ $F{approve_date}.getMinutes()]]></variableExpression>
 				</textElement>
 				<text><![CDATA[ส่วนที่ 1 : สำหรับที่ยืมเงินทดรองจ่าย (โปรดกรอกรายละเอียดให้ครบถ้วน) ]]></text>
 			</staticText>
-			<staticText>
+			<textField>
 				<reportElement mode="Opaque" x="100" y="0" width="301" height="20" forecolor="#FFFFFF" backcolor="#3C3C3C"/>
 				<box leftPadding="0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[CMO PUBLIC COMPANY LIMITED]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_name}]]></textFieldExpression>
+			</textField>
 			<staticText>
 				<reportElement x="100" y="20" width="301" height="57"/>
 				<box leftPadding="2">
@@ -509,7 +512,7 @@ $F{approve_date}.getMinutes()]]></variableExpression>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<imageExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "cmo.png"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? $P{SUBREPORT_DIR} + "cmo.png": $P{SUBREPORT_DIR} + "muse.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="0" y="97" width="56" height="20"/>
