@@ -2,8 +2,8 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_hr_expense" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.1000000000000099"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="604"/>
+	<property name="ireport.x" value="3"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -31,6 +31,33 @@
 	</field>
 	<field name="operating_unit" class="java.lang.String">
 		<fieldDescription><![CDATA[operating_unit_id/name]]></fieldDescription>
+	</field>
+	<field name="company_name" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/name]]></fieldDescription>
+	</field>
+	<field name="company_street1" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/street]]></fieldDescription>
+	</field>
+	<field name="company_street2" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/street2]]></fieldDescription>
+	</field>
+	<field name="company_zip" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/zip]]></fieldDescription>
+	</field>
+	<field name="company_country" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/country_id/name]]></fieldDescription>
+	</field>
+	<field name="company_phone" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/phone]]></fieldDescription>
+	</field>
+	<field name="company_fax" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/fax]]></fieldDescription>
+	</field>
+	<field name="company_web" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/website]]></fieldDescription>
+	</field>
+	<field name="company_email" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/email]]></fieldDescription>
 	</field>
 	<field name="employee" class="java.lang.String">
 		<fieldDescription><![CDATA[user_id/name]]></fieldDescription>
@@ -372,15 +399,15 @@ $F{employee}]]></textFieldExpression>
 				</textElement>
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{expense_date}]]></textFieldExpression>
 			</textField>
-			<staticText>
+			<textField>
 				<reportElement mode="Opaque" x="100" y="0" width="252" height="20" forecolor="#FFFFFF" backcolor="#3C3C3C"/>
 				<box leftPadding="0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[CMO PUBLIC COMPANY LIMITED]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_name}]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement x="100" y="20" width="252" height="75"/>
 				<box leftPadding="2">
 					<topPen lineWidth="1.0"/>
@@ -390,11 +417,10 @@ $F{employee}]]></textFieldExpression>
 				<textElement verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[ 4/18-19 Soi Nuanchan 56, Nuanchan, Buengkum,
-Bangkok 10230 Thailand
-Tel :  66 2088 3888 Fax : 66 2088 3848
-www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_street1} + " " + $F{company_street2} + " " + $F{company_zip} + " " + $F{company_country}
+					+ "\nTel: " + $F{company_phone} + " Fax: " + $F{company_fax}
+					+ "\n" + $F{company_web} + " Email: " + $F{company_email}]]></textFieldExpression>
+			</textField>
 			<image hAlign="Center" vAlign="Middle" onErrorType="Icon">
 				<reportElement x="0" y="0" width="100" height="95"/>
 				<box leftPadding="0">
@@ -403,7 +429,7 @@ www.cmo-group.com Email : cmo@cmo-group.com ]]></text>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<imageExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "cmo.png"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? $P{SUBREPORT_DIR} + "cmo.png": $P{SUBREPORT_DIR} + "muse.png"]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="352" y="0" width="1" height="93"/>
