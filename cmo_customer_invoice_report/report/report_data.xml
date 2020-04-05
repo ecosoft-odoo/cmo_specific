@@ -131,7 +131,7 @@
            <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_customer_invoice2_th)"/>
         </record>
 
-        <!-- Receipt/Tax Invoice (PEO EN) -->
+        <!-- Customer Invoices : Receipt/Tax Invoice (PEO EN) (Not used 04/04/2020) -->
         <record id="cmo_receipt_tax_invoice_peo_en" model="ir.actions.report.xml">
            <field name="string">Receipt/Tax Invoice (PEO EN)</field>
            <field name="auto">True</field>
@@ -153,7 +153,7 @@
            <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_receipt_tax_invoice_peo_en)"/>
         </record>
 
-        <!-- Receipt/Tax Invoice (PEO TH) -->
+        <!-- Customer Invoices : Receipt/Tax Invoice (PEO TH) (Not used 04/04/2020) -->
         <record id="cmo_receipt_tax_invoice_peo_th" model="ir.actions.report.xml">
            <field name="string">Receipt/Tax Invoice (PEO TH)</field>
            <field name="auto">True</field>
@@ -173,6 +173,50 @@
            <field name="model">account.invoice</field>
            <field name="key2" eval="'client_print_multi'"/>
            <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_receipt_tax_invoice_peo_th)"/>
+        </record>
+
+        <!-- Customer Payment : Receipt/Tax Invoice (PEO EN) -->
+        <record id="cmo_customer_payment_receipt_tax_invoice_peo_en" model="ir.actions.report.xml">
+           <field name="string">Receipt/Tax Invoice (PEO EN)</field>
+           <field name="auto">True</field>
+           <field name="model">account.voucher</field>
+           <field name="jasper_model_id" ref="account_voucher.model_account_voucher"/>
+           <field name="name">Receipt/Tax Invoice (PEO EN)</field>
+           <field name="report_name">cmo.customer.payment.receipt.tax.invoice.peo.en</field>
+           <field name="report_rml">cmo_customer_invoice_report/report/cmo_customer_payment_receipt_tax_invoice_peo.jrxml</field>
+           <field name="force_locale">en_US</field>
+           <field name="menu">True</field>
+           <field name="header">False</field>
+           <field name="jasper_report">True</field>
+           <field name="jasper_output">pdf</field>
+        </record>
+        <record id="cmo_customer_payment_receipt_tax_invoice_peo_en_values" model="ir.values">
+           <field name="name">Receipt/Tax Invoice (PEO EN)</field>
+           <field name="model">account.voucher</field>
+           <field name="key2" eval="'client_print_multi'"/>
+           <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_customer_payment_receipt_tax_invoice_peo_en)"/>
+        </record>
+
+        <!-- Customer Payment : Receipt/Tax Invoice (PEO TH) -->
+        <record id="cmo_customer_payment_receipt_tax_invoice_peo_th" model="ir.actions.report.xml">
+           <field name="string">Receipt/Tax Invoice (PEO TH)</field>
+           <field name="auto">True</field>
+           <field name="model">account.voucher</field>
+           <field name="jasper_model_id" ref="account_voucher.model_account_voucher"/>
+           <field name="name">Receipt/Tax Invoice (PEO TH)</field>
+           <field name="report_name">cmo.customer.payment.receipt.tax.invoice.peo.th</field>
+           <field name="report_rml">cmo_customer_invoice_report/report/cmo_customer_payment_receipt_tax_invoice_peo.jrxml</field>
+           <field name="force_locale">th_TH</field>
+           <field name="menu">True</field>
+           <field name="header">False</field>
+           <field name="jasper_report">True</field>
+           <field name="jasper_output">pdf</field>
+        </record>
+        <record id="cmo_customer_payment_receipt_tax_invoice_peo_th_values" model="ir.values">
+           <field name="name">Receipt/Tax Invoice (PEO TH)</field>
+           <field name="model">account.voucher</field>
+           <field name="key2" eval="'client_print_multi'"/>
+           <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(cmo_customer_payment_receipt_tax_invoice_peo_th)"/>
         </record>
 
         <!-- Receipt/Tax Invoice (EN) -->
