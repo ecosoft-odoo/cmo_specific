@@ -108,6 +108,9 @@
 	<field name="sequence" class="java.lang.Integer">
 		<fieldDescription><![CDATA[order_line/sequence]]></fieldDescription>
 	</field>
+	<field name="company_name" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/name]]></fieldDescription>
+	</field>
 	<sortField name="group"/>
 	<sortField name="custom_group"/>
 	<sortField name="section code"/>
@@ -304,7 +307,7 @@ $F{quote_id} : $F{name}]]></textFieldExpression>
 			</textField>
 			<image>
 				<reportElement x="30" y="-5" width="88" height="67"/>
-				<imageExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "cmo.png"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? $P{SUBREPORT_DIR} + "cmo.png": $P{SUBREPORT_DIR} + "muse.png"]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="230" y="0" width="153" height="32"/>
