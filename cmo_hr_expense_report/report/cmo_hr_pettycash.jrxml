@@ -179,12 +179,12 @@ $F{approve_date}.getMinutes()]]></variableExpression>
 				<text><![CDATA[CASH PAYMENT VOUCHER]]></text>
 			</staticText>
 			<image hAlign="Center" vAlign="Middle" onErrorType="Icon">
-				<reportElement x="0" y="0" width="178" height="43"/>
+				<reportElement x="0" y="3" width="178" height="35"/>
 				<box leftPadding="0">
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.0"/>
-					<rightPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<imageExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? $P{SUBREPORT_DIR} + "cmo.png": $P{SUBREPORT_DIR} + "muse.png"]]></imageExpression>
 			</image>
@@ -329,6 +329,16 @@ $F{approve_date}.getMinutes()]]></variableExpression>
 			</textField>
 			<frame>
 				<reportElement x="0" y="42" width="178" height="18"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+			</frame>
+			<frame>
+				<reportElement x="0" y="0" width="178" height="42"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>

@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.948717100000011"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="260"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -347,13 +347,7 @@ $F{approve_date}.getMinutes()]]></variableExpression>
 				<reportElement x="352" y="0" width="1" height="95"/>
 			</line>
 			<image hAlign="Center" vAlign="Middle" onErrorType="Icon">
-				<reportElement x="0" y="0" width="100" height="95"/>
-				<box leftPadding="0">
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
+				<reportElement x="5" y="5" width="90" height="85"/>
 				<imageExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? $P{SUBREPORT_DIR} + "cmo.png": $P{SUBREPORT_DIR} + "muse.png"]]></imageExpression>
 			</image>
 			<staticText>
