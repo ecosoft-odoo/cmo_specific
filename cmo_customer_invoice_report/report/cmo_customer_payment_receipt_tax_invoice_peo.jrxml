@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_receipt_tax_invoice_peo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
 	<property name="ireport.zoom" value="0.9090909090909095"/>
 	<property name="ireport.x" value="13"/>
-	<property name="ireport.y" value="309"/>
+	<property name="ireport.y" value="213"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line_ids&quot;]"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
@@ -144,7 +144,7 @@ null:"DRAFT"]]></textFieldExpression>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="176"/>
+		<band height="325"/>
 	</pageFooter>
 	<lastPageFooter>
 		<band height="325">
