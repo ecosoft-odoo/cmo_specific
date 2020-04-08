@@ -17,6 +17,9 @@
 	<field name="approve_name" class="java.lang.String">
 		<fieldDescription><![CDATA[approver_id/name]]></fieldDescription>
 	</field>
+	<field name="company_name" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/name]]></fieldDescription>
+	</field>
 	<field name="approve_job" class="java.lang.String">
 		<fieldDescription><![CDATA[approver_job_id/name]]></fieldDescription>
 	</field>
@@ -230,7 +233,7 @@
 			<image hAlign="Center" vAlign="Middle" onErrorType="Icon">
 				<reportElement x="3" y="-5" width="195" height="134"/>
 				<box leftPadding="4"/>
-				<imageExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "cmo.png"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? $P{SUBREPORT_DIR} + "cmo.png": $P{SUBREPORT_DIR} + "muse.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="346" y="0" width="211" height="24"/>

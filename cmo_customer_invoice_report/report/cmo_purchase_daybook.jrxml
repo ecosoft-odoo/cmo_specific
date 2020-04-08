@@ -2,8 +2,8 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_supplier_payment_voucher" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="OPENERP_RELATIONS" value="[&quot;move_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.3310000000000006"/>
-	<property name="ireport.x" value="115"/>
-	<property name="ireport.y" value="192"/>
+	<property name="ireport.x" value="1"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -67,6 +67,9 @@
 	</field>
 	<field name="description" class="java.lang.String">
 		<fieldDescription><![CDATA[move_ids/name]]></fieldDescription>
+	</field>
+	<field name="company_name" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/name]]></fieldDescription>
 	</field>
 	<field name="move_line_date" class="java.util.Date">
 		<fieldDescription><![CDATA[move_ids/date]]></fieldDescription>
@@ -230,7 +233,6 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Record By]]></text>
 			</staticText>
-			<!-- Change from static text to this -->
 			<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="UniqueID" isBlankWhenNull="true">
 				<reportElement x="369" y="720" width="186" height="30"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -260,9 +262,9 @@
 	<pageHeader>
 		<band height="210" splitType="Stretch">
 			<image hAlign="Center" vAlign="Middle" onErrorType="Icon">
-				<reportElement x="3" y="-5" width="195" height="134"/>
+				<reportElement x="11" y="0" width="156" height="114"/>
 				<box leftPadding="4"/>
-				<imageExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "cmo.png"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? $P{SUBREPORT_DIR} + "cmo.png": $P{SUBREPORT_DIR} + "muse.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="346" y="0" width="211" height="24"/>

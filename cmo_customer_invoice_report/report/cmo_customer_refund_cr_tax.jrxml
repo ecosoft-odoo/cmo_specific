@@ -2,8 +2,8 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_customer_refund_cr_tax" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line&quot;]"/>
 	<property name="ireport.zoom" value="1.4641000000000035"/>
-	<property name="ireport.x" value="197"/>
-	<property name="ireport.y" value="480"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -76,6 +76,12 @@
 	</field>
 	<field name="others_note" class="java.lang.String">
 		<fieldDescription><![CDATA[others_note]]></fieldDescription>
+	</field>
+	<field name="company_name" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/name]]></fieldDescription>
+	</field>
+	<field name="company_vat" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/vat]]></fieldDescription>
 	</field>
 	<field name="project_note" class="java.lang.String">
 		<fieldDescription><![CDATA[project_note]]></fieldDescription>
@@ -172,20 +178,22 @@ $F{origin_total} - $F{amount_untaxed}]]></variableExpression>
 	</background>
 	<title>
 		<band height="313" splitType="Stretch">
-			<staticText>
+			<textField>
 				<reportElement x="9" y="84" width="232" height="35"/>
 				<box leftPadding="2"/>
 				<textElement lineSpacing="1_1_2">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[4/18-19 ซอยนวลจันทร์ 56
-แขวงนวลจันทร์ เขตบึงกุ่ม กรุงเทพฯ 10230
-เลขประจำตัวผู้เสียภาษี 1017546000458]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ?
+					"4/18-19 ซอยนวลจันทร์ 56\n" +  "แขวงนวลจันทร์ เขตบึงกุ่ม กรุงเทพฯ 10230\n" +
+					"เลขประจำตัวผู้เสียภาษี : " + $F{company_vat} :
+					"4/27 ซอยนวลจันทร์ 56\n" +  "แขวงนวลจันทร์ เขตบึงกุ่ม กรุงเทพฯ 10230\n" +
+					"เลขประจำตัวผู้เสียภาษี : " + $F{company_vat}]]></textFieldExpression>
+			</textField>
 			<image hAlign="Center" vAlign="Middle" onErrorType="Icon">
-				<reportElement x="11" y="-33" width="140" height="128"/>
+				<reportElement x="0" y="-10" width="79" height="66"/>
 				<box leftPadding="4"/>
-				<imageExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "cmo.png"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? $P{SUBREPORT_DIR} + "cmo.png": $P{SUBREPORT_DIR} + "muse.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="0" y="144" width="555" height="20"/>
@@ -222,13 +230,13 @@ $F{origin_total} - $F{amount_untaxed}]]></variableExpression>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["เลขประจำตัวผู้เสียภาษี "+ $F{company_tax}]]></textFieldExpression>
 			</textField>
-			<staticText>
+			<textField>
 				<reportElement x="9" y="64" width="323" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[บริษัท ซีเอ็มโอ จำกัด (มหาชน) (สำนักงานใหญ่)]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? "บริษัท ซีเอ็มโอ จำกัด (มหาชน) (สำนักงานใหญ่)" : "บริษัท มิวส์ คอร์ปอเรชั่น จำกัด (สำนักงานใหญ่)"]]></textFieldExpression>
+			</textField>
 			<staticText>
 				<reportElement x="9" y="199" width="54" height="20"/>
 				<textElement verticalAlignment="Middle">

@@ -8,6 +8,15 @@
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
 	</queryString>
+	<field name="company_name" class="java.lang.String">
+		<fieldDescription><![CDATA[invoice_ids/company_id/name]]></fieldDescription>
+	</field>
+	<field name="company_phone" class="java.lang.String">
+		<fieldDescription><![CDATA[invoice_ids/company_id/phone]]></fieldDescription>
+	</field>
+	<field name="company_fax" class="java.lang.String">
+		<fieldDescription><![CDATA[invoice_ids/company_id/fax]]></fieldDescription>
+	</field>
 	<field name="partner_name" class="java.lang.String">
 		<fieldDescription><![CDATA[partner_id/name]]></fieldDescription>
 	</field>
@@ -81,22 +90,24 @@
 	</title>
 	<pageHeader>
 		<band height="206" splitType="Stretch">
-			<staticText>
+			<textField>
 				<reportElement x="100" y="37" width="232" height="54"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[4/18-19 ซอยนวลจันทร์ 56, ถ. นวลจันทร์
-แขวงนวลจันทร์ เขตบึงกุ่ม กรุงเทพฯ 10230
-โทร.  (66-2) 088 3888
-Fax : (66-2) 088 3857
-]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ?
+					"4/18-19 ซอยนวลจันทร์ 56\n" +  "แขวงนวลจันทร์ เขตบึงกุ่ม กรุงเทพฯ 10230\n" +
+					"Tel : " + $F{company_phone} +
+					"\nFax : " + $F{company_fax} :
+					"4/27 ซอยนวลจันทร์ 56\n" +  "แขวงนวลจันทร์ เขตบึงกุ่ม กรุงเทพฯ 10230\n" +
+					"Tel : " + $F{company_phone} +
+					"\nFax : " + $F{company_fax}]]></textFieldExpression>
+			</textField>
 			<image hAlign="Center" vAlign="Middle" onErrorType="Icon">
 				<reportElement x="11" y="3" width="86" height="74"/>
 				<box leftPadding="4"/>
-				<imageExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "cmo.png"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? $P{SUBREPORT_DIR} + "cmo.png": $P{SUBREPORT_DIR} + "muse.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="155" y="127" width="211" height="33"/>
@@ -133,13 +144,13 @@ Fax : (66-2) 088 3857
 				</textElement>
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{date}]]></textFieldExpression>
 			</textField>
-			<staticText>
+			<textField>
 				<reportElement x="100" y="17" width="232" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[บริษัท ซีเอ็มโอ จำกัด (มหาชน)]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? "บริษัท ซีเอ็มโอ จำกัด (มหาชน) (สำนักงานใหญ่)" : "บริษัท มิวส์ คอร์ปอเรชั่น จำกัด (สำนักงานใหญ่)"]]></textFieldExpression>
+			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="97" y="186" width="269" height="20"/>
 				<box leftPadding="2"/>

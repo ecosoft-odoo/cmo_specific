@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_receipt_mig" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0000000000000004"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="150"/>
+	<property name="ireport.y" value="0"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<parameter name="EVENTS_DATA_SOURCE" class="java.lang.Object"/>
@@ -41,6 +41,18 @@
 	</field>
 	<field name="id" class="java.lang.String">
 		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="company_name" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/name]]></fieldDescription>
+	</field>
+	<field name="company_phone" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/phone]]></fieldDescription>
+	</field>
+	<field name="company_fax" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/fax]]></fieldDescription>
+	</field>
+	<field name="company_vat" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/vat]]></fieldDescription>
 	</field>
 	<field name="narration" class="java.lang.String">
 		<fieldDescription><![CDATA[narration]]></fieldDescription>
@@ -123,8 +135,8 @@ $F{line_payment}]]></variableExpression>
 	<pageHeader>
 		<band height="201" splitType="Stretch">
 			<image>
-				<reportElement x="0" y="-18" width="128" height="66"/>
-				<imageExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "cmo.png"]]></imageExpression>
+				<reportElement x="0" y="-6" width="128" height="66"/>
+				<imageExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? $P{SUBREPORT_DIR} + "cmo.png": $P{SUBREPORT_DIR} + "muse.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement mode="Transparent" x="74" y="-6" width="236" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
@@ -133,13 +145,13 @@ $F{line_payment}]]></variableExpression>
 				</textElement>
 				<text><![CDATA[บริษัท ซีเอ็มโอ จำกัด (มหาชน) (สำนักงานใหญ่)]]></text>
 			</staticText>
-			<staticText>
+			<textField>
 				<reportElement mode="Transparent" x="74" y="9" width="236" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
-				<text><![CDATA[4/18-19 ซอยนวลจันทร์ 56]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? "4/18-19 ซอยนวลจันทร์ 56" : "4/27 ซอยนวลจันทร์ 56"]]></textFieldExpression>
+			</textField>
 			<staticText>
 				<reportElement mode="Transparent" x="74" y="23" width="236" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
@@ -147,13 +159,13 @@ $F{line_payment}]]></variableExpression>
 				</textElement>
 				<text><![CDATA[แขวงนวลจันทร์ เขตบึงกุ่ม กรุงเทพฯ 10230]]></text>
 			</staticText>
-			<staticText>
+			<textField>
 				<reportElement mode="Transparent" x="74" y="38" width="236" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
-				<text><![CDATA[4/18-19 Soi Nuanchan 56]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? "4/18-19 Soi Nuanchan 56" : "4/27 Soi Nuanchan 56"]]></textFieldExpression>
+			</textField>
 			<staticText>
 				<reportElement mode="Transparent" x="74" y="52" width="236" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
@@ -161,20 +173,20 @@ $F{line_payment}]]></variableExpression>
 				</textElement>
 				<text><![CDATA[Nuanchan Buengkum Bangkok 10230]]></text>
 			</staticText>
-			<staticText>
+			<textField>
 				<reportElement mode="Transparent" x="74" y="66" width="236" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
-				<text><![CDATA[Tel. 02-088-3888   Fax. 02-088-3857]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA["Tel: " + $F{company_phone} + " Fax: " + $F{company_fax}]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement mode="Transparent" x="74" y="80" width="236" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
-				<text><![CDATA[เลขประจำตัวผู้เสียภาษี 0107546000458]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA["เลขประจำตัวผู้เสียภาษี " + $F{company_vat}]]></textFieldExpression>
+			</textField>
 			<staticText>
 				<reportElement mode="Transparent" x="495" y="12" width="91" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">

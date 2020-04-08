@@ -92,6 +92,15 @@
 	<field name="origin" class="java.lang.String">
 		<fieldDescription><![CDATA[origin]]></fieldDescription>
 	</field>
+	<field name="company_name" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/name]]></fieldDescription>
+	</field>
+	<field name="company_phone" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/phone]]></fieldDescription>
+	</field>
+	<field name="company_fax" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/fax]]></fieldDescription>
+	</field>
 	<field name="company_vat" class="java.lang.String">
 		<fieldDescription><![CDATA[company_id/vat]]></fieldDescription>
 	</field>
@@ -172,9 +181,9 @@
 	<title>
 		<band height="189" splitType="Stretch">
 			<image hAlign="Center" vAlign="Middle" onErrorType="Icon">
-				<reportElement x="0" y="-21" width="120" height="108"/>
+				<reportElement x="0" y="0" width="100" height="87"/>
 				<box leftPadding="4"/>
-				<imageExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "cmo.png"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? $P{SUBREPORT_DIR} + "cmo.png": $P{SUBREPORT_DIR} + "muse.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="461" y="0" width="91" height="20"/>
@@ -245,24 +254,25 @@ $F{district_id}+ " " +
 $F{province_id} + " "+
 $F{partner_zip}]]></textFieldExpression>
 			</textField>
-			<staticText>
+			<textField>
 				<reportElement x="111" y="0" width="232" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[บริษัท ซีเอ็มโอ จำกัด (มหาชน) (สำนักงานใหญ่)]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? "บริษัท ซีเอ็มโอ จำกัด (มหาชน) (สำนักงานใหญ่)" : "บริษัท มิวส์ คอร์ปอเรชั่น จำกัด (สำนักงานใหญ่)"]]></textFieldExpression>
+			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="111" y="20" width="245" height="86"/>
 				<textElement verticalAlignment="Middle" lineSpacing="Single">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["4/18-19 ซอยนวลจันทร์ 56\n" +
-"แขวงนวลจันทร์ เขตบึงกุ่ม กรุงเทพฯ 10230\n" +
-"4/18-19 Soi Nuanchan 56, Nuancgan, Buengkum,\n" +
-"Bangkok 10230 Thailand\n" +
-"Tel :  02-088-3888 Fax : 02-088-3848\n" +
-"เลขประจำตัวผู้เสียภาษี " + $F{company_vat}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ?
+					"4/18-19 ซอยนวลจันทร์ 56\n" +  "แขวงนวลจันทร์ เขตบึงกุ่ม กรุงเทพฯ 10230\n" +
+					"4/18-19 Soi Nuanchan 56, Nuancgan, Buengkum,\n" + "Bangkok 10230 Thailand\n" +
+					"Tel : " + $F{company_phone} + " Fax : " + $F{company_fax} :
+					"4/27 ซอยนวลจันทร์ 56\n" +  "แขวงนวลจันทร์ เขตบึงกุ่ม กรุงเทพฯ 10230\n" +
+					"4/27 Soi Nuanchan 56, Nuancgan, Buengkum,\n" + "Bangkok 10230 Thailand\n" +
+					"Tel : " + $F{company_phone} + " Fax : " + $F{company_fax}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -434,13 +444,13 @@ $F{origin_invoice}:$F{origin}]]></textFieldExpression>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["(" + (new Scriptlet()).getAmtInWords((new BigDecimal($V{string_total}==""?0:$V{string_total})).setScale(2).toString(),"THB") + ")"]]></textFieldExpression>
 			</textField>
-			<staticText>
+			<textField>
 				<reportElement x="288" y="92" width="267" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[บริษัท ซีเอ็มโอ จำกัด (มหาชน) (สำนักงานใหญ่)]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? "บริษัท ซีเอ็มโอ จำกัด (มหาชน) (สำนักงานใหญ่)" : "บริษัท มิวส์ คอร์ปอเรชั่น จำกัด (สำนักงานใหญ่)"]]></textFieldExpression>
+			</textField>
 			<line>
 				<reportElement x="327" y="168" width="180" height="1"/>
 			</line>
