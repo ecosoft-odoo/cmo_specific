@@ -116,6 +116,15 @@
 	<field name="company_name" class="java.lang.String">
 		<fieldDescription><![CDATA[company_id/name]]></fieldDescription>
 	</field>
+	<field name="company_phone" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/phone]]></fieldDescription>
+	</field>
+	<field name="company_fax" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/fax]]></fieldDescription>
+	</field>
+	<field name="company_vat" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/vat]]></fieldDescription>
+	</field>
 	<variable name="string_amount_total" class="java.lang.String">
 		<variableExpression><![CDATA[(Math.round($F{amount_total}*100)/100).toString()]]></variableExpression>
 	</variable>
@@ -262,41 +271,51 @@
 				<reportElement x="-3" y="0" width="73" height="61"/>
 				<imageExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? $P{SUBREPORT_DIR} + "logo.png": $P{SUBREPORT_DIR} + "muse.png"]]></imageExpression>
 			</image>
-			<staticText>
-				<reportElement mode="Transparent" x="77" y="-3" width="300" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+			<textField>
+				<reportElement mode="Transparent" x="77" y="-3" width="300" height="20" forecolor="#000000" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[$F{state} != "draft"]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="9" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
-				<text><![CDATA[บริษัท ซีเอ็มโอ จำกัด (มหาชน)]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Transparent" x="77" y="12" width="300" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? "บริษัท ซีเอ็มโอ จำกัด (มหาชน) (สำนักงานใหญ่)" : "บริษัท มิวส์ คอร์ปอเรชั่น จำกัด (สำนักงานใหญ่)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="77" y="12" width="300" height="20" forecolor="#000000" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[$F{state} != "draft"]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
-				<text><![CDATA[4/18-19 ซอยนวลจันทร์ 56]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? "4/18-19 ซอยนวลจันทร์ 56" : "4/27 ซอยนวลจันทร์ 56"]]></textFieldExpression>
+			</textField>
 			<staticText>
-				<reportElement mode="Transparent" x="77" y="27" width="300" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement mode="Transparent" x="77" y="27" width="300" height="20" forecolor="#000000" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[$F{state} != "draft"]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[แขวงนวลจันทร์ เขตบึงกุ่ม กรุงเทพฯ 10230]]></text>
 			</staticText>
-			<staticText>
-				<reportElement mode="Transparent" x="77" y="42" width="300" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+			<textField>
+				<reportElement mode="Transparent" x="77" y="42" width="300" height="20" forecolor="#000000" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[$F{state} != "draft"]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
-				<text><![CDATA[โทร. 02-088-3888 แฟกซ์ 02-088-3848]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Transparent" x="77" y="56" width="300" height="20" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Tel: " + $F{company_phone} + " Fax: " + $F{company_fax}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="77" y="56" width="300" height="20" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[$F{state} != "draft"]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
-				<text><![CDATA[เลขประจำตัวผู้เสียภาษี 0107546000458 สำนักงานใหญ่]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA["เลขประจำตัวผู้เสียภาษี " + $F{company_vat} + " สำนักงานใหญ่"]]></textFieldExpression>
+			</textField>
 			<staticText>
 				<reportElement mode="Transparent" x="255" y="-3" width="300" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
