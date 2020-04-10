@@ -377,8 +377,8 @@ $F{quote_id} : $F{name}]]></textFieldExpression>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{REPORT_LOCALE}.toString() == "en_US" ? "CMO PLC. here in after referred to as “Company” agrees to provide services to Client" :
-"บริษัท ซีเอ็มโอ จำกัด (มหาชน) ตกลงให้บริการแก่ท่าน โดยมีรายละเอียดของการดำเนินการและค่าบริการดังต่อไปนี้"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{REPORT_LOCALE}.toString() == "en_US" ? $F{company_name} == "CMO Public Company Limited" ? "CMO PLC. here in after referred to as “Company” agrees to provide services to Client" : "Muse Corporation Co.,Ltd here in after referred to as “Company” agrees to provide services to Client"  :
+$F{company_name} == "CMO Public Company Limited" ? "บริษัท ซีเอ็มโอ จำกัด (มหาชน) ตกลงให้บริการแก่ท่าน โดยมีรายละเอียดของการดำเนินการและค่าบริการดังต่อไปนี้" : "บริษัท มิวส์ คอร์ปอเรชั่น จำกัด ตกลงให้บริการแก่ท่าน โดยมีรายละเอียดของการดำเนินการและค่าบริการดังต่อไปนี้"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement isPrintRepeatedValues="false" mode="Opaque" x="0" y="274" width="454" height="20" isRemoveLineWhenBlank="true" backcolor="#5FE9FE"/>
@@ -568,8 +568,8 @@ $F{quote_id} : $F{name}]]></textFieldExpression>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{REPORT_LOCALE}.toString() == "en_US" ? "For and on behalf of CMO Public Company Limited" :
-"ในนาม บริษัท ซีเอ็มโอ จำกัด (มหาชน)"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{REPORT_LOCALE}.toString() == "en_US" ? $F{company_name} == "CMO Public Company Limited" ? "For and on behalf of CMO Public Company Limited" : "For and on behalf of Muse Corporation Co.,Ltd" :
+$F{company_name} == "CMO Public Company Limited" ? "ในนาม บริษัท ซีเอ็มโอ จำกัด (มหาชน)" : "ในนาม บริษัท มิวส์ คอร์ปอเรชั่น จำกัด"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement positionType="FixRelativeToBottom" x="141" y="900" width="45" height="20"/>

@@ -56,6 +56,9 @@
 	<field name="description" class="java.lang.String">
 		<fieldDescription><![CDATA[move_ids/name]]></fieldDescription>
 	</field>
+	<field name="company_name" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/name]]></fieldDescription>
+	</field>
 	<field name="bank_name" class="java.lang.String">
 		<fieldDescription><![CDATA[company_bank_id/bank_name]]></fieldDescription>
 	</field>
@@ -338,7 +341,7 @@
 			<image hAlign="Center" vAlign="Middle" onErrorType="Icon">
 				<reportElement x="3" y="-5" width="173" height="114"/>
 				<box leftPadding="4"/>
-				<imageExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "cmo.png"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? $P{SUBREPORT_DIR} + "cmo.png": $P{SUBREPORT_DIR} + "muse.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="176" y="24" width="211" height="43"/>
