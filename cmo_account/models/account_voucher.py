@@ -41,7 +41,11 @@ class AccountVoucher(models.Model):
     )
     validate_user_id = fields.Many2one(
         'res.partner',
-        string='Verify By',
+        string='Verify By (1)',
+    )
+    validate_user2_id = fields.Many2one(
+        'res.partner',
+        string='Verify By (2)',
     )
     approved_user_id = fields.Many2one(
         'res.partner',
