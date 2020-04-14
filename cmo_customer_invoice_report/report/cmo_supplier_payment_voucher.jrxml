@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;move_ids&quot;]"/>
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="625"/>
+	<property name="ireport.y" value="337"/>
 	<style name="style1">
 		<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
 	</style>
@@ -86,11 +86,17 @@
 	<field name="verify_by" class="java.lang.String">
 		<fieldDescription><![CDATA[validate_user_id/name]]></fieldDescription>
 	</field>
+	<field name="verify_by_2" class="java.lang.String">
+		<fieldDescription><![CDATA[validate_user2_id/name]]></fieldDescription>
+	</field>
 	<field name="approve_by" class="java.lang.String">
 		<fieldDescription><![CDATA[approved_user_id/name]]></fieldDescription>
 	</field>
 	<field name="position_verify" class="java.lang.String">
 		<fieldDescription><![CDATA[validate_user_id/employee_id/job_id/name]]></fieldDescription>
+	</field>
+	<field name="position_verify_2" class="java.lang.String">
+		<fieldDescription><![CDATA[validate_user2_id/employee_id/job_id/name]]></fieldDescription>
 	</field>
 	<field name="position_approved" class="java.lang.String">
 		<fieldDescription><![CDATA[approved_user_id/employee_id/job_id/name]]></fieldDescription>
@@ -727,6 +733,20 @@ $F{payment_type} == "cheque")
 					<font size="8" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{position_approved}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="139" y="66" width="139" height="20" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{position_verify_2}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="139" y="55" width="139" height="20" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{verify_by_2}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

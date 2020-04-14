@@ -90,6 +90,7 @@
                 </xpath>
                 <xpath expr="//field[@name='name']" position="after">
                     <field name="validate_user_id"/>
+                    <field name="validate_user2_id"/>
                     <field name="approved_user_id"/>
                 </xpath>
                 <field name="reference" position="attributes">
