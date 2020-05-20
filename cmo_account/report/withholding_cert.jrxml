@@ -251,14 +251,18 @@ $F{type_6_tax}.split(";")[1]:
 $F{type_6_tax}?
 $F{type_6_tax}:null]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00 %" isBlankWhenNull="true">
+			<textField pattern="" isBlankWhenNull="true">
 				<reportElement x="255" y="529" width="173" height="47">
 					<printWhenExpression><![CDATA[$F{type_6_percent}]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font fontName="Monospaced" size="14" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Double"><![CDATA[new Double($F{type_6_percent})/100]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[Arrays.asList($F{type_6_percent}.split(";")).size() > 1?
+				$F{type_6_percent}.split(";")[0].split("000")[0] + " %\n" +
+				$F{type_6_percent}.split(";")[1].split("000")[0] + " %":
+				$F{type_6_percent}?
+				$F{type_6_percent}.split("0000")[0] + " %" :null]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00;(###0.00)" isBlankWhenNull="true">
 				<reportElement x="302" y="529" width="120" height="47">
