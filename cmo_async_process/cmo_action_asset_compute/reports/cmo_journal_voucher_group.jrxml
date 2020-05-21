@@ -15,7 +15,7 @@
 		<fieldDescription><![CDATA[summary_ids/account_id/name]]></fieldDescription>
 	</field>
 	<field name="company_name" class="java.lang.String">
-		<fieldDescription><![CDATA[company_id/name]]></fieldDescription>
+		<fieldDescription><![CDATA[create_uid/company_id/name]]></fieldDescription>
 	</field>
 	<field name="approve_name" class="java.lang.String">
 		<fieldDescription><![CDATA[approver_id/name]]></fieldDescription>
