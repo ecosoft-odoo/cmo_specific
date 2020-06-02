@@ -11,6 +11,10 @@
                 <xpath expr="//field[@name='number']" position="after">
                     <field name="number_preprint"/>
                 </xpath>
+                <xpath expr="//group" position="inside">
+                    <filter string="Date" domain="[]" context="{'group_by':'date'}"/>
+                    <filter string="Payment Date" domain="[]" context="{'group_by':'date_value'}"/>
+                </xpath>
             </field>
         </record>
 
@@ -23,6 +27,10 @@
                 <xpath expr="//field[@name='number']" position="after">
                     <field name="number_cheque"/>
                 </xpath>
+                <xpath expr="//group" position="inside">
+                    <filter string="Date" domain="[]" context="{'group_by':'date'}"/>
+                    <filter string="Payment Date" domain="[]" context="{'group_by':'date_value'}"/>
+                </xpath>                
             </field>
         </record>
 
