@@ -17,6 +17,7 @@
         'report',
         'cmo_account',
         'l10n_th_amount_text',
+        'cmo_company_enhance',
     ],
     'data': [
         'report/report_data.xml',

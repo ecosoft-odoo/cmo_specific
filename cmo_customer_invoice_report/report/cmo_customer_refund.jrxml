@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line&quot;]"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="266"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -104,6 +104,30 @@
 	<field name="company_vat" class="java.lang.String">
 		<fieldDescription><![CDATA[company_id/vat]]></fieldDescription>
 	</field>
+	<field name="company_logo" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/logo]]></fieldDescription>
+	</field>
+	<field name="company_name_th" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/partner_th]]></fieldDescription>
+	</field>
+	<field name="company_street_th" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/street_th]]></fieldDescription>
+	</field>
+	<field name="company_street2_th" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/street2_th]]></fieldDescription>
+	</field>
+	<field name="company_zip_th" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/zip_th]]></fieldDescription>
+	</field>
+	<field name="company_street" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/street]]></fieldDescription>
+	</field>
+	<field name="company_street2" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/street2]]></fieldDescription>
+	</field>
+	<field name="company_zip" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/zip]]></fieldDescription>
+	</field>
 	<variable name="string_total" class="java.lang.String">
 		<variableExpression><![CDATA[(Math.round($F{amount_total}*100)/100).toString()]]></variableExpression>
 	</variable>
@@ -183,7 +207,7 @@
 			<image hAlign="Center" vAlign="Middle" onErrorType="Icon">
 				<reportElement x="0" y="0" width="100" height="87"/>
 				<box leftPadding="4"/>
-				<imageExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? $P{SUBREPORT_DIR} + "cmo.png": $P{SUBREPORT_DIR} + "muse.png"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA[$F{company_logo}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="461" y="0" width="91" height="20"/>
@@ -259,20 +283,16 @@ $F{partner_zip}]]></textFieldExpression>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? "บริษัท ซีเอ็มโอ จำกัด (มหาชน) (สำนักงานใหญ่)" : "บริษัท มิวส์ คอร์ปอเรชั่น จำกัด (สำนักงานใหญ่)"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_name_th}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="111" y="20" width="245" height="86"/>
 				<textElement verticalAlignment="Middle" lineSpacing="Single">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ?
-					"4/18-19 ซอยนวลจันทร์ 56\n" +  "แขวงนวลจันทร์ เขตบึงกุ่ม กรุงเทพฯ 10230\n" +
-					"4/18-19 Soi Nuanchan 56, Nuancgan, Buengkum,\n" + "Bangkok 10230 Thailand\n" +
-					"Tel : " + $F{company_phone} + " Fax : " + $F{company_fax} :
-					"4/27 ซอยนวลจันทร์ 56\n" +  "แขวงนวลจันทร์ เขตบึงกุ่ม กรุงเทพฯ 10230\n" +
-					"4/27 Soi Nuanchan 56, Nuancgan, Buengkum,\n" + "Bangkok 10230 Thailand\n" +
-					"Tel : " + $F{company_phone} + " Fax : " + $F{company_fax}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_street_th} + "\n" + $F{company_street2_th} + " " + $F{company_zip_th} + "\n" +
+$F{company_street}.replace(",", "") + "\n" + $F{company_street2}.replace(",", "") + " " + $F{company_zip} + "\n" +
+"Tel : " + $F{company_phone} + " Fax : " + $F{company_fax}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -449,7 +469,7 @@ $F{origin_invoice}:$F{origin}]]></textFieldExpression>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? "บริษัท ซีเอ็มโอ จำกัด (มหาชน) (สำนักงานใหญ่)" : "บริษัท มิวส์ คอร์ปอเรชั่น จำกัด (สำนักงานใหญ่)"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_name_th}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="327" y="168" width="180" height="1"/>

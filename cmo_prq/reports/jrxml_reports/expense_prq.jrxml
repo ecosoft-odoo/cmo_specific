@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="expense_prq" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.3310000000000155"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1416"/>
+	<property name="ireport.y" value="0"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;expense_line_ids&quot;]"/>
 	<style name="column_header">
 		<box>
@@ -86,6 +86,9 @@
 	</field>
 	<field name="company_email" class="java.lang.String">
 		<fieldDescription><![CDATA[company_id/email]]></fieldDescription>
+	</field>
+	<field name="company_logo" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/logo]]></fieldDescription>
 	</field>
 	<variable name="string_amount_total" class="java.lang.String">
 		<variableExpression><![CDATA[(Math.round($F{amount_expense_total}*100)/100).toString()]]></variableExpression>
@@ -193,11 +196,11 @@
 	<pageHeader>
 		<band height="155" splitType="Stretch">
 			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
-				<reportElement x="6" y="0" width="96" height="86"/>
+				<reportElement x="0" y="0" width="96" height="86"/>
 				<graphicElement>
 					<pen lineWidth="0.0" lineStyle="Solid"/>
 				</graphicElement>
-				<imageExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? $P{SUBREPORT_DIR} + "logo.png": $P{SUBREPORT_DIR} + "muse.png"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA[$F{company_logo}]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement mode="Opaque" x="96" y="0" width="280" height="20" forecolor="#FFFFFF" backcolor="#000000"/>

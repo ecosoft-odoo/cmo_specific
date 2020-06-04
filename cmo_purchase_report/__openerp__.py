@@ -6,6 +6,7 @@
     'website': 'http://ecosoft.co.th',
     'depends': [
         'purchase',
+        'cmo_company_enhance',
     ],
     'data': [
         "jasper_data.xml",

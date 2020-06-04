@@ -71,6 +71,9 @@
 	<field name="company_name" class="java.lang.String">
 		<fieldDescription><![CDATA[company_id/name]]></fieldDescription>
 	</field>
+	<field name="company_logo" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/logo]]></fieldDescription>
+	</field>
 	<sortField name="id"/>
 	<sortField name="debit" order="Descending" type="Variable"/>
 	<sortField name="credit" order="Descending" type="Variable"/>
@@ -258,7 +261,7 @@
 			<image hAlign="Center" vAlign="Middle" onErrorType="Icon">
 				<reportElement x="17" y="12" width="123" height="92"/>
 				<box leftPadding="4"/>
-				<imageExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? $P{SUBREPORT_DIR} + "cmo.png": $P{SUBREPORT_DIR} + "muse.png"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA[$F{company_logo}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="176" y="24" width="211" height="43"/>
