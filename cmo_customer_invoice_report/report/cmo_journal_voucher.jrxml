@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;line_id&quot;]"/>
 	<property name="ireport.zoom" value="1.0000000000000004"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1000"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -55,6 +55,9 @@
 	</field>
 	<field name="sortby" class="java.lang.Number">
 		<fieldDescription><![CDATA[line_id/id]]></fieldDescription>
+	</field>
+	<field name="company_logo" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/logo]]></fieldDescription>
 	</field>
 	<sortField name="sortby"/>
 	<variable name="total_debit" class="java.lang.Number" resetType="Group" resetGroup="UniqueID" calculation="Sum">
@@ -211,7 +214,6 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Record By]]></text>
 			</staticText>
-			<!-- Change from static text to this -->
 			<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="UniqueID" isBlankWhenNull="true">
 				<reportElement x="369" y="720" width="186" height="30"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -252,7 +254,7 @@
 			<image hAlign="Center" vAlign="Middle" onErrorType="Icon">
 				<reportElement x="3" y="-5" width="195" height="134"/>
 				<box leftPadding="4"/>
-				<imageExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? $P{SUBREPORT_DIR} + "cmo.png": $P{SUBREPORT_DIR} + "muse.png"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA[$F{company_logo}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="346" y="0" width="211" height="24"/>

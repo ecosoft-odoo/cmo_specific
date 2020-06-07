@@ -12,6 +12,7 @@
         'sale_split_quote2order',
         'cmo_sale_discount_total_enhance',
         'report',
+        'cmo_company_enhance',
     ],
     'data': [
         'report/report_saleorder.xml',

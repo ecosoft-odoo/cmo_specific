@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_receipt" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.3310000000000004"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1544"/>
+	<property name="ireport.y" value="0"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line&quot;]"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<parameter name="EVENTS_DATA_SOURCE" class="java.lang.Object"/>
@@ -62,6 +62,30 @@
 	</field>
 	<field name="amount_untaxed_text_th" class="java.lang.String">
 		<fieldDescription><![CDATA[amount_untaxed_text_th]]></fieldDescription>
+	</field>
+	<field name="company_logo" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/logo]]></fieldDescription>
+	</field>
+	<field name="company_name_th" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/partner_th]]></fieldDescription>
+	</field>
+	<field name="company_street_th" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/street_th]]></fieldDescription>
+	</field>
+	<field name="company_street2_th" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/street2_th]]></fieldDescription>
+	</field>
+	<field name="company_zip_th" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/zip_th]]></fieldDescription>
+	</field>
+	<field name="company_street" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/street]]></fieldDescription>
+	</field>
+	<field name="company_street2" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/street2]]></fieldDescription>
+	</field>
+	<field name="company_zip" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/zip]]></fieldDescription>
 	</field>
 	<group name="UniqueID" isStartNewPage="true" isResetPageNumber="true" footerPosition="ForceAtBottom" keepTogether="true">
 		<groupExpression><![CDATA[$F{id}]]></groupExpression>
@@ -134,36 +158,22 @@
 		<band height="201" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="-18" width="128" height="66"/>
-				<imageExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? $P{SUBREPORT_DIR} + "cmo.png": $P{SUBREPORT_DIR} + "muse.png"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA[$F{company_logo}]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement mode="Transparent" x="74" y="9" width="236" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? "4/18-19 ซอยนวลจันทร์ 56" : "4/27 ซอยนวลจันทร์ 56"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_street_th}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement mode="Transparent" x="74" y="23" width="236" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
-				</textElement>
-				<text><![CDATA[แขวงนวลจันทร์ เขตบึงกุ่ม กรุงเทพฯ 10230]]></text>
-			</staticText>
 			<textField>
 				<reportElement mode="Transparent" x="74" y="38" width="236" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? "4/18-19 Soi Nuanchan 56" : "4/27 Soi Nuanchan 56"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_street}.replace(",", "")]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement mode="Transparent" x="74" y="52" width="236" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
-				</textElement>
-				<text><![CDATA[Nuanchan Buengkum Bangkok 10230]]></text>
-			</staticText>
 			<textField>
 				<reportElement mode="Transparent" x="74" y="66" width="236" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
@@ -239,7 +249,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{REPORT_LOCALE}.toString() == "en_US" ? $F{company_name} : $F{company_name} == "CMO Public Company Limited" ? "บริษัท ซีเอ็มโอ จำกัด (มหาชน) (สำนักงานใหญ่)" : "บริษัท มิวส์ คอร์ปอเรชั่น จำกัด (สำนักงานใหญ่)"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{REPORT_LOCALE}.toString() == "en_US" ? $F{company_name} : $F{company_name_th}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement mode="Transparent" x="74" y="80" width="236" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
@@ -247,6 +257,20 @@
 					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[($P{REPORT_LOCALE}.toString() == "en_US" ? "Tax ID " : "เลขประจำตัวผู้เสียภาษี ") + $F{company_vat}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="74" y="23" width="236" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_street2_th} + " " + $F{company_zip_th}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="74" y="52" width="236" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_street2}.replace(",", "") + " " + $F{company_zip}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

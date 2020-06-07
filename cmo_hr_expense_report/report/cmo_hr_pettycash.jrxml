@@ -3,7 +3,7 @@
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
 	<property name="ireport.zoom" value="2.1435888100000176"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="51"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -67,6 +67,9 @@
 	</field>
 	<field name="description" class="java.lang.String">
 		<fieldDescription><![CDATA[name]]></fieldDescription>
+	</field>
+	<field name="company_logo" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/logo]]></fieldDescription>
 	</field>
 	<variable name="sum_total_amount" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{total_amount}]]></variableExpression>
@@ -186,7 +189,7 @@ $F{approve_date}.getMinutes()]]></variableExpression>
 					<bottomPen lineWidth="0.0"/>
 					<rightPen lineWidth="0.0"/>
 				</box>
-				<imageExpression class="java.lang.String"><![CDATA[$F{company_name} == "CMO Public Company Limited" ? $P{SUBREPORT_DIR} + "cmo.png": $P{SUBREPORT_DIR} + "muse.png"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA[$F{company_logo}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="0" y="60" width="82" height="40"/>
