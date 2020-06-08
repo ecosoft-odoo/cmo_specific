@@ -547,7 +547,7 @@ $F{company_name_th}.replace("(สำนักงานใหญ่)", "") + " �
 				<textFieldExpression class="java.lang.String"><![CDATA["("+ $F{sale person}+ ")"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" x="103" y="675" width="336" height="20"/>
+				<reportElement positionType="Float" x="74" y="675" width="400" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
