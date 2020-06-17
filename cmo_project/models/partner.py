@@ -8,10 +8,8 @@ class ResPartner(models.Model):
     brand_type_id = fields.Many2one(
         'project.brand.type',  # res.partner.brand.type
         string='Brand type',
-        required=True,
     )
     industry_id = fields.Many2one(
         'project.industry',  # res.partner.industry
         string='Industry',
-        required=True,
     )

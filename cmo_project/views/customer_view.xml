@@ -8,8 +8,8 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='website']" position="after">
-                    <field name="industry_id"/>
-                    <field name="brand_type_id"/>
+                    <field name="industry_id" required="1"/>
+                    <field name="brand_type_id" required="1"/>
                 </xpath>
             </field>
         </record>
