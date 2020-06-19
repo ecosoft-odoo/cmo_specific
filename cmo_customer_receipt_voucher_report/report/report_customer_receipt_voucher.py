@@ -40,7 +40,7 @@ class ReportCustomerReceiptVoucher(models.Model):
             INNER JOIN account_voucher av ON avl.voucher_id = av.id
             LEFT JOIN account_bank_receipt abr ON av.bank_receipt_id = abr.id
             LEFT JOIN account_move_line aml ON avl.move_line_id = aml.id
-            LEFT JOIN (
+            LEFT JOIN ( 
                 SELECT aml.move_id, aml.analytic_account_id, aml.debit,
                        aml.credit
                 FROM account_move_line aml
@@ -64,8 +64,7 @@ class ReportCustomerReceiptVoucher(models.Model):
                    % (self._table, self._get_sql_view()))
 
     @api.multi
-    def get_text_total_amount(self):
-        total_amount = sum(self.mapped('voucher_id').mapped('amount'))
+    def get_text_total_amount(self, total_amount):
         return num2words(total_amount, to='currency', lang='th')
 
     @api.multi

@@ -42,14 +42,18 @@
                         <div><b>Receive Baht</b></div>
                     </div>
                     <div class="col-xs-3">
-                        <span t-esc="'{0:,.2f}'.format(sum(docs.mapped('voucher_id').mapped('amount')))"/>
+                        <t t-set="total_amount_untaxed" t-value="sum(docs.mapped('amount_untaxed'))"/>
+                        <t t-set="total_vat" t-value="docs.get_vat()"/>
+                        <t t-set="total_wht" t-value="abs(sum(docs.mapped('voucher_id').mapped('line_cr_ids').mapped('amount_wht'))) - abs(sum(docs.mapped('voucher_id').mapped('line_dr_ids').mapped('amount_wht')))"/>
+                        <t t-set="total_amount" t-value="total_amount_untaxed + total_vat - total_wht"/>
+                        <span t-esc="'{0:,.2f}'.format(total_amount)"/>
                     </div>
                     <div class="col-xs-1">
                         <div><b>บาท</b></div>
                         <div><b>Baht</b></div>
                     </div>
                     <div class="col-xs-6">
-                        (<span t-esc="docs.get_text_total_amount()"/>)
+                        (<span t-esc="docs.get_text_total_amount(total_amount)"/>)
                     </div>
                 </div>
                 <div class="row margin-top">
@@ -202,30 +206,34 @@
                                     </td>
                                     <td class="text-right" style="border-right: 1px solid;"><span t-esc="'{0:,.2f}'.format(doc.amount_untaxed)"/></td>
                                 </tr>
+                                <t t-if="total_vat">
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-right" style="border-top: 3px solid;border-right: 1px solid;"><b t-esc="'{0:,.2f}'.format(total_amount_untaxed)"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td class="text-right"><b>Vat 7%</b></td>
+                                        <td class="text-right" style="border-right: 1px solid;"><b t-esc="'{0:,.2f}'.format(total_vat)"/></td>
+                                    </tr>
+                                </t>
+                                <t t-if="total_wht">
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-right" style="border-right: 1px solid; border-top: 3px solid;"><b t-esc="'{0:,.2f}'.format(total_amount_untaxed + total_vat)"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td class="text-right"><b>WHT 3%</b></td>
+                                        <td class="text-right" style="border-right: 1px solid;"><b t-esc="'{0:,.2f}'.format(total_wht)"/></td>
+                                    </tr>
+                                </t>
                                 <tr>
                                     <td></td>
-                                    <td></td>
-                                    <td class="text-right" style="border-top: 3px solid;border-right: 1px solid;"><span t-esc="'{0:,.2f}'.format(total_amount_untaxed)"/></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="text-center"><b>Vat 7%</b></td>
-                                    <td class="text-right" style="border-right: 1px solid;"><span t-esc="'{0:,.2f}'.format(total_vat)"/></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td class="text-right" style="border-right: 1px solid; border-top: 3px solid;"><span t-esc="'{0:,.2f}'.format(total_amount_untaxed + total_vat)"/></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="text-center"><b>WHT 3%</b></td>
-                                    <td class="text-right" style="border-right: 1px solid;"><span t-esc="'{0:,.2f}'.format(total_wht)"/></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td class="text-right" style="border-right: 1px solid;border-top: 3px solid;border-bottom: 3px solid;"><span t-esc="'{0:,.2f}'.format(total_amount_untaxed + total_vat - total_wht)"/></td>
+                                    <td class="text-right"><b>Total</b></td>
+                                    <td class="text-right" style="border-right: 1px solid;border-top: 3px solid;border-bottom: 3px solid;"><b t-esc="'{0:,.2f}'.format(total_amount_untaxed + total_vat - total_wht)"/></td>
                                 </tr>
                             </tbody>
                         </table>
