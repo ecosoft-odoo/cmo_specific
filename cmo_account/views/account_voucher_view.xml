@@ -12,8 +12,8 @@
                     <field name="number_preprint"/>
                 </xpath>
                 <xpath expr="//group" position="inside">
-                    <filter string="Date" domain="[]" context="{'group_by':'date'}"/>
-                    <filter string="Payment Date" domain="[]" context="{'group_by':'date_value'}"/>
+                    <filter string="Date" domain="[]" context="{'group_by':'date:day'}"/>
+                    <filter string="Payment Date" domain="[]" context="{'group_by':'date_value:day'}"/>
                 </xpath>
             </field>
         </record>
@@ -28,9 +28,9 @@
                     <field name="number_cheque"/>
                 </xpath>
                 <xpath expr="//group" position="inside">
-                    <filter string="Date" domain="[]" context="{'group_by':'date'}"/>
-                    <filter string="Payment Date" domain="[]" context="{'group_by':'date_value'}"/>
-                </xpath>                
+                    <filter string="Date" domain="[]" context="{'group_by':'date:day'}"/>
+                    <filter string="Payment Date" domain="[]" context="{'group_by':'date_value:day'}"/>
+                </xpath>
             </field>
         </record>
 
