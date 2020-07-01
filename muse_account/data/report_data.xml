@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		# WHT Cert
+		<record id="l10n_th_account.report_withholding_cert" model="ir.actions.report.xml">
+			<field name="report_rml">muse_account/report/muse_withholding_cert.jrxml</field>
+		</record>
+
+	</data>
+</openerp>

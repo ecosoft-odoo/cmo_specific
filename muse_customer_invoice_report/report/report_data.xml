@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+            <!-- แบบที่ 2 Customer Invoice -->
+                <!-- Invoice (Project EN) -->
+               <record id="muse_customer_invoice2_en" model="ir.actions.report.xml">
+                  <field name="string">Invoice (Project EN)</field>
+                  <field name="auto">True</field>
+                  <field name="model">account.invoice</field>
+                  <field name="jasper_model_id" ref="account.model_account_invoice"/>
+                  <field name="name">MUSE Invoice (Project EN)</field>
+                  <field name="report_name">cmo.customer.invoice2.en</field>
+                  <field name="report_rml">muse_customer_invoice_report/report/muse_customer_invoice2.jrxml</field>
+                  <field name="force_locale">en_US</field>
+                  <field name="menu">True</field>
+                  <field name="header">False</field>
+                  <field name="jasper_report">True</field>
+                  <field name="jasper_output">pdf</field>
+               </record>
+               <record id="muse_customer_invoice2_en_values" model="ir.values">
+                  <field name="name">Invoice (Project EN)</field>
+                  <field name="model">account.invoice</field>
+                  <field name="key2" eval="'client_print_multi'"/>
+                  <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(muse_customer_invoice2_en)"/>
+               </record>
+               <!-- Invoice (Project TH) -->
+               <record id="muse_customer_invoice2_th" model="ir.actions.report.xml">
+                  <field name="string">Invoice (Project TH)</field>
+                  <field name="auto">True</field>
+                  <field name="model">account.invoice</field>
+                  <field name="jasper_model_id" ref="account.model_account_invoice"/>
+                  <field name="name">MUSE Invoice (Project TH)</field>
+                  <field name="report_name">cmo.customer.invoice2.th</field>
+                  <field name="report_rml">muse_customer_invoice_report/report/muse_customer_invoice2.jrxml</field>
+                  <field name="force_locale">th_TH</field>
+                  <field name="menu">True</field>
+                  <field name="header">False</field>
+                  <field name="jasper_report">True</field>
+                  <field name="jasper_output">pdf</field>
+               </record>
+               <record id="muse_customer_invoice2_th_values" model="ir.values">
+                  <field name="name">Invoice (Project TH)</field>
+                  <field name="model">account.invoice</field>
+                  <field name="key2" eval="'client_print_multi'"/>
+                  <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(muse_customer_invoice2_th)"/>
+               </record>
+               <!-- Invoice (PEO EN) -->
+               <record id="muse_customer_invoice_en" model="ir.actions.report.xml">
+                  <field name="string">Invoice (PEO EN)</field>
+                  <field name="auto">True</field>
+                  <field name="model">account.invoice</field>
+                  <field name="jasper_model_id" ref="account.model_account_invoice"/>
+                  <field name="name">MUSE Invoice (PEO EN)</field>
+                  <field name="report_name">cmo.customer.invoice.en</field>
+                  <field name="report_rml">muse_customer_invoice_report/report/muse_customer_invoice.jrxml</field>
+                  <field name="force_locale">en_US</field>
+                  <field name="menu">True</field>
+                  <field name="header">False</field>
+                  <field name="jasper_report">True</field>
+                  <field name="jasper_output">pdf</field>
+               </record>
+               <record id="muse_customer_invoice_en_values" model="ir.values">
+                  <field name="name">Invoice (PEO EN)</field>
+                  <field name="model">account.invoice</field>
+                  <field name="key2" eval="'client_print_multi'"/>
+                  <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(muse_customer_invoice_en)"/>
+               </record>
+               <!-- Invoice (PEO TH) -->
+               <record id="muse_customer_invoice_th" model="ir.actions.report.xml">
+                  <field name="string">Invoice (PEO TH)</field>
+                  <field name="auto">True</field>
+                  <field name="model">account.invoice</field>
+                  <field name="jasper_model_id" ref="account.model_account_invoice"/>
+                  <field name="name">MUSE Invoice (PEO TH)</field>
+                  <field name="report_name">cmo.customer.invoice.th</field>
+                  <field name="report_rml">muse_customer_invoice_report/report/muse_customer_invoice.jrxml</field>
+                  <field name="force_locale">th_TH</field>
+                  <field name="menu">True</field>
+                  <field name="header">False</field>
+                  <field name="jasper_report">True</field>
+                  <field name="jasper_output">pdf</field>
+               </record>
+               <record id="muse_customer_invoice_th_values" model="ir.values">
+                  <field name="name">Invoice (PEO TH)</field>
+                  <field name="model">account.invoice</field>
+                  <field name="key2" eval="'client_print_multi'"/>
+                  <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(muse_customer_invoice_th)"/>
+               </record>
+
+        <!-- MUSE Receipt/Tax Invoice (TH) -->
+        <!--แบบที่ 3 -->
+        <record id="muse_customer_payment_th" model="ir.actions.report.xml">
+           <field name="string">MUSE Receipt/Tax Invoice (TH)</field>
+           <field name="auto">True</field>
+           <field name="model">account.voucher</field>
+           <field name="jasper_model_id" ref="account_voucher.model_account_voucher"/>
+           <field name="name">MUSE Receipt/Tax Invoice (TH)</field>
+           <field name="report_name">cmo.customer.payment.th</field>
+           <field name="report_rml">muse_customer_invoice_report/report/muse_receipt_tax_invoice_EN.jrxml</field>
+           <field name="force_locale">th_TH</field>
+           <field name="menu">True</field>
+           <field name="header">False</field>
+           <field name="jasper_report">True</field>
+           <field name="jasper_output">pdf</field>
+        </record>
+        <record id="muse_customer_payment_th_values" model="ir.values">
+           <field name="name">MUSE Receipt/Tax Invoice (TH)</field>
+           <field name="model">account.voucher</field>
+           <field name="key2" eval="'client_print_multi'"/>
+           <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(muse_customer_payment_th)"/>
+        </record>
+        <!-- MUSE Receipt/Tax Invoice (EN) -->
+        <record id="muse_customer_payment_en" model="ir.actions.report.xml">
+          <field name="string">MUSE Receipt/Tax Invoice (EN)</field>
+          <field name="auto">True</field>
+          <field name="model">account.voucher</field>
+          <field name="jasper_model_id" ref="account_voucher.model_account_voucher"/>
+          <field name="name">MUSE Receipt/Tax Invoice (EN)</field>
+          <field name="report_name">cmo.customer.payment.en</field>
+          <field name="report_rml">muse_customer_invoice_report/report/muse_receipt_tax_invoice_EN.jrxml</field>
+          <field name="force_locale">en_US</field>
+          <field name="menu">True</field>
+          <field name="header">False</field>
+          <field name="jasper_report">True</field>
+          <field name="jasper_output">pdf</field>
+       </record>
+       <record id="muse_customer_payment_en_values" model="ir.values">
+          <field name="name">MUSE Receipt/Tax Invoice (EN)</field>
+          <field name="model">account.voucher</field>
+          <field name="key2" eval="'client_print_multi'"/>
+          <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(muse_customer_payment_en)"/>
+       </record>
+       <!-- MUSE Receipt/Tax Invoice (PEO EN) -->
+       <record id="muse_customer_payment_receipt_tax_invoice_peo_en" model="ir.actions.report.xml">
+          <field name="string">MUSE Receipt/Tax Invoice (PEO EN)</field>
+          <field name="auto">True</field>
+          <field name="model">account.voucher</field>
+          <field name="jasper_model_id" ref="account_voucher.model_account_voucher"/>
+          <field name="name">MUSE Receipt/Tax Invoice (PEO EN)</field>
+          <field name="report_name">cmo.customer.payment.receipt.tax.invoice.peo.en</field>
+          <field name="report_rml">muse_customer_invoice_report/report/muse_receipt_tax_invoice_PEO.jrxml</field>
+          <field name="force_locale">en_US</field>
+          <field name="menu">True</field>
+          <field name="header">False</field>
+          <field name="jasper_report">True</field>
+          <field name="jasper_output">pdf</field>
+       </record>
+       <record id="muse_customer_payment_receipt_tax_invoice_peo_en_values" model="ir.values">
+          <field name="name">MUSE Receipt/Tax Invoice (PEO EN)</field>
+          <field name="model">account.voucher</field>
+          <field name="key2" eval="'client_print_multi'"/>
+          <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(muse_customer_payment_receipt_tax_invoice_peo_en)"/>
+       </record>
+       <!-- MUSE Receipt/Tax Invoice (PEO TH) -->
+       <record id="muse_customer_payment_receipt_tax_invoice_peo_th" model="ir.actions.report.xml">
+          <field name="string">MUSE Receipt/Tax Invoice (PEO TH)</field>
+          <field name="auto">True</field>
+          <field name="model">account.voucher</field>
+          <field name="jasper_model_id" ref="account_voucher.model_account_voucher"/>
+          <field name="name">MUSE Receipt/Tax Invoice (PEO TH)</field>
+          <field name="report_name">cmo.customer.payment.receipt.tax.invoice.peo.th</field>
+          <field name="report_rml">muse_customer_invoice_report/report/muse_receipt_tax_invoice_PEO.jrxml</field>
+          <field name="force_locale">th_TH</field>
+          <field name="menu">True</field>
+          <field name="header">False</field>
+          <field name="jasper_report">True</field>
+          <field name="jasper_output">pdf</field>
+       </record>
+       <record id="muse_customer_payment_receipt_tax_invoice_peo_th_values" model="ir.values">
+          <field name="name">MUSE Receipt/Tax Invoice (PEO TH)</field>
+          <field name="model">account.voucher</field>
+          <field name="key2" eval="'client_print_multi'"/>
+          <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(muse_customer_payment_receipt_tax_invoice_peo_th)"/>
+       </record>
+       <!-- Customer Invoice MUSE Receipt/Tax Invoice (PEO IN TH) -->
+       <record id="muse_receipt_tax_invoice_peo_th" model="ir.actions.report.xml">
+          <field name="string">MUSE Receipt/Tax Invoice (PEO TH)</field>
+          <field name="auto">True</field>
+          <field name="model">account.invoice</field>
+          <field name="jasper_model_id" ref="account.model_account_invoice"/>
+          <field name="name">MUSE Receipt/Tax Invoice (PEO TH)</field>
+          <field name="report_name">cmo.receipt.tax.invoice.peo.th</field>
+          <field name="report_rml">muse_customer_invoice_report/report/muse_receipt_tax_invoice_PEO(IN).jrxml</field>
+          <field name="force_locale">th_TH</field>
+          <field name="menu">True</field>
+          <field name="header">False</field>
+          <field name="jasper_report">True</field>
+          <field name="jasper_output">pdf</field>
+       </record>
+       <record id="muse_receipt_tax_invoice_peo_th_values" model="ir.values">
+          <field name="name">MUSE Receipt/Tax Invoice (PEO TH)</field>
+          <field name="model">account.invoice</field>
+          <field name="key2" eval="'client_print_multi'"/>
+          <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(muse_receipt_tax_invoice_peo_th)"/>
+       </record>
+        <!--Customer Invoice MUSE Receipt/Tax Invoice (PEO IN EN) -->
+       <record id="muse_receipt_tax_invoice_peo_en" model="ir.actions.report.xml">
+          <field name="string">MUSE Receipt/Tax Invoice (PEO EN)</field>
+          <field name="auto">True</field>
+          <field name="model">account.invoice</field>
+          <field name="jasper_model_id" ref="account.model_account_invoice"/>
+          <field name="name">MUSE Receipt/Tax Invoice (PEO EN)</field>
+          <field name="report_name">cmo.receipt.tax.invoice.peo.en</field>
+          <field name="report_rml">muse_customer_invoice_report/report/muse_receipt_tax_invoice_PEO(IN).jrxml</field>
+          <field name="force_locale">en_US</field>
+          <field name="menu">True</field>
+          <field name="header">False</field>
+          <field name="jasper_report">True</field>
+          <field name="jasper_output">pdf</field>
+       </record>
+       <record id="muse_receipt_tax_invoice_peo_en_values" model="ir.values">
+          <field name="name">MUSE Receipt/Tax Invoice (PEO EN)</field>
+          <field name="model">account.invoice</field>
+          <field name="key2" eval="'client_print_multi'"/>
+          <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(muse_receipt_tax_invoice_peo_en)"/>
+       </record>
+       <!-- MUSE Receipt for Migration -->
+       <record id="muse_customer_payment_receipt_mig" model="ir.actions.report.xml">
+          <field name="string">Receipt (for migration)</field>
+          <field name="auto">True</field>
+          <field name="model">account.voucher</field>
+          <field name="jasper_model_id" ref="account_voucher.model_account_voucher"/>
+          <field name="name">MUSE Receipt (for migration)</field>
+          <field name="report_name">cmo.customer.payment.receipt.mig</field>
+          <field name="report_rml">muse_customer_invoice_report/report/muse_receipt_migration.jrxml</field>
+          <field name="force_locale">en_US</field>
+          <field name="menu">True</field>
+          <field name="header">False</field>
+          <field name="jasper_report">True</field>
+          <field name="jasper_output">pdf</field>
+       </record>
+       <record id="muse_customer_payment_receipt_mig_values" model="ir.values">
+          <field name="name">MUSE Receipt (for migration)</field>
+          <field name="model">account.voucher</field>
+          <field name="key2" eval="'client_print_multi'"/>
+          <field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(muse_customer_payment_receipt_mig)"/>
+       </record>
+
+        <delete id="account_bank_receipt.report_bank_receipt" model="ir.actions.report.xml"/>
+
+        <report string="Bank Receipt"
+          model="account.bank.receipt"
+          auto="True"
+          name="cmo.bank.receipt"
+          rml="cmo_customer_invoice_report/report/cmo_bank_receipt.jrxml"
+          id="cmo_bank_receipt"
+          menu="True"
+          header="False"
+        />
+        <record id="cmo_bank_receipt" model="ir.actions.report.xml">
+          <field name="jasper_report">True</field>
+          <field name="jasper_output">pdf</field>
+        </record>
+
+        <report string="Bank Payment"
+          model="account.bank.payment"
+          auto="True"
+          name="cmo.bank.payment"
+          rml="cmo_customer_invoice_report/report/cmo_bank_payment.jrxml"
+          id="cmo_bank_payment"
+          menu="True"
+          header="False"
+        />
+        <record id="cmo_bank_payment" model="ir.actions.report.xml">
+          <field name="jasper_report">True</field>
+          <field name="jasper_output">pdf</field>
+        </record>
+
+    </data>
+</openerp>

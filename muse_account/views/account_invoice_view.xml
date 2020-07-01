@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!--Search-->
+        <record id="view_account_invoice_filter" model="ir.ui.view">
+            <field name="name">view.account.invoice.filter</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='number']" position="after">
+                    <field name="number_preprint"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Edit Desc in Invoice Line -->
+        <record id="invoice_form" model="ir.ui.view">
+            <field name="name">invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_line']/tree/field[@name='name']" position="after">
+                    <button name="%(action_edit_desc)d" string="Edit" type="action" icon="gtk-justify-fill"
+                        context='{"edit_field": "name"}' groups="account.group_invoice_edit_desc"/>
+                </xpath>
+                <button name="invoice_print" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </button>
+                <button name="action_invoice_sent" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </button>
+                <field name="user_id" position="after">
+                    <field name="validate_user_id"/>
+                    <field name="validate_date"/>
+                    <field name="approver_id"/>
+                    <field name="approver_job_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="invoice_supplier_form" model="ir.ui.view">
+            <field name="name">account.invoice.supplier.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                    <field name="validate_user_id"/>
+                    <field name="validate_date"/>
+                    <field name="approver_id"/>
+                    <field name="approver_job_id"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>
