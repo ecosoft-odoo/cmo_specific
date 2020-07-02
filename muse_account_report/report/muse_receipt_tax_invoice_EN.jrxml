@@ -32,7 +32,7 @@
 	<field name="receipt_num" class="java.lang.String">
 		<fieldDescription><![CDATA[number]]></fieldDescription>
 	</field>
-	<field name="in_ref" class="java.lang.Integer">
+	<field name="in_ref" class="java.lang.String">
 		<fieldDescription><![CDATA[billing_id]]></fieldDescription>
 	</field>
 	<field name="name" class="java.lang.String">
@@ -64,6 +64,40 @@
 	</field>
 	<field name="total_th" class="java.lang.String">
 		<fieldDescription><![CDATA[amount_total_text_th]]></fieldDescription>
+	</field>
+	<field name="company_name_th" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/partner_th]]></fieldDescription>
+	</field>
+	<field name="company_street_th" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/street_th]]></fieldDescription>
+	</field>
+	<field name="company_street2_th" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/street2_th]]></fieldDescription>
+	</field>
+	<field name="company_zip_th" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/zip_th]]></fieldDescription>
+	</field>
+	<field name="company_street" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/street]]></fieldDescription>
+	</field>
+	<field name="company_zip" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/zip
+]]></fieldDescription>
+	</field>
+	<field name="company_street2" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/street2]]></fieldDescription>
+	</field>
+	<field name="company_logo" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/logo]]></fieldDescription>
+	</field>
+	<field name="company_phone" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/phone]]></fieldDescription>
+	</field>
+	<field name="company_fax" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/fax]]></fieldDescription>
+	</field>
+	<field name="company_vat" class="java.lang.String">
+		<fieldDescription><![CDATA[company_id/vat]]></fieldDescription>
 	</field>
 	<variable name="allocation_amount" class="java.lang.Number" resetType="Group" resetGroup="UniqueID">
 		<variableExpression><![CDATA[($F{allocation_amount}*100)/107]]></variableExpression>
@@ -107,41 +141,6 @@
 			<rectangle radius="5">
 				<reportElement x="338" y="111" width="217" height="123"/>
 			</rectangle>
-			<staticText>
-				<reportElement x="114" y="8" width="165" height="17"/>
-				<textElement>
-					<font size="12" isBold="false" isItalic="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[บริษัท มิวส์ คอร์ปอเรชั่น จำกัด]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="116" y="33" width="173" height="27"/>
-				<textElement>
-					<font isBold="false" isItalic="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[4/27 ซ.นวลจันทร์ 56 แขวงนวลจันทร์ เขตบึงกุ่ม กรุงเทพฯ 10230]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="116" y="60" width="212" height="20"/>
-				<textElement>
-					<font isBold="false" isItalic="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[โทรศัพท์ 02-944-5888 โทรสาร 02-944-5878]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Opaque" x="338" y="60" width="217" height="20"/>
-				<textElement>
-					<font isBold="false" isItalic="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[เลขประจำตัวผู้เสียภาษีอากร 0105558021461]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="359" y="80" width="100" height="20"/>
-				<textElement>
-					<font isBold="false" isItalic="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[สำนักงานใหญ่]]></text>
-			</staticText>
 			<staticText>
 				<reportElement x="14" y="114" width="46" height="26"/>
 				<textElement>
@@ -251,44 +250,50 @@ Ref.Invoice No.]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="77" y="116" width="100" height="20"/>
-				<textElement/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
 				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{partner_id}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="77" y="140" width="251" height="24" isPrintWhenDetailOverflows="true"/>
 				<textElement>
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					<font isItalic="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{partner_name}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="141" y="210" width="100" height="20"/>
-				<textElement/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{cus_vat}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="427" y="116" width="100" height="20"/>
 				<textElement>
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					<font isItalic="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.util.Date"><![CDATA[(new java.text.SimpleDateFormat("dd/MM/yyyy",new Locale("en", "US"))).format($F{payment_date})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="427" y="144" width="100" height="20"/>
 				<textElement>
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					<font isItalic="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{receipt_num}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="427" y="164" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{in_ref}]]></textFieldExpression>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{in_ref}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="77" y="165" width="251" height="33" isPrintWhenDetailOverflows="true"/>
 				<textElement lineSpacing="Double">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					<font isItalic="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[(new Scriptlet()).getAddress(
     $F{partner_street1},
@@ -299,15 +304,57 @@ Ref.Invoice No.]]></text>
     null)]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="4" y="91" width="334" height="20"/>
+				<reportElement x="80" y="36" width="224" height="20"/>
 				<textElement>
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					<font size="10" isItalic="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[($P{REPORT_LOCALE}.toString() == "en_US" ? "Tax ID " : "เลขประจำตัวผู้เสียภาษี ") + $F{partner_id}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_street2_th} + " " + $F{company_zip_th}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="85" width="224" height="20"/>
+				<textElement>
+					<font size="10" isItalic="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Tel: " + $F{company_phone} + " Fax: " + $F{company_fax}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="52" width="224" height="20"/>
+				<textElement>
+					<font size="10" isItalic="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_street}.replace(",", "")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="19" width="224" height="20"/>
+				<textElement>
+					<font size="10" isItalic="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_street_th}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="2" width="224" height="20"/>
+				<textElement>
+					<font size="10" isItalic="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_name_th}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="68" width="224" height="20"/>
+				<textElement>
+					<font size="10" isItalic="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_street2}.replace(",", "") + " " + $F{company_zip}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="364" y="65" width="309" height="20"/>
+				<textElement>
+					<font size="10" isItalic="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["เลขประจำตัวผู้เสียภาษี " + $F{company_vat}]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="0" y="0" width="291" height="88"/>
-				<imageExpression class="java.lang.String"><![CDATA["/home/ecosoft/odoo-8.0/workspace/cmo_specific/cmo_customer_invoice_report/report/muse.png"]]></imageExpression>
+				<reportElement x="4" y="2" width="128" height="66"/>
+				<imageExpression class="java.lang.String"><![CDATA[$F{company_logo}]]></imageExpression>
 			</image>
 		</band>
 	</columnHeader>
@@ -386,7 +433,7 @@ Ref.Invoice No.]]></text>
 			<textField>
 				<reportElement x="55" y="54" width="404" height="33"/>
 				<textElement>
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					<font isItalic="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
@@ -396,7 +443,7 @@ Ref.Invoice No.]]></text>
 				</reportElement>
 				<box rightPadding="2"/>
 				<textElement textAlignment="Right" lineSpacing="Double">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					<font isItalic="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$V{allocation_amount}==null?
 0 :$F{line_type}=="dr"?
@@ -406,7 +453,7 @@ $V{allocation_amount}]]></textFieldExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="16" y="387" width="275" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					<font isItalic="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["(" + ($P{REPORT_LOCALE}.toString() == "en_US" ? $F{total_en} : $F{total_th}) + ")"]]></textFieldExpression>
 			</textField>
@@ -419,7 +466,7 @@ $V{allocation_amount}]]></textFieldExpression>
 				</reportElement>
 				<box rightPadding="2"/>
 				<textElement textAlignment="Right" lineSpacing="Single">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					<font isItalic="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$V{sum_allocation_amount}]]></textFieldExpression>
 			</textField>
@@ -429,7 +476,7 @@ $V{allocation_amount}]]></textFieldExpression>
 				</reportElement>
 				<box rightPadding="2"/>
 				<textElement textAlignment="Right" lineSpacing="Single">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					<font isItalic="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$V{sum_allocation_amount_untax}]]></textFieldExpression>
 			</textField>
@@ -439,7 +486,7 @@ $V{allocation_amount}]]></textFieldExpression>
 				</reportElement>
 				<box rightPadding="2"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" lineSpacing="Single">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					<font isItalic="true" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$V{sum_allocation_amount}-$V{sum_allocation_amount_untax}]]></textFieldExpression>
 			</textField>
