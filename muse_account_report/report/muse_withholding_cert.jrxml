@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="withholding_cert" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="muse_withholding_cert" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
 	<property name="ireport.zoom" value="1.9487171000000345"/>
-	<property name="ireport.x" value="246"/>
-	<property name="ireport.y" value="432"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA[System.getProperty("user.dir") + "/../../../pb2_generic/l10n_th_account/report/"]]></defaultValueExpression>
 	</parameter>
@@ -103,14 +103,8 @@
 	<field name="id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[id]]></fieldDescription>
 	</field>
-	<field name="pnd3a" class="java.lang.String">
-		<fieldDescription><![CDATA[x_pnd3a]]></fieldDescription>
-	</field>
 	<field name="number" class="java.lang.String">
 		<fieldDescription><![CDATA[number]]></fieldDescription>
-	</field>
-	<field name="company_id" class="java.lang.String">
-		<fieldDescription><![CDATA[name]]></fieldDescription>
 	</field>
 	<variable name="variable1" class="java.lang.String"/>
 	<variable name="tax_percentage" class="java.lang.String">
@@ -157,7 +151,7 @@
 			<staticText>
 				<reportElement x="309" y="4" width="156" height="19"/>
 				<textElement verticalAlignment="Middle">
-					<font size="12" isBold="true" isItalic="true" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
+					<font size="12" isBold="false" isItalic="false" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[เลขประจำตัวประชาชน]]></text>
 			</staticText>
@@ -216,7 +210,7 @@
 			<textField isBlankWhenNull="true">
 				<reportElement x="409" y="31" width="100" height="19"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
-					<font fontName="Monospaced" size="12" isBold="true" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
+					<font fontName="Monospaced" size="12" isBold="false" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_taxid}]]></textFieldExpression>
 			</textField>
@@ -263,12 +257,12 @@
                     (1.1) อัตราร้อยละ 30 ของกําไรสุทธิ
                     (1.2) อัตราร้อยละ 25 ของกําไรสุทธิ
                     (1.3) อัตราร้อยละ 20 ของกําไรสุทธิ
-                    (1.4) อัตราอืน ๆ (ระบุ) ........................... ของกําไรสุทธิ
+                    (1.4) อัตราอื่น ๆ (ระบุ) ........................... ของกําไรสุทธิ
              (2) กิจการทีได้รับยกเว้นภาษีเงินได้นิติบุคคล ซึ่งผู้รับเงินปันผลไม่ได้รับเครดิตภาษี
              (3) กําไรเฉพาะส่วนทีได้รับยกเว้นไม่ต้องนํามารวมคํานวณภาษีเงินได้นิติบุคคล
-                   ซึ่งงผู้รับเงินปันผล ไม่ได้รับเครดิตภาษี
-5. การจ่ายเงินได้ต้องหักภาษี ณ ทีจ่ายตามคําสังกรมสรรพากรทีออกตามมาตรา 3 เตรส เช่น
-     รางวัล ส่วนลดหรือประโยชน์ใด ๆ เนืองจากการส่งเสริมการขาย รางวัลในการประกวด
+                   ซึ่งผู้รับเงินปันผล ไม่ได้รับเครดิตภาษี
+5. การจ่ายเงินได้ต้องหักภาษี ณ ที่จ่ายตามคําสั่งกรมสรรพากรที่ออกตามมาตรา 3 เตรส เช่น
+     รางวัล ส่วนลดหรือประโยชน์ใด ๆ เนื่องจากการส่งเสริมการขาย รางวัลในการประกวด
      การแข่งขัน การชิงโชค ค่าแสดงของนักแสดงสาธารณะ ค่าจ้างทําของ ค่าโฆษณา ค่าเช่า
      ค่าขนส่ง ค่าบริการ  ค่าเบี้ยประกัน วินาศภัยฯ
 
@@ -352,7 +346,7 @@
 			<staticText>
 				<reportElement x="309" y="3" width="156" height="19"/>
 				<textElement verticalAlignment="Middle">
-					<font size="12" isBold="true" isItalic="true" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
+					<font size="12" isBold="false" isItalic="false" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[เลขประจำตัวประชาชน]]></text>
 			</staticText>
@@ -380,7 +374,7 @@
 			<textField isBlankWhenNull="true">
 				<reportElement x="409" y="3" width="100" height="19"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
-					<font fontName="Monospaced" size="12" isBold="true" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
+					<font fontName="Monospaced" size="12" isBold="false" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{supplier_taxid}]]></textFieldExpression>
 			</textField>
@@ -443,7 +437,7 @@
 				<textElement textAlignment="Center">
 					<font size="12" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[( ) เงินสะสมจ่ายเข้ากองทุนสํารองเลี้ยงชีพใบอนุญาตเลขที.................................... จำนวนเงิน...........................................บาท
+				<text><![CDATA[( ) เงินสะสมจ่ายเข้ากองทุนสํารองเลี้ยงชีพใบอนุญาตเลขที่.................................... จำนวนเงิน...........................................บาท
 ( ) เงินสมทบจ่ายเข้ากองทุนประกันสังคม จำนวน...............................................................บาท]]></text>
 			</staticText>
 			<staticText>
@@ -451,7 +445,7 @@
 				<textElement textAlignment="Center">
 					<font size="12" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[เลขทีบัญชีนายจ้าง                                                        เลขทีบัตรประกันสังคม ของผู้ถูกหักภาษี ณ ทีจ่าย]]></text>
+				<text><![CDATA[เลขที่บัญชีนายจ้าง                                                        เลขที่บัตรประกันสังคม ของผู้ถูกหักภาษี ณ ที่จ่าย]]></text>
 			</staticText>
 			<rectangle>
 				<reportElement x="84" y="550" width="100" height="12"/>
@@ -483,7 +477,7 @@
 					<font size="12" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[ขอรับรองว่าข้อความและตัวเลขดังกล่าวข้างต้นถูกต้องตรงกับความจริงทุกประการ
-(ลงชือ).....................................................ผู้มีหน้าทีหักภาษี ณ ที่จ่าย
+(ลงชื่อ).....................................................ผู้มีหน้าที่หักภาษี ณ ที่จ่าย
 ........................................................ วัน เดือน ปี ที่ออกหนังสือรับรอง]]></text>
 			</staticText>
 			<ellipse>
@@ -552,28 +546,28 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{pnd53}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Group" evaluationGroup="UniqueID">
-				<reportElement isPrintRepeatedValues="false" x="233" y="135" width="100" height="25"/>
+				<reportElement isPrintRepeatedValues="false" x="380" y="120" width="100" height="25"/>
 				<textElement lineSpacing="Single" markup="none">
 					<font size="12" pdfFontName="THSarabun.ttf"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{pnd3}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Group" evaluationGroup="UniqueID">
-				<reportElement isPrintRepeatedValues="false" x="46" y="575" width="100" height="25"/>
+				<reportElement isPrintRepeatedValues="false" x="44" y="577" width="100" height="25"/>
 				<textElement lineSpacing="Single" markup="none">
 					<font size="12" pdfFontName="THSarabun.ttf"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{withholding}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Group" evaluationGroup="UniqueID">
-				<reportElement isPrintRepeatedValues="false" x="46" y="600" width="100" height="25"/>
+				<reportElement isPrintRepeatedValues="false" x="44" y="606" width="100" height="25"/>
 				<textElement lineSpacing="Single" markup="none">
 					<font size="12" pdfFontName="THSarabun.ttf"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{paid_one_time}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="97" y="435" width="173" height="54">
+				<reportElement x="75" y="435" width="173" height="54">
 					<printWhenExpression><![CDATA[$F{type_6_base}]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Top" lineSpacing="Single">
