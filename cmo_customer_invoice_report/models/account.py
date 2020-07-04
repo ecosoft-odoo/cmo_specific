@@ -21,6 +21,20 @@ def filter_print_report(res, reports, res_model=[]):
 class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
+    # Receipt/Tax Invoice (PEO)
+    voucher_ids = fields.Many2many(
+        'account.voucher',
+        compute='_compute_report_data',
+    )
+
+    @api.multi
+    def _compute_report_data(self):
+        for rec in self:
+            moves = rec.payment_ids.mapped('move_id')
+            vouchers = self.env['account.voucher'].search(
+                [('move_id', 'in', moves.ids)])
+            rec.voucher_ids = vouchers
+
     @api.model
     def fields_view_get(self, view_id=None, view_type='form',
                         toolbar=False, submenu=False):
@@ -85,6 +99,9 @@ class AccountVoucher(models.Model):
     invoice_number_preprint = fields.Char(
         compute='_compute_report_data',
     )
+    invoice_number = fields.Char(
+        compute='_compute_report_data',
+    )
     invoice_amount_untaxed = fields.Float(
         compute='_compute_report_data',
     )
@@ -98,6 +115,9 @@ class AccountVoucher(models.Model):
         compute='_compute_report_data',
     )
     invoice_amount_total_text_th = fields.Char(
+        compute='_compute_report_data',
+    )
+    is_cheque = fields.Boolean(
         compute='_compute_report_data',
     )
 
@@ -145,6 +165,7 @@ class AccountVoucher(models.Model):
             rec.invoice_number_preprint = ', '.join(list(set(filter(
                     lambda x: x and x != '-',
                     invoices.mapped('number_preprint')))))
+            rec.invoice_number = ', '.join(invoices.mapped('number'))
             amount_untaxed, amount_tax, amount_total = 0.0, 0.0, 0.0
             for invoice in invoices:
                 sign = invoice.type == 'out_refund' and (-1) or 1
@@ -158,6 +179,14 @@ class AccountVoucher(models.Model):
                 self._get_invoice_amount_total_text_en(amount_total)
             rec.invoice_amount_total_text_th = \
                 self._get_invoice_amount_total_text_th(amount_total)
+            # Check paid by cheque ?
+            # If type of cheque no == integer will be paid by cheque
+            # If type of cheque no != integer will be paid by cash
+            try:
+                int(rec.number_cheque.strip())
+                rec.is_cheque = True
+            except Exception:
+                rec.is_cheque = False
 
     @api.model
     def fields_view_get(self, view_id=None, view_type='form',
