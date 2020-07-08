@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="muse_receipt_tax_invoice_peo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="34"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line&quot;]"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -102,6 +102,9 @@
 	</field>
 	<field name="bank_cheque" class="java.lang.String">
 		<fieldDescription><![CDATA[voucher_ids/bank_cheque]]></fieldDescription>
+	</field>
+	<field name="partner_taxbranch_id" class="java.lang.String">
+		<fieldDescription><![CDATA[partner_id/taxbranch]]></fieldDescription>
 	</field>
 	<sortField name="id"/>
 	<group name="UniqueID" isStartNewPage="true" isResetPageNumber="true" keepTogether="true">
@@ -347,11 +350,12 @@ TAX INVOICE / RECEIPT]]></text>
 				<text><![CDATA[ที่อยู่ Address]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="6" y="216" width="127" height="30"/>
+				<reportElement x="6" y="186" width="127" height="30"/>
 				<textElement>
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[เลขประจำตัวผู้เสียภาษีอากร]]></text>
+				<text><![CDATA[เลขประจำตัวผู้เสียภาษีอากร
+Tax ID]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="338" y="186" width="96" height="30"/>
@@ -408,7 +412,7 @@ No.]]></text>
     null)]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="136" y="216" width="182" height="30" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement mode="Transparent" x="136" y="186" width="182" height="30" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
@@ -540,6 +544,21 @@ No.]]></text>
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{bank_cheque}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="6" y="216" width="75" height="30"/>
+				<textElement>
+					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[สาขาที่
+Tax Branch]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="73" y="216" width="182" height="30" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{partner_taxbranch_id}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
