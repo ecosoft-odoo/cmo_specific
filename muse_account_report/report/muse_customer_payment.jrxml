@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="muse_customer_payment" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="176"/>
+	<property name="ireport.y" value="0"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -114,6 +114,12 @@
 	</field>
 	<field name="partner_taxbranch_id" class="java.lang.String">
 		<fieldDescription><![CDATA[partner_id/taxbranch]]></fieldDescription>
+	</field>
+	<field name="payment_number_preprint" class="java.lang.String">
+		<fieldDescription><![CDATA[number_preprint]]></fieldDescription>
+	</field>
+	<field name="invoice_number_preprint" class="java.lang.String">
+		<fieldDescription><![CDATA[invoice_number_preprint]]></fieldDescription>
 	</field>
 	<sortField name="id"/>
 	<sortField name="line_type"/>
@@ -460,18 +466,22 @@ No.]]></text>
 				<textFieldExpression class="java.lang.String"><![CDATA[(new java.text.SimpleDateFormat("dd/MM/yyyy",new Locale("en", "US"))).format($F{payment_date})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="417" y="157" width="133" height="30"/>
+				<reportElement x="417" y="157" width="133" height="30">
+					<printWhenExpression><![CDATA[$F{payment_number_preprint} && $F{payment_number_preprint} != "-"]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{payment_number}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{payment_number_preprint}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="417" y="186" width="133" height="30"/>
+				<reportElement x="417" y="186" width="133" height="30">
+					<printWhenExpression><![CDATA[$F{invoice_number_preprint} && $F{invoice_number_preprint} != "-"]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{invoice_number}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{invoice_number_preprint}]]></textFieldExpression>
 			</textField>
 			<rectangle radius="0">
 				<reportElement mode="Transparent" x="339" y="212" width="15" height="15">
