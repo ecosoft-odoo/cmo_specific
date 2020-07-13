@@ -134,9 +134,9 @@ class AccountWhtCert(models.Model):
     @api.multi
     def _assign_number(self):
         tax_forms = {}
-        msg = "Setting number is not correct. "
-              "Please check income tax form in "
-              "Settings >> Configuration >> Accounting."
+        msg = "Setting number is not correct. \
+            Please check income tax form in \
+            Settings >> Configuration >> Accounting."
         try:
             tax_forms = ast.literal_eval(
                 self.env.user.company_id.income_tax_form)
