@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import ast
 from datetime import datetime
 from openerp import models, fields, api, _
 from openerp.exceptions import ValidationError
@@ -132,10 +133,15 @@ class AccountWhtCert(models.Model):
 
     @api.multi
     def _assign_number(self):
-        """ PND1: XSCMYY, PND3: XPCMYY, PND53: XCCMYY """
-        tax_forms = {'pnd1': 'XSCM',
-                     'pnd3': 'XPCM',
-                     'pnd53': 'XCCM'}
+        tax_forms = {}
+        msg = "Setting number is not correct. "
+              "Please check income tax form in "
+              "Settings >> Configuration >> Accounting."
+        try:
+            tax_forms = ast.literal_eval(
+                self.env.user.company_id.income_tax_form)
+        except Exception:
+            raise ValidationError(_(msg))
         super(AccountWhtCert, self)._assign_number()
         for cert in self:
             if cert.sequence:

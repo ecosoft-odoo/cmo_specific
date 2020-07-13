@@ -15,6 +15,7 @@
         'data/action.xml',
         'views/account_wht_cert.xml',
         'views/hr_expense_view.xml',
+        'views/res_config_view.xml',
     ],
     'demo': [
     ],
