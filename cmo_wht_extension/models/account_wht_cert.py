@@ -134,7 +134,7 @@ class AccountWhtCert(models.Model):
     @api.multi
     def _assign_number(self):
         tax_forms = {}
-        msg = "Setting number is not correct. \
+        msg = "Setting number is not correct. \n \
             Please check income tax form in \
             Settings >> Configuration >> Accounting."
         try:
