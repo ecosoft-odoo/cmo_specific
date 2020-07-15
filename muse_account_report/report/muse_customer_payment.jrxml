@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="muse_customer_payment" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="muse_customer_payment" language="groovy" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="266"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;line_ids&quot;]"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -151,9 +151,9 @@ $F{allocation_amount}]]></variableExpression>
 		<groupExpression><![CDATA[$F{id}]]></groupExpression>
 	</group>
 	<background>
-		<band height="802">
+		<band height="752">
 			<staticText>
-				<reportElement x="0" y="277" width="52" height="310"/>
+				<reportElement x="0" y="277" width="52" height="275"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -162,7 +162,7 @@ $F{allocation_amount}]]></variableExpression>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="52" y="277" width="373" height="310"/>
+				<reportElement x="52" y="277" width="390" height="275"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -172,7 +172,7 @@ $F{allocation_amount}]]></variableExpression>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="425" y="277" width="130" height="310"/>
+				<reportElement x="442" y="277" width="130" height="275"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
@@ -181,7 +181,7 @@ $F{allocation_amount}]]></variableExpression>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="587" width="300" height="62"/>
+				<reportElement x="0" y="552" width="317" height="62"/>
 				<box topPadding="3" leftPadding="3" rightPadding="3">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -192,7 +192,7 @@ $F{allocation_amount}]]></variableExpression>
 				<text><![CDATA[หมายเหตุ : ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="300" y="587" width="125" height="31" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement mode="Transparent" x="317" y="552" width="125" height="31" forecolor="#000000" backcolor="#FFFFFF"/>
 				<box leftPadding="3">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -204,7 +204,7 @@ $F{allocation_amount}]]></variableExpression>
 				<text><![CDATA[มูลค่าก่อน Vat / Sub Total]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="300" y="618" width="125" height="31" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement mode="Transparent" x="317" y="583" width="125" height="31" forecolor="#000000" backcolor="#FFFFFF"/>
 				<box leftPadding="3">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -216,7 +216,7 @@ $F{allocation_amount}]]></variableExpression>
 				<text><![CDATA[ภาษีมูลค่าเพิ่ม / Vat]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="425" y="587" width="130" height="31"/>
+				<reportElement x="442" y="552" width="130" height="31"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
@@ -225,7 +225,7 @@ $F{allocation_amount}]]></variableExpression>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="425" y="618" width="130" height="31"/>
+				<reportElement x="442" y="583" width="130" height="31"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
@@ -234,7 +234,7 @@ $F{allocation_amount}]]></variableExpression>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="649" width="300" height="31"/>
+				<reportElement x="0" y="614" width="317" height="31"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -244,7 +244,7 @@ $F{allocation_amount}]]></variableExpression>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="300" y="649" width="125" height="31" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement mode="Transparent" x="317" y="614" width="125" height="31" forecolor="#000000" backcolor="#FFFFFF"/>
 				<box leftPadding="3">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -257,7 +257,7 @@ $F{allocation_amount}]]></variableExpression>
 				<text><![CDATA[มูลค่าสุทธิ / Net Total]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="425" y="649" width="130" height="31"/>
+				<reportElement x="442" y="614" width="130" height="31"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -267,42 +267,42 @@ $F{allocation_amount}]]></variableExpression>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="41" y="726" width="167" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement mode="Transparent" x="41" y="691" width="167" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[.......................................]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="41" y="750" width="167" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement mode="Transparent" x="41" y="715" width="167" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[วันที่ / Date..............................]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="41" y="775" width="167" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement mode="Transparent" x="41" y="740" width="167" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[ผู้รับเงิน / Receiver]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="349" y="750" width="167" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement mode="Transparent" x="349" y="715" width="167" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[วันที่ / Date..............................]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="349" y="775" width="167" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement mode="Transparent" x="349" y="740" width="167" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[ผู้อนุมัติ / Authorized]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="349" y="726" width="167" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement mode="Transparent" x="349" y="691" width="167" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
@@ -359,7 +359,7 @@ $F{allocation_amount}]]></variableExpression>
 				<textFieldExpression class="java.lang.String"><![CDATA["Tel: " + $F{company_phone} + " Fax: " + $F{company_fax}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Transparent" x="359" y="14" width="191" height="39" backcolor="#000000"/>
+				<reportElement mode="Transparent" x="376" y="14" width="191" height="39" backcolor="#000000"/>
 				<textElement textAlignment="Center" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="13" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -367,13 +367,13 @@ $F{allocation_amount}]]></variableExpression>
 TAX INVOICE / RECEIPT]]></text>
 			</staticText>
 			<rectangle radius="0">
-				<reportElement mode="Transparent" x="349" y="6" width="206" height="48"/>
+				<reportElement mode="Transparent" x="366" y="6" width="206" height="48"/>
 				<graphicElement>
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</graphicElement>
 			</rectangle>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="339" y="83" width="309" height="20"/>
+				<reportElement x="364" y="83" width="309" height="20"/>
 				<textElement>
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -421,7 +421,7 @@ Ref.Invoice No.]]></text>
 Date]]></text>
 			</staticText>
 			<rectangle radius="0">
-				<reportElement mode="Transparent" x="332" y="119" width="223" height="123"/>
+				<reportElement mode="Transparent" x="332" y="119" width="240" height="123"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="338" y="157" width="66" height="30"/>
@@ -459,14 +459,14 @@ No.]]></text>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{partner_tax_id}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement x="417" y="127" width="133" height="30"/>
+				<reportElement x="417" y="127" width="150" height="30"/>
 				<textElement>
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[(new java.text.SimpleDateFormat("dd/MM/yyyy",new Locale("en", "US"))).format($F{payment_date})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="417" y="157" width="133" height="30">
+				<reportElement x="417" y="157" width="150" height="30">
 					<printWhenExpression><![CDATA[$F{payment_number_preprint} && $F{payment_number_preprint} != "-"]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -475,7 +475,7 @@ No.]]></text>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{payment_number_preprint}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="417" y="186" width="133" height="30">
+				<reportElement x="417" y="186" width="150" height="30">
 					<printWhenExpression><![CDATA[$F{invoice_number_preprint} && $F{invoice_number_preprint} != "-"]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -572,7 +572,7 @@ No.]]></text>
 				<text><![CDATA[X]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="449" y="211" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF">
+				<reportElement mode="Transparent" x="449" y="211" width="118" height="20" forecolor="#000000" backcolor="#FFFFFF">
 					<printWhenExpression><![CDATA[$F{is_cheque}==true]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
@@ -581,7 +581,7 @@ No.]]></text>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{number_cheque}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="449" y="225" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF">
+				<reportElement mode="Transparent" x="449" y="225" width="118" height="20" forecolor="#000000" backcolor="#FFFFFF">
 					<printWhenExpression><![CDATA[$F{is_cheque}==true]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
@@ -621,7 +621,7 @@ Tax Branch]]></text>
 No.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="52" y="0" width="373" height="30"/>
+				<reportElement mode="Transparent" x="52" y="0" width="390" height="30"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -634,7 +634,7 @@ No.]]></text>
 Description]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="425" y="0" width="130" height="30"/>
+				<reportElement mode="Transparent" x="442" y="0" width="130" height="30"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
@@ -650,7 +650,7 @@ Amount]]></text>
 	<detail>
 		<band height="25" splitType="Stretch">
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="52" y="0" width="373" height="25" forecolor="#000000" backcolor="#FFFFFF">
+				<reportElement mode="Transparent" x="52" y="0" width="390" height="25" forecolor="#000000" backcolor="#FFFFFF">
 					<printWhenExpression><![CDATA[$F{journal_id}=='Opening Entries Journal']]></printWhenExpression>
 				</reportElement>
 				<box topPadding="3" leftPadding="3" rightPadding="3"/>
@@ -660,7 +660,7 @@ Amount]]></text>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{note}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="425" y="0" width="130" height="25" forecolor="#000000" backcolor="#FFFFFF">
+				<reportElement mode="Transparent" x="442" y="0" width="130" height="25" forecolor="#000000" backcolor="#FFFFFF">
 					<printWhenExpression><![CDATA[$F{journal_id}=='Opening Entries Journal']]></printWhenExpression>
 				</reportElement>
 				<box topPadding="3" leftPadding="3" rightPadding="3"/>
@@ -681,7 +681,7 @@ $V{allocation_amount}]]></textFieldExpression>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$V{UniqueID_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="52" y="0" width="373" height="25" forecolor="#000000" backcolor="#FFFFFF">
+				<reportElement mode="Transparent" x="52" y="0" width="390" height="25" forecolor="#000000" backcolor="#FFFFFF">
 					<printWhenExpression><![CDATA[$F{journal_id}!='Opening Entries Journal']]></printWhenExpression>
 				</reportElement>
 				<box topPadding="3" leftPadding="3" rightPadding="3"/>
@@ -691,7 +691,7 @@ $V{allocation_amount}]]></textFieldExpression>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{others_note}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="425" y="0" width="130" height="25" forecolor="#000000" backcolor="#FFFFFF">
+				<reportElement mode="Transparent" x="442" y="0" width="130" height="25" forecolor="#000000" backcolor="#FFFFFF">
 					<printWhenExpression><![CDATA[$F{journal_id}!='Opening Entries Journal']]></printWhenExpression>
 				</reportElement>
 				<box topPadding="3" leftPadding="3" rightPadding="3"/>
@@ -706,12 +706,12 @@ $V{amount_untaxed}]]></textFieldExpression>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="241"/>
+		<band height="225"/>
 	</pageFooter>
 	<lastPageFooter>
 		<band height="243">
 			<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="UniqueID" isBlankWhenNull="true">
-				<reportElement x="52" y="29" width="248" height="30"/>
+				<reportElement x="52" y="44" width="265" height="30"/>
 				<box topPadding="3" leftPadding="3" rightPadding="3"/>
 				<textElement verticalAlignment="Top">
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
@@ -719,7 +719,7 @@ $V{amount_untaxed}]]></textFieldExpression>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{narration}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="UniqueID" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="425" y="28" width="130" height="31" forecolor="#000000" backcolor="#FFFFFF">
+				<reportElement mode="Transparent" x="442" y="43" width="130" height="31" forecolor="#000000" backcolor="#FFFFFF">
 					<printWhenExpression><![CDATA[$F{journal_id}=='Opening Entries Journal']]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="3" rightPadding="3">
@@ -734,7 +734,7 @@ $V{amount_untaxed}]]></textFieldExpression>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$V{sum_allocation_amount_untax}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="425" y="59" width="130" height="31" forecolor="#000000" backcolor="#FFFFFF">
+				<reportElement mode="Transparent" x="442" y="74" width="130" height="31" forecolor="#000000" backcolor="#FFFFFF">
 					<printWhenExpression><![CDATA[$F{journal_id}=='Opening Entries Journal']]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="3" rightPadding="3"/>
@@ -744,7 +744,7 @@ $V{amount_untaxed}]]></textFieldExpression>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$V{sum_allocation_amount}-$V{sum_allocation_amount_untax}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="425" y="90" width="130" height="31" forecolor="#000000" backcolor="#FFFFFF">
+				<reportElement mode="Transparent" x="442" y="105" width="130" height="31" forecolor="#000000" backcolor="#FFFFFF">
 					<printWhenExpression><![CDATA[$F{journal_id}=='Opening Entries Journal']]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="3" rightPadding="3"/>
@@ -754,7 +754,7 @@ $V{amount_untaxed}]]></textFieldExpression>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$V{sum_allocation_amount}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="0" y="90" width="300" height="31" isPrintWhenDetailOverflows="true"/>
+				<reportElement x="0" y="105" width="317" height="31" isPrintWhenDetailOverflows="true"/>
 				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="0.0"/>
@@ -767,7 +767,7 @@ $V{amount_untaxed}]]></textFieldExpression>
 				<textFieldExpression class="java.lang.String"><![CDATA["(" + ($P{REPORT_LOCALE}.toString() == "en_US" ? $F{amount_total_text_en} : $F{amount_total_text_th}) + ")"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="UniqueID" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="425" y="28" width="130" height="31" forecolor="#000000" backcolor="#FFFFFF">
+				<reportElement mode="Transparent" x="442" y="43" width="130" height="31" forecolor="#000000" backcolor="#FFFFFF">
 					<printWhenExpression><![CDATA[$F{journal_id}!='Opening Entries Journal']]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="3" rightPadding="3">
@@ -782,7 +782,7 @@ $V{amount_untaxed}]]></textFieldExpression>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$V{total_amount_untaxed} != null ? $V{total_amount_untaxed} : 0]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="425" y="59" width="130" height="31" forecolor="#000000" backcolor="#FFFFFF">
+				<reportElement mode="Transparent" x="442" y="74" width="130" height="31" forecolor="#000000" backcolor="#FFFFFF">
 					<printWhenExpression><![CDATA[$F{journal_id}!='Opening Entries Journal']]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="3" rightPadding="3"/>
@@ -792,7 +792,7 @@ $V{amount_untaxed}]]></textFieldExpression>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$V{total_amount_tax} != null ? $V{total_amount_tax} : 0]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="425" y="90" width="130" height="31" forecolor="#000000" backcolor="#FFFFFF">
+				<reportElement mode="Transparent" x="442" y="105" width="130" height="31" forecolor="#000000" backcolor="#FFFFFF">
 					<printWhenExpression><![CDATA[$F{journal_id}!='Opening Entries Journal']]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="3" rightPadding="3"/>
