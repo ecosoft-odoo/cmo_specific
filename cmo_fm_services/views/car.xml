@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        
+        <!-- car :: action -->
+        <record id="car_action" model="ir.actions.act_window" >
+            <field name="name">Car Center Reserve</field>
+            <field name="res_model">cmo_fm_services.cars</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first letter.</p>
+            </field>
+        </record>
+        
+        <record id="car_calendar_action" model="ir.actions.act_window" >
+            <field name="name">Car Center Calendar</field>
+            <field name="res_model">cmo_fm_services.cars</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">calendar</field>
+            <field name="domain">[('state','=','done')]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first letter.</p>
+            </field>
+        </record>
+        
+        <record id="service_desk_action" model="ir.actions.act_url" >
+            <field name="name">fms.cmo-group.com</field>
+            <field name="url">http://fms.cmo-group.com</field>
+            <field name="target">new</field>
+        </record>
+        
+        
+        <menuitem id="top_menu" name="FM Services" action="car_calendar_action"/>
+        <menuitem id="main_menu_1" name="Car Center" parent="top_menu" />
+        <menuitem id="sub_menu_1_1" name="Car Center Calendar" parent="main_menu_1" action="car_calendar_action"/>
+        <menuitem id="sub_menu_1_2" name="Car Center Reserve" parent="main_menu_1" action="car_action"/>
+        
+<!--        <menuitem id="main_menu_2" name="Meeting Room" parent="top_menu" />-->
+<!--        <menuitem id="sub_menu_1_1" name="Meeting Room Calendar" parent="main_menu_2" action="car_calendar_action"/>-->
+<!--        <menuitem id="sub_menu_2_2" name="Meeting Room Reserve" parent="main_menu_2" action="room_action"/>-->
+<!--        <menuitem id="sub_menu_3" name="Service Desk" parent="main_menu" action="service_desk_action"/>-->
+        
+        <!-- car :: search -->
+        <record model="ir.ui.view" id="car_search_view">
+            <field name="name">cars.search</field>
+            <field name="model">cmo_fm_services.cars</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="code"/>
+                    <field name="event"/>
+                    <field name="place"/>
+                    <field name="task"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="passenger"/>
+                    <field name="note"/>
+                    <field name="project"/>
+                    <field name="by"/>
+                    <field name="operating_unit"/>
+                    <group expand="0" string="Group By">
+                        <filter name="Date" context="{'group_by':'start_date'}"/>
+                        <filter string="Project" name="Project" context="{'group_by':'project'}"/>
+                        <filter string="By" name="Group By" context="{'group_by':'by'}"/>
+                        <filter string="Operating Unit" name="Operating Unit" context="{'group_by':'operating_unit'}"/>
+                        <filter string="State" name="State" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+                
+            </field>
+        </record>
+        
+        <!-- car :: calendar -->
+        <record model="ir.ui.view" id="car_calendar_view">
+            <field name="name">cars.calendar</field>
+            <field name="model">cmo_fm_services.cars</field>
+            <field name="arch" type="xml">
+                <calendar string="Calendar" date_start="start_date" 
+                          date_stop="end_date"  
+                          color="operating_unit" 
+                          quick_add="false" >
+                        <field name="event" />
+                </calendar>
+            </field>
+        </record>
+        
+        <!-- car :: gantt -->
+        <record model="ir.ui.view" id="car_gantt_view">
+            <field name="name">cars.gantt</field>
+            <field name="model">cmo_fm_services.cars</field>
+            <field name="arch" type="xml">
+                <gantt string="Gantt" date_start="start_date" 
+                          date_stop="end_date"
+                          color="operating_unit">
+                        <field name="event"/>
+                </gantt>
+            </field>
+        </record>
+
+        
+        <!-- car :: tree -->
+        <record id="car_tree_view" model="ir.ui.view">
+            <field name="name">cars.tree</field>
+            <field name="model">cmo_fm_services.cars</field>
+            <field name="arch" type="xml">
+                <tree string="Car Center Tree" default_order="start_date desc, end_date desc, by asc">
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="event"/>
+                    <field name="place"/>
+                    <field name="by"/>
+                    <field name="operating_unit"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- car :: form -->
+        <record id="car_form_view" model="ir.ui.view" >
+            <field name="name">cars.form</field>
+            <field name="model">cmo_fm_services.cars</field>
+            <field name="arch" type="xml">
+                <form string="Car Center Form">
+                    <field name="by" invisible="1"/>
+                    <header>
+                        <button name="action_cancelled" type="object" string="Cancel" states="draft,confirmed,done" groups="cmo_fm_services.group_car_manager"/>
+                        <button name="action_confirm" type="object" string="Confirm" states="draft" class="oe_highlight" />
+                        <button name="action_done" type="object" string="Reserve" states="confirmed" class="oe_highlight" groups="cmo_fm_services.group_car_manager" />
+                        <field name="state" widget="statusbar" />
+                    </header>
+
+                    <sheet>
+                        <h1>
+                            <label string="Car Center Reserve"/>
+                            <field name="code" class="oe_inline"/>
+                        </h1>
+                        <group>
+                            <group name="left">
+                                <field name="id" invisible="1"/>
+                                <field name="code"/>
+                                <field name="project" />
+                            </group>
+
+                            <group name="right">
+                                <field name="start_date" attrs="{'readonly':[('id','>',0)]}" />
+                                <field name="end_date" attrs="{'readonly':[('id','>',0)]}" />
+                                <field name="by"/>
+                                <field name="operating_unit"/>
+                            </group>
+                        </group>
+                         <group>
+                            <notebook>
+                                <page string="Reserve Info">
+                                    <group>
+                                    <field name="event" />
+                                    <field name="place" />
+                                    <field name="task" />
+                                    <field name="number" />
+                                    <field name="passenger" />
+                                    </group>
+                                </page>
+                                <page string="Note">
+                                    <field name="note"/>
+                                </page>
+                            </notebook>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        
+        
+        
+     </data>
+</openerp>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="seq_type_cmo_project" model="ir.sequence.type">
+            <field name="name">Outbount Letter</field>
+            <field name="code">code.no</field>
+        </record>
+        <record id="seq_cmo_project" model="ir.sequence">
+            <field name="name">Outbount Letter Sequence</field>
+            <field name="code">code.no</field>
+            <field name="prefix"></field>
+            <field name="padding">4</field>
+            <field name="subfix">-%(year)s</field>
+            <field name="company_id" eval="False"/>
+            <field name="implementation">no_gap</field>
+        </record>
+        <!--<record id="mt_code_type" model="mail.message.subtype">
+            <field name="name">Letter Code Sub Type</field>
+            <field name="res_model">code</field>
+            <field name="default" eval="False"/>
+            <field name="description">Type Change</field>
+        </record>-->
+    </data>
+</openerp>

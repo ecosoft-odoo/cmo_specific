@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <!-- letter :: search -->
+        <record model="ir.ui.view" id="letter_search_view">
+            <field name="name">letter.search</field>
+            <field name="model">outbound_letter.letter</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="code"/>
+                    <field name="project"/>
+                    <!--<field name="project_related"/>-->
+                    <field name="date"/>
+                    <field name="subject"/>
+                    <field name="to"/>
+                    <field name="by"/>
+                    <field name="operating_unit"/>
+                    <field name="type"/>
+<!--                    <field name="note"/>-->
+<!--                    <field name="state"/>-->
+                    <group expand="0" string="Group By">
+                        <filter string="Date" name="Date" context="{'group_by':'date'}"/>
+                        <filter string="Subject" name="Subject" context="{'group_by':'subject'}"/>
+                        <filter string="To" name="To" context="{'group_by':'to'}"/>
+                        <filter string="Project" name="Project" context="{'group_by':'project'}"/>
+                        <filter string="By" name="Group By" context="{'group_by':'by'}"/>
+                        <filter string="Operating Unit" name="Operating Unit" context="{'group_by':'operating_unit'}"/>
+                        <filter string="Type" name="Type" context="{'group_by':'type'}"/>
+                        <filter string="Recieved" name="Received" context="{'group_by':'received'}"/>
+                    </group>
+                </search>
+                
+            </field>
+        </record>
+
+        <!-- letter :: form -->
+        <record id="letter_form_view" model="ir.ui.view" >
+            <field name="name">letter.form</field>
+            <field name="model">outbound_letter.letter</field>
+            <field name="arch" type="xml">
+                <form string="Letter Form">
+                    <header>
+                       <!-- <button name="action_bank_transfer" states="draft" string="Draft" type="object" class="oe_highlight"/>
+                        &lt;!&ndash; <button name="action_draft" states="cancel" string="Set to Draft" type="object"/> &ndash;&gt;
+                        <button name="cancel_bank_transfer" states="draft,done" string="Cancel" type="object"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,done,cancel"/>-->
+
+                        <!--<button name="draft" type="workflow" string="Reset to draft" states="confirmed,done"/>
+                        <button name="confirm" type="workflow" string="Confirm" states="draft" class="oe_highlight"/>
+                        <button name="done" type="workflow" string="Done" states="confirmed" class="oe_highlight"/>
+                        <field name="state" widget="statusbar"/>-->
+                    </header>
+                    <sheet>
+                        <h1>
+                            <label string="Outbound Letter"/>
+                            <field name="code" class="oe_inline"/>
+                        </h1>
+                        <group>
+                            <group name="left">
+                                <field name="to"/>
+                                <field name="subject"/>
+                                <field name="project"/>
+<!--                                <field name="note"/>-->
+                                <!--<field name="project_related"/>-->
+                                <!--<field name="state"/>-->
+
+<!--                                <field name="projects"/>-->
+<!--                                <field name="project_id"/>-->
+<!--                                <field name="project_test"/>-->
+<!--                                <field name="project_analytics"/>-->
+<!--                                <field name="aaa"/>-->
+
+                            </group>
+
+                            <group name="right">
+                                <field name="date"/>
+                                <field name="type"/>
+                                <field name="by"/>
+                                <field name="operating_unit"/>
+                                <field name="received"/>
+                            </group>
+                        </group>
+                        <!--<group>
+                            <notebook>
+                                <page string="Letter Info">
+                                </page>
+                                <page string="About">
+                                    This is an example of notebooks
+                                </page>
+                            </notebook>
+                        </group>-->
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- letter :: tree -->
+        <record id="tree_tree_view" model="ir.ui.view">
+            <field name="name">letter.tree</field>
+            <field name="model">outbound_letter.letter</field>
+            <field name="arch" type="xml">
+                <tree string="Course Tree">
+                    <field name="code"/>
+                    <field name="date"/>
+                    <field name="subject"/>
+                    <field name="to"/>
+                    <field name="project"/>
+                    <!--<field name="project_related"/>-->
+                    <field name="by"/>
+                    <field name="operating_unit"/>
+                    <field name="type"/>
+<!--                    <field name="state"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <!-- letter :: action -->
+        <record id="letter_action" model="ir.actions.act_window" >
+            <field name="name">Outbound Letter</field>
+            <field name="res_model">outbound_letter.letter</field>
+            <field name="view_type">form</field>
+            <!--<field name="view_mode">tree,form,gantt,calendar,chart,kanban</field>-->
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first letter.</p>
+            </field>
+        </record>
+
+        <record id="google_action" model="ir.actions.act_url" >
+            <field name="name">Google.com</field>
+            <field name="url">http://intranet.cm.co.th</field>
+            <field name="target">new</field>
+        </record>
+
+
+
+
+        <menuitem id="top_menu_outbound_letter" name="Outbound Letter" action="letter_action"/>
+        <menuitem id="main_menu_outbound_letter" name="Outbound Letter" parent="top_menu_outbound_letter" action="letter_action"/>
+        <menuitem id="sub_menu_letter" name="Outbound Letter" parent="main_menu_outbound_letter" action="letter_action"/>
+<!--        <menuitem id="sub_menu_intranet" name="Intranet" parent="main_menu_outbound_letter" action="google_action"/>-->
+
+
+
+    </data>
+</openerp>

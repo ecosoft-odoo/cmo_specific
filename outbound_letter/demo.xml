@@ -1,0 +1,47 @@
+<openerp>
+    <data>
+        <!--  -->
+        <!--   <record id="object0" model="outbound_letter.outbound_letter"> -->
+        <!--     <field name="name">Object 0</field> -->
+        <!--   </record> -->
+        <!--  -->
+        <!--   <record id="object1" model="outbound_letter.outbound_letter"> -->
+        <!--     <field name="name">Object 1</field> -->
+        <!--   </record> -->
+        <!--  -->
+        <!--   <record id="object2" model="outbound_letter.outbound_letter"> -->
+        <!--     <field name="name">Object 2</field> -->
+        <!--   </record> -->
+        <!--  -->
+        <!--   <record id="object3" model="outbound_letter.outbound_letter"> -->
+        <!--     <field name="name">Object 3</field> -->
+        <!--   </record> -->
+        <!--  -->
+        <!--   <record id="object4" model="outbound_letter.outbound_letter"> -->
+        <!--     <field name="name">Object 4</field> -->
+        <!--   </record> -->
+        <!--  -->
+
+
+        <openerp>
+            <data>
+                <record model="outbound_letter.course" id="course0">
+                    <field name="name">Course 0</field>
+                    <field name="description">Course 0's description
+
+        Can have multiple lines
+                    </field>
+                </record>
+                <record model="outbound_letter.course" id="course1">
+                    <field name="name">Course 1</field>
+                    <!-- no description for this one -->
+                </record>
+                <record model="outbound_letter.course" id="course2">
+                    <field name="name">Course 2</field>
+                    <field name="description">Course 2's description</field>
+                </record>
+            </data>
+        </openerp>
+
+    </data>
+</openerp>

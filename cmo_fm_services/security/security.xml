@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="group_car_manager" model="res.groups">
+            <field name="name">FM Services Manager</field>
+        </record>
+        <record id="group_car_user" model="res.groups">
+            <field name="name">FM Services User</field>
+        </record>
+    </data>
+</openerp>
