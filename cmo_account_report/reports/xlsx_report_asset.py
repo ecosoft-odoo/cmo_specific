@@ -119,7 +119,7 @@ class XLSXReportAsset(models.TransientModel):
         # Prepare fixed params
         date_start = False
         date_end = False
-        fiscalyear_start = self.fiscalyear_start_id.name
+        # fiscalyear_start = self.fiscalyear_start_id.name
         if self.filter == 'filter_date':
             date_start = self.date_start
             date_end = self.date_end
@@ -150,14 +150,14 @@ class XLSXReportAsset(models.TransientModel):
                  and ml.date <= %s -- date end
                  and asset_id = a.id) accumulated_cf,
                 -- accumulated_bf
-                case when SUBSTRING(a.date_start :: text,1,4) >= %s
+                case when a.date_start >= %s
                 then 0 else
                 (select a.purchase_value - coalesce(sum(credit-debit), 0.0)
                  from account_move_line ml
                  join account_period ap on ap.id = ml.period_id
                  join account_fiscalyear af on af.id = ap.fiscalyear_id
                  where account_id in %s  -- accumulatedp account
-                 and af.name < %s -- fiscalyear start
+                 and ml.date < %s
                  and asset_id = a.id) end accumulated_bf
             from
             account_asset a
@@ -165,8 +165,8 @@ class XLSXReportAsset(models.TransientModel):
         """ + where_str + "order by profile_id, number",
                          (tuple(depre_account_ids), date_start, date_end,
                           tuple(accum_depre_account_ids), date_end,
-                          fiscalyear_start,
-                          tuple(accum_depre_account_ids), fiscalyear_start))
+                          date_start,
+                          tuple(accum_depre_account_ids), date_start))
         asset_results = self._cr.dictfetchall()
         ReportLine = self.env['asset.view']
         for line in asset_results:
