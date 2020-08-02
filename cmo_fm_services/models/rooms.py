@@ -67,14 +67,24 @@ class Rooms(models.Model):
             start_rec = datetime.strptime(record.start_date, "%Y-%m-%d %H:%M:%S")
             end_rec = datetime.strptime(record.end_date, "%Y-%m-%d %H:%M:%S")
             
-            if (self.room == record.room):
+            if (start_self >= end_self):
+            	raise ValidationError(_("Start must be less than End, pls. change your time."))
+       	 
+        	if (self.room == record.room):
+            	if( ((start_self >= start_rec) and (end_self <= end_rec))
+               	or ((start_self <= start_rec) and (end_self > start_rec))
+               	or ((start_self <= end_rec) and (end_self > end_rec))
+              	):
+                	raise ValidationError(_('It not possible to duplicate room in your reserve, pls. change your room or times.'))
+            
+#             if (self.room == record.room):
                 
-                if ((start_self.date() > start_rec.date() and end_self.date() < end_rec.date())
-                    or (start_self.date() <= start_rec.date() and end_self.date() >= end_rec.date())):
-                    if ((start_self.time() > start_rec.time() and start_self.time() < end_rec.time())
-                        or (end_self.time() > start_rec.time() and end_self.time() < end_rec.time())
-                        or (start_self.time() <= start_rec.time() and end_self.time() >= end_rec.time())):
-                        raise ValidationError(_("1Duplicate reserve in room : " + record.room + " ["+self.start_date + "-" + self.end_date+"], pls. change your room or time."))
+#                 if ((start_self.date() > start_rec.date() and end_self.date() < end_rec.date())
+#                     or (start_self.date() <= start_rec.date() and end_self.date() >= end_rec.date())):
+#                     if ((start_self.time() > start_rec.time() and start_self.time() < end_rec.time())
+#                         or (end_self.time() > start_rec.time() and end_self.time() < end_rec.time())
+#                         or (start_self.time() <= start_rec.time() and end_self.time() >= end_rec.time())):
+#                         raise ValidationError(_("1Duplicate reserve in room : " + record.room + " ["+self.start_date + "-" + self.end_date+"], pls. change your room or time."))
                         
 #                if start_self.date() >= start_rec.date() and end_self.date() <= end_rec.date():
 #                    if ((start_self.time() > start_rec.time() and start_self.time() < end_rec.time())
