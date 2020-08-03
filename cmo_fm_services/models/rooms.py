@@ -70,9 +70,9 @@ class Rooms(models.Model):
             if (start_self >= end_self):
             	raise ValidationError(_("Start must be less than End, pls. change your time."))
        	 
-        	if (self.room == record.room):
-            	if(((start_self >= start_rec) and (end_self <= end_rec)) or ((start_self <= start_rec) and (end_self > start_rec)) or ((start_self <= end_rec) and (end_self > end_rec))):
-                	raise ValidationError(_('It not possible to duplicate room in your reserve, pls. change your room or times.'))
+#         	if (self.room == record.room):
+#             	if (((start_self >= start_rec) and (end_self <= end_rec)) or ((start_self <= start_rec) and (end_self > start_rec)) or ((start_self <= end_rec) and (end_self > end_rec))):
+#                 	raise ValidationError(_('It not possible to duplicate room in your reserve, pls. change your room or times.'))
             
 #             if (self.room == record.room):
                 
