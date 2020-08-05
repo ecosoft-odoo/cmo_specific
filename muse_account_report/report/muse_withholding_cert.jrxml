@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="muse_withholding_cert" language="groovy" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="10" bottomMargin="10">
 	<property name="ireport.zoom" value="1.3310000000000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="562"/>
+	<property name="ireport.y" value="373"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
 	</queryString>
@@ -430,7 +430,7 @@
 				<textFieldExpression class="java.util.Date"><![CDATA[(new SimpleDateFormat("yyyy-MM-dd")).parse($F{date_value})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="418" y="309" width="84" height="35" forecolor="#000000" backcolor="#FFFFFF">
+				<reportElement mode="Transparent" x="358" y="309" width="144" height="35" forecolor="#000000" backcolor="#FFFFFF">
 					<printWhenExpression><![CDATA[$F{type_1_base} > 0.0]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="3" rightPadding="3"/>
@@ -440,7 +440,7 @@
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{type_1_base}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="418" y="323" width="84" height="35" forecolor="#000000" backcolor="#FFFFFF">
+				<reportElement mode="Transparent" x="358" y="323" width="144" height="35" forecolor="#000000" backcolor="#FFFFFF">
 					<printWhenExpression><![CDATA[$F{type_2_base} > 0.0]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="3" rightPadding="3"/>
@@ -450,7 +450,7 @@
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{type_2_base}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="418" y="336" width="84" height="35" forecolor="#000000" backcolor="#FFFFFF">
+				<reportElement mode="Transparent" x="358" y="336" width="144" height="35" forecolor="#000000" backcolor="#FFFFFF">
 					<printWhenExpression><![CDATA[$F{type_3_base} > 0.0]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="3" rightPadding="3"/>
@@ -460,7 +460,7 @@
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{type_3_base}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="502" y="309" width="70" height="35" forecolor="#000000" backcolor="#FFFFFF">
+				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="428" y="309" width="144" height="35" forecolor="#000000" backcolor="#FFFFFF">
 					<printWhenExpression><![CDATA[$F{type_1_tax} > 0.0]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="3" rightPadding="3"/>
@@ -470,7 +470,7 @@
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{type_1_tax}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="502" y="323" width="70" height="35" forecolor="#000000" backcolor="#FFFFFF">
+				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="428" y="323" width="144" height="35" forecolor="#000000" backcolor="#FFFFFF">
 					<printWhenExpression><![CDATA[$F{type_2_tax} > 0.0]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="3" rightPadding="3"/>
@@ -480,7 +480,7 @@
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{type_2_tax}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="502" y="336" width="70" height="35" forecolor="#000000" backcolor="#FFFFFF">
+				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="428" y="336" width="144" height="35" forecolor="#000000" backcolor="#FFFFFF">
 					<printWhenExpression><![CDATA[$F{type_3_tax} > 0.0]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="3" rightPadding="3"/>
@@ -510,7 +510,7 @@
 				<textFieldExpression class="java.util.Date"><![CDATA[(new SimpleDateFormat("yyyy-MM-dd")).parse($F{date_value})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="418" y="490" width="84" height="35" forecolor="#000000" backcolor="#FFFFFF">
+				<reportElement mode="Transparent" x="358" y="490" width="144" height="35" forecolor="#000000" backcolor="#FFFFFF">
 					<printWhenExpression><![CDATA[$F{type_5_base} > 0.0]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="3" rightPadding="3"/>
@@ -520,7 +520,7 @@
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{type_5_base}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="502" y="490" width="70" height="35" forecolor="#000000" backcolor="#FFFFFF">
+				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="428" y="490" width="144" height="35" forecolor="#000000" backcolor="#FFFFFF">
 					<printWhenExpression><![CDATA[$F{type_5_tax} > 0.0]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="3" rightPadding="3"/>
@@ -577,7 +577,7 @@ $F{type_6_percent} + " %" :null]]></textFieldExpression>
 				<textFieldExpression class="java.util.Date"><![CDATA[(new SimpleDateFormat("yyyy-MM-dd")).parse($F{date_value})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="###0.00;(###0.00)" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="418" y="537" width="84" height="54" forecolor="#000000" backcolor="#FFFFFF">
+				<reportElement mode="Transparent" x="358" y="537" width="144" height="54" forecolor="#000000" backcolor="#FFFFFF">
 					<printWhenExpression><![CDATA[$F{type_6_base}]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="3" rightPadding="3"/>
@@ -591,7 +591,7 @@ $F{type_6_base}?
 $F{type_6_base}:null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="502" y="537" width="70" height="54" forecolor="#000000" backcolor="#FFFFFF">
+				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="428" y="537" width="144" height="54" forecolor="#000000" backcolor="#FFFFFF">
 					<printWhenExpression><![CDATA[$F{type_6_tax} != null]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="3" rightPadding="3"/>
@@ -625,7 +625,7 @@ $F{type_6_tax}:null]]></textFieldExpression>
 				<text><![CDATA[รวมเงินทีจ่ายและภาษีทีหักนําส่ง]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="418" y="601" width="84" height="20" forecolor="#000000" backcolor="#FFFFFF">
+				<reportElement mode="Transparent" x="358" y="601" width="144" height="20" forecolor="#000000" backcolor="#FFFFFF">
 					<printWhenExpression><![CDATA[$F{total_base} > 0.0]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="3" rightPadding="3"/>
@@ -635,7 +635,7 @@ $F{type_6_tax}:null]]></textFieldExpression>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{total_base}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="502" y="601" width="70" height="20" forecolor="#000000" backcolor="#FFFFFF">
+				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="428" y="601" width="144" height="20" forecolor="#000000" backcolor="#FFFFFF">
 					<printWhenExpression><![CDATA[$F{total_tax} > 0.0]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="3" rightPadding="3"/>
