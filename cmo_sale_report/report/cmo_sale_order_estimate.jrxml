@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_sale_order_eng" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="0.9090909090909091"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="908"/>
+	<property name="ireport.y" value="0"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;order_line&quot;]"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<parameter name="parameter1" class="java.lang.String"/>
@@ -113,6 +113,9 @@
 	</field>
 	<field name="company_name_th" class="java.lang.String">
 		<fieldDescription><![CDATA[company_id/partner_th]]></fieldDescription>
+	</field>
+	<field name="vat" class="java.lang.String">
+		<fieldDescription><![CDATA[partner_id/vat]]></fieldDescription>
 	</field>
 	<sortField name="section code"/>
 	<variable name="sum total section" class="java.lang.Float" resetType="Group" resetGroup="section" calculation="Sum">
@@ -265,35 +268,42 @@ $F{quote_id} : $F{name}]]></textFieldExpression>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{project_code}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="79" y="115" width="455" height="20"/>
+				<reportElement x="121" y="115" width="413" height="18"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{customer}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="79" y="135" width="455" height="43"/>
+				<reportElement x="121" y="133" width="413" height="30"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{street} + " " + $F{street2}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="79" y="178" width="455" height="20"/>
+				<reportElement x="121" y="165" width="413" height="18"/>
+				<textElement>
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{vat}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="121" y="183" width="413" height="18"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{project name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="79" y="198" width="455" height="20"/>
+				<reportElement x="121" y="201" width="413" height="18"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{event date}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="79" y="218" width="455" height="20"/>
+				<reportElement x="121" y="218" width="413" height="18"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -339,35 +349,42 @@ $F{quote_id} : $F{name}]]></textFieldExpression>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{REPORT_LOCALE}.toString() == "en_US" ? "Date :" : "วันที่ :"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="2" y="115" width="72" height="20"/>
+				<reportElement x="2" y="115" width="110" height="18"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{REPORT_LOCALE}.toString() == "en_US" ? "Attention :" : "เรียน :"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="2" y="135" width="72" height="20"/>
+				<reportElement x="2" y="133" width="110" height="18"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{REPORT_LOCALE}.toString() == "en_US" ? "Address :" : "ที่อยู่ :"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="2" y="178" width="72" height="20"/>
+				<reportElement x="2" y="165" width="110" height="18"/>
+				<textElement textAlignment="Right">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{REPORT_LOCALE}.toString() == "en_US" ? "Tax :" : "เลขประจำตัวผู้เสียภาษี :"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="183" width="110" height="18"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{REPORT_LOCALE}.toString() == "en_US" ? "Project :" : "ชื่อโปรเจ็ค :"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="2" y="198" width="72" height="20"/>
+				<reportElement x="2" y="201" width="110" height="18"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{REPORT_LOCALE}.toString() == "en_US" ? "Event Date :" : "วันที่จัดงาน :"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="2" y="218" width="72" height="20"/>
+				<reportElement x="2" y="218" width="110" height="18"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
