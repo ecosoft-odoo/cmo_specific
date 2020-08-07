@@ -3,6 +3,7 @@
     <data>
         <template id="customer_receipt_voucher_layout_header">
             <div class="header crv_header">
+                <t t-set="wizard" t-value="docs.get_value_wizard()"/>
                 <div class="row">
                     <div class="col-xs-4">
                         <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo"/>
@@ -11,29 +12,30 @@
                         <b>ใบสำคัญรับเงิน</b><br/>
                         <b>RECEIPT VOUCHER</b>
                     </div>
-                    <div class="col-xs-4 text-right number">
-                        <div>
-                            <b>เลขที่</b><br/>
-                            <b>No.</b>
-                        </div>
-                        <div class="number-box"><span t-esc="docs.get_value_wizard().number_document"/></div>
-                    </div>
+                    <div class="col-xs-4 text-right number"></div>
                 </div>
                 <div class="row payment_type">
                     <div class="col-xs-12 text-right">
                         <b class="text">เงินสด / เช็ค</b><br/>
                         <span class="input">
-                            <t t-if="docs">
-                                <t t-if="not docs[0].voucher_id.number_cheque">
-                                    <b class="cash"><input type="checkbox" name="cash" checked="checked"/> Cash</b>
-                                    <b class="cheque"><input type="checkbox" name="cheque"/> Cheque</b>
-                                </t>
-                                <t t-if="docs[0].voucher_id.number_cheque">
-                                    <b class="cash"><input type="checkbox" name="cash"/> Cash</b>
-                                    <b class="cheque"><input type="checkbox" name="cheque" checked="checked"/> Cheque</b>
-                                </t>
+                            <t t-if="not wizard.is_cheque">
+                                <b class="cash"><input type="checkbox" name="cash" checked="checked"/> Cash</b>
+                                <b class="cheque"><input type="checkbox" name="cheque"/> Cheque</b>
+                            </t>
+                            <t t-if="wizard.is_cheque">
+                                <b class="cash"><input type="checkbox" name="cash"/> Cash</b>
+                                <b class="cheque"><input type="checkbox" name="cheque" checked="checked"/> Cheque</b>
                             </t>
                         </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-2">
+                        <div><b>เลขที่</b></div>
+                        <div><b>No</b></div>
+                    </div>
+                    <div class="col-xs-10">
+                        <span t-esc="', '.join(list(set([doc.voucher_id.number for doc in docs.sorted(lambda l: l.voucher_id.number)])))"/>
                     </div>
                 </div>
                 <div class="row margin-top">
@@ -62,7 +64,7 @@
                         <div><b>From</b></div>
                     </div>
                     <div class="col-xs-10">
-                        <span t-esc="docs and docs[0].voucher_id.partner_id.name"/>
+                        <span t-esc="wizard.partner_id.name"/>
                     </div>
                 </div>
                 <div class="row margin-top">
@@ -87,12 +89,16 @@
                     <div class="col-xs-2">
                         <span t-esc="docs and docs[0].voucher_id.bank_cheque"/>
                     </div>
+                    <div class="col-xs-2"></div>
+                    <div class="col-xs-2"></div>
+                </div>
+                <div class="row margin-top">
                     <div class="col-xs-2">
                         <div><b>ลงวันที่</b></div>
                         <div><b>Due Date</b></div>
                     </div>
-                    <div class="col-xs-2">
-                        <span t-esc="datetime.datetime.strptime(docs.get_value_wizard().date_due, '%Y-%m-%d').strftime('%d/%m/%Y')"/>
+                    <div class="col-xs-10">
+                        <span t-esc="', '.join(list(set([datetime.datetime.strptime(doc.voucher_id.date, '%Y-%m-%d').strftime('%d/%m/%Y') for doc in docs.sorted(lambda l: l.voucher_id.date)])))"/>
                     </div>
                 </div>
             </div>
@@ -165,12 +171,9 @@
                                             <div>Bank</div>
                                         </div>
                                         <div style="display: inline-block; width: 400px;">
-                                            <t t-if="docs[0].bank_receipt_id">
-                                                <div t-esc="docs and docs[0].bank_receipt_id.bank_account_id.name"/>
-                                                <div>
-                                                    <t t-esc="docs and docs[0].bank_receipt_id.partner_bank_id.bank_name"/>
-                                                    <t t-esc="'(%s)' % docs[0].bank_receipt_id.partner_bank_id.acc_number"/>
-                                                </div>
+                                            <t t-set="partner_banks" t-value="docs.mapped('bank_receipt_id.partner_bank_id')"/>
+                                            <t t-foreach="partner_banks" t-as="partner_bank">
+                                                <div t-esc="partner_bank.display_name"/>
                                             </t>
                                         </div>
                                         <div style="display: inline-block;">

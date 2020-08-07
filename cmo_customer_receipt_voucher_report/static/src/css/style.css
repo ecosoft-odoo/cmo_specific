@@ -15,11 +15,11 @@
 .crv_header .number .number-box {
     border: 1px solid;
     width: 170px;
-    height: 30px;
+    min-height: 30px;
     margin-bottom: 3px;
 }
 .crv_header .payment_type div {
-    margin-top: -50px;
+    margin-top: -70px;
 }
 .crv_header .payment_type .text {
     margin-right: 52px;

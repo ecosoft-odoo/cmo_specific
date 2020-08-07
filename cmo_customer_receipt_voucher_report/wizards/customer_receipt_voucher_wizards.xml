@@ -9,8 +9,8 @@
 				<form>
                     <group>
                         <group>
-                            <field name="number_document"/>
                             <field name="partner_id" domain="[('customer', '=', True)]"/>
+                            <field name="voucher_ids" widget="many2many_tags" domain="[('type', '=', 'receipt'), ('state', '=', 'posted'), ('partner_id', '=', partner_id)]"/>
                             <field name="date_due"/>
                             <field name="is_cheque"/>
                             <field name="number_cheque" attrs="{'invisible': [('is_cheque', '=', False)], 'required': [('is_cheque', '=', True)]}"/>
