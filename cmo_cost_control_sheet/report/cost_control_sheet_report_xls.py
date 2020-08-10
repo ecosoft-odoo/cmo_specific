@@ -10,6 +10,8 @@ from openerp.addons.report_xls.utils import _render
 from openerp.tools.translate import _
 from openerp import SUPERUSER_ID
 from pytz import timezone
+from PIL import Image
+from cStringIO import StringIO
 
 _logger = logging.getLogger(__name__)
 
@@ -461,18 +463,21 @@ class CostControlSheetReportXls(report_xls):
         ws.footer_str = self.xls_footers['standard']
         ws.row(3).height = 450
 
+        company_id = self.pool['res.users'].browse(
+            cr, uid, uid, context=context).company_id
+
         # Insert logo
-        report_dir = os.path.dirname(
-            os.path.dirname(os.path.realpath(__file__)))
+        image_base64 = str(company_id.logo).decode('base64')
+        image_data = StringIO(image_base64)
+        img = Image.open(image_data).convert('RGB')
+        img.save('/tmp/company_logo.bmp')
         ws.insert_bitmap(
-            '%s/static/description/cmo.bmp' % report_dir, 0, 0, x=26.4, y=5,
-            scale_x=0.08, scale_y=0.5)
+            '/tmp/company_logo.bmp', 0, 0, x=26.4, y=0,
+            scale_x=0.055, scale_y=0.349)
 
         # Merge row of logo
         ws.write_merge(row_pos, 2, 0, 0)
 
-        company_id = self.pool['res.users'].browse(
-            cr, uid, uid, context=context).company_id
         titles = [
             '',
             ' '.join([company_id.street, company_id.street2, company_id.zip,
@@ -1246,6 +1251,8 @@ class CostControlSheetReportXls(report_xls):
             c_specs, [x[0] for x in c_specs])
         row_pos = self.xls_write_row(ws, row_pos, row_data)
         # Insert checkbox
+        report_dir = os.path.dirname(
+            os.path.dirname(os.path.realpath(__file__)))
         ws.insert_bitmap(
             '%s/static/description/checkbox.bmp' % report_dir, row_pos + 1, 0,
             x=400, y=1, scale_x=0.5, scale_y=0.5
