@@ -150,14 +150,12 @@ class CostControlSheetReportXls(report_xls):
         col_style = None
         if index == 0:
             col_style = xlwt.easyxf(
-                'pattern: pattern solid, fore_colour black;')
+                border_style + 'pattern: pattern solid, fore_colour black;')
         elif index == 3:
             col_style = xlwt.easyxf(
                 _xs['center'] + border_style + 'font: bold true, height 360;')
-        c_specs = []
-        if index < 3:
-            c_specs += [('logo', 1, 0, 'text', None)]
-        c_specs += [
+        c_specs = [
+            ('logo', 1, 0, 'text', None),
             ('report_name', merge, 0, 'text', title, None, col_style),
         ]
         row_data = self.xls_row_template(c_specs, [x[0] for x in c_specs])
@@ -472,11 +470,11 @@ class CostControlSheetReportXls(report_xls):
         img = Image.open(image_data).convert('RGB')
         img.save('/tmp/company_logo.bmp')
         ws.insert_bitmap(
-            '/tmp/company_logo.bmp', 0, 0, x=26.4, y=0,
+            '/tmp/company_logo.bmp', 0, 0, x=26.4, y=5,
             scale_x=0.055, scale_y=0.349)
 
         # Merge row of logo
-        ws.write_merge(row_pos, 2, 0, 0)
+        ws.write_merge(row_pos, 3, 0, 0)
 
         titles = [
             '',
@@ -491,9 +489,8 @@ class CostControlSheetReportXls(report_xls):
             'Cost Control Sheet',
         ]
         for index, title in enumerate(titles):
-            merge = index == 3 and 9 or 8
             row_pos = self._report_title(
-                ws, _p, row_pos, _xs, title, index, merge=merge)
+                ws, _p, row_pos, _xs, title, index, merge=8)
 
         ws.set_horz_split_pos(row_pos)
 
