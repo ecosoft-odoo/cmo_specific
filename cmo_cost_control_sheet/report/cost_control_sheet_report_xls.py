@@ -473,7 +473,7 @@ class CostControlSheetReportXls(report_xls):
             '/tmp/company_logo.bmp', 0, 0, x=26.4, y=3,
             scale_x=0.055, scale_y=0.320)
         os.system('chmod 777 /tmp/company_logo.bmp')
-        
+
         # Merge row of logo
         ws.write_merge(row_pos, 3, 0, 0)
 
