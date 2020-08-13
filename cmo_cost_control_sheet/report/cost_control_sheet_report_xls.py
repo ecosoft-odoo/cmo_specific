@@ -471,7 +471,7 @@ class CostControlSheetReportXls(report_xls):
         img.save('/tmp/company_logo.bmp')
         ws.insert_bitmap(
             '/tmp/company_logo.bmp', 0, 0, x=26.4, y=3,
-            scale_x=0.055, scale_y=0.330)
+            scale_x=0.055, scale_y=0.320)
         os.system('chmod 777 /tmp/company_logo.bmp')
         
         # Merge row of logo
