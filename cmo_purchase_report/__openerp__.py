@@ -10,6 +10,7 @@
     ],
     'data': [
         "jasper_data.xml",
+        'views/purchase_config_views.xml',
     ],
     'installable': True,
     'auto_install': False,
