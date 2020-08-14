@@ -6,12 +6,12 @@
             <field name="model">purchase.config.settings</field>
             <field name="inherit_id" ref="purchase.view_purchase_configuration"/>
             <field name="arch" type="xml">
-                <form position="inside">
+                <xpath expr="//form" position="inside">
                     <separator string="Report"/>
                     <group>
-                        <field name="check_billing_regulations" />
+                        <field name="check_billing_regulations" class="oe_inline"/>
                     </group>
-                </form>
+                </xpath>
             </field>
         </record>
     </data>
