@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_sale_order_eng" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.1"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="873"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;order_line&quot;]"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<parameter name="parameter1" class="java.lang.String"/>
@@ -116,6 +116,12 @@
 	</field>
 	<field name="vat" class="java.lang.String">
 		<fieldDescription><![CDATA[partner_id/vat]]></fieldDescription>
+	</field>
+	<field name="operating_unit" class="java.lang.String">
+		<fieldDescription><![CDATA[project_related_id/operating_unit_id/name]]></fieldDescription>
+	</field>
+	<field name="display_ou" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[display_operating_unit]]></fieldDescription>
 	</field>
 	<sortField name="section code"/>
 	<variable name="sum total section" class="java.lang.Float" resetType="Group" resetGroup="section" calculation="Sum">
@@ -550,7 +556,7 @@ $F{company_name_th}.replace("(สำนักงานใหญ่)", "") + " �
 				<textFieldExpression class="java.lang.String"><![CDATA["("+ $F{approval} +")"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" x="209" y="703" width="123" height="20"/>
+				<reportElement positionType="Float" x="209" y="712" width="123" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -564,7 +570,7 @@ $F{company_name_th}.replace("(สำนักงานใหญ่)", "") + " �
 				<textFieldExpression class="java.lang.String"><![CDATA["("+ $F{sale person}+ ")"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" x="74" y="675" width="400" height="20"/>
+				<reportElement positionType="Float" x="74" y="689" width="400" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -728,10 +734,19 @@ $F{company_name_th}.replace("(สำนักงานใหญ่)", "") + " �
 			</break>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement positionType="Float" x="49" y="646" width="160" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{sale_position}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="49" y="661" width="160" height="20">
+					<printWhenExpression><![CDATA[$F{display_ou}==true]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{operating_unit}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement positionType="Float" x="337" y="646" width="160" height="20"/>
