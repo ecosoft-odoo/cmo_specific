@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_purchase_order" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.9487171000000043"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="2640"/>
+	<property name="ireport.y" value="872"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;order_line&quot;]"/>
 	<style name="column_header">
 		<box>
@@ -200,9 +200,9 @@
 				<reportElement x="324" y="746" width="185" height="1"/>
 			</line>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="9" y="668" width="274" height="60" forecolor="#000000" backcolor="#FFFFFF"/>
-				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+				<reportElement mode="Transparent" x="9" y="666" width="306" height="60" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="1_1_2" markup="none">
+					<font fontName="SansSerif" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{check and billing regulations}]]></textFieldExpression>
 			</textField>
@@ -554,9 +554,9 @@
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{amount_total}==null?0:$F{amount_total}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement style="detail" mode="Transparent" x="48" y="42" width="267" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
-				<textElement verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+				<reportElement style="detail" mode="Transparent" x="48" y="40" width="267" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2" markup="none">
+					<font fontName="SansSerif" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["(" + (new Scriptlet()).getAmtInWords((new BigDecimal($V{string_amount_total}==""?0:$V{string_amount_total})).setScale(2).toString(),"THB") + ")"]]></textFieldExpression>
 			</textField>
