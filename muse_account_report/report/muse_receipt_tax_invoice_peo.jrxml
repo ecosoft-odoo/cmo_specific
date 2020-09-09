@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="muse_receipt_tax_invoice_peo" language="groovy" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="122"/>
+	<property name="ireport.y" value="0"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line&quot;]"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -451,7 +451,7 @@ No.]]></text>
 			</textField>
 			<rectangle radius="0">
 				<reportElement mode="Transparent" x="339" y="212" width="15" height="15">
-					<printWhenExpression><![CDATA[$F{is_cheque}==true]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{is_cheque}!=true]]></printWhenExpression>
 				</reportElement>
 				<graphicElement>
 					<pen lineWidth="0.75" lineStyle="Solid"/>
@@ -509,7 +509,7 @@ No.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Transparent" x="339" y="212" width="15" height="15" forecolor="#000000" backcolor="#FFFFFF">
-					<printWhenExpression><![CDATA[$F{is_cheque}!=true]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{is_cheque}==true]]></printWhenExpression>
 				</reportElement>
 				<box>
 					<topPen lineWidth="1.0"/>

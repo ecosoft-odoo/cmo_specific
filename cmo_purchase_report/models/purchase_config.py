@@ -7,15 +7,15 @@ class PurchaseConfigSettings(models.TransientModel):
 
     check_billing_regulations = fields.Text(
         string='Check and billing regulations',
-        default=lambda l: l._default_check_billing_regulations(),
     )
 
-    @api.onchange('check_billing_regulations')
-    def _onchange_billing_regulations(self):
-        company_id = self.env.user.company_id
-        company_id.write(
-            {'check_billing_regulations': self.check_billing_regulations})
-
     @api.model
-    def _default_check_billing_regulations(self):
-        return self.env.user.company_id.check_billing_regulations
+    def get_default_check_billing_regulations(self, fields):
+        cbr = self.env.user.company_id.check_billing_regulations
+        return {'check_billing_regulations': cbr}
+
+    @api.multi
+    def set_default_check_billing_regulations(self):
+        company = self.env.user.company_id
+        company.write({
+            'check_billing_regulations': self.check_billing_regulations})

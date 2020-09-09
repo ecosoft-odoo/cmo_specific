@@ -20,6 +20,7 @@
                 '__EXPORT__': {
                     1: {
                         '_HEAD_': {
+                            'A1': '${"Trial Balance for %s" % env.user.company_id.partner_id.name}',
                             'B3': 'fiscalyear_id.name',
                         },
                         'line_ids': {
