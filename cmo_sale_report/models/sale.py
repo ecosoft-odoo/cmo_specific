@@ -22,6 +22,10 @@ class SaleOrder(models.Model):
     approval_position_name = fields.Char(
         compute='_compute_related_job_name',
     )
+    display_operating_unit = fields.Boolean(
+        string="Display Operating Unit",
+        default=True,
+    )
 
     @api.multi
     def _compute_related_job_name(self):

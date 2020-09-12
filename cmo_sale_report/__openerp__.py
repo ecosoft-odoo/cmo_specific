@@ -16,6 +16,7 @@
     ],
     'data': [
         'report/report_saleorder.xml',
+        'views/sale_view.xml',
     ],
     'demo': [
     ],
