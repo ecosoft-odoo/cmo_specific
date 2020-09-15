@@ -24,7 +24,6 @@ class SaleOrder(models.Model):
     )
     display_operating_unit = fields.Boolean(
         string="Display Operating Unit",
-        default=True,
     )
 
     @api.multi
