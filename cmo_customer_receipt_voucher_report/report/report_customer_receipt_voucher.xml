@@ -38,24 +38,28 @@
                         <span t-esc="', '.join(list(set([doc.voucher_id.number for doc in docs.sorted(lambda l: l.voucher_id.number)])))"/>
                     </div>
                 </div>
+                <t t-set="amount_wht" t-value="abs(sum(docs.mapped('voucher_id').mapped('line_cr_ids').mapped('amount_wht'))) - abs(sum(docs.mapped('voucher_id').mapped('line_dr_ids').mapped('amount_wht')))"/>
+                <t t-set="total_taxed" t-value="0"/>
+                <t t-set="total_amount_untaxed" t-value="0"/>
+                <t t-foreach="docs" t-as="doc">
+                    <t t-set="amount_total_all" t-value="doc._get_amount_all(doc.amount_taxed, total_wht, total_vat)"/>
+                    <t t-set="total_taxed" t-value="total_taxed + amount_total_all[1]"/>
+                    <t t-set="total_amount_untaxed" t-value="total_amount_untaxed + amount_total_all[0]"/>
+                </t>
                 <div class="row margin-top">
                     <div class="col-xs-2">
                         <div><b>รับเงิน</b></div>
                         <div><b>Receive Baht</b></div>
                     </div>
                     <div class="col-xs-3">
-                        <t t-set="total_amount_untaxed" t-value="sum(docs.mapped('amount_untaxed'))"/>
-                        <t t-set="total_vat" t-value="docs.get_vat()"/>
-                        <t t-set="total_wht" t-value="abs(sum(docs.mapped('voucher_id').mapped('line_cr_ids').mapped('amount_wht'))) - abs(sum(docs.mapped('voucher_id').mapped('line_dr_ids').mapped('amount_wht')))"/>
-                        <t t-set="total_amount" t-value="total_amount_untaxed + total_vat - total_wht"/>
-                        <span t-esc="'{0:,.2f}'.format(total_amount)"/>
+                        <span t-esc="'{0:,.2f}'.format(total_amount_untaxed + total_taxed - amount_wht)"/>
                     </div>
                     <div class="col-xs-1">
                         <div><b>บาท</b></div>
                         <div><b>Baht</b></div>
                     </div>
                     <div class="col-xs-6">
-                        (<span t-esc="docs.get_text_total_amount(total_amount)"/>)
+                        (<span t-esc="docs.get_text_total_amount(total_amount_untaxed + total_taxed - total_wht)"/>)
                     </div>
                 </div>
                 <div class="row margin-top">
@@ -89,10 +93,15 @@
                     <div class="col-xs-2">
                         <span t-esc="docs and docs[0].voucher_id.bank_cheque"/>
                     </div>
-                    <div class="col-xs-2"></div>
-                    <div class="col-xs-2"></div>
+                    <div class="col-xs-2">
+                        <div><b>ลงวันที่</b></div>
+                        <div><b>Due Date</b></div>
+                    </div>
+                    <div class="col-xs-2">
+                        <span t-esc="', '.join(list(set([datetime.datetime.strptime(doc.voucher_id.date, '%Y-%m-%d').strftime('%d/%m/%Y') for doc in docs.sorted(lambda l: l.voucher_id.date)])))"/>
+                    </div>
                 </div>
-                <div class="row margin-top">
+                <!-- <div class="row margin-top">
                     <div class="col-xs-2">
                         <div><b>ลงวันที่</b></div>
                         <div><b>Due Date</b></div>
@@ -100,7 +109,7 @@
                     <div class="col-xs-10">
                         <span t-esc="', '.join(list(set([datetime.datetime.strptime(doc.voucher_id.date, '%Y-%m-%d').strftime('%d/%m/%Y') for doc in docs.sorted(lambda l: l.voucher_id.date)])))"/>
                     </div>
-                </div>
+                </div> -->
             </div>
         </template>
         <template id="customer_receipt_voucher_layout_footer">
@@ -198,17 +207,34 @@
                             </thead>
                             <tbody>
                                 <t t-set="total_amount_untaxed" t-value="0"/>
+                                <t t-set="total_taxed" t-value="0"/>
+                                <t t-set="total_diff" t-value="0"/>
                                 <t t-set="total_vat" t-value="docs.get_vat()"/>
                                 <t t-set="total_wht" t-value="abs(sum(docs.mapped('voucher_id').mapped('line_cr_ids').mapped('amount_wht'))) - abs(sum(docs.mapped('voucher_id').mapped('line_dr_ids').mapped('amount_wht')))"/>
+                                <t t-set="wht" t-value="docs._get_wht_all()"/>
+                                <t t-set="writeoff" t-value="''"/>
                                 <tr t-foreach="docs" t-as="doc">
-                                    <t t-set="total_amount_untaxed" t-value="total_amount_untaxed + doc.amount_untaxed"/>
-                                    <td></td>
+                                    <t t-set="total_diff" t-value="total_diff + doc.voucher_id.writeoff_amount"/>
+                                    <t t-if="doc.voucher_id.writeoff_amount">
+                                        <t t-set="writeoff" t-value="' '.join([str(doc.voucher_id.comment), writeoff])"/>
+                                    </t>
+                                    <t t-set="amount_total_all" t-value="doc._get_amount_all(doc.amount_taxed, total_wht, total_vat, doc.voucher_id.writeoff_amount)"/>
+                                    <t t-set="total_taxed" t-value="total_taxed + amount_total_all[1]"/>
+                                    <t t-set="total_amount_untaxed" t-value="total_amount_untaxed + amount_total_all[0]"/>
+                                    <td/>
                                     <td>
                                         <t t-set="transaction" t-value="' / '.join(filter(lambda l: l != False and l != '', [doc.move_line_id.name, doc.analytic_account_id.name]))"/>
                                         <span t-esc="transaction"/>
                                     </td>
-                                    <td class="text-right" style="border-right: 1px solid;"><span t-esc="'{0:,.2f}'.format(doc.amount_untaxed)"/></td>
+                                    <td class="text-right" style="border-right: 1px solid;"><span t-esc="'{0:,.2f}'.format(amount_total_all[0])"/></td>
                                 </tr>
+                                <t t-if="total_diff">
+                                    <tr>
+                                        <td/>
+                                        <td t-esc="writeoff"/>
+                                        <td class="text-right" style="border-right: 1px solid;"><b t-esc="'{0:,.2f}'.format(total_diff)"/></td>
+                                    </tr>
+                                </t>
                                 <t t-if="total_vat">
                                     <tr>
                                         <td></td>
@@ -218,25 +244,26 @@
                                     <tr>
                                         <td></td>
                                         <td class="text-right"><b>Vat 7%</b></td>
-                                        <td class="text-right" style="border-right: 1px solid;"><b t-esc="'{0:,.2f}'.format(total_vat)"/></td>
+                                        <td class="text-right" style="border-right: 1px solid;"><b t-esc="'{0:,.2f}'.format(total_taxed)"/></td>
                                     </tr>
                                 </t>
                                 <t t-if="total_wht">
                                     <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="text-right" style="border-right: 1px solid; border-top: 3px solid;"><b t-esc="'{0:,.2f}'.format(total_amount_untaxed + total_vat)"/></td>
+                                        <td/>
+                                        <td/>
+                                        <td class="text-right" style="border-right: 1px solid; border-top: 3px solid;"><b t-esc="'{0:,.2f}'.format(total_amount_untaxed + total_taxed)"/></td>
                                     </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td class="text-right"><b>WHT 3%</b></td>
-                                        <td class="text-right" style="border-right: 1px solid;"><b t-esc="'{0:,.2f}'.format(total_wht)"/></td>
+                                    <tr t-foreach="wht" t-as="wht_type">
+                                        <t t-set="total_with_wht" t-value="docs._filter_wht_line(wht_type)"/>
+                                        <td/>
+                                        <td class="text-right"><b>WHT <t t-esc="int(wht_type.amount * 100)"/>%</b></td>
+                                        <td class="text-right" style="border-right: 1px solid;"><b t-esc="'{0:,.2f}'.format(abs(total_with_wht))"/></td>
                                     </tr>
                                 </t>
                                 <tr>
                                     <td></td>
                                     <td class="text-right"><b>Total</b></td>
-                                    <td class="text-right" style="border-right: 1px solid;border-top: 3px solid;border-bottom: 3px solid;"><b t-esc="'{0:,.2f}'.format(total_amount_untaxed + total_vat - total_wht)"/></td>
+                                    <td class="text-right" style="border-right: 1px solid;border-top: 3px solid;border-bottom: 3px solid;"><b t-esc="'{0:,.2f}'.format(total_amount_untaxed + total_taxed - total_wht + total_diff)"/></td>
                                 </tr>
                             </tbody>
                         </table>
