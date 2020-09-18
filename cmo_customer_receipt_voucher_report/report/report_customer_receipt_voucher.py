@@ -15,8 +15,8 @@ class ReportCustomerReceiptVoucher(models.Model):
         'account.analytic.account',
         string='Project',
     )
-    amount_untaxed = fields.Float(
-        string='Amount Untaxed',
+    amount_taxed = fields.Float(
+        string='Amount Taxed',
     )
     bank_receipt_id = fields.Many2one(
         'account.bank.receipt',
@@ -33,14 +33,15 @@ class ReportCustomerReceiptVoucher(models.Model):
                     OVER(ORDER BY av.id, aml2.analytic_account_id) AS id,
                    av.id AS voucher_id,
                    aml2.analytic_account_id,
-                   SUM(aml2.credit-aml2.debit) AS amount_untaxed,
+                   -- SUM(aml2.credit-aml2.debit) AS amount_taxed,
+                   av.amount AS amount_taxed,
                    abr.id AS bank_receipt_id,
                    aml.id AS move_line_id
             FROM account_voucher_line avl
             INNER JOIN account_voucher av ON avl.voucher_id = av.id
             LEFT JOIN account_bank_receipt abr ON av.bank_receipt_id = abr.id
             LEFT JOIN account_move_line aml ON avl.move_line_id = aml.id
-            LEFT JOIN ( 
+            LEFT JOIN (
                 SELECT aml.move_id, aml.analytic_account_id, aml.debit,
                        aml.credit
                 FROM account_move_line aml
@@ -66,6 +67,32 @@ class ReportCustomerReceiptVoucher(models.Model):
     @api.multi
     def get_text_total_amount(self, total_amount):
         return num2words(total_amount, to='currency', lang='th')
+
+    @api.multi
+    def _get_wht_all(self):
+        wht = []
+        for rec in self:
+            for wht_line in rec.voucher_id.tax_line_wht:
+                wht.append(wht_line.tax_id)
+        return list(set(wht))
+
+    @api.multi
+    def _filter_wht_line(self, type):
+        tax_line_wht = self.mapped('voucher_id').mapped('tax_line_wht')
+        wht_type = tax_line_wht.filtered(lambda l: l.tax_id == type)
+        return sum(wht_type.mapped('amount'))
+
+    @api.multi
+    def _get_amount_all(self, amount_taxed, total_wht=0.0,
+                        total_vat=0.0, diff_amount=0.0):
+        self.ensure_one()
+        amount_untaxed = amount_taxed
+        # check tax
+        if total_vat:
+            amount_untaxed /= 1.07
+        taxed = amount_taxed - amount_untaxed
+        amount_untaxed_wht = amount_untaxed + total_wht - diff_amount
+        return amount_untaxed_wht, taxed
 
     @api.multi
     def get_vat(self):

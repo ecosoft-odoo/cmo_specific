@@ -10,13 +10,15 @@
                     <group>
                         <group>
                             <field name="partner_id" domain="[('customer', '=', True)]"/>
-                            <field name="voucher_ids" widget="many2many_tags" domain="[('type', '=', 'receipt'), ('state', '=', 'posted'), ('partner_id', '=', partner_id)]"/>
-                            <field name="date_due"/>
                             <field name="is_cheque"/>
-                            <field name="number_cheque" attrs="{'invisible': [('is_cheque', '=', False)], 'required': [('is_cheque', '=', True)]}"/>
                         </group>
                         <group></group>
                     </group>
+                    <notebook>
+                        <page string="Customer Payments">
+                            <field name="voucher_ids" nolabel="1" domain="[('type', '=', 'receipt'), ('state', '=', 'posted'), ('partner_id', '=', partner_id)]"/>
+                        </page>
+                    </notebook>
 					<footer>
 						<button name="action_get_report" type="object" string="Execute Report" class="oe_highlight"/>
 						or
