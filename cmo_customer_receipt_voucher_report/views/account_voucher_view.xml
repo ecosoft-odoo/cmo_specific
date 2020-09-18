@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        # Customer Payment
+        <record id="view_vendor_receipt_form_ext" model="ir.ui.view">
+            <field name="name">view.vendor.receipt.form.ext</field>
+            <field name="model">account.voucher</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="l10n_th_account.view_vendor_receipt_form_ext"/>
+            <field name="arch" type="xml">
+                <field name="comment" position="after">
+                    <field name="comment_text" attrs="{'invisible':[('payment_option','!=','with_writeoff')]}"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>

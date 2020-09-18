@@ -216,7 +216,7 @@
                                 <tr t-foreach="docs" t-as="doc">
                                     <t t-set="total_diff" t-value="total_diff + doc.voucher_id.writeoff_amount"/>
                                     <t t-if="doc.voucher_id.writeoff_amount">
-                                        <t t-set="writeoff" t-value="' '.join([str(doc.voucher_id.comment), writeoff])"/>
+                                        <t t-set="writeoff" t-value="' '.join([str(doc.voucher_id.comment_text), writeoff])"/>
                                     </t>
                                     <t t-set="amount_total_all" t-value="doc._get_amount_all(doc.amount_taxed, total_wht, total_vat, doc.voucher_id.writeoff_amount)"/>
                                     <t t-set="total_taxed" t-value="total_taxed + amount_total_all[1]"/>
@@ -232,7 +232,7 @@
                                     <tr>
                                         <td/>
                                         <td t-esc="writeoff"/>
-                                        <td class="text-right" style="border-right: 1px solid;"><b t-esc="'{0:,.2f}'.format(total_diff)"/></td>
+                                        <td class="text-right" style="border-right: 1px solid;"><b>(<span t-esc="'{0:,.2f}'.format(abs(total_diff))"/>)</b></td>
                                     </tr>
                                 </t>
                                 <t t-if="total_vat">
