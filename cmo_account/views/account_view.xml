@@ -243,5 +243,27 @@
       parent="account.periodical_processing_reconciliation" sequence="30"
       groups="account.group_account_manager"/>
 
+      # Account Closing Period
+      <record id="action_account_special" model="ir.actions.act_window">
+          <field name="name">Accounts (Special)</field>
+          <field name="res_model">account.account</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">tree,form,graph</field>
+          <field name="search_view_id" ref="account.view_account_search"/>
+          <field name="view_id" ref="account.view_account_list"/>
+          <field name="context">{'periods_special': True, 'all_fiscalyear': True}</field>
+          <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                  Click to add an account.
+              </p>
+          </field>
+      </record>
+
+      <menuitem
+           action="action_account_special"
+           id="menu_account_special"
+           parent="account.account_account_menu"
+           groups="account.group_account_manager"/>
+
     </data>
   </openerp>
