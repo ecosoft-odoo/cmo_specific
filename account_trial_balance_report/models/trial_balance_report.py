@@ -96,7 +96,8 @@ class AccountTrailBalanceReport(models.Model):
         opening_periods = report.fiscalyear_id.period_ids.filtered(
             lambda l: l.special)
         if opening_periods and len(opening_periods) == 1:
-            domain += [('date', '>=', opening_periods.date_start)]
+            init_moves = init_moves.filtered(
+                lambda l: l.date >= opening_periods.date_start)
         return init_moves
 
     @api.model
