@@ -91,6 +91,12 @@ class AccountTrailBalanceReport(models.Model):
         if target_move == 'posted':
             domain += [('move_id.state', '=', 'posted')]
         init_moves = MoveLine.search(domain)
+        # Pod : 22/09/2020
+        # make sure that date have to greater than opening period
+        opening_periods = report.fiscalyear_id.period_ids.filtered(
+            lambda l: l.special)
+        if opening_periods and len(opening_periods) == 1:
+            domain += [('date', '>=', opening_periods.date_start)]
         return init_moves
 
     @api.model
