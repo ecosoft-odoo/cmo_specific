@@ -133,13 +133,13 @@ class AccountInvoice(models.Model):
     @api.multi
     def invoice_validate(self):
         # result = super(AccountInvoice, self.sudo()).invoice_validate()
-        result = super(AccountInvoice, self).invoice_validate()
         for invoice in self:
             for line in invoice.invoice_line:
-                if line.name != line.name.strip():
-                    raise UserError(_('Warning!'), _('The description should not line up at first. Please correct the description.'))
+                if line.name:
+                    line.name = line.name.strip()
             invoice.write({'validate_user_id': self.env.user.id,
                            'validate_date': fields.Datetime.now()})
+        result = super(AccountInvoice, self).invoice_validate()
         return result
 
     @api.multi
