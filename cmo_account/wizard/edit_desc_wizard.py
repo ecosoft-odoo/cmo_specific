@@ -30,5 +30,5 @@ class EditDesc(models.TransientModel):
         active_model = self._context.get('active_model')
         active_id = self._context.get('active_id')
         rec = self.env[active_model].browse(active_id)
-        rec.write({self._context['edit_field']: self.name.strip()})
+        rec.write({self._context['edit_field']: self.name})
         return True

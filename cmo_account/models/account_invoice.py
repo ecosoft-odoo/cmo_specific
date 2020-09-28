@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-from openerp import _, fields, models, api
+from openerp import fields, models, api
 from openerp.tools.amount_to_text_en import amount_to_text
 from openerp.addons.l10n_th_amount_text.amount_to_text_th \
     import amount_to_text_th
-from openerp.exceptions import Warning as UserError
 
 
 class AccountInvoice(models.Model):
@@ -135,9 +134,6 @@ class AccountInvoice(models.Model):
         # result = super(AccountInvoice, self.sudo()).invoice_validate()
         result = super(AccountInvoice, self).invoice_validate()
         for invoice in self:
-            for line in invoice.invoice_line:
-                if line.name != line.name.strip():
-                    raise UserError(_('Warning!'), _('The description should not line up at first. Please correct the description.'))
             invoice.write({'validate_user_id': self.env.user.id,
                            'validate_date': fields.Datetime.now()})
         return result
@@ -188,3 +184,9 @@ class AccountInvoiceLine(models.Model):
         string='Status',
         related='invoice_id.state',
     )
+
+    @api.model
+    def move_line_get_item(self, line):
+        line_dict = super(AccountInvoiceLine, self).move_line_get_item(line)
+        line_dict['name'] = line.name[:64]
+        return line_dict
