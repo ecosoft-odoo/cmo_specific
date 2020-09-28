@@ -655,12 +655,20 @@ class ProjectProject(models.Model):
         'quote_related_ids.state',
     )
     def _compute_price_and_cost(self):
+        Invoice = self.env['account.invoice']
         for project in self:
             actual_price = 0.0
             estimate_cost = 0.0
             quotes = project.sudo().quote_related_ids.filtered(
                 lambda r: r.state in ('draft', 'done')
             )
+            # filtered SO, INV not refund
+            refund_ids = Invoice.search([
+                ('origin_invoice_id', 'in', project.out_invoice_ids.ids)])
+            if refund_ids:
+                refund = [refund_id.origin_invoice_id.quote_ref_id.id
+                          for refund_id in refund_ids]
+                quotes = quotes.filtered(lambda l: l.id not in refund)
             for quote in quotes:
                 actual_price += quote.amount_untaxed
                 estimate_cost += sum(quote.order_line.filtered(
