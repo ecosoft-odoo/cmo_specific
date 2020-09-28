@@ -388,27 +388,32 @@ class ProjectProject(models.Model):
     def _compute_is_invoiced_and_paid(self):
         for project in self:
             invoice_states = project.out_invoice_ids.mapped('state')
-            sale_order_states = []
-
-            for quote in project.quote_related_ids:
-                domain = [
-                    ('quote_id', '=', quote.id),
-                    ('order_type', '=', 'sale_order'),
-                ]
-                sale_order_states = \
-                    sale_order_states + \
-                    self.env['sale.order'].sudo().\
-                    search(domain).mapped('state')
-            sale_order_states = list(set(sale_order_states))
+            inv_states = list(set(invoice_states))
+            # sale_order_states = []
+            #
+            # for quote in project.quote_related_ids:
+            #     domain = [
+            #         ('quote_id', '=', quote.id),
+            #         ('order_type', '=', 'sale_order'),
+            #     ]
+            #     sale_order_states = \
+            #         sale_order_states + \
+            #         self.env['sale.order'].sudo().\
+            #         search(domain).mapped('state')
+            # sale_order_states = list(set(sale_order_states))
             if 'open' in invoice_states or 'paid' in invoice_states:
                 project.is_invoiced = True
             else:
                 project.is_invoiced = False
 
-            if 'done' in sale_order_states or 'cancel' in sale_order_states:
+            if len(inv_states) == 1 and 'paid' in inv_states:
                 project.is_paid = True
             else:
                 project.is_paid = False
+            # if 'done' in sale_order_states or 'cancel' in sale_order_states:
+            #     project.is_paid = True
+            # else:
+            #     project.is_paid = False
 
             if project.is_invoiced and project.is_paid:
                 project.state = 'close'
