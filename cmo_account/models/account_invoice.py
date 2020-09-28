@@ -185,8 +185,8 @@ class AccountInvoiceLine(models.Model):
         related='invoice_id.state',
     )
 
-    @api.model
-    def move_line_get_item(self, line):
-        line_dict = super(AccountInvoiceLine, self).move_line_get_item(line)
-        line_dict['name'] = line.name[:64]
-        return line_dict
+    # @api.model
+    # def move_line_get_item(self, line):
+    #     line_dict = super(AccountInvoiceLine, self).move_line_get_item(line)
+    #     line_dict['name'] = line.name[:64]
+    #     return line_dict
