@@ -36,7 +36,7 @@ class WithholdingIncomeTaxView(models.AbstractModel):
     tax_payer = fields.Char(
         string='Tax Payer',
     )
-    percent = fields.Integer(
+    percent = fields.Float(
         string='Percent',
     )
     base_total = fields.Float(
