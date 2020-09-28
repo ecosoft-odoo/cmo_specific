@@ -133,7 +133,7 @@ class XLSXReportWithholdingIncomeTax(models.TransientModel):
                 c.number, c.date as date_value, c.income_tax_form, c.tax_payer,
                 c.rpt_period_id as wht_period_id, c.id as cert_id,
                 rp.id as supplier_ids, ct.id as cert_line_ids,
-                round(avg(ct.percent)::numeric, 0) as percent,
+                round(avg(ct.percent)::numeric, 2) as percent,
             case when c.state != 'cancel'
                 then sum(ct.base) else 0.0 end as base_total,
             case when c.state != 'cancel'
