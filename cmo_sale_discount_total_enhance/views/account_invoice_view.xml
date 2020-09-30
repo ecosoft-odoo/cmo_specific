@@ -8,6 +8,9 @@
             <field name="arch" type="xml">
                 <field name="discount_type" position="replace"/>
                 <field name="discount_rate" position="replace"/>
+                <field name="discount" position="attributes">
+                    <attribute name="digits">(16, 10)</attribute>
+                </field>
             </field>
         </record>
     </data>
