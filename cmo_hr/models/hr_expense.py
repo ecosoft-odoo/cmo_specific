@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from lxml import etree
 from openerp import fields, models, api
 from openerp.exceptions import ValidationError
 from openerp.tools import float_compare
@@ -174,6 +175,25 @@ class HrExpenseExpense(models.Model):
                ('ac_payee', 'A/C Payee'), ]
         if context.get('default_pay_to', False) == 'pettycash':
             res = [('cash', 'Cash'), ]
+        return res
+
+    @api.model
+    def fields_view_get(self, view_id=None, view_type='form',
+                        toolbar=False, submenu=False):
+        res = super(HrExpenseExpense, self).fields_view_get(
+            view_id, view_type, toolbar=toolbar, submenu=submenu)
+        if self._context.get('active_model') == 'project.project':
+            # Hide action
+            if res.get('toolbar', {}).get('action'):
+                res['toolbar']['action'] = []
+            # Hide create, edit, delete button in expense
+            doc = etree.XML(res['arch'])
+            nodes = doc.xpath('/tree') + doc.xpath('/form')
+            for node in nodes:
+                node.set('create', 'false')
+                node.set('edit', 'false')
+                node.set('delete', 'false')
+            res['arch'] = etree.tostring(doc)
         return res
 
 
