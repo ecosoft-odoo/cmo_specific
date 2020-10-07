@@ -306,6 +306,14 @@
                                     class="oe_inline oe_link"
                                     string="(change)"/>
                             </div>
+                            <label for="ignore_so"/>
+                            <div groups="account.group_account_user">
+                                <field name="id" invisible="1"/>
+                                <field name="ignore_so" class="oe_inline" widget="many2many_tags" domain="[('project_related_id', 'like', id), ('order_type', '=', 'quotation')]"/>
+                                <button name="action_ignore_so" type="object" always_show="1"
+                                    class="oe_inline oe_link"
+                                    string="(Update)"/>
+                            </div>
                             <field name="hold_reason" attrs="{'invisible':[('state','not in','pending')]}"/>
                             <field name="close_reason" string="Close Reason" readonly="1" attrs="{'invisible': [('close_reason','=',False)]}"/>
                             <field name="lost_reason_id" readonly="1" attrs="{'invisible': [('close_reason','not in','lost')]}"/>

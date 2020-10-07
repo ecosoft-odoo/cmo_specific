@@ -309,6 +309,10 @@ class ProjectProject(models.Model):
         string='Close Project by Accounting',
         copy=False,
     )
+    ignore_so = fields.Many2many(
+        comodel_name='sale.order',
+        string='Ignore Quotation',
+    )
     is_group_afreport = fields.Boolean(
         compute='_compute_is_group_afreport',
     )
@@ -332,6 +336,21 @@ class ProjectProject(models.Model):
     #         root.set('edit', 'false')
     #         res['arch'] = etree.tostring(root)
     #     return res
+
+    @api.multi
+    def action_ignore_so(self):
+        for rec in self:
+            rec.with_context({'ignore_so': True})._compute_price_and_cost()
+        return True
+
+    @api.multi
+    def _hook_compute_price(self, quotes):
+        self.ensure_one()
+        if not self._context.get('ignore_so', False):
+            return quotes
+        # Update price
+        quotes = quotes.filtered(lambda l: l.id not in self.ignore_so.ids)
+        return quotes
 
     @api.multi
     def _compute_is_group_afreport(self):
@@ -669,6 +688,7 @@ class ProjectProject(models.Model):
                 refund = [refund_id.origin_invoice_id.quote_ref_id.id
                           for refund_id in refund_ids]
                 quotes = quotes.filtered(lambda l: l.id not in refund)
+            quotes = self._hook_compute_price(quotes)
             for quote in quotes:
                 actual_price += quote.amount_untaxed
                 estimate_cost += sum(quote.order_line.filtered(
