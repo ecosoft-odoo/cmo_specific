@@ -161,8 +161,7 @@ class XLSXReportAsset(models.TransientModel):
                  and asset_id = a.id) end accumulated_bf
             from
             account_asset a
-            -- where (a.state != 'close' or a.value_depreciated != 0)
-            where 1=1
+            where (a.state != 'close' or a.number is not null)
         """ + where_str + "order by profile_id, number",
                          (tuple(depre_account_ids), date_start, date_end,
                           tuple(accum_depre_account_ids), date_end,
