@@ -688,7 +688,7 @@ class ProjectProject(models.Model):
                 refund = [refund_id.origin_invoice_id.quote_ref_id.id
                           for refund_id in refund_ids]
                 quotes = quotes.filtered(lambda l: l.id not in refund)
-            quotes = self._hook_compute_price(quotes)
+            quotes = project._hook_compute_price(quotes)
             for quote in quotes:
                 actual_price += quote.amount_untaxed
                 estimate_cost += sum(quote.order_line.filtered(
