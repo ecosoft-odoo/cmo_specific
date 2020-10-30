@@ -520,7 +520,7 @@ $F{company_name_th}.replace("(สำนักงานใหญ่)", "") + " �
 				<reportElement x="16" y="172" width="537" height="308"/>
 				<box topPadding="3"/>
 				<textElement verticalAlignment="Top" lineSpacing="1_1_2">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					<font size="7" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Term of Payment}]]></textFieldExpression>
 			</textField>

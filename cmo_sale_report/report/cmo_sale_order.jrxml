@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_sale_order_eng" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0000000000000004"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="733"/>
+	<property name="ireport.y" value="642"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;order_line&quot;]"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<parameter name="parameter1" class="java.lang.String"/>
@@ -525,7 +525,7 @@ $F{company_name_th}.replace("(สำนักงานใหญ่)", "") + " �
 				<reportElement x="16" y="172" width="537" height="308"/>
 				<box topPadding="3"/>
 				<textElement verticalAlignment="Top" lineSpacing="1_1_2">
-					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
+					<font size="7" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Term of Payment}]]></textFieldExpression>
 			</textField>
