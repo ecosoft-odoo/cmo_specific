@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from datetime import timedelta
+from datetime import timedelta, datetime
 from openerp import models, fields, api, _
 from openerp.exceptions import ValidationError
 
@@ -100,6 +100,25 @@ class Cars(models.Model):
     @api.multi
     def copy(self):
         raise ValidationError(_('It not possible to duplicate same date the record, pls. create a new one.'))
+        
+    @api.multi
+    @api.constrains('start_date', 'end_date')
+    def _check_date(self):
+        envir = self.env['cmo_fm_services.cars'].search([('id', '!=', self.id),('state', '=', 'done')])
+        for record in envir:
+            start_self = datetime.strptime(self.start_date, "%Y-%m-%d %H:%M:%S")
+            end_self = datetime.strptime(self.end_date, "%Y-%m-%d %H:%M:%S")
+            start_rec = datetime.strptime(record.start_date, "%Y-%m-%d %H:%M:%S")
+            end_rec = datetime.strptime(record.end_date, "%Y-%m-%d %H:%M:%S")
+
+            if (start_self >= end_self):
+                raise ValidationError(_("[Start Date] must be less than [End Date], pls. change your times."))
+            
+            if( ((start_self >= start_rec) and (end_self <= end_rec)) 
+               or ((start_self < start_rec) and (end_self > start_rec)) 
+               or ((start_self < end_rec) and (end_self > end_rec)) 
+              ):
+                raise ValidationError(_('It not possible to duplicate [times] in your reserve, pls. change your [times] .'))
     
     
 #    @api.multi
