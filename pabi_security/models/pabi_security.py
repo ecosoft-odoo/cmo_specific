@@ -15,6 +15,11 @@ class PABISecurity(models.Model):
         string='Last Apply Date',
         readonly=True,
     )
+    last_apply_user_id = fields.Many2one(
+        'res.users',
+        string='Last Apply By',
+        readonly=True,
+    )
     line_ids = fields.One2many(
         'pabi.security.line',
         'security_id',
@@ -182,6 +187,7 @@ class PABISecurity(models.Model):
                     # Apply all groups to this user
                     user_rec.write({'groups_id': group_ids})
             rec.date = fields.Datetime.now()
+            rec.last_apply_user_id = self.env.user.id
         return True
 
 
