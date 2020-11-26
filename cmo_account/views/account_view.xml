@@ -264,5 +264,31 @@
            id="menu_account_all_period"
            parent="account.account_account_menu"/>
 
+
+       <!-- account.account -->
+       <record id="view_account_list" model="ir.ui.view">
+           <field name="name">account.account.list</field>
+           <field name="model">account.account</field>
+           <field name="field_parent">child_id</field>
+           <field name="inherit_id" ref="account.view_account_list"/>
+           <field name="arch" type="xml">
+               <field name="company_currency_id" position="attributes">
+                   <attribute name="invisible">1</attribute>
+               </field>
+           </field>
+       </record>
+
+       <record id="view_account_tree" model="ir.ui.view">
+           <field name="name">account.account.tree</field>
+           <field name="model">account.account</field>
+           <field name="field_parent">child_id</field>
+           <field name="inherit_id" ref="account.view_account_tree"/>
+           <field name="arch" type="xml">
+               <field name="company_currency_id" position="attributes">
+                   <attribute name="invisible">1</attribute>
+               </field>
+           </field>
+       </record>
+
     </data>
   </openerp>
