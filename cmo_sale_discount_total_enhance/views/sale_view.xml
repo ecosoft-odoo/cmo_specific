@@ -14,6 +14,9 @@
                 <xpath expr="//field[@name='order_line']/tree[@string='Sales Order Lines']/field[@name='price_subtotal']" position="replace">
                     <field name="price_subtotal_no_disco" options="{'currency_field': 'currency_id'}"/>
                 </xpath>
+                <xpath expr="//field[@name='order_line']/form//field[@name='price_unit']" position="after">
+                    <field name="price_subtotal_no_disco" invisible="1"/>
+                </xpath>
             </field>
         </record>
     </data>
