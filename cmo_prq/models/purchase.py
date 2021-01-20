@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from openerp import models, api
+from openerp import models, api, _
+from openerp.exceptions import Warning as UserError
 
 
 class PurchaseOrder(models.Model):
@@ -16,8 +17,17 @@ class PurchaseOrder(models.Model):
         }
 
     @api.multi
+    def _find_open_invoice(self):
+        self.ensure_one()
+        open_invoices = self.invoice_ids.filtered(lambda l: l.state in ['open', 'paid'])
+        return open_invoices
+
+    @api.multi
     def action_cancel_draft(self):
         self.ensure_one()
+        open_invoices = self._find_open_invoice()
+        if len(open_invoices) > 0:
+            raise UserError(_('You can set to draft only purchase orders that not invoiced.'))
         for rec in self.invoice_ids:
             rec.update({'state': 'cancel'})
         for order in self:
