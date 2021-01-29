@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_supplier_billing_items_tree" model="ir.ui.view">
+            <field name="name">view.supplier.billing.items.tree</field>
+            <field name="model">account.invoice</field>
+            <field name="arch" type="xml">
+                <tree create="false" import="false" colors="blue:state == 'draft';black:state in ('proforma','proforma2','open');gray:state == 'cancel'" string="Supplier Billing Items">
+                    <field name="supplier_billing_number"/>
+                    <field name="supplier_billing_partner_id"/>
+                    <field name="number" string="Invoice Number"/>
+                    <field name="date_invoice" string="Supplier Billing Date"/>
+                    <field name="supplier_billing_date"/>
+                    <field name="supplier_billing_due_date"/>
+                    <field name="amount_total"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_supplier_billing_items" model="ir.actions.act_window">
+            <field name="name">Supplier Billing Items</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">tree</field>
+            <field name="domain">[('supplier_billing_id','!=', False)]</field>
+            <field name="view_id" ref="view_supplier_billing_items_tree"/>
+        </record>
+
+        <menuitem action="action_supplier_billing_items"
+                  id="menu_action_supplier_billing_items"
+                  string="Supplier Billing Items"
+                  parent="account.menu_finance_payables"
+                  groups="account.group_account_invoice,account.group_account_manager"
+                  sequence="11" />
+    </data>
+</openerp>
