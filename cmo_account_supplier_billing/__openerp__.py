@@ -10,6 +10,7 @@
         'account_supplier_billing',
     ],
     'data': [
+        'views/account_invoice.xml',
         'views/supplier_billing.xml',
     ],
     'demo': [
