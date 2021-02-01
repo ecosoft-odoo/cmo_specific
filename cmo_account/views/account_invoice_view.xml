@@ -11,6 +11,9 @@
                 <xpath expr="//field[@name='number']" position="after">
                     <field name="number_preprint"/>
                 </xpath>
+                <xpath expr="//filter[@name='group_by_partner_id']" position="after">
+                    <filter name="group_by_project_ref_id" string="Project" context="{'group_by':'project_ref_id'}"/>
+                </xpath>
             </field>
         </record>
 
