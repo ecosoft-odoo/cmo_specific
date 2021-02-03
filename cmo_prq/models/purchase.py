@@ -25,9 +25,11 @@ class PurchaseOrder(models.Model):
     @api.multi
     def action_cancel_draft(self):
         self.ensure_one()
+        # Error when purchase order has open invoices
         open_invoices = self._find_open_invoice()
         if len(open_invoices) > 0:
             raise UserError(_('You can set to draft only purchase orders that not invoiced.'))
+        # ---
         for rec in self.invoice_ids:
             rec.update({'state': 'cancel'})
         for order in self:
@@ -102,6 +104,11 @@ class PurchaseOrder(models.Model):
     def _cancel_prq(self):
         PRQ = self.env['purchase.prq']
         for po in self:
+            # Error when purchase order has open invoices
+            open_invoices = po._find_open_invoice()
+            if len(open_invoices) > 0:
+                raise UserError(_('You can cancel only purchase orders that not invoiced.'))
+            # ---
             prq = PRQ.search([('purchase_id', '=', po.id)])
             for rec in prq:
                 rec.action_reject()
