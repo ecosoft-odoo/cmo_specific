@@ -331,7 +331,7 @@ $F{company_street}.replace(",", "") + "\n" + $F{company_street2}.replace(",", ""
 	</columnHeader>
 	<detail>
 		<band height="77" splitType="Stretch">
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<!-- <textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement isPrintRepeatedValues="false" x="11" y="39" width="389" height="38" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
 				<box topPadding="4" leftPadding="4"/>
 				<textElement lineSpacing="1_1_2">
@@ -343,7 +343,7 @@ $F{company_street}.replace(",", "") + "\n" + $F{company_street2}.replace(",", ""
 "สถานที่จัดงาน " + $F{quote_venue} + "\n" +
 $F{others_note} :
 null]]></textFieldExpression>
-			</textField>
+			</textField> -->
 			<textField pattern="#,##0.00;(#,##0.00-)" isBlankWhenNull="true">
 				<reportElement isPrintRepeatedValues="false" x="400" y="0" width="155" height="20"/>
 				<box rightPadding="2"/>
