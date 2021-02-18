@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="muse_withholding_cert" language="groovy" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="10" bottomMargin="10">
 	<property name="ireport.zoom" value="1.3310000000000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="384"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
 	</queryString>
@@ -48,6 +48,12 @@
 	<field name="type_3_tax" class="java.lang.Number">
 		<fieldDescription><![CDATA[x_type_3_tax]]></fieldDescription>
 	</field>
+	<field name="type_4a_tax" class="java.lang.Number">
+		<fieldDescription><![CDATA[x_type_4a_tax]]></fieldDescription>
+	</field>
+	<field name="type_4b_tax" class="java.lang.Number">
+		<fieldDescription><![CDATA[x_type_4b_tax]]></fieldDescription>
+	</field>
 	<field name="type_5_tax" class="java.lang.Number">
 		<fieldDescription><![CDATA[x_type_5_tax]]></fieldDescription>
 	</field>
@@ -62,6 +68,12 @@
 	</field>
 	<field name="type_3_base" class="java.lang.Number">
 		<fieldDescription><![CDATA[x_type_3_base]]></fieldDescription>
+	</field>
+	<field name="type_4a_base" class="java.lang.Number">
+		<fieldDescription><![CDATA[x_type_4a_base]]></fieldDescription>
+	</field>
+	<field name="type_4b_base" class="java.lang.Number">
+		<fieldDescription><![CDATA[x_type_4b_base]]></fieldDescription>
 	</field>
 	<field name="type_5_base" class="java.lang.Number">
 		<fieldDescription><![CDATA[x_type_5_base]]></fieldDescription>
@@ -429,6 +441,26 @@
 				</textElement>
 				<textFieldExpression class="java.util.Date"><![CDATA[(new SimpleDateFormat("yyyy-MM-dd")).parse($F{date_value})]]></textFieldExpression>
 			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="330" y="348" width="88" height="35" forecolor="#000000" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[$F{type_4a_tax} > 0.0]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[(new SimpleDateFormat("yyyy-MM-dd")).parse($F{date_value})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="329" y="362" width="88" height="35" forecolor="#000000" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[$F{type_4b_tax} > 0.0]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[(new SimpleDateFormat("yyyy-MM-dd")).parse($F{date_value})]]></textFieldExpression>
+			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="358" y="309" width="144" height="35" forecolor="#000000" backcolor="#FFFFFF">
 					<printWhenExpression><![CDATA[$F{type_1_base} > 0.0]]></printWhenExpression>
@@ -460,6 +492,26 @@
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{type_3_base}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="358" y="348" width="144" height="35" forecolor="#000000" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[$F{type_4a_base} > 0.0]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{type_4a_base}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="358" y="362" width="144" height="35" forecolor="#000000" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[$F{type_4b_base} > 0.0]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{type_4b_base}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="428" y="309" width="144" height="35" forecolor="#000000" backcolor="#FFFFFF">
 					<printWhenExpression><![CDATA[$F{type_1_tax} > 0.0]]></printWhenExpression>
 				</reportElement>
@@ -488,6 +540,26 @@
 					<font fontName="SansSerif" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Number"><![CDATA[$F{type_3_tax}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="428" y="348" width="144" height="35" forecolor="#000000" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[$F{type_4a_tax} > 0.0]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{type_4a_tax}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="428" y="362" width="144" height="35" forecolor="#000000" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[$F{type_4b_tax} > 0.0]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{type_4b_tax}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00 %" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="255" y="490" width="75" height="35" forecolor="#000000" backcolor="#FFFFFF">
@@ -756,6 +828,26 @@ $F{type_6_tax}:null]]></textFieldExpression>
 (ลงชื่อ).....................................................ผู้มีหน้าที่หักภาษี ณ ที่จ่าย
 ........................................................ วัน เดือน ปี ที่ออกหนังสือรับรอง]]></text>
 			</staticText>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00 %" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="255" y="362" width="75" height="35" forecolor="#000000" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[$F{type_4b_base} > 0.0]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="1" rightPadding="1"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{type_4b_tax}/$F{type_4b_base}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00 %" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="255" y="348" width="75" height="35" forecolor="#000000" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[$F{type_4a_base} > 0.0]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="1" rightPadding="1"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{type_4a_tax}/$F{type_4a_base}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 </jasperReport>
