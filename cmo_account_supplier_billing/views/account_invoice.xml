@@ -7,7 +7,7 @@
             <field name="arch" type="xml">
                 <tree create="false" import="false" colors="blue:state == 'draft';black:state in ('proforma','proforma2','open');gray:state == 'cancel'" string="Supplier Billing Items">
                     <field name="supplier_billing_number"/>
-                    <field name="supplier_billing_partner_id"/>
+                    <field name="supplier_billing_partner_id" string="Supplier"/>
                     <field name="number" string="Invoice Number"/>
                     <field name="date_invoice" string="Supplier Billing Date"/>
                     <field name="supplier_billing_date"/>
