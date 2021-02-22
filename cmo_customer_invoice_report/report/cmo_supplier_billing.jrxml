@@ -32,8 +32,8 @@
 	<field name="date_invoice" class="java.util.Date">
 		<fieldDescription><![CDATA[invoice_ids/date_invoice]]></fieldDescription>
 	</field>
-	<field name="amount_total" class="java.lang.Number">
-		<fieldDescription><![CDATA[invoice_ids/amount_total]]></fieldDescription>
+	<field name="supplier_billing_amount_total" class="java.lang.Number">
+		<fieldDescription><![CDATA[invoice_ids/supplier_billing_amount_total]]></fieldDescription>
 	</field>
 	<field name="due_date" class="java.util.Date">
 		<fieldDescription><![CDATA[due_date]]></fieldDescription>
@@ -57,7 +57,7 @@
 		<fieldDescription><![CDATA[invoice_ids/company_id/zip_th]]></fieldDescription>
 	</field>
 	<variable name="Grand_total" class="java.lang.Number" calculation="Sum">
-		<variableExpression><![CDATA[$F{amount_total}]]></variableExpression>
+		<variableExpression><![CDATA[$F{supplier_billing_amount_total}]]></variableExpression>
 	</variable>
 	<variable name="invoice_count" class="java.lang.Integer" calculation="Count">
 		<variableExpression><![CDATA[$F{supplier_invoice_number}]]></variableExpression>
@@ -269,13 +269,13 @@
 				</textElement>
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{date_invoice}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00;#,##0.00-" isBlankWhenNull="true">
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
 				<reportElement x="400" y="-1" width="155" height="20"/>
 				<box rightPadding="2">
 					<bottomPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.Number"><![CDATA[$F{amount_total}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{supplier_billing_amount_total}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="0" y="-1" width="51" height="20"/>

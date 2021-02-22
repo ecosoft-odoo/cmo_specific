@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from openerp import fields, models
+from openerp import api, fields, models
+import openerp.addons.decimal_precision as dp
 
 
 class AccountInvoice(models.Model):
@@ -19,4 +20,16 @@ class AccountInvoice(models.Model):
         related='supplier_billing_id.due_date',
         string='Due Date',
     )
+    supplier_billing_amount_total = fields.Float(
+        string='Total',
+        digits=dp.get_precision('Account'),
+        compute='_compute_supplier_billing_amount_total')
+    
+    @api.one
+    @api.depends('amount_total')
+    def _compute_supplier_billing_amount_total(self):
+        if self.type in ['out_refund', 'in_refund']:
+            self.supplier_billing_amount_total = self.amount_total * -1
+        else:
+            self.supplier_billing_amount_total = self.amount_total
 
