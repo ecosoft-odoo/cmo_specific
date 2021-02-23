@@ -29,8 +29,11 @@
 	<field name="supplier_invoice_number" class="java.lang.String">
 		<fieldDescription><![CDATA[invoice_ids/supplier_invoice_number]]></fieldDescription>
 	</field>
-	<field name="date_invoice" class="java.util.Date">
-		<fieldDescription><![CDATA[invoice_ids/date_invoice]]></fieldDescription>
+	<field name="supplier_billing_invoice_number" class="java.lang.String">
+		<fieldDescription><![CDATA[invoice_ids/supplier_billing_invoice_number]]></fieldDescription>
+	</field>
+	<field name="supplier_billing_date_print" class="java.util.Date">
+		<fieldDescription><![CDATA[invoice_ids/supplier_billing_date_print]]></fieldDescription>
 	</field>
 	<field name="supplier_billing_amount_total" class="java.lang.Number">
 		<fieldDescription><![CDATA[invoice_ids/supplier_billing_amount_total]]></fieldDescription>
@@ -257,7 +260,7 @@
 				<textElement verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{supplier_invoice_number}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{supplier_billing_invoice_number}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="274" y="-1" width="126" height="20"/>
@@ -267,7 +270,7 @@
 				<textElement verticalAlignment="Middle">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression class="java.util.Date"><![CDATA[$F{date_invoice}]]></textFieldExpression>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{supplier_billing_date_print}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
 				<reportElement x="400" y="-1" width="155" height="20"/>

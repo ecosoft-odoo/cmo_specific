@@ -20,15 +20,32 @@ class AccountInvoice(models.Model):
         related='supplier_billing_id.due_date',
         string='Due Date',
     )
+    supplier_billing_state = fields.Selection(
+        selection=[
+            ('draft', 'Draft'),
+            ('billed', 'Billed'),
+            ('cancel', 'Cancelled'),
+        ],
+        related='supplier_billing_id.state',
+        string='Supplier Billing State',
+    )
+    # Fields for print forms
+    supplier_billing_invoice_number = fields.Char(string='Invoice Number')
+    supplier_billing_date_print = fields.Date(string='Supplier Billing Date')
+    is_difference = fields.Boolean(
+        string='Difference',
+        help='If difference checked, total will be negative.',
+    )
     supplier_billing_amount_total = fields.Float(
         string='Total',
         digits=dp.get_precision('Account'),
-        compute='_compute_supplier_billing_amount_total')
+        compute='_compute_supplier_billing_amount_total'
+    )
     
     @api.one
-    @api.depends('amount_total')
+    @api.depends('amount_total', 'is_difference')
     def _compute_supplier_billing_amount_total(self):
-        if self.type in ['out_refund', 'in_refund']:
+        if self.is_difference or self.type in ['out_refund', 'in_refund']:
             self.supplier_billing_amount_total = self.amount_total * -1
         else:
             self.supplier_billing_amount_total = self.amount_total
