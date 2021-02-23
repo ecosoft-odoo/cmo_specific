@@ -22,7 +22,11 @@
                     <attribute name="invisible">1</attribute>
                 </xpath>
                 <xpath expr="//tree/field[@name='amount_total']" position="after">
+                    <field name="supplier_billing_state" invisible="1"/>
+                    <field name="supplier_billing_invoice_number" attrs="{'readonly': [('supplier_billing_state', '!=', 'draft')]}"/>
+                    <field name="supplier_billing_date_print" attrs="{'readonly': [('supplier_billing_state', '!=', 'draft')]}"/>
                     <field name="supplier_billing_amount_total" sum="Total Amount"/>
+                    <field name="is_difference" attrs="{'readonly': [('supplier_billing_state', '!=', 'draft')]}"/>
                 </xpath>
             </field>
         </record>
