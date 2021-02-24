@@ -12,7 +12,7 @@
                     <field name="number_preprint"/>
                 </xpath>
                 <xpath expr="//filter[@name='group_by_partner_id']" position="after">
-                    <filter name="group_by_project_ref_id" string="Project" context="{'group_by':'project_ref_id'}"/>
+                    <filter name="group_by_project_id" string="Project" context="{'group_by':'project_id'}"/>
                 </xpath>
             </field>
         </record>

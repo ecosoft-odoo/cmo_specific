@@ -7,7 +7,7 @@ class AccountInvoice(models.Model):
 
     project_ref_id = fields.Many2one(
         'project.project',
-        compute='_compute_project_ref_id',
+        related='quote_ref_id.project_related_id',
         string='Project',
         store=True,
         readonly=True,
@@ -23,18 +23,26 @@ class AccountInvoice(models.Model):
         string='Project Name',
         readonly=True,
     )
+    project_id = fields.Many2one(
+        'project.project',
+        compute='_compute_project_id',
+        string='Project',
+        store=True,
+        readonly=True,
+    )
 
     @api.depends('invoice_line', 'invoice_line.account_analytic_id')
     @api.multi
-    def _compute_project_ref_id(self):
+    def _compute_project_id(self):
         project_obj = self.env['project.project']
         for invoice in self:
-            account_analytic = invoice.invoice_line.mapped('account_analytic_id')
-            if len(account_analytic) == 1:
-                invoice.project_ref_id = project_obj.search(
-                    [('analytic_account_id', '=', account_analytic.id)], limit=1)
-            else:
-                invoice.project_ref_id = False
+            if invoice.project_ref_id:
+                invoice.project_id = invoice.project_ref_id
+            else:    
+                account_analytic = invoice.invoice_line.mapped('account_analytic_id')
+                if len(account_analytic) == 1:
+                    invoice.project_id = project_obj.search(
+                        [('analytic_account_id', '=', account_analytic.id)], limit=1)
 
     # @api.multi
     # def write(self, vals):
