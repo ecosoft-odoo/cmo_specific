@@ -32,7 +32,7 @@
             <field name="inherit_id" ref="account.invoice_tree"/>
             <field name="arch" type="xml">
                 <field name="origin" position="before">
-                    <field name="project_ref_id"/>
+                    <field name="project_id"/>
                 </field>
             </field>
         </record>
