@@ -684,8 +684,11 @@ class ProjectProject(models.Model):
                 lambda r: r.state in ('draft', 'done')
             )
             # filtered SO, INV not refund
-            refund_ids = Invoice.search([
-                ('origin_invoice_id', 'in', project.out_invoice_ids.ids)])
+            out_inv_ids = project.env['account.invoice'].sudo().search([
+                ('project_ref_id', '=', project.id),('type', '=', 'out_invoice')
+            ])
+            refund_ids = Invoice.sudo().search([
+                ('origin_invoice_id', 'in', out_inv_ids.ids)])
             if refund_ids:
                 refund = [refund_id.origin_invoice_id.quote_ref_id.id
                           for refund_id in refund_ids]
