@@ -406,9 +406,7 @@ class ProjectProject(models.Model):
                  'state')
     def _compute_is_invoiced_and_paid(self):
         for project in self:
-            invoice_states = self.env['account.invoice'].sudo().search([
-                ('project_ref_id', '=', project.id),('type', '=', 'out_invoice')
-            ]).mapped('state')
+            invoice_states = project.out_invoice_ids.mapped('state')
             inv_states = list(set(invoice_states))
             # sale_order_states = []
             #
@@ -631,7 +629,7 @@ class ProjectProject(models.Model):
     def _compute_out_invoice_count(self):
         for project in self:
             invoice_ids = self.env['account.invoice'].sudo().search([
-                ('project_ref_id', '=', project.id),('type', '=', 'out_invoice')
+                ('id', 'in', project.out_invoice_ids.ids)
             ])
             project.out_invoice_count = len(invoice_ids)
 
@@ -684,11 +682,8 @@ class ProjectProject(models.Model):
                 lambda r: r.state in ('draft', 'done')
             )
             # filtered SO, INV not refund
-            out_inv_ids = project.env['account.invoice'].sudo().search([
-                ('project_ref_id', '=', project.id),('type', '=', 'out_invoice')
-            ])
-            refund_ids = Invoice.sudo().search([
-                ('origin_invoice_id', 'in', out_inv_ids.ids)])
+            refund_ids = Invoice.search([
+                ('origin_invoice_id', 'in', project.out_invoice_ids.ids)])
             if refund_ids:
                 refund = [refund_id.origin_invoice_id.quote_ref_id.id
                           for refund_id in refund_ids]
