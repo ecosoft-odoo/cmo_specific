@@ -406,9 +406,7 @@ class ProjectProject(models.Model):
                  'state')
     def _compute_is_invoiced_and_paid(self):
         for project in self:
-            invoice_states = self.env['account.invoice'].sudo().search([
-                ('project_ref_id', '=', project.id),('type', '=', 'out_invoice')
-            ]).mapped('state')
+            invoice_states = project.out_invoice_ids.mapped('state')
             inv_states = list(set(invoice_states))
             # sale_order_states = []
             #
@@ -631,7 +629,7 @@ class ProjectProject(models.Model):
     def _compute_out_invoice_count(self):
         for project in self:
             invoice_ids = self.env['account.invoice'].sudo().search([
-                ('project_ref_id', '=', project.id),('type', '=', 'out_invoice')
+                ('id', 'in', project.out_invoice_ids.ids)
             ])
             project.out_invoice_count = len(invoice_ids)
 
