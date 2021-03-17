@@ -188,7 +188,7 @@ class HrExpenseExpense(models.Model):
     def action_validated(self):
         self.ensure_one()
         today = fields.Datetime.now()
-        return self.write({'state': 'validate',
+        return self.sudo().write({'state': 'validate',
                            'approve_by': self.env.user.id,
                            'approve_date': today})
 
