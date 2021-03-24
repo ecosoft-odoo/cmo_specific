@@ -12,3 +12,9 @@ Additional Python Libs for CMO
 * xlrd==1.2.0
 * xlsxwriter==1.3.7
 
+APT
+
+* fonts-thai-tlwg
+* software-properties-common
+
+
