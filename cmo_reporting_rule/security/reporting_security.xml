@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+        <!-- Group -->
+        <record id="base.group_for_reporting" model="res.groups">
+            <field name="name">Reporting Group</field>
+        </record>
+
+
+        <!-- Project -->
+        <menuitem action="project.action_view_task_history_cumulative"
+            id="project.menu_action_view_task_history_cumulative"
+            parent="base.menu_project_report"
+            groups="base.group_for_reporting"
+        />
+
+        <menuitem action="project.action_project_task_user_tree" 
+            id="project.menu_project_task_user_tree" 
+            parent="base.menu_project_report"
+            groups="base.group_for_reporting"
+        />
+        
+        <!-- Warehouse -->
+        <menuitem action="stock_account.action_wizard_stock_valuation_history" 
+            id="stock_account.menu_action_wizard_valuation_history" 
+            parent="stock.next_id_61" 
+            sequence="1"
+            groups="base.group_for_reporting"
+        />
+
+        <menuitem action="stock.action_stock_line_date"
+            id="stock.menu_report_stock_line_date" 
+            parent="stock.next_id_61" 
+            sequence="2"
+            groups="base.group_for_reporting"
+        />
+
+        <!-- Accounting -->
+        <menuitem action="account.action_account_invoice_report_all" 
+            id="account.menu_action_account_invoice_report_all"
+            parent="account.menu_finance_reporting"
+            sequence="0"
+            groups="base.group_for_reporting"
+        />
+
+        <menuitem action="account.action_account_entries_report_all"
+            id="account.menu_action_account_entries_report_all"
+            groups="base.group_for_reporting"
+            parent="account.menu_finance_reporting" 
+            sequence="4"
+        />
+
+        <menuitem action="account.action_account_treasury_report_all" 
+            id="account.menu_action_account_treasury_report_all"
+            parent="account.menu_finance_reporting"
+            groups="base.group_for_reporting"
+            sequence="2"
+        />
+
+        <menuitem action="account_voucher.action_sale_receipt_report_all" 
+            id="account_voucher.menu_action_sale_receipt_report_all" 
+            parent="account.menu_finance_reporting" 
+            sequence="3"
+            groups="base.group_for_reporting"
+        />
+
+        <!-- Human Resources -->
+        <menuitem action="hr_expense.action_hr_expense_report_all" 
+            id="hr_expense.menu_hr_expense_report_all" 
+            parent="hr.menu_hr_reporting" 
+            sequence="1"
+            groups="base.group_for_reporting"
+        />
+
+        <!-- Audit -->
+        <menuitem action="auditlog.action_auditlog_rule_tree"
+            id="auditlog.menu_action_auditlog_rule_tree" 
+            parent="auditlog.menu_audit" 
+            groups="base.group_for_reporting"
+        />
+
+        <menuitem action="auditlog.action_auditlog_log_tree"
+            id="auditlog.menu_audit_logs" 
+            name="Logs"
+            parent="auditlog.menu_audit" 
+            groups="base.group_for_reporting"
+        />
+
+        <menuitem action="auditlog.action_auditlog_http_session_tree"
+            id="auditlog.menu_action_auditlog_http_session_tree"
+            parent="auditlog.menu_audit"
+            groups="base.group_for_reporting"
+        />
+
+        <menuitem action="auditlog.action_auditlog_http_request_tree"
+            id="auditlog.menu_action_auditlog_http_request_tree"
+            parent="auditlog.menu_audit"
+            groups="base.group_for_reporting"
+        />
+
+        <!-- Configuration -->
+        <menuitem action="board.action_board_create"
+            id="board.menu_board_create" 
+            parent="base.menu_reporting_config"
+            groups="base.group_for_reporting"
+            sequence="2"
+        />
+    </data>
+</openerp>
