@@ -41,7 +41,7 @@ class AccountInvoice(models.Model):
         digits=dp.get_precision('Account'),
         compute='_compute_supplier_billing_amount_total'
     )
-    
+
     @api.one
     @api.depends('amount_total', 'is_difference')
     def _compute_supplier_billing_amount_total(self):
@@ -57,7 +57,6 @@ class AccountInvoice(models.Model):
             view_id, view_type, toolbar=toolbar, submenu=submenu)
         name = 'view.supplier.billing.items.tree'
         view_check = self.env['ir.ui.view'].search([('name', '=', name)], limit=1).id
-        
         if view_id == view_check:
             if res.get('toolbar', False) and res.get('toolbar').get('action',
                                                                     False):

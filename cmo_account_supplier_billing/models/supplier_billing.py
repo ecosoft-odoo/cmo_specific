@@ -22,5 +22,3 @@ class SupplierBilling(models.Model):
             if list(filter(lambda x: x not in ['open', 'cancel'],
                            invoice_states)):
                 billing.billing_active = False
-
-    
