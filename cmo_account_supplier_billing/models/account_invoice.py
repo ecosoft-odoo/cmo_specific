@@ -50,3 +50,17 @@ class AccountInvoice(models.Model):
         else:
             self.supplier_billing_amount_total = self.amount_total
 
+    @api.model
+    def fields_view_get(self, view_id=None, view_type='form', toolbar=False,
+                        submenu=False):
+        res = super(AccountInvoice, self).fields_view_get(
+            view_id, view_type, toolbar=toolbar, submenu=submenu)
+        name = 'view.supplier.billing.items.tree'
+        view_check = self.env['ir.ui.view'].search([('name', '=', name)], limit=1).id
+        
+        if view_id == view_check:
+            if res.get('toolbar', False) and res.get('toolbar').get('action',
+                                                                    False):
+                res['toolbar']['action'] = []
+                res['toolbar']['print'] = []
+        return res
