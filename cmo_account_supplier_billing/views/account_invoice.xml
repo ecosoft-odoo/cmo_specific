@@ -8,8 +8,8 @@
                 <tree create="false" import="false" colors="blue:state == 'draft';black:state in ('proforma','proforma2','open');gray:state == 'cancel'" string="Supplier Billing Items">
                     <field name="supplier_billing_number"/>
                     <field name="supplier_billing_partner_id" string="Supplier"/>
-                    <field name="number" string="Invoice Number"/>
-                    <field name="date_invoice" string="Supplier Billing Date"/>
+                    <field name="supplier_billing_invoice_number" string="Invoice Number"/>
+                    <field name="supplier_billing_date_print" string="Supplier Billing Date"/>
                     <field name="supplier_billing_date"/>
                     <field name="supplier_billing_due_date"/>
                     <field name="amount_total"/>
