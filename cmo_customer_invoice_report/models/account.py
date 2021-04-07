@@ -120,6 +120,7 @@ class AccountVoucher(models.Model):
     is_cheque = fields.Boolean(
         compute='_compute_report_data',
     )
+    
 
     @api.multi
     def _get_invoice_amount_total_text_en(self, amount_total):

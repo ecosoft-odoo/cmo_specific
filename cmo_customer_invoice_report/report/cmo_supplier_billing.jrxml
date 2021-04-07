@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cmo_hr_expense" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_ids&quot;]"/>
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="2.143588810000002"/>
+	<property name="ireport.x" value="6"/>
+	<property name="ireport.y" value="787"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString language="xPath">
 		<![CDATA[/data/record]]>
@@ -58,6 +58,9 @@
 	</field>
 	<field name="company_zip_th" class="java.lang.String">
 		<fieldDescription><![CDATA[invoice_ids/company_id/zip_th]]></fieldDescription>
+	</field>
+	<field name="current_user" class="java.lang.String">
+		<fieldDescription><![CDATA[current_user]]></fieldDescription>
 	</field>
 	<variable name="Grand_total" class="java.lang.Number" calculation="Sum">
 		<variableExpression><![CDATA[$F{supplier_billing_amount_total}]]></variableExpression>
@@ -328,7 +331,7 @@
 				<text><![CDATA[ฉบับ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="7" y="113" width="267" height="20"/>
+				<reportElement x="7" y="124" width="267" height="20"/>
 				<textElement textAlignment="Center">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -390,7 +393,7 @@
 				<textElement textAlignment="Left">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[2. จ่ายเช็คทุกวันศุกร์ที่ 4 ของเดือน
+				<text><![CDATA[2. จ่ายเช็คทุกวันศุกร์สุดท้ายของเดือน
 ]]></text>
 			</staticText>
 			<staticText>
@@ -418,6 +421,11 @@
 				<reportElement x="83" y="34" width="51" height="15"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{invoice_count}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="(###0)">
+				<reportElement x="7" y="105" width="267" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["(" + $F{current_user} + ")"]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>
