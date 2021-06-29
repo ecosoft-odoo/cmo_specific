@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 4.0.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="muse_receipt_tax_invoice_peo" language="groovy" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
@@ -128,7 +129,7 @@
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -138,7 +139,7 @@
 					<leftPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -147,7 +148,7 @@
 					<topPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -156,7 +157,7 @@
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
 				</box>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[หมายเหตุ : ]]></text>
@@ -191,7 +192,7 @@
 					<topPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -200,7 +201,7 @@
 					<topPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -210,7 +211,7 @@
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -233,7 +234,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -288,42 +289,42 @@
 			</image>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="82" y="66" width="224" height="20"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_street2}.replace(",", "") + " " + $F{company_zip}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="82" y="51" width="224" height="20"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_street}.replace(",", "")]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="82" y="18" width="224" height="20"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_street_th}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="81" y="0" width="224" height="20"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_name_th}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="82" y="34" width="224" height="20"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_street2_th} + " " + $F{company_zip_th}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="82" y="83" width="224" height="20"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Tel: " + $F{company_phone} + " Fax: " + $F{company_fax}]]></textFieldExpression>
@@ -344,24 +345,24 @@ TAX INVOICE / RECEIPT]]></text>
 			</rectangle>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="364" y="83" width="309" height="20"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["เลขประจำตัวผู้เสียภาษีอากร " + $F{company_vat}]]></textFieldExpression>
 			</textField>
 			<rectangle radius="0">
-				<reportElement mode="Transparent" x="0" y="119" width="329" height="123"/>
+				<reportElement mode="Transparent" x="0" y="110" width="329" height="132"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="6" y="157" width="46" height="30"/>
-				<textElement>
+				<reportElement x="6" y="142" width="46" height="30"/>
+				<textElement lineSpacing="Single">
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[ที่อยู่ Address]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="6" y="186" width="127" height="30"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[เลขประจำตัวผู้เสียภาษีอากร
@@ -369,47 +370,49 @@ Tax ID]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="338" y="186" width="96" height="30"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[อ้างถึงใบแจ้งหนี้
 Ref.Invoice No.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="6" y="127" width="46" height="30"/>
-				<textElement>
+				<reportElement x="6" y="112" width="46" height="30"/>
+				<textElement lineSpacing="Single">
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[นามลูกค้า Name]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="338" y="127" width="32" height="30"/>
-				<textElement textAlignment="Left">
+				<textElement textAlignment="Left" lineSpacing="Single">
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[วันที่
 Date]]></text>
 			</staticText>
 			<rectangle radius="0">
-				<reportElement mode="Transparent" x="332" y="119" width="240" height="123"/>
+				<reportElement mode="Transparent" x="332" y="110" width="240" height="132"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="338" y="157" width="66" height="30"/>
-				<textElement textAlignment="Left">
+				<textElement textAlignment="Left" lineSpacing="Single">
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[เลขที่เอกสาร
 No.]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="62" y="127" width="256" height="30"/>
-				<textElement>
+				<reportElement x="62" y="112" width="256" height="30"/>
+				<textElement lineSpacing="Single">
 					<font isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{partner_name}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="62" y="157" width="256" height="30"/>
+				<reportElement x="62" y="142" width="256" height="44">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
 				<textElement lineSpacing="Single">
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -430,7 +433,7 @@ No.]]></text>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement x="417" y="127" width="150" height="30"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[(new java.text.SimpleDateFormat("dd/MM/yyyy",new Locale("en", "US"))).format($F{payment_date})]]></textFieldExpression>
@@ -439,7 +442,7 @@ No.]]></text>
 				<reportElement x="417" y="157" width="150" height="30">
 					<printWhenExpression><![CDATA[$F{payment_number_preprint} && $F{payment_number_preprint} != "-"]]></printWhenExpression>
 				</reportElement>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{payment_number_preprint}]]></textFieldExpression>
@@ -448,7 +451,7 @@ No.]]></text>
 				<reportElement x="417" y="186" width="150" height="30">
 					<printWhenExpression><![CDATA[$F{invoice_number_preprint} && $F{invoice_number_preprint} != "-"]]></printWhenExpression>
 				</reportElement>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{invoice_number_preprint}]]></textFieldExpression>
@@ -497,14 +500,14 @@ No.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="449" y="215" width="143" height="12"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font isBold="false" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[..................................]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="449" y="229" width="143" height="12"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font isBold="false" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[..................................]]></text>
@@ -544,7 +547,7 @@ No.]]></text>
 			</textField>
 			<staticText>
 				<reportElement x="6" y="216" width="75" height="30"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[สาขาที่
@@ -567,7 +570,7 @@ Tax Branch]]></text>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[ลำดับ
@@ -580,7 +583,7 @@ No.]]></text>
 					<leftPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[รายการ
@@ -592,7 +595,7 @@ Description]]></text>
 					<topPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[จำนวนเงิน
@@ -636,7 +639,7 @@ Amount]]></text>
 			<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="UniqueID" isBlankWhenNull="true">
 				<reportElement x="52" y="44" width="265" height="30"/>
 				<box topPadding="3" leftPadding="3" rightPadding="3"/>
-				<textElement verticalAlignment="Top">
+				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{comment}]]></textFieldExpression>
@@ -678,7 +681,7 @@ Amount]]></text>
 					<bottomPen lineWidth="0.0"/>
 					<rightPen lineWidth="0.0"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
 					<font size="10" isItalic="false" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["(" + ($P{REPORT_LOCALE}.toString() == "en_US" ? $F{amount_total_text_en} : $F{amount_total_text_th}) + ")"]]></textFieldExpression>
