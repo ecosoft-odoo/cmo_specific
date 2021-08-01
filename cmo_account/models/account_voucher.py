@@ -96,8 +96,9 @@ class AccountVoucher(models.Model):
                             ttype, date):
         res = super(AccountVoucher, self).onchange_partner_id(
             partner_id, journal_id, amount, currency_id, ttype, date)
-        partner = self.env['res.partner'].browse(partner_id)
-        res['value'].update({'payee': partner.name})
+        if 'value' in res:
+            partner = self.env['res.partner'].browse(partner_id)
+            res['value'].update({'payee': partner.name})
         return res
 
     @api.multi
